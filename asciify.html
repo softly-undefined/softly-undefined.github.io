@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webcam ASCII Viewer</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #000;
+      color: rgb(255, 255, 255);
+      font-family: 'Courier New', monospace;
+    }
+    #ascii {
+      white-space: pre;
+      line-height: 1em;
+      margin-top: 1rem;
+    }
+    button, input[type=range] {
+      margin-top: 0.5rem;
+    }
+    .slider-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .slider-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    label {
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="color:#0f0;">Webcam asciify Viewer</h1>
+  <p><a href="index.html" target="_blank">Return Home</a></p>
+  <button id="startBtn">Start ASCII Cam</button>
+  <div class="slider-container">
+    <div class="slider-group">
+      <label for="contrast">Contrast: <span id="contrastVal">100</span></label>
+      <input type="range" id="contrast" min="-255" max="255" value="100">
+    </div>
+    <div class="slider-group">
+      <label for="sharpness">Sharpness: <span id="sharpnessVal">1.00</span></label>
+      <input type="range" id="sharpness" min="0" max="3" step="0.01" value="1">
+    </div>
+    <div class="slider-group">
+      <label for="pixelSize">Pixel Size: <span id="pixelSizeVal">4</span></label>
+      <input type="range" id="pixelSize" min="2" max="50" step="1" value="4">
+    </div>
+    <div class="slider-group">
+      <label for="saturation">Saturation: <span id="saturationVal">1</span></label>
+      <input type="range" id="saturation" min="0" max="3" step="0.1" value="1">
+    </div>
+    <div class="slider-group">
+      <label for="brightness">Brightness: <span id="brightnessVal">0</span></label>
+      <input type="range" id="brightness" min="-100" max="100" step="1" value="0">
+    </div>
+  </div>
+  <div id="info">This application accesses your webcam. Please allow access when prompted.</div>
+  <video id="video" autoplay playsinline style="display:none;"></video>
+  <canvas id="canvas" style="display:none;"></canvas>
+  <pre id="ascii"></pre>
+
+  <script>
+    const startBtn = document.getElementById('startBtn');
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const asciiContainer = document.getElementById('ascii');
+
+    const contrastSlider = document.getElementById('contrast');
+    const sharpnessSlider = document.getElementById('sharpness');
+    const pixelSizeSlider = document.getElementById('pixelSize');
+    const saturationSlider = document.getElementById('saturation');
+    const brightnessSlider = document.getElementById('brightness');
+
+    let currentPixelSize = parseInt(pixelSizeSlider.value);
+    const ASCII_CODES = Array.from({ length: 95 }, (_, i) => i + 32);
+    let charTemplates = null;
+
+    function precomputeCharTemplates(pixelSize) {
+      const offCanvas = document.createElement('canvas');
+      offCanvas.width = pixelSize;
+      offCanvas.height = pixelSize;
+      const ctx = offCanvas.getContext('2d');
+      ctx.textBaseline = 'top';
+      ctx.font = `${pixelSize}px monospace`;
+      const templates = {};
+      ASCII_CODES.forEach(code => {
+        const char = String.fromCharCode(code);
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, pixelSize, pixelSize);
+        ctx.fillStyle = 'white';
+        ctx.fillText(char, 0, 0);
+        const data = ctx.getImageData(0, 0, pixelSize, pixelSize).data;
+        const vector = new Float32Array(pixelSize * pixelSize);
+        for (let i = 0; i < pixelSize * pixelSize; i++) {
+          const offset = i * 4;
+          const r = data[offset];
+          const g = data[offset + 1];
+          const b = data[offset + 2];
+          vector[i] = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+        }
+        templates[char] = vector;
+      });
+      return templates;
+    }
+
+    function truncate(value) {
+      return Math.max(0, Math.min(255, value));
+    }
+
+    function applySharpening(ctx, width, height, sharpness = 1.0) {
+      const centerWeight = 1 + 4 * sharpness;
+      const weights = [ 0, -1, 0, -1, centerWeight, -1, 0, -1, 0 ];
+      const side = 3, half = 1;
+      const src = ctx.getImageData(0, 0, width, height);
+      const dst = ctx.createImageData(width, height);
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          let r = 0, g = 0, b = 0;
+          for (let ky = 0; ky < side; ky++) {
+            for (let kx = 0; kx < side; kx++) {
+              const px = x + kx - half;
+              const py = y + ky - half;
+              if (px >= 0 && px < width && py >= 0 && py < height) {
+                const i = (py * width + px) * 4;
+                const wt = weights[ky * side + kx];
+                r += src.data[i] * wt;
+                g += src.data[i + 1] * wt;
+                b += src.data[i + 2] * wt;
+              }
+            }
+          }
+          const idx = (y * width + x) * 4;
+          dst.data[idx] = truncate(r);
+          dst.data[idx + 1] = truncate(g);
+          dst.data[idx + 2] = truncate(b);
+          dst.data[idx + 3] = 255;
+        }
+      }
+      ctx.putImageData(dst, 0, 0);
+    }
+
+    function matchSection(vec, templates) {
+      let best = ' ', bestScore = -Infinity, maxDist = Math.sqrt(vec.length);
+      for (const char in templates) {
+        const tpl = templates[char];
+        let sum = 0;
+        for (let i = 0; i < vec.length; i++) sum += (vec[i] - tpl[i]) ** 2;
+        const score = 1 - Math.sqrt(sum) / maxDist;
+        if (score > bestScore) {
+          best = char;
+          bestScore = score;
+        }
+      }
+      return best;
+    }
+
+    function frameToAscii(ctx, width, height) {
+      const pixelSize = currentPixelSize;
+      const contrast = parseInt(contrastSlider.value);
+      const brightness = parseInt(brightnessSlider.value);
+      const saturation = parseFloat(saturationSlider.value);
+      const sharpness = parseFloat(sharpnessSlider.value);
+      applySharpening(ctx, width, height, sharpness);
+      const image = ctx.getImageData(0, 0, width, height);
+      const data = image.data;
+      const factor = (259 * (contrast + 255)) / (255 * (259 - contrast));
+      for (let i = 0; i < data.length; i += 4) {
+        let r = factor * (data[i] - 128) + 128;
+        let g = factor * (data[i + 1] - 128) + 128;
+        let b = factor * (data[i + 2] - 128) + 128;
+        const avg = (r + g + b) / 3;
+        r = avg + (r - avg) * saturation + brightness;
+        g = avg + (g - avg) * saturation + brightness;
+        b = avg + (b - avg) * saturation + brightness;
+        data[i] = truncate(r);
+        data[i + 1] = truncate(g);
+        data[i + 2] = truncate(b);
+      }
+      ctx.putImageData(image, 0, 0);
+      const adjusted = ctx.getImageData(0, 0, width, height).data;
+      const rows = Math.floor(height / pixelSize);
+      const cols = Math.floor(width / pixelSize);
+      const lines = [];
+      for (let row = 0; row < rows; row++) {
+        let line = '';
+        for (let col = 0; col < cols; col++) {
+          const vec = new Float32Array(pixelSize * pixelSize);
+          let i = 0;
+          for (let y = 0; y < pixelSize; y++) {
+            for (let x = 0; x < pixelSize; x++) {
+              const px = col * pixelSize + x;
+              const py = row * pixelSize + y;
+              const idx = (py * width + px) * 4;
+              const r = adjusted[idx], g = adjusted[idx + 1], b = adjusted[idx + 2];
+              vec[i++] = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+            }
+          }
+          line += matchSection(vec, charTemplates);
+        }
+        lines.push(line);
+      }
+      return lines.join('\n');
+    }
+
+    [contrastSlider, sharpnessSlider, saturationSlider, brightnessSlider].forEach(slider => {
+      slider.oninput = () => {
+        document.getElementById(slider.id + 'Val').textContent = parseFloat(slider.value).toFixed(2);
+      }
+    });
+
+    pixelSizeSlider.oninput = () => {
+      document.getElementById('pixelSizeVal').textContent = pixelSizeSlider.value;
+      currentPixelSize = parseInt(pixelSizeSlider.value);
+      charTemplates = precomputeCharTemplates(currentPixelSize);
+    };
+
+    let animationFrameId = null;
+    async function drawAsciiLoop() {
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        const width = 320;
+        const height = Math.floor((video.videoHeight / video.videoWidth) * width * 0.4825);
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, width, height);
+        asciiContainer.textContent = frameToAscii(ctx, width, height);
+      }
+      animationFrameId = requestAnimationFrame(drawAsciiLoop);
+    }
+
+    startBtn.onclick = async () => {
+      startBtn.disabled = true;
+      asciiContainer.textContent = 'Loading character templates...';
+      currentPixelSize = parseInt(pixelSizeSlider.value);
+      charTemplates = precomputeCharTemplates(currentPixelSize);
+      asciiContainer.textContent = 'Accessing webcam...';
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+        await video.play();
+        drawAsciiLoop();
+      } catch (err) {
+        asciiContainer.textContent = 'Could not access webcam: ' + err.message;
+        startBtn.disabled = false;
+      }
+    };
+  </script>
+</body>
+</html>

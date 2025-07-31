@@ -2,32 +2,451 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Coming Soon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eric Bennett – Personal Website</title>
   <style>
     body {
-      background-color: #f4f4f4;
+      margin: 0;
       font-family: sans-serif;
-      text-align: center;
-      padding-top: 20vh;
-      color: #333;
     }
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 0.5em;
+  
+    table {
+      max-width: 100%;
+      width: 100%;
+      box-sizing: border-box;
     }
-    p {
-      font-size: 1.2em;
-      color: #666;
+  
+    td img {
+      max-width: 100%;
+      height: auto;
     }
+  
+    .section {
+      padding: 0 10px;
+    }
+  
+    @media (max-width: 850px) {
+      td[width="150"] {
+        width: 100%;
+        text-align: center;
+        display: block;
+      }
+  
+      td[style*="padding: 20px;"] {
+        padding: 10px !important;
+      }
+  
+      h1 {
+        font-size: 1.5em;
+      }
+  
+      #profile-image {
+        width: 225px !important;
+        height: auto !important;
+        margin: 10px auto;
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #2c2c2c;
+        color: #f0f0f0;
+      }
+
+      table, td {
+        background-color: #2c2c2c;
+        color: inherit;
+      }
+
+      .section {
+        background-color: #2c2c2c;
+      }
+
+      a {
+        color: #80b3ff;
+      }
+
+      hr {
+        border-color: #444;
+      }
+    }
+
   </style>
+  
+  
 </head>
 <body>
-  <h1>Eric's Cooking Right Now...</h1>
-  <p>Let Him Cook Please</p>
-  <p>While you're here check these out!</p>
-  <p><a href="https://softly-undefined.github.io/mandarin-trainer">Go use Mandarin Trainer</a></p>
-  <p><a href="https://softly-undefined.github.io/taiwan-data">Go to Taiwan Data Project</a></p>
-  <p><a href="https://softly-undefined.github.io/training-mandarin-trainer">Learn the story behind Mandarin Trainer</a></p>
+  <table width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="*" align="center">
+        <table style="max-width: 1000px; width: 100%;" cellpadding="0" cellspacing="0">
+          <tr>
+            <td width="2" bgcolor="black"></td>
+            <td width="*" align="left" style="padding: 20px;">
+              <!-- Header Section -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td valign="top">
+                    <h1>Eric Bennett</h1>
+                    <p><strong>Student</strong>, Computer Science & Chinese<br>University of Maryland, College Park</p>
+                    <p>Email: <a >ebenne92 at terpmail dot umd dot edu</a></p>
+                    <p>
+                      <a href="files/resume.pdf" target="_blank">Resume</a> |
+                      <a href="https://www.linkedin.com/in/ericbennett3/" target="_blank">LinkedIn</a> |
+                      <a href="https://github.com/softly-undefined" target="_blank">GitHub</a>
+                    </p>
+                    <!-- <p>
+                      <button onclick="toggleLanguage()">中文</button>
+                    </p> -->
+                  </td>
+                  <td width="225" valign="top" align="right">
+                    <img src="files/eric.png" alt="Eric Bennett" id="profile-image" />
+                  </td>
+                </tr>
+              </table>
+              <hr>
+              <p>
+                <a href="#about">About</a> |
+                <a href="#projects">Projects</a> |
+                <a href="#experience">Experience</a> |
+                <a href="#education">Education</a> |
+                <a href="#publications">Publications</a> |
+                <a href="#skills">Skills</a> |
+                <a href="#contact">Contact</a>
+              </p>
+              <hr>
+
+              <!-- About Section -->
+              <div class="section" id="about">
+                <h2>
+                  Ab<a href="/secret_index.html" title="secret" style="color: inherit; text-decoration: none; background: transparent; cursor: pointer;">o</a>ut Me
+                </h2>
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td colspan="2">
+                      <p>
+                        I am a 4th-year dual-degree student at the University of Maryland (UMD) pursuing a B.S. in Computer Science with a specialization in Machine Learning and a B.A. in Chinese. I'm currently a student researcher in the CLIP Lab under Dr. Marine Carpuat, and I'm also affiliated with the Department of East Asian Languages and Cultures under Dr. Andrew Schonebaum. I was a Huayu BEST scholarship recipient studying at National Taiwan Normal University (NTNU) in 2023, and an exchange student at National Taiwan University (NTU CSIE) in 2025. At UMD, I'm also a member of the Gemstone Undergraduate Research Honors Program, a member of the Global Fellows program, and the cofounder of Tea Club at the University of Maryland.
+                      </p>
+                      <!-- <p>
+                        My primary research interests are in multilingual NLP with low-resource languages and machine translation, especially with Classical Chinese. 1) LLM Evaluation, 2) Low Resource Language MT, 3) third?
+                      </p> -->
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <hr>
+
+
+              <!-- Publications Section -->
+              <div class="section" id="publications">
+                <h2>Publications</h2>
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td valign="middle">
+                      <ul>
+                        <li>
+                          <strong>Evaluating Evaluation Metrics for Ancient Chinese to English Machine Translation</strong><br>
+                          <em>Eric R. Bennett, HyoJung Han, Xinchen Yang, Andrew Schonebaum, Marine Carpuat</em><br>
+                          Proceedings of the Second Workshop on Ancient Language Processing (ALP 2025), pages 71–76<br>
+                          <a href="https://aclanthology.org/2025.alp-1.9/" target="_blank">[Paper]</a> | 
+                          <a href="https://aclanthology.org/2025.alp-1.9.pdf" target="_blank">[PDF]</a>
+                        </li>
+                      </ul>
+                    </td>
+                    <td class="image-cell" valign="middle" align="right">
+                      <img src="files/eemacemt.png" alt="EEMACEMT" class="section-image" />
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <hr>
+
+              <!-- Projects Section -->
+              <div class="section" id="projects">
+                <h2>Featured Projects</h2>
+                <table width="100%" cellpadding="0" cellspacing="0">
+
+                  <!-- Mandarin Trainer -->
+                  <tr>
+                    <td valign="middle">
+                      <p><strong>Mandarin Trainer:</strong> Full‑stack Mandarin vocabulary training website built with a React.js frontend and Firebase backend. The training interface uses a spaced‑repetition algorithm that promotes retention, and reflects the specific complexities of learning Chinese. </p>
+                      <p>
+                        Try the website <a href="https://softly-undefined.github.io/mandarin-trainer" target="_blank">here</a>, and learn more about the design process <a href="https://softly-undefined.github.io/training-mandarin-trainer" target="_blank">here</a>.
+                      </p>                      
+                    </td>
+                    <td class="image-cell" valign="middle" align="right">
+                      <img src="files/mandarin_trainer.png" alt="Mandarin Trainer" class="section-image" />
+                    </td>
+                  </tr>
+                  <tr><td colspan="2"><hr style="border-top: 1px dotted #999; margin: 10px 0;"></td></tr>
+                  
+                  <!-- Cognitive Alignment -->
+                  <tr>
+                    <td class="image-cell" valign="middle" align="left">
+                      <img src="files/cognitive_alignment.png" alt="Cognitive Alignment Paper" class="section-image" />
+                    </td>
+
+                    <td valign="middle">
+                      <p><strong>Cognitive Alignment - Reducing Order Bias in MCQ Answering: </strong> A novel method to reduce order bias in multiple-choice question answering by large language models (LLMs). The technique decouples answer selection from answer order by comparing free-response LLM outputs with answer choices using embedding similarity. The method was evaluated across a subset of MMLU questions in English and Chinese and is shown to consistently reduce order bias across multiple metrics.</p>
+                      <p>Coauthored with Su Bao during a joint research project at National Taiwan University. Find the paper <a href="files/cognitive_alignment.pdf" target="_blank">here</a> and the code <a href="https://github.com/softly-undefined/NLP_final" target="_blank">here</a>.</p>
+                    </td>
+                    
+                  </tr>
+                  <tr><td colspan="2"><hr style="border-top: 1px dotted #999; margin: 10px 0;"></td></tr>
+
+                  <!-- Classical Chinese Translator V2 -->
+                  <tr>
+                    
+                    <td valign="middle">
+                      <p><strong>Classical Chinese Translator</strong> Simple LLM-powered Classical Chinese translation interface capable of batch-translating novels at a time. Leaves markers throughout the original and translated text for easy reference between the two. Currently in use by UMD faculty.</p>
+                      <p>Find the code <a href="https://github.com/softly-undefined/classical-chinese-tool-v2" target="_blank">here</a>.</p>
+                    </td>
+                    <td class="image-cell" valign="middle" align="right">
+                      <img src="files/classical_translation_tool.png" alt="Classical Chinese Translator V2" class="section-image" />
+                    </td>
+                  </tr>
+                  <tr><td colspan="2"><hr style="border-top: 1px dotted #999; margin: 10px 0;"></td></tr>
+
+                  
+
+
+                  <!-- Asciify -->
+                  <tr>
+                    <td class="image-cell" valign="middle" align="left">
+                      <img src="files/asciify.png" alt="Asciify" class="section-image" />
+                    </td>
+                    <td valign="middle">
+                      <p><strong>Asciify:</strong> A .png to .txt converter built in Python. Uses the euclidean distance between the pixels of ASCII characters and sections of the image to capture the shape and brightness of groups of pixels accuractely. Works with both images and videos.</p>
+                      <p>
+                        Find the code <a href="https://github.com/softly-undefined/asciify" target="_blank">here</a>, and try an interactive web-based version of the project <a href="asciify.html" target="_blank">here</a>.
+                      </p>                      
+                    </td>
+                  </tr>
+                  <tr><td colspan="2"><hr style="border-top: 1px dotted #999; margin: 10px 0;"></td></tr>
+
+                  <!-- Vanishing Tictactoe -->
+                  <tr>
+                                     
+                    <td valign="middle">
+                      <p><strong>Vanishing Tic Tac Toe – Deep Reinforcement Learning:</strong> Research project exploring how deep reinforcement learning (DRL) can master complex strategy in a tiny environment. In Vanishing Tic Tac Toe, players’ oldest pieces begin to disappear over time, introducing temporal planning into an otherwise simple game. We implemented the environment in OpenAI Gym, designed a suite of rule-based opponents, and trained a Double Deep Q-Network (Double DQN) agent against a curriculum of adversaries. Developed alongside an international team during my time at National Taiwan University in Taipei.</p>
+                      <p>
+                        Find the paper <a href="files/vanishing_tictactoe.pdf" target="_blank">here</a> and the code <a href="https://github.com/softly-undefined/tictactoe" target="_blank">here</a>.
+                      </p>
+                    </td>
+
+                    <td class="image-cell" valign="middle" align="right">
+                      <img src="files/tictactoe.gif" alt="Vanishing Tictactoe Animation" class="section-image" />
+                    </td>   
+                  </tr>
+                  <tr><td colspan="2"><hr style="border-top: 1px dotted #999; margin: 10px 0;"></td></tr>
+
+                  <!-- Political Bias -->
+                  <!-- <tr>
+                    <td valign="middle">
+                      <p><strong>Political Bias Data Analysis:</strong> Exploration of bias in political media data using quantitative methods—looking for patterns in language, tone, and framing across sources.</p>
+                    </td>
+                    <td class="image-cell" valign="middle" align="right">
+                      <img src="files/political_bias.png" alt="Political Bias Data Analysis" class="section-image" />
+                    </td>
+                  </tr>
+                  <tr><td colspan="2"><hr style="border-top: 1px dotted #999; margin: 10px 0;"></td></tr> -->
+
+                  <!-- Chris Bot -->
+                  <!-- <tr>
+                    <td class="image-cell" valign="middle" align="left">
+                      <img src="files/chris_bot.png" alt="Chris Bot" class="section-image" />
+                    </td>
+                    <td valign="middle">
+                      <p><strong>Chris Bot:</strong> A chat-based assistant or automation tool built for internal process support, notifications, or team collaboration (expand details as needed).</p>
+                    </td>
+                  </tr>
+                  <tr><td colspan="2"><hr style="border-top: 1px dotted #999; margin: 10px 0;"></td></tr> -->
+
+                  <!-- Monopoly Stats -->
+                  <tr>
+                    <td class="image-cell" valign="middle" align="left">
+                      <img src="files/monopoly.png" alt="Monopoly" class="section-image" style="width: 350px; max-width: 100%; height: auto;" />
+                    </td>
+                    <td valign="middle">
+                      <p>
+                        <strong>Monopoly Statistics:</strong> Exploring movement dynamics and economy in the board game Monopoly. Through a Monte Carlo simulation of 1,000,000 games, the project tracks landing frequencies, property profit rates, and the impact of chance and community chest cards. 
+                      </p>
+                      <p>
+                        Top Monopoly insight: The red and orange properties are most the most likely to be landed on!
+                      </p>                      
+                      
+                      <p>
+                        Find the simulation code and analysis <a href="https://github.com/softly-undefined/monopoly-stats" target="_blank">here</a>.
+                      </p>
+                    </td>
+                    
+                  </tr>
+                  <tr><td colspan="2"><hr style="border-top: 1px dotted #999; margin: 10px 0;"></td></tr>
+
+                  <!-- Pickles -->
+                  <tr>
+                    
+                    <td valign="middle">
+                      <p>
+                        <strong>Chris and Eric's Small Batch Pickles:</strong> My pickle company, founded in 2023 with <a href="https://www.linkedin.com/in/chris-moon-/" target="_blank">Chris Moon</a>. We craft unique, small-batch pickles with unique flavors and local ingredients alongside an amazing team. Suported by a $1,000 grant from the Dingman-Lamone Center for Entrepreneurship.
+                      </p>
+                      <p>
+                        Check out our website <a href="https://chrisandericspickles.com" target="_blank">here</a>.
+                      </p>
+                    </td>
+                    <td class="image-cell" valign="middle" align="right">
+                      <img src="files/pickle.png" alt="Pickle" class="section-image" />
+                    </td>
+                  </tr>
+                  <tr><td colspan="2"><hr style="border-top: 1px dotted #999; margin: 10px 0;"></td></tr>
+
+                  <!-- Sour Patch Kids -->
+                  <tr>
+                    <td class="image-cell" valign="middle" align="left">
+                      <img src="files/sour_patch_kids.png" alt="Sour Patch Kids" class="section-image" />
+                    </td>
+                    <td valign="middle">
+                      <p><strong>Sour Patch Kids:</strong> My first data science project from during COVID-19, where I was able to prove empirically that Sour Patch Kids recognizes Red and Blue are the best flavors by eating and counting 400 packs of candy. Did you know there are more blue and red Sour Patch Kids than the other colors?</p>
+                      <p>
+                        Find the full report 
+                        <a href="files/sour_patch_kids_report.pdf" target="_blank">here</a> 
+                        and the code 
+                        <a href="https://github.com/softly-undefined/sour-patch-kids-stats/tree/main" target="_blank">here</a>.
+                      </p>
+                      </td>
+                    
+                  </tr>
+                  
+
+
+                </table>
+              </div>
+              <hr>
+
+              
+              
+
+              <!-- Experience Section
+              <div class="section" id="experience">
+                <h2>Experience</h2>
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td valign="top">
+                      <ul>
+                        <li><strong>Research Assistant:</strong> Special Competitive Studies Project, Arlington, VA (June 2025 – Present) – Supporting research initiative founded by Eric Schmidt (former CEO of Google) and advised by David Lin. Generating and analyzing data regarding U.S.-China competition in emerging tech sectors including AI, nuclear fusion, quantum computing, and 6G.</li>
+                        <li><strong>Student Researcher:</strong> University of Maryland Computational Linguistics and Information Processing Laboratory (CLIP), College Park, MD (February 2024 – Present) – Authored paper on Ancient Chinese to English Machine Translation accepted to ALP 2025. Leveraging NLP techniques to improve semantic understanding of Ancient Chinese texts.</li>
+                        <li><strong>Research Intern:</strong> Gemstone Honors Research Program, College Park, MD (August 2022 – Present) – Member of Team TAIP (Teaching AI Platform), focused on the intersection of education and artificial intelligence.</li>
+                        <li><strong>ASPIRE High School Intern:</strong> Johns Hopkins University Applied Physics Laboratory (June 2021 - June 2022) – Conducted research on Coronavirus Research Prior to COVID-19 Pandemic, utilizing bibliometric models to create data visualizations.</li>
+                      </ul>
+                    </td>
+                    <td class="image-cell" valign="top" align="right"></td>
+                  </tr>
+                </table>
+              </div>
+              <hr> -->
+
+              <!-- Education Section
+              <div class="section" id="education">
+                <h2>Education</h2>
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td valign="middle">
+                      <ul>
+                        <li><strong>Dual Degree Program:</strong> University of Maryland, College Park – Expected Graduation: May 2026</li>
+                        <li><strong>Bachelor of Science in Computer Science:</strong> Machine Learning Specialization, GPA: 3.45</li>
+                        <li><strong>Bachelor of Arts in Chinese</strong></li>
+                        <li><strong>Global Fellows Program:</strong> U.S. Intelligence and Policy Making (August 2024 - Present)</li>
+                        <li><strong>Study Abroad:</strong> National Taiwan University, College of Electrical Engineering and Computer Science (January 2025 - Present) – Chinese language courses and Computer Science courses taught in Mandarin</li>
+                        <li><strong>Summer Study Abroad:</strong> National Taiwan Normal University (June 2023 - August 2023) – Recipient of Huayu BEST Scholarship for Chinese Summer Language and Literature study abroad program</li>
+                      </ul>
+                    </td>
+                    <td class="image-cell" valign="middle" align="right"></td>
+                  </tr>
+                </table>
+              </div>
+              <hr> -->
+
+              
+
+              <!-- Awards Section -->
+              <div class="section" id="skills">
+                <h2>Awards</h2>
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td valign="middle">
+                      <ul>
+                        <li>UMD Omicron Delta Kappa Honor Society: University of Maryland Top Ten Freshman Award</li>
+                        <li>UMD School of Languages, Literatures, and Cultures: Tsung Chin Chinese Calligraphy Scholarship Recipient</li>
+                        <li>Boy Scouts of America: Eagle Scout Award</li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <hr>
+
+
+
+              <!-- Contact Section
+              <div class="section" id="contact">
+                <h2>Contact</h2>
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td valign="top">
+                      <p>
+                        e benne 92 at terpmail dot umd dot edu
+                      </p>
+                    </td>
+                    <td class="image-cell" valign="top" align="right"></td>
+                  </tr>
+                </table>
+              </div>
+              <hr> -->
+
+              <p><center>Last modified on 07/30/2025</center></p>
+
+              <script>
+                const CONFIG = {
+                  showImages: true,
+                  imageWidth: 250,
+                  imageCellWidth: 200,
+                  profileImageWidth: 200,
+                  profileImageHeight: 200
+                };
+
+                function initializeImages() {
+                  const profileImage = document.getElementById('profile-image');
+                  if (profileImage) {
+                    profileImage.width = CONFIG.profileImageWidth;
+                    profileImage.height = CONFIG.profileImageHeight;
+                  }
+
+                  const imageCells = document.querySelectorAll('.image-cell');
+                  const sectionImages = document.querySelectorAll('.section-image');
+
+                  imageCells.forEach(cell => {
+                    cell.width = CONFIG.imageCellWidth;
+                    if (CONFIG.showImages) {
+                      cell.style.display = 'table-cell';
+                    } else {
+                      cell.style.display = 'none';
+                    }
+                  });
+
+                  sectionImages.forEach(img => {
+                    img.width = CONFIG.imageWidth;
+                  });
+                }
+
+                document.addEventListener('DOMContentLoaded', function() {
+                  initializeImages();
+                });
+              </script>
+            </td>
+            <td width="2" bgcolor="black"></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>
