@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QR Code Generator</title>
+
+  <!-- QRCode.js -->
+  <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+
+  <style>
+    /* Consistent grey background from index.html dark mode */
+    :root {
+      --bg: #2c2c2c;
+      --fg: #f0f0f0;
+      --panel: #2c2c2c;
+      --border: #f0f0f0;
+      --muted: #aaaaaa;
+      --input-bg: #3a3a3a;
+      --input-border: #555;
+      --placeholder: #bbbbbb;
+      --btn-bg: #3a3a3a;
+      --btn-border: #555;
+      --btn-fg: #f0f0f0;
+      --btn-hover: #444;
+      --link: #80b3ff;
+    }
+
+    html,body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 40px 16px 12px;
+      text-align: center;
+    }
+
+    .generator-container {
+      width: min(90%, 680px);
+      background: var(--panel);
+      border-left: 2px solid var(--border);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .input-row {
+      width: 100%;
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 10px 12px;
+      font-size: 16px;
+      background: var(--input-bg);
+      color: var(--fg);
+      border: 1px solid var(--input-border);
+      border-radius: 6px;
+    }
+    input::placeholder {
+      color: var(--placeholder);
+    }
+    input:focus {
+      border-color: #80b3ff;
+      box-shadow: 0 0 0 3px rgba(128,179,255,0.25);
+      outline: none;
+    }
+
+    button {
+      padding: 10px 16px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid var(--btn-border);
+      background: var(--btn-bg);
+      color: var(--btn-fg);
+      cursor: pointer;
+    }
+    button:hover {
+      background: var(--btn-hover);
+    }
+
+    #qr-code {
+        background: white;      /* white background for border */
+        padding: 12px;           /* controls border size */
+        border-radius: 4px;      /* optional */
+        display: inline-block;   /* ensures the padding wraps tightly */
+    }
+
+
+    #download-btn {
+      display: none;
+      margin-top: 10px;
+    }
+
+    #back-btn {
+      margin-top: 10px;
+    }
+
+    .credits {
+      width: min(90%, 680px);
+      margin: 14px auto 40px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .credits a {
+      color: var(--link);
+      text-decoration: none;
+    }
+    .credits a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Convenient QR Code Generator</h1>
+
+  <div class="generator-container">
+    <div class="input-row">
+      <input id="text-input" type="text" placeholder="Enter text or URL" />
+      <button id="generate-btn">Generate</button>
+    </div>
+
+    <div id="qr-code"></div>
+
+    <button id="download-btn">Download QR Code</button>
+    <button id="back-btn" onclick="window.location.href='../index.html'">Home</button>
+  </div>
+
+  <div class="credits">
+    <small>
+      QR code generation is powered by the open-source
+      <a href="https://github.com/davidshimjs/qrcodejs" target="_blank" rel="noopener noreferrer">QRCode.js library</a>.
+    </small>
+  </div>
+
+  <script>
+    const qrcode = new QRCode(document.getElementById("qr-code"), {
+      width: 256,
+      height: 256,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+
+    const textInput = document.getElementById("text-input");
+    const generateBtn = document.getElementById("generate-btn");
+    const downloadBtn = document.getElementById("download-btn");
+
+    function generate() {
+      const text = textInput.value.trim();
+      if (!text) {
+        alert("Please enter some text or a URL to encode.");
+        return;
+      }
+      qrcode.makeCode(text);
+      downloadBtn.style.display = "inline-block";
+    }
+
+    generateBtn.addEventListener("click", generate);
+    textInput.addEventListener("keypress", e => {
+      if (e.key === "Enter") generate();
+    });
+
+    downloadBtn.addEventListener("click", () => {
+      const canvas = document.querySelector("#qr-code canvas");
+      let dataUrl = null;
+
+      if (canvas) {
+        dataUrl = canvas.toDataURL("image/png");
+      } else {
+        const img = document.querySelector("#qr-code img");
+        if (img) dataUrl = img.src;
+      }
+
+      if (dataUrl) {
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = "qr_code.png";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+    });
+  </script>
+</body>
+</html>
