@@ -441,12 +441,14 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   // Compute bounding sphere and centre for current 3D points
-  function compute3DBounds() {
+  // Compute bounding sphere and centre for current 3D points
+  function compute3DBounds({ preserveView = false } = {}) {
     if (!currentPoints3D || currentPoints3D.length === 0) {
       viewCenter = { x: 0, y: 0, z: 0 };
       boundingRadius = 1;
       return;
     }
+
     let minX = Infinity, minY = Infinity, minZ = Infinity;
     let maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
     for (const [x, y, z] of currentPoints3D) {
@@ -457,28 +459,32 @@ window.addEventListener('DOMContentLoaded', () => {
       if (z < minZ) minZ = z;
       if (z > maxZ) maxZ = z;
     }
-    // Centre is midpoint of bounds
+
     viewCenter = {
       x: (minX + maxX) / 2,
       y: (minY + maxY) / 2,
       z: (minZ + maxZ) / 2,
     };
-    // Radius is half of the diagonal length
+
     const dx = maxX - minX;
     const dy = maxY - minY;
     const dz = maxZ - minZ;
     boundingRadius = Math.sqrt(dx * dx + dy * dy + dz * dz) / 2;
-    // Determine base zoom and camera distance so that entire fractal fits
-    // We'll set camera distance slightly greater than bounding radius for perspective
-    cameraDist = boundingRadius * 4;
-    // Compute base zoom such that the projected size roughly fits canvas width
-    // Without perspective, size on screen would be 2 * boundingRadius * baseZoom / cameraDist
-    // We set baseZoom to cameraDist * 0.9 / boundingRadius to get 90% of canvas height.
+
+    // Choose a reasonable camera distance and compute a zoom that fills ~90% of the shorter canvas side.
+    // With perspective projection factor = baseZoom / (cameraDist - rz) ≈ baseZoom / cameraDist near center.
+    // To fit diameter 2R into fraction f of side S: baseZoom/cameraDist = (f*S)/(2R).
     const shorterSide = Math.min(canvas.clientWidth, canvas.clientHeight);
-    baseZoom = (shorterSide * 0.4);
-    userZoom = 1;
-    rotX = 0;
-    rotY = 0;
+    const fillFrac = 0.9;                // fill ~90% of the shorter side
+    cameraDist = 3 * boundingRadius;     // closer camera than before so things appear larger
+    baseZoom = cameraDist * (fillFrac * shorterSide) / (2 * boundingRadius);
+
+    if (!preserveView) {
+      // Only reset these when explicitly asked (e.g., first load, toggle 3D, or Reset View)
+      userZoom = 1;
+      rotX = 0;
+      rotY = 0;
+    }
   }
 
   // Called whenever a parameter is changed or on first load
@@ -512,8 +518,10 @@ window.addEventListener('DOMContentLoaded', () => {
     currentPoints2D = get2DPoints(currentString, angleDeg);
     currentPoints3D = get3DPoints(currentString, angleDeg, twistDeg, extrude);
     if (enable3dInput.checked) {
-      compute3DBounds();
+      // Recompute bounds but keep current rotation/zoom so the view doesn’t “snap back”
+      compute3DBounds({ preserveView: true });
     }
+    
     // Redraw only if not animating
     if (!isAnimating) {
       draw();
@@ -610,7 +618,7 @@ window.addEventListener('DOMContentLoaded', () => {
   enable3dInput.addEventListener('change', () => {
     // When toggling mode we need to recompute 3D bounds if switching to 3D
     if (enable3dInput.checked) {
-      compute3DBounds();
+      compute3DBounds({ preserveView: false });
     }
     draw();
   });
