@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Eric's Dragon Curve Exploration</title>
+  <style>
+    /* Basic page styling */
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+    /* Sidebar for controls */
+    #controls {
+      width: 280px;
+      background-color: #f7f7f7;
+      border-right: 1px solid #ddd;
+      box-sizing: border-box;
+      padding: 15px;
+      overflow-y: auto;
+    }
+    #controls h1 {
+      font-size: 1.4em;
+      margin: 0 0 15px 0;
+    }
+    .slider-container {
+      margin-bottom: 12px;
+    }
+    .slider-container label {
+      display: block;
+      font-size: 0.9em;
+      margin-bottom: 4px;
+    }
+    .slider-container input[type="range"] {
+      width: 100%;
+    }
+    .slider-container input[type="number"] {
+      width: 60px;
+      margin-left: 6px;
+    }
+    /* Colour inputs should align nicely */
+    .slider-container input[type="color"] {
+      margin-top: 4px;
+    }
+    #canvas-container {
+      flex-grow: 1;
+      position: relative;
+    }
+    #draw-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: #ffffff;
+      cursor: grab;
+    }
+    #draw-canvas:active {
+      cursor: grabbing;
+    }
+    button {
+      padding: 6px 12px;
+      font-size: 0.9em;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    p.help-text {
+      font-size: 0.75em;
+      color: #666;
+      margin-top: 15px;
+    }
+
+    /* Dark mode styles */
+    body.dark {
+      background-color: #181a1b;
+      color: #ddd;
+    }
+    body.dark #controls {
+      background-color: #202224;
+      border-right-color: #333;
+    }
+    body.dark #draw-canvas {
+      background-color: #111;
+    }
+    body.dark p.help-text {
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <h1>Eric's Dragon Curve Exploration</h1>
+    <div class="slider-container">
+      <label for="iteration">Iterations: <span id="iteration-value">10</span></label>
+      <input type="range" id="iteration" min="0" max="20" step="1" value="10">
+      <input type="number" id="iteration-number" min="0" max="20" step="1" value="10">
+    </div>
+    <div class="slider-container">
+      <label for="angle">Angle (°): <span id="angle-value">90</span></label>
+      <input type="range" id="angle" min="0" max="180" step="1" value="90">
+      <input type="number" id="angle-number" min="0" max="180" step="1" value="90">
+    </div>
+    <div class="slider-container">
+      <label for="twist">3D Twist (°): <span id="twist-value">0.0</span></label>
+      <input type="range" id="twist" min="0" max="180" step="0.1" value="0">
+      <input type="number" id="twist-number" min="0" max="180" step="0.1" value="0" >
+    </div>
+    <div class="slider-container">
+      <label for="extrude">Extrude (z-step): <span id="extrude-value">0.0</span></label>
+      <input type="range" id="extrude" min="0" max="5" step="0.1" value="0">
+      <input type="number" id="extrude-number" min="0" max="5" step="0.1" value="0" >
+    </div>
+    <div class="slider-container">
+      <label for="speed">Animation Speed (segments/sec): <span id="speed-value">60</span></label>
+      <input type="range" id="speed" min="10" max="200" step="10" value="60">
+      <input type="number" id="speed-number" min="10" max="200" step="10" value="60">
+    </div>
+    <div class="slider-container">
+      <label for="color-start">Start Color:</label>
+      <input type="color" id="color-start" value="#3366cc">
+    </div>
+    <div class="slider-container">
+      <label for="color-end">End Color:</label>
+      <input type="color" id="color-end" value="#3366cc">
+      <label><input type="checkbox" id="enable-gradient"> Enable Gradient</label>
+      <label style="display:block;"><input type="checkbox" id="rainbow"> Rainbow Colors</label>
+    </div>
+    <div class="slider-container">
+      <label><input type="checkbox" id="enable3d"> Enable 3D Mode</label>
+    </div>
+    <div class="slider-container">
+      <label><input type="checkbox" id="dark-mode"> Dark Mode</label>
+    </div>
+    <button id="reset-view">Reset View</button>
+    <button id="animate-btn">Animate</button>
+    <button id="cancel-btn" style="display:none;">Cancel</button>
+    <button id="home-btn">Return Home</button>
+    <p class="help-text">Drag on the canvas to rotate in 3D mode. Use the scroll wheel to zoom.</p>
+  </div>
+  <div id="canvas-container">
+    <canvas id="draw-canvas"></canvas>
+  </div>
+  <!-- Application logic -->
+  <script src="script.js"></script>
+</body>
+</html>
