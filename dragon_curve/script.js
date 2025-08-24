@@ -1,12 +1,13 @@
 /*
- * Dragon Curve Explorer
+ * Dragon Curve Explorer (updated for fine-grained angle & 3D twist control)
  *
- * This script powers an interactive fractal explorer for the dragon curve.
- * It uses an L‑system to generate the curve and supports both 2D and
- * simple 3D visualisations. Users can adjust the number of iterations
- * (folds), the turning angle of the turtle, a twist applied in 3D space,
- * and a constant extrude distance along the z‑axis. In 3D mode the view
- * can be rotated by dragging the mouse and zoomed with the scroll wheel.
+ * Changes:
+ * - Sliders & numeric inputs for Angle and Twist accept 0.01° increments.
+ * - UI readouts show two decimals for Angle and Twist.
+ * - Fine nudging on numeric inputs with keyboard & mouse wheel:
+ *     ArrowUp/Down or wheel = ±1.00°
+ *     Alt/Option (or Meta)  = ±0.10°
+ *     Shift                  = ±0.01°
  */
 
 // Wait until the DOM is ready before running any logic
@@ -44,6 +45,13 @@ window.addEventListener('DOMContentLoaded', () => {
   const cancelBtn = document.getElementById('cancel-btn');
   const homeBtn = document.getElementById('home-btn');
 
+  // --- Finer granularity for angle & twist sliders/inputs ---
+  for (const el of [angleInput, angleNumber, twistInput, twistNumber]) {
+    el.step = '0.01';           // allow hundredths of a degree
+    if (!el.min) el.min = '-360';
+    if (!el.max) el.max = '360';
+  }
+
   // State variables for the current fractal
   let currentString = '';
   let currentPoints2D = [];
@@ -67,7 +75,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // Whether rainbow colouring is enabled. When true, colours cycle through
   // the hue spectrum from beginning to end of the curve.
   let useRainbow = false;
-  // Cache for already computed L‑system strings to avoid recomputation
+  // Cache for already computed L-system strings to avoid recomputation
   const lSystemCache = {};
 
   // Canvas sizing: handle high DPI displays by scaling the drawing context
@@ -83,9 +91,9 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   window.addEventListener('resize', resizeCanvas);
 
-  // --- L‑system generation ---
+  // --- L-system generation ---
   /**
-   * Generate the dragon curve L‑system string for a given number of
+   * Generate the dragon curve L-system string for a given number of
    * iterations. The rules used are:
    * F → F+G
    * G → F−G
@@ -95,7 +103,7 @@ window.addEventListener('DOMContentLoaded', () => {
    * Results are cached so that repeated calls with the same iteration
    * count are fast.
    * @param {number} n Number of iterations
-   * @returns {string} The resulting L‑system string
+   * @returns {string} The resulting L-system string
    */
   function generateLSystem(n) {
     if (lSystemCache[n]) return lSystemCache[n];
@@ -114,11 +122,11 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Convert an L‑system string into an array of 2D points. The turtle
-   * starts at (0,0) facing along the positive x‑axis. Each F or G step
+   * Convert an L-system string into an array of 2D points. The turtle
+   * starts at (0,0) facing along the positive x-axis. Each F or G step
    * moves the turtle forward by one unit. Plus rotates left by the
    * specified angle, minus rotates right by the angle.
-   * @param {string} str L‑system string
+   * @param {string} str L-system string
    * @param {number} angleDeg Turning angle in degrees
    * @returns {Array<[number, number]>} Array of 2D points
    */
@@ -144,14 +152,14 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Convert an L‑system string into an array of 3D points. A simple
+   * Convert an L-system string into an array of 3D points. A simple
    * orientation matrix is maintained and updated on each turn. The rules
    * for updating orientation for '+' and '−' are:
    *   orientation = orientation * Rz(angle) * Rx(twist)
    *   orientation = orientation * Rz(−angle) * Rx(twist)
    * Each step forward translates by one unit along the current local
-   * forward (x) axis and an optional constant along the global z‑axis.
-   * @param {string} str L‑system string
+   * forward (x) axis and an optional constant along the global z-axis.
+   * @param {string} str L-system string
    * @param {number} angleDeg Turn angle around z axis, in degrees
    * @param {number} twistDeg Twist applied around the local x axis, in degrees
    * @param {number} extrude Amount to add along global z per segment
@@ -441,7 +449,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   // Compute bounding sphere and centre for current 3D points
-  // Compute bounding sphere and centre for current 3D points
   function compute3DBounds({ preserveView = false } = {}) {
     if (!currentPoints3D || currentPoints3D.length === 0) {
       viewCenter = { x: 0, y: 0, z: 0 };
@@ -472,11 +479,9 @@ window.addEventListener('DOMContentLoaded', () => {
     boundingRadius = Math.sqrt(dx * dx + dy * dy + dz * dz) / 2;
 
     // Choose a reasonable camera distance and compute a zoom that fills ~90% of the shorter canvas side.
-    // With perspective projection factor = baseZoom / (cameraDist - rz) ≈ baseZoom / cameraDist near center.
-    // To fit diameter 2R into fraction f of side S: baseZoom/cameraDist = (f*S)/(2R).
     const shorterSide = Math.min(canvas.clientWidth, canvas.clientHeight);
     const fillFrac = 0.9;                // fill ~90% of the shorter side
-    cameraDist = 3 * boundingRadius;     // closer camera than before so things appear larger
+    cameraDist = 3 * boundingRadius;     // closer camera so things appear larger
     baseZoom = cameraDist * (fillFrac * shorterSide) / (2 * boundingRadius);
 
     if (!preserveView) {
@@ -493,16 +498,16 @@ window.addEventListener('DOMContentLoaded', () => {
     const angleDeg = parseFloat(angleInput.value);
     const twistDeg = parseFloat(twistInput.value);
     const extrude = parseFloat(extrudeInput.value);
-    // Update displayed values
+    // Update displayed values (angle & twist to two decimals)
     iterationValue.textContent = iterations;
-    angleValue.textContent = angleDeg;
-    twistValue.textContent = twistDeg.toFixed(1);
-    extrudeValue.textContent = extrude.toFixed(1);
+    angleValue.textContent = isNaN(angleDeg) ? '0.00' : angleDeg.toFixed(2);
+    twistValue.textContent = isNaN(twistDeg) ? '0.00' : twistDeg.toFixed(2);
+    extrudeValue.textContent = isNaN(extrude) ? '0.0' : extrude.toFixed(1);
     // Keep number inputs in sync with sliders
-    iterationNumber.value = iterations;
-    angleNumber.value = angleDeg;
-    twistNumber.value = twistDeg;
-    extrudeNumber.value = extrude;
+    iterationNumber.value = `${iterations}`;
+    angleNumber.value = isNaN(angleDeg) ? '0.00' : angleDeg.toFixed(2);
+    twistNumber.value = isNaN(twistDeg) ? '0.00' : twistDeg.toFixed(2);
+    extrudeNumber.value = isNaN(extrude) ? '0.0' : extrude.toFixed(1);
     // Update speed display
     const spd = parseInt(speedInput.value, 10);
     speedNumber.value = spd;
@@ -521,7 +526,6 @@ window.addEventListener('DOMContentLoaded', () => {
       // Recompute bounds but keep current rotation/zoom so the view doesn’t “snap back”
       compute3DBounds({ preserveView: true });
     }
-    
     // Redraw only if not animating
     if (!isAnimating) {
       draw();
@@ -533,37 +537,41 @@ window.addEventListener('DOMContentLoaded', () => {
   angleInput.addEventListener('input', updateFractal);
   twistInput.addEventListener('input', updateFractal);
   extrudeInput.addEventListener('input', updateFractal);
+
   // Keep number inputs in sync with sliders and update fractal
   iterationNumber.addEventListener('change', () => {
     let val = parseInt(iterationNumber.value, 10);
     if (isNaN(val)) return;
     val = Math.max(parseInt(iterationInput.min), Math.min(parseInt(iterationInput.max), val));
-    iterationInput.value = val;
+    iterationInput.value = `${val}`;
     updateFractal();
   });
   iterationInput.addEventListener('input', () => {
     iterationNumber.value = iterationInput.value;
   });
+
   angleNumber.addEventListener('change', () => {
     let val = parseFloat(angleNumber.value);
     if (isNaN(val)) return;
     val = Math.max(parseFloat(angleInput.min), Math.min(parseFloat(angleInput.max), val));
-    angleInput.value = val;
+    angleInput.value = val.toFixed(2);
     updateFractal();
   });
   angleInput.addEventListener('input', () => {
-    angleNumber.value = angleInput.value;
+    angleNumber.value = parseFloat(angleInput.value).toFixed(2);
   });
+
   twistNumber.addEventListener('change', () => {
     let val = parseFloat(twistNumber.value);
     if (isNaN(val)) return;
     val = Math.max(parseFloat(twistInput.min), Math.min(parseFloat(twistInput.max), val));
-    twistInput.value = val;
+    twistInput.value = val.toFixed(2);
     updateFractal();
   });
   twistInput.addEventListener('input', () => {
-    twistNumber.value = twistInput.value;
+    twistNumber.value = parseFloat(twistInput.value).toFixed(2);
   });
+
   extrudeNumber.addEventListener('change', () => {
     let val = parseFloat(extrudeNumber.value);
     if (isNaN(val)) return;
@@ -574,6 +582,7 @@ window.addEventListener('DOMContentLoaded', () => {
   extrudeInput.addEventListener('input', () => {
     extrudeNumber.value = extrudeInput.value;
   });
+
   // Speed controls
   speedInput.addEventListener('input', () => {
     const val = parseInt(speedInput.value, 10);
@@ -589,6 +598,7 @@ window.addEventListener('DOMContentLoaded', () => {
     speedValueSpan.textContent = val;
     animationSpeed = val;
   });
+
   // Colour pickers and gradient toggle
   colorStartInput.addEventListener('input', () => {
     startColor = colorStartInput.value;
@@ -638,6 +648,49 @@ window.addEventListener('DOMContentLoaded', () => {
       draw();
     }
   });
+
+  // --- Fine nudge handlers for precise angle/twist control ---
+  // Normal = 1.00°, Alt/Meta = 0.10°, Shift = 0.01°
+  function computeNudgeStep(mod) {
+    if (mod.shiftKey) return 0.01;
+    if (mod.altKey || mod.metaKey) return 0.1;
+    return 1.0;
+  }
+  function clamp(val, min, max) {
+    return Math.min(max, Math.max(min, val));
+  }
+  function nudge(el, dir, mod) {
+    const step = computeNudgeStep(mod);
+    const cur = parseFloat(el.value || '0') || 0;
+    const min = parseFloat(el.min ?? '-360');
+    const max = parseFloat(el.max ?? '360');
+    const next = clamp(cur + dir * step, min, max);
+    // Keep two decimals for angle/twist
+    el.value = next.toFixed(2);
+    // Use 'change' to reuse existing sync logic
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  // Apply to numeric inputs (and optionally sliders) for Angle & Twist
+  for (const el of [angleNumber, twistNumber]) {
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        nudge(el, e.key === 'ArrowUp' ? +1 : -1, e);
+      }
+    });
+    el.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      nudge(el, e.deltaY < 0 ? +1 : -1, e);
+    }, { passive: false });
+  }
+  // Optional: enable wheel nudging on sliders too
+  for (const el of [angleInput, twistInput]) {
+    el.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      nudge(el, e.deltaY < 0 ? +1 : -1, e);
+    }, { passive: false });
+  }
 
   // Mouse interaction for 3D rotation and zoom
   let isDragging = false;
