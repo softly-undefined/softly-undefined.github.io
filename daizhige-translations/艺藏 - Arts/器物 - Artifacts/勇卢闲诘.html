@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>勇卢闲诘</title>
+  <title>勇卢闲诘 - 勇卢闲诘</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,9 +15,7 @@
       color: #0077cc;
       text-decoration: underline;
       cursor: pointer;
-    }
-    .back-link {
-      margin-bottom: 1rem;
+      scroll-margin-top: 5.5rem;
     }
     .section {
       margin-bottom: 2rem;
@@ -33,12 +31,27 @@
       margin: 0.75rem 0 1.25rem;
     }
     .view-toggle {
+      position: sticky;
+      top: 0;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: flex-start;
+      margin: -1rem -1rem 1.5rem;
+      padding: 0.75rem 1rem;
+      background: #fff;
+      z-index: 10;
+      border-bottom: 1px solid #d5d5d5;
+    }
+    .view-toggle-group {
       display: flex;
       gap: 0.5rem;
-      margin: 1.5rem 0 1rem;
       flex-wrap: wrap;
+      align-items: center;
     }
-    .toggle-button {
+    .toggle-button,
+    .return-link {
       padding: 0.4rem 0.9rem;
       border: 1px solid #0077cc;
       background: #fff;
@@ -48,12 +61,18 @@
       font-size: 0.95rem;
       transition: all 0.15s ease-in-out;
     }
-    .toggle-button:hover {
+    .toggle-button:hover,
+    .return-link:hover {
       background: rgba(0, 119, 204, 0.08);
     }
     .toggle-button.active {
       background: #0077cc;
       color: #fff;
+    }
+    .return-link {
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: auto;
     }
     .view {
       display: none;
@@ -87,6 +106,18 @@
       margin: 0.5rem 0;
     }
     @media (max-width: 600px) {
+      .view-toggle {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.6rem;
+      }
+      .view-toggle-group {
+        justify-content: center;
+      }
+      .return-link {
+        margin-left: 0;
+        text-align: center;
+      }
       .toggle-button {
         flex: 1 1 auto;
         text-align: center;
@@ -95,13 +126,15 @@
   </style>
 </head>
 <body>
-  <div class="back-link"><a href="../../index.html">&larr; Back to index</a></div>
-  <h1>勇卢闲诘</h1>
+  <h1>勇卢闲诘 - 勇卢闲诘</h1>
   
 
-  <div class="view-toggle" role="tablist" aria-label="View mode">
-    <button type="button" class="toggle-button active" data-target="stacked-view" aria-pressed="true">Stacked</button>
-    <button type="button" class="toggle-button" data-target="interlaced-view" aria-pressed="false">Interlaced</button>
+  <div class="view-toggle" role="toolbar" aria-label="Page controls">
+    <div class="view-toggle-group" role="group" aria-label="View mode">
+      <button type="button" class="toggle-button active" data-target="stacked-view" aria-pressed="true">Stacked</button>
+      <button type="button" class="toggle-button" data-target="interlaced-view" aria-pressed="false">Interlaced</button>
+    </div>
+    <a class="return-link" href="../../index.html">Return to index</a>
   </div>
 
   <div id="stacked-view" class="view active" aria-hidden="false">

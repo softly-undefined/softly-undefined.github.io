@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Seventy-Two Sicknesses and Their Treatment Methods</title>
+  <title>七十二症辨治方法 - Seventy-Two Sicknesses and Their Treatment Methods</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,9 +15,7 @@
       color: #0077cc;
       text-decoration: underline;
       cursor: pointer;
-    }
-    .back-link {
-      margin-bottom: 1rem;
+      scroll-margin-top: 5.5rem;
     }
     .section {
       margin-bottom: 2rem;
@@ -33,12 +31,27 @@
       margin: 0.75rem 0 1.25rem;
     }
     .view-toggle {
+      position: sticky;
+      top: 0;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: flex-start;
+      margin: -1rem -1rem 1.5rem;
+      padding: 0.75rem 1rem;
+      background: #fff;
+      z-index: 10;
+      border-bottom: 1px solid #d5d5d5;
+    }
+    .view-toggle-group {
       display: flex;
       gap: 0.5rem;
-      margin: 1.5rem 0 1rem;
       flex-wrap: wrap;
+      align-items: center;
     }
-    .toggle-button {
+    .toggle-button,
+    .return-link {
       padding: 0.4rem 0.9rem;
       border: 1px solid #0077cc;
       background: #fff;
@@ -48,12 +61,18 @@
       font-size: 0.95rem;
       transition: all 0.15s ease-in-out;
     }
-    .toggle-button:hover {
+    .toggle-button:hover,
+    .return-link:hover {
       background: rgba(0, 119, 204, 0.08);
     }
     .toggle-button.active {
       background: #0077cc;
       color: #fff;
+    }
+    .return-link {
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: auto;
     }
     .view {
       display: none;
@@ -87,6 +106,18 @@
       margin: 0.5rem 0;
     }
     @media (max-width: 600px) {
+      .view-toggle {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.6rem;
+      }
+      .view-toggle-group {
+        justify-content: center;
+      }
+      .return-link {
+        margin-left: 0;
+        text-align: center;
+      }
       .toggle-button {
         flex: 1 1 auto;
         text-align: center;
@@ -95,13 +126,15 @@
   </style>
 </head>
 <body>
-  <div class="back-link"><a href="../index.html">&larr; Back to index</a></div>
-  <h1>Seventy-Two Sicknesses and Their Treatment Methods</h1>
+  <h1>七十二症辨治方法 - Seventy-Two Sicknesses and Their Treatment Methods</h1>
   <p class="doc-header">Translation created with model: gemma3</p>
 
-  <div class="view-toggle" role="tablist" aria-label="View mode">
-    <button type="button" class="toggle-button active" data-target="stacked-view" aria-pressed="true">Stacked</button>
-    <button type="button" class="toggle-button" data-target="interlaced-view" aria-pressed="false">Interlaced</button>
+  <div class="view-toggle" role="toolbar" aria-label="Page controls">
+    <div class="view-toggle-group" role="group" aria-label="View mode">
+      <button type="button" class="toggle-button active" data-target="stacked-view" aria-pressed="true">Stacked</button>
+      <button type="button" class="toggle-button" data-target="interlaced-view" aria-pressed="false">Interlaced</button>
+    </div>
+    <a class="return-link" href="../index.html">Return to index</a>
   </div>
 
   <div id="stacked-view" class="view active" aria-hidden="false">
@@ -117,15 +150,13 @@ H翕翕发热 is for the surface fever, wind-cold retreats from the skin and hea
 <br/>
 Furthermore, when surface evil has not subsided, it seeks to enter and disrupt the internal, creating false illusions; when the internal generates fever, it is difficult to tolerate, with both surface and internal fever manifesting as heat.<br/>
 <br/>
-The treatment lies in prioritizing harmony, disregarding the severity of chills; without sweating, use Ma Huang (ephedra), Han Gui (Chinese cinnamon), and Tai Yang (solar) herbs, understanding their distinct properties.<a id="trans-1p" href="#orig-1p" class="marker">[1p]</a><br/>
-Heat sensations, when persistent like the tide, are caused by Yang Ming’s thorny vines. The heat at the hours of Yin and Mao belongs to the Liver Wood, and one should consider this carefully.<br/>
+The treatment lies in prioritizing harmony, disregarding the severity of chills; without sweating, use Ma Huang (ephedra), Han Gui (Chinese cinnamon), and Tai Yang (solar) herbs, understanding their distinct properties.<a id="trans-1p" href="#orig-1p" class="marker">[1p]</a> Heat sensations, when persistent like the tide, are caused by Yang Ming’s thorny vines. The heat at the hours of Yin and Mao belongs to the Liver Wood, and one should consider this carefully.<br/>
 <br/>
 To relieve heat, one should open the channels of Gu and Shu, avoiding coldness. Furthermore, heat arising from labor and injury is not like a fever, but rather a different condition.<br/>
 <br/>
 A feeling of alternating chills and heat, like that of malaria, is due to the struggle of evil airs within the body, causing damage to the Gallbladder. A feeling of alternating chills and heat is characterized by a sensation of coldness when evil resides on the surface, and a sensation of heat when evil resides within.<br/>
 <br/>
-If evil resides within half a li of the surface, there will be alternating chills and heat, with attacks occurring without a fixed number of times, and ceasing when passed through a different channel.<a id="trans-2p" href="#orig-2p" class="marker">[2p]</a><br/>
-Furthermore, there are fevers resembling malaria but not malaria itself, sometimes with symptoms that cease and then return; the common use of Chaihu Tang and Jie, if wrongly administered, leads to decline.<br/>
+If evil resides within half a li of the surface, there will be alternating chills and heat, with attacks occurring without a fixed number of times, and ceasing when passed through a different channel.<a id="trans-2p" href="#orig-2p" class="marker">[2p]</a> Furthermore, there are fevers resembling malaria but not malaria itself, sometimes with symptoms that cease and then return; the common use of Chaihu Tang and Jie, if wrongly administered, leads to decline.<br/>
 <br/>
 ○ Fever and Irritability<br/>
 Fever with restlessness, arising from a cold, wind-chill, or loss of manifestation; furthermore, fevers differ in their nature, and it is necessary to understand the distinction between yang deficiency and yin excess.<br/>
@@ -133,8 +164,7 @@ Fever with restlessness, arising from a cold, wind-chill, or loss of manifestati
 Yang heat disrupts the mind and causes fever and dryness; yin deficiency causes anger and kidney restlessness; when fever is present, the heat is light and dry, and excessive heat is severe, and restlessness follows before and after the heat.<br/>
 <br/>
 ○ Evil Wind and Back Pain<br/>
-Wind-chill, evil wind, and severe cold injure the meridians and allow evil to penetrate; evil wind belongs to yang and harmonizes with the vital energy; it differs from yang and yin and does not cause severe cold.<a id="trans-3p" href="#orig-3p" class="marker">[3p]</a><br/>
-And further, those with wind-cold injure the back, avoiding cold wind, the back is yang, the abdomen is yin; thus, when the back is exposed to evil cold, ginger is used to invigorate and harmonize; this is the essential principle.<br/>
+Wind-chill, evil wind, and severe cold injure the meridians and allow evil to penetrate; evil wind belongs to yang and harmonizes with the vital energy; it differs from yang and yin and does not cause severe cold.<a id="trans-3p" href="#orig-3p" class="marker">[3p]</a> And further, those with wind-cold injure the back, avoiding cold wind, the back is yang, the abdomen is yin; thus, when the back is exposed to evil cold, ginger is used to invigorate and harmonize; this is the essential principle.<br/>
 <br/>
 ○ Head dizziness, head pain, soreness of the neck.<br/>
 Wind-cold causes head pain, dizziness, and soreness of the neck; it does not call upon the usual parts. The evil resides in the sun, therefore head pain; fatigue from labor only strengthens the yang.<br/>
@@ -142,8 +172,7 @@ Wind-cold causes head pain, dizziness, and soreness of the neck; it does not cal
 If the patient has a lingering illness with body pain, sweating dissipates the yang, transforming into wind; furthermore, if the limbs are not at ease, the patient’s condition requires both reinforcement and purging.<br/>
 <br/>
 ○ Fullness in the chest, fullness in the chest and diaphragm.<br/>
-Without heat, aversion to cold, sweating occurs from the yin; it does not cause fullness of the body. Pressing it does not cause pain; wind-cold obstructs the blood, the chest and diaphragm are full, descending is without ascent.<a id="trans-4p" href="#orig-4p" class="marker">[4p]</a><br/>
-Fever and chills arise from the yang, causing damage to the ranks; pressing it yields pain, knots in the chest small, not pressing it yields pain, large and dangerous to injure.<br/>
+Without heat, aversion to cold, sweating occurs from the yin; it does not cause fullness of the body. Pressing it does not cause pain; wind-cold obstructs the blood, the chest and diaphragm are full, descending is without ascent.<a id="trans-4p" href="#orig-4p" class="marker">[4p]</a> Fever and chills arise from the yang, causing damage to the ranks; pressing it yields pain, knots in the chest small, not pressing it yields pain, large and dangerous to injure.<br/>
 <br/>
 Fever knots in the chest, causing distress and thirst; chills knot in the chest, causing stuffiness and aversion to coolness; water knots in the chest, swelling and sweating; not lightly misinterpreting the separate consultations.<br/>
 <br/>
@@ -151,13 +180,11 @@ Abdominal pain and fullness, small fullness in the abdomen.<br/>
 <br/>
 The spleen is of central earth, fifth earth element, and suffers from disease due to excessive yin; yang poison is a malicious hand, the feet are warm, pain ceases with speech.<br/>
 <br/>
-Fullness without respite, like this already, yin poison generates the end, and it is different; fullness desiring evacuation without rest, fullness combined with stagnation can be resolved.<a id="trans-5p" href="#orig-5p" class="marker">[5p]</a><br/>
-Without sweat, the thief-sweat begins with sweat in the head, hands, and feet. Cold evil damages the middle Yang meridians, solidifying the channels and causing external affliction. The body’s fluid diminishes, like rain without sweat, and Ma Huang Tang is the best remedy for this.<br/>
+Fullness without respite, like this already, yin poison generates the end, and it is different; fullness desiring evacuation without rest, fullness combined with stagnation can be resolved.<a id="trans-5p" href="#orig-5p" class="marker">[5p]</a> Without sweat, the thief-sweat begins with sweat in the head, hands, and feet. Cold evil damages the middle Yang meridians, solidifying the channels and causing external affliction. The body’s fluid diminishes, like rain without sweat, and Ma Huang Tang is the best remedy for this.<br/>
 <br/>
 Cold evil damages the middle Yin meridians, loosening the channels and causing self-drenched sweat; this is a symptom of lost Yang, remedied with Ginger-Apricot Decoction by searching for it.<br/>
 <br/>
-Thief-sweats steal through sleep, ceasing upon waking, their traces vanishing; the evil resides in the Yang boundaries, so sweat appears to the neck and beyond; prolonged dampness and overcast weather cause Yang to depart, requiring Ginseng and Ginger Decoction to gather it.<a id="trans-6p" href="#orig-6p" class="marker">[6p]</a><br/>
-The branches and leaves of hands, feet, spleen, and stomach originate from the central heat generated by fire; fluids and moisture flow profusely throughout the limbs, and the spleen clears its function swiftly.<br/>
+Thief-sweats steal through sleep, ceasing upon waking, their traces vanishing; the evil resides in the Yang boundaries, so sweat appears to the neck and beyond; prolonged dampness and overcast weather cause Yang to depart, requiring Ginseng and Ginger Decoction to gather it.<a id="trans-6p" href="#orig-6p" class="marker">[6p]</a> The branches and leaves of hands, feet, spleen, and stomach originate from the central heat generated by fire; fluids and moisture flow profusely throughout the limbs, and the spleen clears its function swiftly.<br/>
 <br/>
 ○ Diarrhea with pus, blood, and difficult urination, urination obstructed, and self-injury through urination.<br/>
 <br/>
@@ -165,34 +192,29 @@ The branches and leaves of hands, feet, spleen, and stomach originate from the c
 <br/>
 Three yang diarrheas cause a general heat in the body, with warm hands and feet belonging to the excessive yin; with deficient yin, water feels like ice; if the heart is cold, it is a deficiency of the yin.<br/>
 <br/>
-Injuries and chills cause diarrhea with pus, blood, and the invasion of cold yin into the intestines and stomach; the distinction between clear and turbid fluids is lost, and the meridians are blocked by dampness; this is unlike ordinary blood loss.<a id="trans-7p" href="#orig-7p" class="marker">[7p]</a><br/>
-The remaining symptoms of diarrhea, incontinence, and similar conditions should be treated according to the principles of this school. Fever with its various transformations is like wind and thunder; it does not easily lead to confusion like common illnesses.<br/>
+Injuries and chills cause diarrhea with pus, blood, and the invasion of cold yin into the intestines and stomach; the distinction between clear and turbid fluids is lost, and the meridians are blocked by dampness; this is unlike ordinary blood loss.<a id="trans-7p" href="#orig-7p" class="marker">[7p]</a> The remaining symptoms of diarrhea, incontinence, and similar conditions should be treated according to the principles of this school. Fever with its various transformations is like wind and thunder; it does not easily lead to confusion like common illnesses.<br/>
 <br/>
 ○ Fever, with its symptoms of vomiting, dry heaving, coughing, reverse dyspnea, and rapid shortness of breath, is a manifestation of the air’s inability to rest; evil airs accumulate within the chest, obstructing it. The air’s reversal manifests as a thick, bright, and upward rush, and all matters of the world cannot be necessarily addressed.<br/>
 <br/>
-○ Yellowing and spots, and madness, are symptoms of fever, capable of causing alarm; damp heat in the spleen and stomach steam together, causing the drawing of skin bags, and hot air penetrates and corrupts the remaining lotus-like formations.<a id="trans-8p" href="#orig-8p" class="marker">[8p]</a><br/>
-Small urination is the cause of yellowing; self-urination and blood accumulation are named; the whole body becomes yellow with dark lips and dark skin, deep heat and deep dizziness are also yellow and deep.<br/>
+○ Yellowing and spots, and madness, are symptoms of fever, capable of causing alarm; damp heat in the spleen and stomach steam together, causing the drawing of skin bags, and hot air penetrates and corrupts the remaining lotus-like formations.<a id="trans-8p" href="#orig-8p" class="marker">[8p]</a> Small urination is the cause of yellowing; self-urination and blood accumulation are named; the whole body becomes yellow with dark lips and dark skin, deep heat and deep dizziness are also yellow and deep.<br/>
 <br/>
 Even if it causes a yellow spot from damaging the blood, it bursts through the skin; if light, it resembles a rash, a mosquito trace, or a similar appearance; if heavy, it is like betel nut and money.<br/>
 <br/>
 Mosquito traces appear on the hands and feet, around the scalp; the abdomen is unbearable to look at; the patient sees large spots, which turn from fresh red to broken into spots.<br/>
 <br/>
-The patient, when quiet, sees small spots.<a id="trans-9p" href="#orig-9p" class="marker">[9p]</a><br/>
-First observe red and yellow spots; if always accompanied by evil qi that does not dissipate, first employ sweat-inducing measures to contend with it.<br/>
+The patient, when quiet, sees small spots.<a id="trans-9p" href="#orig-9p" class="marker">[9p]</a> First observe red and yellow spots; if always accompanied by evil qi that does not dissipate, first employ sweat-inducing measures to contend with it.<br/>
 <br/>
 The greatest taboo is if blood spots are firm; this harms the Dragon Fire at the Dantian, burning the Kidney Channel. If spots appear, quickly administer Gate Class medicine, broadening the formula.<br/>
 <br/>
 ○ Coldness and Reverse Coldness are grievous; when middle-level coldness manifests, this is also a matter of the first rank. True Yang is touched by external images, causing pain in the abdomen and coldness in limbs and lips. <br/>
 <br/>
-Severe pain in the waist and legs, sitting as if in ice; self-sweating causes Yang to flee and cold essence to flow.  Also known as “depleting Yang and wasting Yin,” acupuncture with a suitable formula restores Yang and returns it to its origin.<a id="trans-10p" href="#orig-10p" class="marker">[10p]</a><br/>
-The character *jué* is square and centered, and contains many elements. To ascertain the truth, one must diligently examine the principles, not relying on mere hair. *Jué* is the ultimate, and opposition brings cold; observing, listening, questioning, and cutting through with the blade, one must determine how it is.<br/>
+Severe pain in the waist and legs, sitting as if in ice; self-sweating causes Yang to flee and cold essence to flow.  Also known as “depleting Yang and wasting Yin,” acupuncture with a suitable formula restores Yang and returns it to its origin.<a id="trans-10p" href="#orig-10p" class="marker">[10p]</a> The character *jué* is square and centered, and contains many elements. To ascertain the truth, one must diligently examine the principles, not relying on mere hair. *Jué* is the ultimate, and opposition brings cold; observing, listening, questioning, and cutting through with the blade, one must determine how it is.<br/>
 <br/>
 The *jué* is initially hot, then becomes *jué* itself. The classics say that deep *jué* is deep heat; the *jué* is a celestial *jué* before it becomes hot. The classics say that it directly enters the Yin channel.<br/>
 <br/>
 If the *jué* causes cold in the limbs, one always changes the hexagrams with no reliable basis; one uses *zhì zǐ* (ginger rhizome) and *lǐ tāng* (ginger soup) judiciously, and then cauterizes the *guān yuán* (vital points) and the Sea God.<br/>
 <br/>
-Four inversions are equivalent to four limbs being cold; one must know the depth and shallowness. When evil is in the surface, the hands and feet are hot; the half-surface and half-interior are slightly warm.<a id="trans-11p" href="#orig-11p" class="marker">[11p]</a><br/>
-The limbs reversed by cold invading the interior, transmitting distinct and precise segments; purple heat and warmth arose from warmth and cold, swiftly searching for four-limb reversing decoction.<br/>
+Four inversions are equivalent to four limbs being cold; one must know the depth and shallowness. When evil is in the surface, the hands and feet are hot; the half-surface and half-interior are slightly warm.<a id="trans-11p" href="#orig-11p" class="marker">[11p]</a> The limbs reversed by cold invading the interior, transmitting distinct and precise segments; purple heat and warmth arose from warmth and cold, swiftly searching for four-limb reversing decoction.<br/>
 <br/>
 ○Dream-speech<br/>
 <br/>
@@ -202,36 +224,31 @@ Light cases manifest as murmurs in sleep, heavy cases as deceptive words upon wa
 <br/>
 ○ Sleeplessness and Excessive Sleep (When vital energy belongs to the Yang, it moves during the day; when it belongs to the Yin, it moves during the night; the imbalance of Yin and Yang creates sleeplessness and excessive sleep.)<br/>
 <br/>
-The vital energy, like the state of waking, moves during the day with Yang dominance, Yang being in excess and Yin deficient, causing sleeplessness; the vital energy, during the night, moves with Yin dominance, Yin being in excess and Yang waning, allowing for unrestrained meditation.<a id="trans-12p" href="#orig-12p" class="marker">[12p]</a><br/>
-The saying goes that sleepless nights are not sleepless, and sleepless days are also sleepless. To treat smallpox with chills, one should decoct jujube seeds and the roots of *Zha Ren*.<br/>
+The vital energy, like the state of waking, moves during the day with Yang dominance, Yang being in excess and Yin deficient, causing sleeplessness; the vital energy, during the night, moves with Yin dominance, Yin being in excess and Yang waning, allowing for unrestrained meditation.<a id="trans-12p" href="#orig-12p" class="marker">[12p]</a> The saying goes that sleepless nights are not sleepless, and sleepless days are also sleepless. To treat smallpox with chills, one should decoct jujube seeds and the roots of *Zha Ren*.<br/>
 <br/>
 ○ Dry mouth, parched tongue. The evil heat consumes fluids, leading to thirst; a cup of water cannot quench the thirst, and burning firewood is not worth waiting for. Decoction drains body fluids – this is not something to be taken lightly.<br/>
 <br/>
 The tongue is the root of the heart’s vitality, its color naturally red; a pale tongue with yellow, smooth surfaces and no markings is most displeased. It is most forbidden for kidney water to suppress heart fire, and the appearance of blood on the tongue accompanied by a surging pulse is particularly alarming.<br/>
 <br/>
-○ Nosebleeds and Hemorrhages. Nosebleeds are caused by the oppressive heat and excessive blood; reckless actions block the pores, causing perspiration to cease. It is recorded that those who bleed profusely do not sweat; the treatment is to stop the sweating and the bleeding will cease.<a id="trans-13p" href="#orig-13p" class="marker">[13p]</a><br/>
-If the seven orifices all bleed, fever and red sweat are the standard criteria; if blood is expelled with high fever, one need not doubt it; this is truly a case of gaining the vital energy.<br/>
+○ Nosebleeds and Hemorrhages. Nosebleeds are caused by the oppressive heat and excessive blood; reckless actions block the pores, causing perspiration to cease. It is recorded that those who bleed profusely do not sweat; the treatment is to stop the sweating and the bleeding will cease.<a id="trans-13p" href="#orig-13p" class="marker">[13p]</a> If the seven orifices all bleed, fever and red sweat are the standard criteria; if blood is expelled with high fever, one need not doubt it; this is truly a case of gaining the vital energy.<br/>
 <br/>
 ○ The symptoms of severe pain, stiffness, and convulsions.<br/>
 <br/>
 Original symptoms of *qu shèng* (severe illness) belong to the bladder; the head and neck are stiff, the back is arched and stretched; this is due to wind-cold and dampness, disrupting the vital energy and causing muscle contraction.<br/>
 <br/>
-Eyes open without sweat indicate a severe *qu shèng*, belonging to the Yin and heat, using the root-herb soup; eyes closed with sweat indicate a milder *qu shèng*, belonging to the Yin and cold, using the honeyed peach bark soup.<a id="trans-14p" href="#orig-14p" class="marker">[14p]</a><br/>
-Conflict and opposition between yin and yang shake the heavens and earth, without producing life. The struggle of malevolent energies constitutes battle; the “er” is the clash of these inner malevolent energies.<br/>
+Eyes open without sweat indicate a severe *qu shèng*, belonging to the Yin and heat, using the root-herb soup; eyes closed with sweat indicate a milder *qu shèng*, belonging to the Yin and cold, using the honeyed peach bark soup.<a id="trans-14p" href="#orig-14p" class="marker">[14p]</a> Conflict and opposition between yin and yang shake the heavens and earth, without producing life. The struggle of malevolent energies constitutes battle; the “er” is the clash of these inner malevolent energies.<br/>
 <br/>
 Flesh becomes slack, sinews tense, and constant stillness does not exist; the moving of the “ti” is the slackening of the “qian,” and the jumping of the “qian” is the slackening of the flesh.  Excessive loss of body fluids and blood leads to the drying up of muscle and sinew, and the nourishment of these is a wondrous thing.<br/>
 <br/>
 Following a long illness, drowsiness returns with the resumption of eating, labor returns, and color returns. The illness’s aftereffects manifest as confusion, speech is disordered, and the pulse is erratic; it resembles malaria but is not malaria, forgetting hunger and satiety. Remaining malevolent energies obscure the heart and abdomen.<br/>
 <br/>
-Overconsumption of food results in a return of illness, while the weak earth cannot overcome the energy of grain.  Re-engaging in labor is a return of labor, because it stems from the fact that blood and vital essence have not yet established a firm foundation.<a id="trans-15p" href="#orig-15p" class="marker">[15p]</a><br/>
-Darkness and light transactions are like returning to color; the most difficult illness to treat is that caused by evil poisons and their recipients. The jade stem causes pain in the head, and it is difficult to raise it; one’s eyes and vision become blurred, and one does not know of affairs.<br/>
+Overconsumption of food results in a return of illness, while the weak earth cannot overcome the energy of grain.  Re-engaging in labor is a return of labor, because it stems from the fact that blood and vital essence have not yet established a firm foundation.<a id="trans-15p" href="#orig-15p" class="marker">[15p]</a> Darkness and light transactions are like returning to color; the most difficult illness to treat is that caused by evil poisons and their recipients. The jade stem causes pain in the head, and it is difficult to raise it; one’s eyes and vision become blurred, and one does not know of affairs.<br/>
 <br/>
 A woman’s illness in a jade-walled house is urgent and severe; pain runs through her waist and abdomen, and her pulse is weak. A sickness after a fever is a dangerous case, requiring careful adjustment of prescriptions and supportive measures.<br/>
 <br/>
 ○ Heat entering the blood vessels: A woman suffering from a fever and a melancholic wind, experiences headache, fever, and chills; the moon’s essence is applied to counteract this illness, with the body aching and pain in the waist and spine being difficult to bear.<br/>
 <br/>
-During the day, one is clear-headed; at night, one speaks in delirium, resembling malaria but not malaria, and is viewed differently. Heat entering the blood vessels is a mere name; one should not mistake Hangzhou for汴 (Kaifeng).<a id="trans-16p" href="#orig-16p" class="marker">[16p]</a><br/>
-Wormwood and fox bewilderment:<br/>
+During the day, one is clear-headed; at night, one speaks in delirium, resembling malaria but not malaria, and is viewed differently. Heat entering the blood vessels is a mere name; one should not mistake Hangzhou for汴 (Kaifeng).<a id="trans-16p" href="#orig-16p" class="marker">[16p]</a> Wormwood and fox bewilderment:<br/>
 <br/>
 Wormwood (huò) is the same as the three-bodied insect, arising from the deficiency of the intestines and stomach, seeking food due to coldness. It even consumes human organs and limbs become weary, and the eyes are constantly dizzy.<br/>
 <br/>
@@ -239,65 +256,44 @@ Hearing the expulsion of wormwood is a symptom, and the treatment involves medic
 <br/>
 Stagnation and regret:<br/>
 <br/>
-Stagnation stops what is undesirable, caused by excess heat; regret is the unrestrained expression of joy and anger, dispersing and dissipating confused emotions in search of wisdom.<a id="trans-17p" href="#orig-17p" class="marker">[17p]</a><br/>
-Do not treat all with benevolence. To treat those who call out and say they are corpses, applying pain, numbness, acupuncture—they know nothing of it; the bones and flesh are stubborn, the meridians are cold, fearing difficulty in treatment.<br/>
+Stagnation stops what is undesirable, caused by excess heat; regret is the unrestrained expression of joy and anger, dispersing and dissipating confused emotions in search of wisdom.<a id="trans-17p" href="#orig-17p" class="marker">[17p]</a> Do not treat all with benevolence. To treat those who call out and say they are corpses, applying pain, numbness, acupuncture—they know nothing of it; the bones and flesh are stubborn, the meridians are cold, fearing difficulty in treatment.<br/>
 <br/>
 All methods for treating the hundred channels are ineffective; the medicine cannot be properly applied. There is no return of the flow of the meridians and the channels, the sweating and downward methods are not trustworthy.<br/>
 <br/>
 One resembles cold, yet fears no cold; one resembles heat, yet fears no heat; one eats little, does not eat at all, lies down but does not sleep; the harmony of yang and spring is difficult to achieve.<br/>
 <br/>
-Phlegm, air, and dampness cause foot-dizziness and a deficient, irregular state; phlegm, air, and dampness are averse to wind, they hate cold, causing vomiting and a rush of air attacking the vital organs; the head, neck, and body are weak and painful, the boundaries between conditions are indistinct.<a id="trans-18p" href="#orig-18p" class="marker">[18p]</a><br/>
-Foot ailments resemble coldness, headache and fever with difficult bowel movements, weakness in the feet and knees, and outbreaks of heat and dampness.<br/>
+Phlegm, air, and dampness cause foot-dizziness and a deficient, irregular state; phlegm, air, and dampness are averse to wind, they hate cold, causing vomiting and a rush of air attacking the vital organs; the head, neck, and body are weak and painful, the boundaries between conditions are indistinct.<a id="trans-18p" href="#orig-18p" class="marker">[18p]</a> Foot ailments resemble coldness, headache and fever with difficult bowel movements, weakness in the feet and knees, and outbreaks of heat and dampness.<br/>
 <br/>
 False heat and excessive dryness are like demons; the body’s efforts to avoid heat are not to be labored. If there is no aversion to cold and no headache, it is like true chills, and a slight deviation is a critical error.<br/>
 <br/>
 Eating poorly resembles coldness, indicating how to discern true chills. Headache, fever, and aversion to cold are signs. A full chest, abdominal pain, and vomiting should be treated as if they were true chills.<br/>
 <br/>
 ○ Wind Gate Method<br/>
-The wind attacks the liver and gallbladder, disrupting the vital essence and causing illness. Wind痱 (wind rashes) and dryness afflict the spleen, causing it to wither; countless herbs are cultivated within this condition.<a id="trans-19p" href="#orig-19p" class="marker">[19p]</a><br/>
-Blood stroke makes dancing difficult, a half-body unable to move, a wretched form and corpse; paralysis, convulsions, and spasms, pain everywhere, how sorrowful!<br/>
+The wind attacks the liver and gallbladder, disrupting the vital essence and causing illness. Wind痱 (wind rashes) and dryness afflict the spleen, causing it to wither; countless herbs are cultivated within this condition.<a id="trans-19p" href="#orig-19p" class="marker">[19p]</a> Blood stroke makes dancing difficult, a half-body unable to move, a wretched form and corpse; paralysis, convulsions, and spasms, pain everywhere, how sorrowful!<br/>
 <br/>
 The meridians cause stroke, forgetting pleasure and pain, often due to the stubbornness of flesh and skin; in the wind, the vital energy becomes confused and blurred, leading to unconsciousness and failure to awaken, falling like dust.<br/>
 <br/>
 Regarding the internal organs, the intestines are easily severed, phlegm clouds the mind, causing the eyes to slant, a miserable state; the teeth are tightly closed, the voice is silent, phlegm and viscous discharge spew forth like flowers.<br/>
 <br/>
-Deceiving the road, attacking Guo, the vanguard troops; muskwort clears phlegm and opens the orifices, securing the pass;藿香 (huǒ xiāng) strengthens vital energy, without restraint; 续命汤 (xù mìng tāng) establishes the condition of published symptoms.<a id="trans-20p" href="#orig-20p" class="marker">[20p]</a><br/>
-If the remaining parties do not willingly submit, guard against wind communication and adjust accordingly; it is most forbidden to shake the head and straighten the body, as if adorning the face with sweat and rain.<br/>
+Deceiving the road, attacking Guo, the vanguard troops; muskwort clears phlegm and opens the orifices, securing the pass;藿香 (huǒ xiāng) strengthens vital energy, without restraint; 续命汤 (xù mìng tāng) establishes the condition of published symptoms.<a id="trans-20p" href="#orig-20p" class="marker">[20p]</a> If the remaining parties do not willingly submit, guard against wind communication and adjust accordingly; it is most forbidden to shake the head and straighten the body, as if adorning the face with sweat and rain.<br/>
 <br/>
 The tongue, palate, throat, and larynx should be carefully examined; if the flow of vital energy ceases, life becomes impossible; the shape of the vital energy resembles a stroke of wind, and the pulse is cold and does not vary.<br/>
 <br/>
 It is easy to distinguish the presence of saliva; misdiagnosing as a wind illness leads to a difficult recovery; there are many cases resembling each other, and one must carefully adjust the wind-blowing prescriptions.<br/>
 <br/>
-The vital energy is characterized by the absence of saliva in the mouth, while a stroke of wind is marked by the presence of saliva in the mouth; the vital energy is characterized by a slow pulse, and for the light cases, one should use the藿香正气散 (huǒ xiāng zhèng qì sàn – huǒ xiāng zhèng qì sàn).<a id="trans-21p" href="#orig-21p" class="marker">[21p]</a><br/>
-When the pulse is floating and the meridian is elevated due to a stroke, if the case is severe, use *shunfeng yuni* (smooth wind and uniform air) to dispel the symptoms. Grind *zaojiao* (soapbar root) into powder and inhale a small amount through the nostrils; if sneezing occurs, it can be treated; without sneezing, it is not treated. This is due to the cessation of lung qi. If the mouth does not open, the muscles have already been severed.<a id="trans-22p" href="#orig-22p" class="marker">[22p]</a><br/>
-He does not treat it.<br/>
+The vital energy is characterized by the absence of saliva in the mouth, while a stroke of wind is marked by the presence of saliva in the mouth; the vital energy is characterized by a slow pulse, and for the light cases, one should use the藿香正气散 (huǒ xiāng zhèng qì sàn – huǒ xiāng zhèng qì sàn).<a id="trans-21p" href="#orig-21p" class="marker">[21p]</a> When the pulse is floating and the meridian is elevated due to a stroke, if the case is severe, use *shunfeng yuni* (smooth wind and uniform air) to dispel the symptoms. Grind *zaojiao* (soapbar root) into powder and inhale a small amount through the nostrils; if sneezing occurs, it can be treated; without sneezing, it is not treated. This is due to the cessation of lung qi. If the mouth does not open, the muscles have already been severed.<a id="trans-22p" href="#orig-22p" class="marker">[22p]</a> He does not treat it.<br/>
 Mugwort, Smoothflow, Jiang (Ginger), Zhizhen (Costus), Zhili (Chasteflower), Gan Cao (Licorice), Ma Huang (Ephedra), and桔梗 (Ligusticum) – when a stroke occurs, and the surface air is not flowing smoothly, this is a good remedy.<br/>
-For a condition where the body is numb and the surface air is not flowing smoothly, he treats it with Ma Huang and Xingwu (Chuanxiong).<a id="trans-23p" href="#orig-23p" class="marker">[23p]</a><br/>
-Formerly, the treatment involved using safflower, prepared citrus peel, and ginkgo seeds. The flow of qi in the mouth, eyes, and facial features was irregular. Therefore, treatment was undertaken with white atractylodes and silkworm chrysalis, and licorice root to soothe the rapid qi in the throat.  Chrysanthemum mucronulatum was used to address upper respiratory qi inversion.<a id="trans-24p" href="#orig-24p" class="marker">[24p]</a><br/>
-Phlegm, as a substance, becomes congealed and stagnant in cold conditions, flows and spreads in heat, and is aided by the action of dry ginger in resolving its stagnation. This is a treatment focused on symptoms.<br/>
+For a condition where the body is numb and the surface air is not flowing smoothly, he treats it with Ma Huang and Xingwu (Chuanxiong).<a id="trans-23p" href="#orig-23p" class="marker">[23p]</a> Formerly, the treatment involved using safflower, prepared citrus peel, and ginkgo seeds. The flow of qi in the mouth, eyes, and facial features was irregular. Therefore, treatment was undertaken with white atractylodes and silkworm chrysalis, and licorice root to soothe the rapid qi in the throat.  Chrysanthemum mucronulatum was used to address upper respiratory qi inversion.<a id="trans-24p" href="#orig-24p" class="marker">[24p]</a> Phlegm, as a substance, becomes congealed and stagnant in cold conditions, flows and spreads in heat, and is aided by the action of dry ginger in resolving its stagnation. This is a treatment focused on symptoms.<br/>
 <br/>
 藿香正气散 (Huo Xiang Zheng Qi San – Huo Xiang Zheng Qi Decoction)<br/>
 <br/>
 Huo Xiang (藿香 –藿香 – star anise), Zheng Qi (正气 –正气 – vital energy), Zhusuo (紫苏 –紫苏 – sophora root), Da Bu (大腹 –大腹 – large intestine), Chen Pi (陈皮 –陈皮 – dried orange peel), Zhutou (术苓 –术苓 – white atractylodes), Jingguo (桔梗 –桔梗 – skullcap), Bansha (半夏 –半夏 – prickly ash), Gansu (甘草 –甘草 – licorice root), Hou (厚 –厚 – thick), feng han shuo wei ge xiang.<br/>
 <br/>
-All treatments for wind-phlegm must first regulate vital energy; when vital energy is in balance, phlegm will naturally subside.<a id="trans-25p" href="#orig-25p" class="marker">[25p]</a><br/>
-When the藿香 (huòxiāng –藿香) is in harmony, the clear yang ascends and turbidity descends. The heavens and earth are turned upside down, establishing a clear distinction. What evil obstruction arises?<br/>
+All treatments for wind-phlegm must first regulate vital energy; when vital energy is in balance, phlegm will naturally subside.<a id="trans-25p" href="#orig-25p" class="marker">[25p]</a> When the藿香 (huòxiāng –藿香) is in harmony, the clear yang ascends and turbidity descends. The heavens and earth are turned upside down, establishing a clear distinction. What evil obstruction arises?<br/>
 <br/>
 The recipe for *Xù Méng Tāng* (续瞑汤 –续瞑汤) includes the following ingredients: the lower portion of *ānfù zhī* (附子 –附子), *fángfēng* (防风 –防风), *guīméi* (桂 –桂), *máhuáng* (麻黄 –麻黄), *gāncuò* (甘草 –甘草), *xìngrǔ* (芎 –芎), *sháoqiú* (芍 –芍), and *qín* (芩 –芩). These do not return to life, but instead cause death.<br/>
 <br/>
-The ancients used this formula to treat apoplexy, and its specific symptoms are unknown.<a id="trans-26p" href="#orig-26p" class="marker">[26p]</a><br/>
-I prescribe the Ma Huang Xing Ren Tang. Zhong Jing used it to treat the sore throat caused by the sun’s chill. The Gui Zhi Shao Yao Gui Zhi Tang is also used. Zhong Jing used this to treat the wind caused by the sun.<a id="trans-27p" href="#orig-27p" class="marker">[27p]</a><br/>
-If spoken as such, it causes a reversal of the vital energy, resulting in headache and fever, with intense heat in the back being absolutely necessary. Ginseng and sweet flag are the two of the Four Gentlemen.  Apricot kernel and peach kernel are the two of the Four Substances. Apricot kernel is used to nourish blood.<a id="trans-28p" href="#orig-28p" class="marker">[28p]</a><br/>
-Thus spoken, it follows that the deficiency arises from the vital energy, the emptiness of the blood, and both are connected to what must be used. Wind-borne illnesses, excessive indulgence leading to sickness in wood, and ailments caused by dampness and indulgence are all treated by measures to ward off wind, and by treating the cause of the dampness itself.<a id="trans-29p" href="#orig-29p" class="marker">[29p]</a><br/>
-Cold fevers are treated by adding aconite; hot fevers by adding yellow chrysanthemum. The illness does not come alone; it is managed by adjusting the treatment, therefore its medication also addresses the whole condition.<a id="trans-30p" href="#orig-30p" class="marker">[30p]</a><br/>
-To dispel wind and clear the channels, returning the fragrant lotus to Jing (County), the elder general admires the stone mortar.  Chrysanthemum mucosa, gardenia, chuanxiong, radix scutellaria, and paeonia are used. Ephedra and fragrant elecampane clear the exterior; wind-heat resides in the skin, arising from perspiration.<a id="trans-31p" href="#orig-31p" class="marker">[31p]</a><br/>
-Ginger and chuanxiong are medicines for wind heat, which manifests on the top of the head. It is obtained from the nose and then released. Large yellow root and chuanxiong are medicines to clear channels and promote digestion, which manifests in the upper part of the stomach. It is obtained from behind and then released. Those for wind heat in the small intestine are obtained from urine and then released.<a id="trans-32p" href="#orig-32p" class="marker">[32p]</a><br/>
-The wind vexes the hands and lungs, causing inflammation of the skin and a disturbance of the vital organs. Slippery stone and sticky polygonum clear the lungs and vital organs. However, for expelling the fire that wanders through the channels, forsythia and chrysanthemum are used. The wind, as a disease, subverts the liverwood.<a id="trans-33p" href="#orig-33p" class="marker">[33p]</a><br/>
-The fragrant gardenia, angelica, and chuanxiong are associated with blood. Whereas, licorice, white atractylodes, and cinnamon are used to harmonize the stomach and strengthen the spleen and stomach. Mr. Xu said that wind and evil are the cause of illness.<a id="trans-34p" href="#orig-34p" class="marker">[34p]</a><br/>
-To retain illness and not remove it results in severity, therefore a remedy of dispelling wind and nourishing blood is used to treat it. The minister is a *qin lie* (a type of horse), because it governs the overall wind. Stone plaster removes the general fire from the chest.<a id="trans-35p" href="#orig-35p" class="marker">[35p]</a><br/>
-The wind of Qiang Huo alleviates pain from the soreness caused by the hundred joints of the sun; Fang Feng is a military leader among all medicines for all winds. When the wind of the Three Yangs changes number, there is white bai zi wind heat drying on the qi, cleared with Huang Qi. Wind heat drying on the cool blood, with Sheng Di solo living. Leaving wind damp in the little Yang ginger grass to subdue the evil wind.<a id="trans-36p" href="#orig-36p" class="marker">[36p]</a><br/>
-The excess invades the lungs. Then one should use aged *dang gui* and aged *shilu yang*, which are suitable for nourishing blood after a deficiency of wind. One with these remedies alleviates the dryness of wind-removing medicines, and enables the hands to grasp and the feet to walk, due to the nourishment of blood.<a id="trans-37p" href="#orig-37p" class="marker">[37p]</a><br/>
-Methods for Summer Heat<br/>
+The ancients used this formula to treat apoplexy, and its specific symptoms are unknown.<a id="trans-26p" href="#orig-26p" class="marker">[26p]</a> I prescribe the Ma Huang Xing Ren Tang. Zhong Jing used it to treat the sore throat caused by the sun’s chill. The Gui Zhi Shao Yao Gui Zhi Tang is also used. Zhong Jing used this to treat the wind caused by the sun.<a id="trans-27p" href="#orig-27p" class="marker">[27p]</a> If spoken as such, it causes a reversal of the vital energy, resulting in headache and fever, with intense heat in the back being absolutely necessary. Ginseng and sweet flag are the two of the Four Gentlemen.  Apricot kernel and peach kernel are the two of the Four Substances. Apricot kernel is used to nourish blood.<a id="trans-28p" href="#orig-28p" class="marker">[28p]</a> Thus spoken, it follows that the deficiency arises from the vital energy, the emptiness of the blood, and both are connected to what must be used. Wind-borne illnesses, excessive indulgence leading to sickness in wood, and ailments caused by dampness and indulgence are all treated by measures to ward off wind, and by treating the cause of the dampness itself.<a id="trans-29p" href="#orig-29p" class="marker">[29p]</a> Cold fevers are treated by adding aconite; hot fevers by adding yellow chrysanthemum. The illness does not come alone; it is managed by adjusting the treatment, therefore its medication also addresses the whole condition.<a id="trans-30p" href="#orig-30p" class="marker">[30p]</a> To dispel wind and clear the channels, returning the fragrant lotus to Jing (County), the elder general admires the stone mortar.  Chrysanthemum mucosa, gardenia, chuanxiong, radix scutellaria, and paeonia are used. Ephedra and fragrant elecampane clear the exterior; wind-heat resides in the skin, arising from perspiration.<a id="trans-31p" href="#orig-31p" class="marker">[31p]</a> Ginger and chuanxiong are medicines for wind heat, which manifests on the top of the head. It is obtained from the nose and then released. Large yellow root and chuanxiong are medicines to clear channels and promote digestion, which manifests in the upper part of the stomach. It is obtained from behind and then released. Those for wind heat in the small intestine are obtained from urine and then released.<a id="trans-32p" href="#orig-32p" class="marker">[32p]</a> The wind vexes the hands and lungs, causing inflammation of the skin and a disturbance of the vital organs. Slippery stone and sticky polygonum clear the lungs and vital organs. However, for expelling the fire that wanders through the channels, forsythia and chrysanthemum are used. The wind, as a disease, subverts the liverwood.<a id="trans-33p" href="#orig-33p" class="marker">[33p]</a> The fragrant gardenia, angelica, and chuanxiong are associated with blood. Whereas, licorice, white atractylodes, and cinnamon are used to harmonize the stomach and strengthen the spleen and stomach. Mr. Xu said that wind and evil are the cause of illness.<a id="trans-34p" href="#orig-34p" class="marker">[34p]</a> To retain illness and not remove it results in severity, therefore a remedy of dispelling wind and nourishing blood is used to treat it. The minister is a *qin lie* (a type of horse), because it governs the overall wind. Stone plaster removes the general fire from the chest.<a id="trans-35p" href="#orig-35p" class="marker">[35p]</a> The wind of Qiang Huo alleviates pain from the soreness caused by the hundred joints of the sun; Fang Feng is a military leader among all medicines for all winds. When the wind of the Three Yangs changes number, there is white bai zi wind heat drying on the qi, cleared with Huang Qi. Wind heat drying on the cool blood, with Sheng Di solo living. Leaving wind damp in the little Yang ginger grass to subdue the evil wind.<a id="trans-36p" href="#orig-36p" class="marker">[36p]</a> The excess invades the lungs. Then one should use aged *dang gui* and aged *shilu yang*, which are suitable for nourishing blood after a deficiency of wind. One with these remedies alleviates the dryness of wind-removing medicines, and enables the hands to grasp and the feet to walk, due to the nourishment of blood.<a id="trans-37p" href="#orig-37p" class="marker">[37p]</a> Methods for Summer Heat<br/>
 <br/>
 Summer injury arises from the pulse being deficient due to the effects of heat. The pulse of fever and chills differs; while external symptoms and chills may appear similar, the patient has fever without pain and does not exhibit spasm.<br/>
 <br/>
@@ -305,35 +301,27 @@ One suffers from summer heat when exhausted from overwork, lacking intense heat 
 <br/>
 To drive off the evil, *Xiang Nu Yin Zi* (Chamomilla Decoction) can be used first, and *Wu Ling San* (Five-Ingredient Powder) corrects the evil and restores balance. *Liu He Tang* (Six-Ingredient Soup) should be taken without hesitation.<br/>
 <br/>
-*Xiang Nu Yin Zi* consists of Chamomilla, dried Peeling Bark, Thick Bark, Yellow Ki, and Astragalus; with Sweet Flag, Pawpaw, White Bean. It clears the heart and expels summer heat, and this is remarkable.<a id="trans-38p" href="#orig-38p" class="marker">[38p]</a><br/>
-Five-Lying Decoction<br/>
+*Xiang Nu Yin Zi* consists of Chamomilla, dried Peeling Bark, Thick Bark, Yellow Ki, and Astragalus; with Sweet Flag, Pawpaw, White Bean. It clears the heart and expels summer heat, and this is remarkable.<a id="trans-38p" href="#orig-38p" class="marker">[38p]</a> Five-Lying Decoction<br/>
 <br/>
 Within the Five-Lying Decoction are pig trotters, *Phrargan* (white atractylodes), *Zexie* (greater celandine), and *Guiheen* (cinnamon). It harmonizes yin and yang, clears summer heat and dampness, and stabilizes the mind and spirit.<br/>
 <br/>
 Six-Harmony Decoction<br/>
 <br/>
-Within the Six-Harmony Decoction are hawk’s feet, *Houxiang* (Indian frankincense), *Niuwa* (pumpkin), *Hongpao* (mulberry), and *Buxia* (Chinese star anise). It is used for conditions where the six internal organs are not in harmony.<a id="trans-39p" href="#orig-39p" class="marker">[39p]</a><br/>
-To precede the spleen and stomach and regulate them is the skillful method. Fragrant substances can heal the stomach orifice, therefore藿砂 (huò shā) is used. Spicy substances dispel spleen and stomach qi, therefore 半杏 (bàn xìng) is used. Bland substances promote the elimination of dampness and heat, therefore 茯苓 (fú líng) is used. Sweet substances regulate the spleen and stomach, therefore 扁术 (biǎn shù) is used.<a id="trans-40p" href="#orig-40p" class="marker">[40p]</a><br/>
-If the spleen and stomach are weak, then the spleen and stomach recover and all diseases are rectified. The spleen, when treated, distributes water essence to four places, the five viscera operate concurrently, and even resolves the Tai He [a concept of harmony and balance]. How much more the six viscera!  Concerning the method of the Wet Gate: Ask, how does one know the presence of dampness within, when it is not recognized through contact; it seeks refuge in low places where it gathers cold and moisture, and accumulates.<a id="trans-41p" href="#orig-41p" class="marker">[41p]</a><br/>
-It causes sores on the flesh of the lower body, swelling throughout the body and dysfunction of the spleen and stomach. The pulse is three to half-inch, strange and cold; Sichuan nut and Angelica sinensis to dispel dampness should be taken.<br/>
+Within the Six-Harmony Decoction are hawk’s feet, *Houxiang* (Indian frankincense), *Niuwa* (pumpkin), *Hongpao* (mulberry), and *Buxia* (Chinese star anise). It is used for conditions where the six internal organs are not in harmony.<a id="trans-39p" href="#orig-39p" class="marker">[39p]</a> To precede the spleen and stomach and regulate them is the skillful method. Fragrant substances can heal the stomach orifice, therefore藿砂 (huò shā) is used. Spicy substances dispel spleen and stomach qi, therefore 半杏 (bàn xìng) is used. Bland substances promote the elimination of dampness and heat, therefore 茯苓 (fú líng) is used. Sweet substances regulate the spleen and stomach, therefore 扁术 (biǎn shù) is used.<a id="trans-40p" href="#orig-40p" class="marker">[40p]</a> If the spleen and stomach are weak, then the spleen and stomach recover and all diseases are rectified. The spleen, when treated, distributes water essence to four places, the five viscera operate concurrently, and even resolves the Tai He [a concept of harmony and balance]. How much more the six viscera!  Concerning the method of the Wet Gate: Ask, how does one know the presence of dampness within, when it is not recognized through contact; it seeks refuge in low places where it gathers cold and moisture, and accumulates.<a id="trans-41p" href="#orig-41p" class="marker">[41p]</a> It causes sores on the flesh of the lower body, swelling throughout the body and dysfunction of the spleen and stomach. The pulse is three to half-inch, strange and cold; Sichuan nut and Angelica sinensis to dispel dampness should be taken.<br/>
 <br/>
 Sichuan nut and Angelica sinensis to dispel dampness also include Artemisia annua and Bai Zhu; Ligusticum chuanxiong and Bupleurum chinense drum each other, the pain of wind and dampness vanishes without trace.<br/>
 <br/>
-For dampness flows downwards, obstructing the meridians, now using herbal remedies to treat dampness is like seeking the sun in a damp place, and it dries up.<a id="trans-42p" href="#orig-42p" class="marker">[42p]</a><br/>
-To be in harmony is to be pure. It is a wonder of governance.<br/>
+For dampness flows downwards, obstructing the meridians, now using herbal remedies to treat dampness is like seeking the sun in a damp place, and it dries up.<a id="trans-42p" href="#orig-42p" class="marker">[42p]</a> To be in harmony is to be pure. It is a wonder of governance.<br/>
 <br/>
 ○ Fire Gate Method<br/>
 <br/>
 The heart is the partner of fire according to the five elements; honoring the heart, it is in harmony with the water in the position of the jade; assisting and ruling, the dragon fire is called ‘harmony,’ a scourge of vital energy, truly hateful.<br/>
 <br/>
-To seize the opportunity to incite chaos is easily forgotten and agitated; to insult water is to boil the kidneys and drain their life force; true fire drains and directs the red, false fire should be replenished with ‘Withdrawal of the Pine Pill.’<a id="trans-43p" href="#orig-43p" class="marker">[43p]</a><br/>
-Each classic medical text diagnoses based on pulse and symptoms, reducing and increasing with clear broth and cool drinks. Furthermore, for conditions of internal wind-heat, the earth’s six flavors are meticulously combined.<br/>
+To seize the opportunity to incite chaos is easily forgotten and agitated; to insult water is to boil the kidneys and drain their life force; true fire drains and directs the red, false fire should be replenished with ‘Withdrawal of the Pine Pill.’<a id="trans-43p" href="#orig-43p" class="marker">[43p]</a> Each classic medical text diagnoses based on pulse and symptoms, reducing and increasing with clear broth and cool drinks. Furthermore, for conditions of internal wind-heat, the earth’s six flavors are meticulously combined.<br/>
 <br/>
 The Red-Reducing Powder (Gu Dashan) consists of生地黄 (生地黄), 木通 (wood dong), 栀子 (栀子), 黄柏 (huang pi), 黄芩 (huang qin), 犀角 (xi jiao), 生地 (sheng ye), 甘草 (gan cao), 人参 (ren shen), and 麦冬 (mai dong),柴胡 (chai hu).<br/>
 <br/>
-The Clear Cool Broth uses生地黄, 栀子, 玄参, and 翘麦门.  甘草, 桔梗, 黄连 are added, and it is administered in one cup of water to treat the root of the illness.<a id="trans-44p" href="#orig-44p" class="marker">[44p]</a><br/>
-The heart and small intestine are like front and back; therefore, when the heart is hot, the small intestine is also hot, and the urine will be red, which is the sign.  Ginger and peony roots can cool the blood.  Sweet flag, in small doses, can dispel heat and toxins, and when combined with wood band, it will directly clear the small intestine and bladder. This is called the Red Discharge Powder, for expelling the fire of the third and fourth JIAO (channels).<a id="trans-45p" href="#orig-45p" class="marker">[45p]</a><br/>
-From ease and relaxation comes the weakness.<br/>
+The Clear Cool Broth uses生地黄, 栀子, 玄参, and 翘麦门.  甘草, 桔梗, 黄连 are added, and it is administered in one cup of water to treat the root of the illness.<a id="trans-44p" href="#orig-44p" class="marker">[44p]</a> The heart and small intestine are like front and back; therefore, when the heart is hot, the small intestine is also hot, and the urine will be red, which is the sign.  Ginger and peony roots can cool the blood.  Sweet flag, in small doses, can dispel heat and toxins, and when combined with wood band, it will directly clear the small intestine and bladder. This is called the Red Discharge Powder, for expelling the fire of the third and fourth JIAO (channels).<a id="trans-45p" href="#orig-45p" class="marker">[45p]</a> From ease and relaxation comes the weakness.<br/>
 <br/>
 ○ Internal Injury Treatment<br/>
 <br/>
@@ -341,15 +329,11 @@ Internal injuries must be differentiated from external invasions, distinguishing
 <br/>
 Cold and heat occur together without distinction, speech is delayed and then heavy, then light; one fears all winds, and one fears cold towards fire, like ice.<br/>
 <br/>
-The mouth has no taste, speech is lazy, the voice is short and weak.<a id="trans-46p" href="#orig-46p" class="marker">[46p]</a><br/>
-Though some discomfort exists, one need not fear it; a little warmth immediately dispels the cold. One must understand that deficiency is itself a source of strength, and to remedy a deficiency invigorates the vital energy as if by divine intervention.<br/>
+The mouth has no taste, speech is lazy, the voice is short and weak.<a id="trans-46p" href="#orig-46p" class="marker">[46p]</a> Though some discomfort exists, one need not fear it; a little warmth immediately dispels the cold. One must understand that deficiency is itself a source of strength, and to remedy a deficiency invigorates the vital energy as if by divine intervention.<br/>
 <br/>
 To remedy deficiency and invigorate the vital energy, one relies on the use of safflower, astragalus, white atractylodes, licorice root, and prepared aconite; it is suitable for both internal injury and external invasion.<br/>
 <br/>
-The center is the spleen, it is the earth, it is the mother of all things, it is yang.<a id="trans-47p" href="#orig-47p" class="marker">[47p]</a><br/>
-The Great Void. The father of all things. When it becomes excessively impoverished and laborious, all its viscera become empty. It inevitably steals one’s parents to sustain itself.<a id="trans-48p" href="#orig-48p" class="marker">[48p]</a><br/>
-And the vital energy was severely injured, without remedy, the form and spirit would almost surely cease. Therefore, white atractylos and licorice are used for a gentle replenishment, while ginseng and astragalus are used for a forceful replenishment to invigorate the spirit. When the earth becomes excessively dry, annona cherimola is used to moisten it. When the spirit desires stagnation, pinellia cassiae rhizoma is used to resolve it. And, sophora root and bupleurum root are used to elevate the spirit of the gallbladder and liver.<a id="trans-49p" href="#orig-49p" class="marker">[49p]</a><br/>
-The first six elements, known as Gie, Ye, etc., are the origins of the living things of the East; when the spirits of Gie and Ye ascend, earth, fire, wood, metal, and water inevitably arise in their proper order.<br/>
+The center is the spleen, it is the earth, it is the mother of all things, it is yang.<a id="trans-47p" href="#orig-47p" class="marker">[47p]</a> The Great Void. The father of all things. When it becomes excessively impoverished and laborious, all its viscera become empty. It inevitably steals one’s parents to sustain itself.<a id="trans-48p" href="#orig-48p" class="marker">[48p]</a> And the vital energy was severely injured, without remedy, the form and spirit would almost surely cease. Therefore, white atractylos and licorice are used for a gentle replenishment, while ginseng and astragalus are used for a forceful replenishment to invigorate the spirit. When the earth becomes excessively dry, annona cherimola is used to moisten it. When the spirit desires stagnation, pinellia cassiae rhizoma is used to resolve it. And, sophora root and bupleurum root are used to elevate the spirit of the gallbladder and liver.<a id="trans-49p" href="#orig-49p" class="marker">[49p]</a> The first six elements, known as Gie, Ye, etc., are the origins of the living things of the East; when the spirits of Gie and Ye ascend, earth, fire, wood, metal, and water inevitably arise in their proper order.<br/>
 <br/>
 ○ Method of Treatment for Damp Heat with Poison<br/>
 <br/>
@@ -357,9 +341,7 @@ Damp heat and poison, such as wine, enter those with disorders of the spleen and
 <br/>
 The treatment is to promote sweating and clear the damp through distinct upper and lower channels; the葛花解醒汤 (Gehua Jiexing Tang – Gehua Decoction for Awakening) does not move, while everyone else is drunk, I alone remain awake.<br/>
 <br/>
-The Gehua Decoction includes Gehua (葛花), ginseng, ginger,茯苓 (fuling –茯苓), zhexie (泽泻), mu xiang (木香 – wood fragrance), old peach bark (青陈皮 – qing chen pi), sand ginseng (砂神曲 – sha shen qiu), and nutmeg with cassia to treat injuries caused by alcohol.<a id="trans-50p" href="#orig-50p" class="marker">[50p]</a><br/>
-The cold of mugwort can dispel the poison in wine, the coolness of porcupine moss and *zexie* can drain the dampness from wine, the pungency of nutmeg and sandalwood can loosen the stagnation of food and drink. Dried ginger opens the appetite and stops vomiting, and *shenqu* dissolves greasy, heavy foods.<a id="trans-51p" href="#orig-51p" class="marker">[51p]</a><br/>
-And ginseng and white atractylos, due to their sweetness, are used to nourish and benefit the spleen and stomach that have been injured.<br/>
+The Gehua Decoction includes Gehua (葛花), ginseng, ginger,茯苓 (fuling –茯苓), zhexie (泽泻), mu xiang (木香 – wood fragrance), old peach bark (青陈皮 – qing chen pi), sand ginseng (砂神曲 – sha shen qiu), and nutmeg with cassia to treat injuries caused by alcohol.<a id="trans-50p" href="#orig-50p" class="marker">[50p]</a> The cold of mugwort can dispel the poison in wine, the coolness of porcupine moss and *zexie* can drain the dampness from wine, the pungency of nutmeg and sandalwood can loosen the stagnation of food and drink. Dried ginger opens the appetite and stops vomiting, and *shenqu* dissolves greasy, heavy foods.<a id="trans-51p" href="#orig-51p" class="marker">[51p]</a> And ginseng and white atractylos, due to their sweetness, are used to nourish and benefit the spleen and stomach that have been injured.<br/>
 <br/>
 ○ Methods for the Upper Jiao (Gate)<br/>
 <br/>
@@ -367,8 +349,7 @@ Having stopped the five obstructions, one first recognizes the initial signs; wo
 <br/>
 The metal’s essence is clear and expansive, water’s nature is turbulent and flowing, do not delay; blood, qi, dampness, and heat, together known as the six obstructions, must also be understood.<br/>
 <br/>
-Those that rise do not rise, and those that do not fall do not descend; if one misses the proper time, change; the formula for dissolving obstructions is created through the manipulation of the body’s inherent mechanisms.<a id="trans-52p" href="#orig-52p" class="marker">[52p]</a><br/>
-Resolve Yu Xiang, Pu Chong, Guiong; Chen Pi, Shen Qu, Bai Fu Cong.<br/>
+Those that rise do not rise, and those that do not fall do not descend; if one misses the proper time, change; the formula for dissolving obstructions is created through the manipulation of the body’s inherent mechanisms.<a id="trans-52p" href="#orig-52p" class="marker">[52p]</a> Resolve Yu Xiang, Pu Chong, Guiong; Chen Pi, Shen Qu, Bai Fu Cong.<br/>
 Bamboo Myrtle, Cypress Knee, Chinese Knotweed; Dried Orange Peel, Divine Melody, White Peony Root.<br/>
 Beimu, Cypress Knee, Su Kong, Chinese Knotweed; Again, Old Countrymen are present within.<br/>
 <br/>
@@ -382,21 +363,17 @@ The use of rolling damp fluid requires careful consideration.<br/>
 <br/>
 Two Chen herbs, sweet flag and dried orange peel, white peony root and茯苓 remove the peel;<br/>
 During a severe attack of damp cough, this is the upper course;<br/>
-Adding troops and reducing the fire brings a return to spring.<a id="trans-53p" href="#orig-53p" class="marker">[53p]</a><br/>
-Man’s phlegm is the enemy of the human heart. It originates in the spleen and stomach, and cannot exist independently; it grows with the changing air, and the current treatment of phlegm invariably begins by regulating the qi. This is the most complete method for eliminating dampness and strengthening the body. This formula, consisting of perilla, cinnamon, and chuanxiong, effectively removes dampness and produces a healthy bowel movement and clear urine.<br/>
+Adding troops and reducing the fire brings a return to spring.<a id="trans-53p" href="#orig-53p" class="marker">[53p]</a> Man’s phlegm is the enemy of the human heart. It originates in the spleen and stomach, and cannot exist independently; it grows with the changing air, and the current treatment of phlegm invariably begins by regulating the qi. This is the most complete method for eliminating dampness and strengthening the body. This formula, consisting of perilla, cinnamon, and chuanxiong, effectively removes dampness and produces a healthy bowel movement and clear urine.<br/>
 <br/>
 ○ Method for Coughing<br/>
 <br/>
-The lungs are like a protective cover, vulnerable to disturbances that enter the heart and cause illness. A cough with sound but without phlegm is difficult to eliminate; a cough with sound and phlegm is a persistent ailment that compels the five internal organs to be constantly driven away.  Chamomilla and perilla should be used in combination, with chuanxiong and perilla made into pills for immediate use.<a id="trans-54p" href="#orig-54p" class="marker">[54p]</a><br/>
-To drink Su Yin internally, use bitter orange before Sichuan pepper, half-summer, Chenpi (dried orange peel), Ligusticum chuanxiong (licorice root), and lotus. Sweet flag, powdered ginger, fragrant wood, clear gold, and Xiehu (diarrheal medicine) all dispel obstructions.<br/>
+The lungs are like a protective cover, vulnerable to disturbances that enter the heart and cause illness. A cough with sound but without phlegm is difficult to eliminate; a cough with sound and phlegm is a persistent ailment that compels the five internal organs to be constantly driven away.  Chamomilla and perilla should be used in combination, with chuanxiong and perilla made into pills for immediate use.<a id="trans-54p" href="#orig-54p" class="marker">[54p]</a> To drink Su Yin internally, use bitter orange before Sichuan pepper, half-summer, Chenpi (dried orange peel), Ligusticum chuanxiong (licorice root), and lotus. Sweet flag, powdered ginger, fragrant wood, clear gold, and Xiehu (diarrheal medicine) all dispel obstructions.<br/>
 <br/>
-Ginger, half-summer, clove, cardamom, and nutmeg in a pill warm the spleen and stomach, enabling their proper function; if the damp heat stagnates in the chest and diaphragm, and the lung qi is adversely affected, coughs arise. Half-summer’s pungency dries the spleen, and ginseng’s sweetness nourishes the stomach. Warm ginger moves dampness.<a id="trans-55p" href="#orig-55p" class="marker">[55p]</a><br/>
-Safflower (xi xin) is used to dispel intoxication. Using betel nut, one can capture the essence and use it with phlegm. It is recorded that what is elevated is suppressed, and this is the way it is.<br/>
+Ginger, half-summer, clove, cardamom, and nutmeg in a pill warm the spleen and stomach, enabling their proper function; if the damp heat stagnates in the chest and diaphragm, and the lung qi is adversely affected, coughs arise. Half-summer’s pungency dries the spleen, and ginseng’s sweetness nourishes the stomach. Warm ginger moves dampness.<a id="trans-55p" href="#orig-55p" class="marker">[55p]</a> Safflower (xi xin) is used to dispel intoxication. Using betel nut, one can capture the essence and use it with phlegm. It is recorded that what is elevated is suppressed, and this is the way it is.<br/>
 <br/>
 ○ Method for Rapid Breathing<br/>
 <br/>
-Rapid breathing is the most difficult to treat, a pitiable state of uneven respiration; the lungs are congested with heat and dampness, and the lungs are deficient and cold, fearing its slight symptoms.<a id="trans-56p" href="#orig-56p" class="marker">[56p]</a><br/>
-The hands and feet were warm with a single thread of heat, the limbs chilled with dreams of cold; carefully measured warm broth was used, the distinction between clouds and earth, tigers and mice, seemed almost lost.<br/>
+Rapid breathing is the most difficult to treat, a pitiable state of uneven respiration; the lungs are congested with heat and dampness, and the lungs are deficient and cold, fearing its slight symptoms.<a id="trans-56p" href="#orig-56p" class="marker">[56p]</a> The hands and feet were warm with a single thread of heat, the limbs chilled with dreams of cold; carefully measured warm broth was used, the distinction between clouds and earth, tigers and mice, seemed almost lost.<br/>
 <br/>
 Warm broth with ginseng, longan, pumpkin, cinnamon, licorice, ephedra, white peach, frankincense, and pentagram was used.<br/>
 <br/>
@@ -404,8 +381,7 @@ The method of “哮吼” (Xiao Hou)<br/>
 <br/>
 “哮吼” originated from phlegm in the lung passages, compounded by external heat and internal cold; the throat constantly emitted a sound, like a string being plucked, and the voice was strange.<br/>
 <br/>
-When the heart was affected by floating and slippery symptoms, a decoction and pills brought healing; for chronic “哮吼,” a decoction combined with dispersing herbs was used, without needing multiple remedies or reckless talk.<a id="trans-57p" href="#orig-57p" class="marker">[57p]</a><br/>
-The formula for Zhao Tang uses safflower, Chinese medicinal angelica, cinnamon, licorice, and mulberry root. Half-Summer (wuwei) and poppy shells are added in response to the end of the period.<br/>
+When the heart was affected by floating and slippery symptoms, a decoction and pills brought healing; for chronic “哮吼,” a decoction combined with dispersing herbs was used, without needing multiple remedies or reckless talk.<a id="trans-57p" href="#orig-57p" class="marker">[57p]</a> The formula for Zhao Tang uses safflower, Chinese medicinal angelica, cinnamon, licorice, and mulberry root. Half-Summer (wuwei) and poppy shells are added in response to the end of the period.<br/>
 <br/>
 ○ Methods of the Fever Pavilion<br/>
 <br/>
@@ -413,26 +389,21 @@ Because of the many names of fever, there is no need to employ many remedies in 
 <br/>
 Evil and right are indistinguishable, cold and heat alternate, yin and yang close and open, resulting in paralysis. It is recorded that without phlegm, fever does not arise; the spleen and stomach are the source, and they can be cleansed.<br/>
 <br/>
-When fever is accompanied by many heat symptoms, sweating should be promoted. When fever is accompanied by many cold symptoms, warmth and tranquility should be maintained. When there is no sweating, pathogenic factors should be dispersed. When there is sweating, the vital energy should be regulated and restored.<a id="trans-58p" href="#orig-58p" class="marker">[58p]</a><br/>
-Chai Ling’s formula for treating fever and chills utilizes the principle of differentiation of the vital points, achieving a remarkable effect as if guided by spirits. Though ghost cries and potent elixirs may sever the symptoms, a clear distinction between the real and the unreal is essential for long-term efficacy.<br/>
+When fever is accompanied by many heat symptoms, sweating should be promoted. When fever is accompanied by many cold symptoms, warmth and tranquility should be maintained. When there is no sweating, pathogenic factors should be dispersed. When there is sweating, the vital energy should be regulated and restored.<a id="trans-58p" href="#orig-58p" class="marker">[58p]</a> Chai Ling’s formula for treating fever and chills utilizes the principle of differentiation of the vital points, achieving a remarkable effect as if guided by spirits. Though ghost cries and potent elixirs may sever the symptoms, a clear distinction between the real and the unreal is essential for long-term efficacy.<br/>
 <br/>
 The formula consists of ingredients dispersed within the body, including Ma Huang (ephedra), Fang Peng (honeysuckle), Jiang (ginger), and Gui Wang (licorice).  Violet Sorrel, Zhi (galangal), Shuicao (peony root), and Wang Mu (rhizome of *Peony*) are added, causing perspiration to flow like two large cauldrons.<br/>
 <br/>
 The Chai Ling formula is known by its two component names, representing a new approach to distinguishing between yin and yang. It harmonizes and clears fever and chills, promoting a peaceful and stable recovery.<br/>
 <br/>
-It incorporates ingredients such as Gan Cao (licorice), Guo Li (apple taro), Qing Mu (white atractylodes), Huang Pi (rhizome of *Ligusticum*), and Chi Hu (Scutellaria).  It includes the combination of Tai Yin (dark yin) herbs, Gui Lian (a combination of herbs), and Shan Lin (mountain herbs).<a id="trans-59p" href="#orig-59p" class="marker">[59p]</a><br/>
-Heat abounds, cold is deficient, a bitter taste in the mouth, a dry throat, redness and stickiness of the anus, and the excrement is dry and sore. The pulse reveals a stringy quality; this prescription is the primary treatment.<br/>
+It incorporates ingredients such as Gan Cao (licorice), Guo Li (apple taro), Qing Mu (white atractylodes), Huang Pi (rhizome of *Ligusticum*), and Chi Hu (Scutellaria).  It includes the combination of Tai Yin (dark yin) herbs, Gui Lian (a combination of herbs), and Shan Lin (mountain herbs).<a id="trans-59p" href="#orig-59p" class="marker">[59p]</a> Heat abounds, cold is deficient, a bitter taste in the mouth, a dry throat, redness and stickiness of the anus, and the excrement is dry and sore. The pulse reveals a stringy quality; this prescription is the primary treatment.<br/>
 <br/>
-Indeed, to clear the spleen is not to speak of coolness. Rather, it is to attack and remove its obstructions, and the middle jiao (intestines) constitutes a state of clarity. Therefore, Qingpi (qingpi – a medicinal herb) and Houshi (houshi – another medicinal herb) remove the phlegm from the clear spleen.<a id="trans-60p" href="#orig-60p" class="marker">[60p]</a><br/>
-Han Xia茯líng qīng qù shìzhōng zhī shī, cháihú huángqín qīng qù shìzhōng zhī rè. Bá shù gān cǎo qīng qù shìzhōng zhī xū. Ér cǎo guǒ rén yòu qīng gào máng zhī jí yě.<br/>
+Indeed, to clear the spleen is not to speak of coolness. Rather, it is to attack and remove its obstructions, and the middle jiao (intestines) constitutes a state of clarity. Therefore, Qingpi (qingpi – a medicinal herb) and Houshi (houshi – another medicinal herb) remove the phlegm from the clear spleen.<a id="trans-60p" href="#orig-60p" class="marker">[60p]</a> Han Xia茯líng qīng qù shìzhōng zhī shī, cháihú huángqín qīng qù shìzhōng zhī rè. Bá shù gān cǎo qīng qù shìzhōng zhī xū. Ér cǎo guǒ rén yòu qīng gào máng zhī jí yě.<br/>
 <br/>
-Seventh Treasure Drink: *Chángshān* (Cyclamen), *Hòupǔ* (Juniper), *Chénpí* (Peel of Cinnamon), *Gān cǎo* (Licorice), *Pīngluó* (Betel Nut), *Cǎo guǒ rén* (Fruit Seed of *Cossus Arbor*, a medicinal herb) are all divided equally and simmered in wine for the night; the next morning, it is taken warm.<a id="trans-61p" href="#orig-61p" class="marker">[61p]</a><br/>
-This formula is suitable for cases where the pulse comes up high and the large intestine string is slippery; do not use it for cases of heaviness and stickiness.<br/>
+Seventh Treasure Drink: *Chángshān* (Cyclamen), *Hòupǔ* (Juniper), *Chénpí* (Peel of Cinnamon), *Gān cǎo* (Licorice), *Pīngluó* (Betel Nut), *Cǎo guǒ rén* (Fruit Seed of *Cossus Arbor*, a medicinal herb) are all divided equally and simmered in wine for the night; the next morning, it is taken warm.<a id="trans-61p" href="#orig-61p" class="marker">[61p]</a> This formula is suitable for cases where the pulse comes up high and the large intestine string is slippery; do not use it for cases of heaviness and stickiness.<br/>
 <br/>
 Three Remedies Decoction: *Chaihu*泽泻, *Ma Huang*, removing the stem, this is a prescription for malaria. Those who present with symptoms similar to adults should administer it. This formula is only for purging excess; those who are deficient should supplement their qi and blood.<br/>
 <br/>
-A Verification Formula for Malaria: *Changshan* three *qian*, *Ping Huang* one *qian*, *Cao Guo* one *qian*, *Sang Mu* one *qian*, *Benshan* one *qian*, *Hou Po* eight *fen*, *Qing Pi* one *qian*, *Chai Hu* eight *fen*, *Wu Mei* five *grains*, *Hong Zhu* three *grains*, scallions three *tiao*, *Deng Xin* seven *tiao*, ginger three *pian*. Two bowls of water, simmered in one bowl, taken early in the morning facing east, with feet standing upright, consumed simultaneously, and then immediately discarded.<a id="trans-62p" href="#orig-62p" class="marker">[62p]</a><br/>
-Methods for Dysentery<br/>
+A Verification Formula for Malaria: *Changshan* three *qian*, *Ping Huang* one *qian*, *Cao Guo* one *qian*, *Sang Mu* one *qian*, *Benshan* one *qian*, *Hou Po* eight *fen*, *Qing Pi* one *qian*, *Chai Hu* eight *fen*, *Wu Mei* five *grains*, *Hong Zhu* three *grains*, scallions three *tiao*, *Deng Xin* seven *tiao*, ginger three *pian*. Two bowls of water, simmered in one bowl, taken early in the morning facing east, with feet standing upright, consumed simultaneously, and then immediately discarded.<a id="trans-62p" href="#orig-62p" class="marker">[62p]</a> Methods for Dysentery<br/>
 <br/>
 Ask: How does dysentery come to be, primarily due to stagnation of damp-heat in the air and blood; accumulation of imbalances within the organs and transformation into coldness causes it, stemming from disharmony in the stomach and intestines and improper diet.<br/>
 <br/>
@@ -440,31 +411,24 @@ Do not treat with red, white, and mixed forms; all are treated with damp-heat. I
 <br/>
 For internal dysentery followed by severe dysentery, use fragrant Xiang Lian (Spikenard and Cinnamon).  Wood fragrance (Xiang) and fragrant cinnamon must be prepared; when outbreaks occur in the four seasons, particularly in autumn, this is not an isolated occurrence.<br/>
 <br/>
-Xiang Lian Pill Formula: Wood fragrance (Xiang), fragrant cinnamon, Huang Lian (Forsythia), Hou Po (Angelica Root), Gan Cao (Licorice Root), Chang Xu (Radix Auranticae).<a id="trans-63p" href="#orig-63p" class="marker">[63p]</a><br/>
-Wood fragrance guides vital energy, peach blossom and betel nut with betel leaf; yellow knotweed preserves camphor, buckthorn, and foamy moss; yellow knotweed, ginger, tea, and betel leaf address all sorts of dysentery.<br/>
+Xiang Lian Pill Formula: Wood fragrance (Xiang), fragrant cinnamon, Huang Lian (Forsythia), Hou Po (Angelica Root), Gan Cao (Licorice Root), Chang Xu (Radix Auranticae).<a id="trans-63p" href="#orig-63p" class="marker">[63p]</a> Wood fragrance guides vital energy, peach blossom and betel nut with betel leaf; yellow knotweed preserves camphor, buckthorn, and foamy moss; yellow knotweed, ginger, tea, and betel leaf address all sorts of dysentery.<br/>
 <br/>
 ○ Method for Treating Diarrhea<br/>
 <br/>
 The name for diarrhea is numerous, primarily due to excessive dampness and the influence of demons; the pulse in the lower abdomen is unclear and turbulent, and the wind dampness weakens the pulse.<br/>
 <br/>
-The treatment involves ascending dragon, requiring the use of diuretics, and a hasty, ineffective application of astringent measures.  The Broken Flow Soup contains cinnamon, fragrant windflower, two kinds of foamy moss, and peach blossom, camphor, and sweet flag; this builds the foundation for the flow of fluids.<a id="trans-64p" href="#orig-64p" class="marker">[64p]</a><br/>
-The excessive accumulation of moisture results in the downward sinking of yang energy, which is a matter of reversed clarity and turbidity. Wind is effective against moisture, therefore it is used for protection. Dryness is effective against moisture, therefore it is used in two methods.  The salty is effective against moisture, therefore it is used in two methods.<a id="trans-65p" href="#orig-65p" class="marker">[65p]</a><br/>
-Soil sickness water uses white peony. Its fragrant pear also serves to warm the meridians and assist.<br/>
+The treatment involves ascending dragon, requiring the use of diuretics, and a hasty, ineffective application of astringent measures.  The Broken Flow Soup contains cinnamon, fragrant windflower, two kinds of foamy moss, and peach blossom, camphor, and sweet flag; this builds the foundation for the flow of fluids.<a id="trans-64p" href="#orig-64p" class="marker">[64p]</a> The excessive accumulation of moisture results in the downward sinking of yang energy, which is a matter of reversed clarity and turbidity. Wind is effective against moisture, therefore it is used for protection. Dryness is effective against moisture, therefore it is used in two methods.  The salty is effective against moisture, therefore it is used in two methods.<a id="trans-65p" href="#orig-65p" class="marker">[65p]</a> Soil sickness water uses white peony. Its fragrant pear also serves to warm the meridians and assist.<br/>
 <br/>
-Stop-Diarrhea Pill: Meat bean seeds, shell of bitter orange, turmeric, white peony, for stagnation and diarrhea with severe pain, and after diarrhea the pain diminishes. This is fine for refining the lungs and promoting fine essence. It uses fragrant sand, flat stomach powder, with bitter orange peel, adding white peony and fo-tue.<a id="trans-66p" href="#orig-66p" class="marker">[66p]</a><br/>
-Wǔ Líng Sàn: Buckwheat root, eight parts; white mouse root, eight parts; pig root, eight parts; Zhe Xia (Ze Xie), eight parts; mountain yam, eight parts; aged citrus peel, eight parts; Huang Shu (Sang Shu), eight parts; macadamia nut, eight parts; nutmeg, eight parts; pomegranate seeds, shelled, eight parts. This formula treats dampness and diarrhea with excessive water, accompanied by a lack of pain in the abdomen, abdominal sounds resembling thunder, and fine pulses.<br/>
+Stop-Diarrhea Pill: Meat bean seeds, shell of bitter orange, turmeric, white peony, for stagnation and diarrhea with severe pain, and after diarrhea the pain diminishes. This is fine for refining the lungs and promoting fine essence. It uses fragrant sand, flat stomach powder, with bitter orange peel, adding white peony and fo-tue.<a id="trans-66p" href="#orig-66p" class="marker">[66p]</a> Wǔ Líng Sàn: Buckwheat root, eight parts; white mouse root, eight parts; pig root, eight parts; Zhe Xia (Ze Xie), eight parts; mountain yam, eight parts; aged citrus peel, eight parts; Huang Shu (Sang Shu), eight parts; macadamia nut, eight parts; nutmeg, eight parts; pomegranate seeds, shelled, eight parts. This formula treats dampness and diarrhea with excessive water, accompanied by a lack of pain in the abdomen, abdominal sounds resembling thunder, and fine pulses.<br/>
 <br/>
-Lǐ Zhōng Tāng treats cold-induced diarrhea. *Ren Shen* (Panax Ginseng), one *qian* (cash), dried ginger, one *qian*; *Gan Cao* (Glycyrrhiza Glabra), five parts; *Huāng Xiāng* (藿香 – Perilla frutescens), seven parts; *Liáng Xiāng* (良姜 – Ginger), seven parts; *Shēng Xiāng* (生姜 – Ginger), three slices; *Bái Shù* (白术 – Angelica Sinensis), one *qian*; *Guì* (桂 – Cinnamon), five parts; aged citrus peel, seven parts; *Fú Líng* (茯苓 – Coix Seed), seven parts; *Wū Méi* (烏梅 – Malus Sieboldi), one seed; *Xìng* (杏 – Apricot), two pieces.<a id="trans-67p" href="#orig-67p" class="marker">[67p]</a><br/>
-The heart of the lamp is at its core. The cold reached its extreme, hands and feet were icy, the pulse was sunken and fine, with the addition of *zhuzi* (a type of aconite), along with ginger, cassia, and saffron. Abdominal pain worsened with the addition of *sandiren* (angelica root), *hupa* (rhizoma forsythiae), and wood fragrance, causing nausea and vomiting, which was relieved with *dengxin* (a type of mugwort), along with ginger, cassia. Diarrhea ceased with *xianshe* (a type of scutellaria), along with ginger, cassia. Excessive diarrhea ceased with *dangshu* (Radix Rehmanniae), *shanyao* (Dioscorea jordiana).<a id="trans-68p" href="#orig-68p" class="marker">[68p]</a><br/>
-False sweat, add Huang Qi to dispel stagnation and relieve distention, add Hou Po and Sha Ren to dispel Li Jiang and Ran Shen.<br/>
+Lǐ Zhōng Tāng treats cold-induced diarrhea. *Ren Shen* (Panax Ginseng), one *qian* (cash), dried ginger, one *qian*; *Gan Cao* (Glycyrrhiza Glabra), five parts; *Huāng Xiāng* (藿香 – Perilla frutescens), seven parts; *Liáng Xiāng* (良姜 – Ginger), seven parts; *Shēng Xiāng* (生姜 – Ginger), three slices; *Bái Shù* (白术 – Angelica Sinensis), one *qian*; *Guì* (桂 – Cinnamon), five parts; aged citrus peel, seven parts; *Fú Líng* (茯苓 – Coix Seed), seven parts; *Wū Méi* (烏梅 – Malus Sieboldi), one seed; *Xìng* (杏 – Apricot), two pieces.<a id="trans-67p" href="#orig-67p" class="marker">[67p]</a> The heart of the lamp is at its core. The cold reached its extreme, hands and feet were icy, the pulse was sunken and fine, with the addition of *zhuzi* (a type of aconite), along with ginger, cassia, and saffron. Abdominal pain worsened with the addition of *sandiren* (angelica root), *hupa* (rhizoma forsythiae), and wood fragrance, causing nausea and vomiting, which was relieved with *dengxin* (a type of mugwort), along with ginger, cassia. Diarrhea ceased with *xianshe* (a type of scutellaria), along with ginger, cassia. Excessive diarrhea ceased with *dangshu* (Radix Rehmanniae), *shanyao* (Dioscorea jordiana).<a id="trans-68p" href="#orig-68p" class="marker">[68p]</a> False sweat, add Huang Qi to dispel stagnation and relieve distention, add Hou Po and Sha Ren to dispel Li Jiang and Ran Shen.<br/>
 <br/>
 ○ Method for Cholera<br/>
 The causes of cholera are internal and external injuries with deep roots; sudden onset with vomiting without evacuation, or vomiting without evacuation, must be carefully considered.<br/>
 <br/>
 When the heart and abdomen first vomit and then evacuate, the heart and abdomen are simultaneously painful and evacuation is frequent; if accompanied by convulsions and entry into the abdomen resulting in death, it is wet cholera, like a tiger and wolf.<br/>
 <br/>
-There is also a case of cramping, dry cholera, vomiting and evacuation which is a cause for worry; when life is threatened in an instant, there is no prayer, salt broth exploration and evacuation saves many people.<a id="trans-69p" href="#orig-69p" class="marker">[69p]</a><br/>
-Anemone and Bupleurum are used in the three springs; in the five accumulations, pay attention to finding the winter herbs. Do not lie upon water and earth that resemble each other; the local sand and clay are most efficacious.<br/>
+There is also a case of cramping, dry cholera, vomiting and evacuation which is a cause for worry; when life is threatened in an instant, there is no prayer, salt broth exploration and evacuation saves many people.<a id="trans-69p" href="#orig-69p" class="marker">[69p]</a> Anemone and Bupleurum are used in the three springs; in the five accumulations, pay attention to finding the winter herbs. Do not lie upon water and earth that resemble each other; the local sand and clay are most efficacious.<br/>
 <br/>
 The Anemone and Bupleurum Decoction is observed at the wind gate.<br/>
 <br/>
@@ -472,38 +436,29 @@ Ginger, Sweet Flag, Sichuan Nut, White Ginger, Prepared Ginger, Licorice, Chrysa
 <br/>
 (Note:  The following is a transcription of the herbal formula.)<br/>
 <br/>
-(Note:  The following is a transcription of the herbal formula.)<a id="trans-70p" href="#orig-70p" class="marker">[70p]</a><br/>
-He groaned with a sound in his abdomen, yet nothing was tangible; the sound was loud, turbid, and prolonged, dependent upon it. After turning the stomach and having eaten, it would immediately come up with vomiting, and also had morning and evening vomiting.<br/>
+(Note:  The following is a transcription of the herbal formula.)<a id="trans-70p" href="#orig-70p" class="marker">[70p]</a> He groaned with a sound in his abdomen, yet nothing was tangible; the sound was loud, turbid, and prolonged, dependent upon it. After turning the stomach and having eaten, it would immediately come up with vomiting, and also had morning and evening vomiting.<br/>
 <br/>
 The stomach was blocked, making it difficult to think of food, nausea arose wanting to vomit but could not; swallowing sourness caused a flow of watery acid to come down, and sourness gushed out mixed with diluted water.<br/>
 <br/>
 “No!” they called the forceful expulsion of air, a sound like “wa” was a manifestation of imbalance; “a-kwan” was like today’s “a-kwan,” thick phlegm and dampness confused within the stomach.<br/>
 <br/>
-Dragging his robes, phlegm was caused by fire, pain, pain, and hunger, hunger; the majority of illnesses stemmed from the spleen, stomach, lungs, and liver, with perspiration and saliva dangerously abundant.<a id="trans-71p" href="#orig-71p" class="marker">[71p]</a><br/>
-Two laxatives, if not closed, are of no concern; maintain the middle channel, drink to promote and dispel; adjust with qi and harmonize the middle, adding and subtracting as needed, carefully taking the pulse and adapting treatment to the time.<br/>
+Dragging his robes, phlegm was caused by fire, pain, pain, and hunger, hunger; the majority of illnesses stemmed from the spleen, stomach, lungs, and liver, with perspiration and saliva dangerously abundant.<a id="trans-71p" href="#orig-71p" class="marker">[71p]</a> Two laxatives, if not closed, are of no concern; maintain the middle channel, drink to promote and dispel; adjust with qi and harmonize the middle, adding and subtracting as needed, carefully taking the pulse and adapting treatment to the time.<br/>
 <br/>
 Prescribed for cases where vomiting and diarrhea do not cease.<br/>
 <br/>
 Within the *Bao Zhong Tang* are:藿香 (huǒ xiāng –藿香), 苓 (líng –茯苓), 黄连 (huáng lián –黄连), 栀子 (zhī zi –栀子), 半砂仁 (bàn shā rén –半砂仁); plus茯苓 (líng), 陈皮 (chén pí –陈皮), 炙甘草 (zhī gān cǎo –炙甘草), 龙胆 (lóng dǎn –龙胆) – together they act like a divine medicine.<br/>
 <br/>
-Within the *Shun Qi Tang* are: 香附 (xiāng fù –香附), 芩 (qín –芩), 陈皮 (chén pí –陈皮), 甘草 (gān cǎo –甘草), 半砂仁 (bàn shā rén –半砂仁); plus 术枳 (shù zhǐ –术枳), 连栀 (lián zhī –连栀), 神曲 (shén qǔ –神曲), 煨姜 (wēi jiāng –煨姜) – one piece of ginger, to dispel unrest.<a id="trans-72p" href="#orig-72p" class="marker">[72p]</a><br/>
-The Classic states: “Concerning the circulation of vital airs, they say that when vital airs are full, they circulate with blood in harmonious balance; when internal and external are injured, producing sickness and disease, public and private spirits are suppressed, fame is exhausted, and resources are depleted. There is surplus, it is like a fire burning the wild fields; it does not reach the small square of life; alone, it is a good method, not a cold one, one should not waste it. Alone, the formula is one two portions of ginseng. Vital airs are the source of all things; if there were not vital airs, heaven would be insufficient to nourish all things, and if there were not vital airs, humans would be insufficient to give birth to life. Therefore, it is said that if there is no movement of breath, the machine is truly exhausted.”<a id="trans-73p" href="#orig-73p" class="marker">[73p]</a><br/>
-If there is no continuity, then the spirit is disordered and judgment is flawed. Therefore, illness is primarily addressed by focusing on the vital energy. *Ren Shen* has a sweet taste and a warm nature, obtaining the balanced energy of heaven and earth to form its substance, thus used to replenish that balanced energy, allowing it to continue.<a id="trans-74p" href="#orig-74p" class="marker">[74p]</a><br/>
-And he cured various illnesses. The child was agitated and restless. It was due to deficiency with heat. He who felt cold and was accompanied by the addition of aconite returned his solitary Yang.<a id="trans-75p" href="#orig-75p" class="marker">[75p]</a><br/>
-The distinction between reality and illusion must be carefully observed. Relying solely on one’s own judgment can only treat emptiness. When confronted with a serious, critical illness, one must adapt treatment to the specific circumstances.<br/>
+Within the *Shun Qi Tang* are: 香附 (xiāng fù –香附), 芩 (qín –芩), 陈皮 (chén pí –陈皮), 甘草 (gān cǎo –甘草), 半砂仁 (bàn shā rén –半砂仁); plus 术枳 (shù zhǐ –术枳), 连栀 (lián zhī –连栀), 神曲 (shén qǔ –神曲), 煨姜 (wēi jiāng –煨姜) – one piece of ginger, to dispel unrest.<a id="trans-72p" href="#orig-72p" class="marker">[72p]</a> The Classic states: “Concerning the circulation of vital airs, they say that when vital airs are full, they circulate with blood in harmonious balance; when internal and external are injured, producing sickness and disease, public and private spirits are suppressed, fame is exhausted, and resources are depleted. There is surplus, it is like a fire burning the wild fields; it does not reach the small square of life; alone, it is a good method, not a cold one, one should not waste it. Alone, the formula is one two portions of ginseng. Vital airs are the source of all things; if there were not vital airs, heaven would be insufficient to nourish all things, and if there were not vital airs, humans would be insufficient to give birth to life. Therefore, it is said that if there is no movement of breath, the machine is truly exhausted.”<a id="trans-73p" href="#orig-73p" class="marker">[73p]</a> If there is no continuity, then the spirit is disordered and judgment is flawed. Therefore, illness is primarily addressed by focusing on the vital energy. *Ren Shen* has a sweet taste and a warm nature, obtaining the balanced energy of heaven and earth to form its substance, thus used to replenish that balanced energy, allowing it to continue.<a id="trans-74p" href="#orig-74p" class="marker">[74p]</a> And he cured various illnesses. The child was agitated and restless. It was due to deficiency with heat. He who felt cold and was accompanied by the addition of aconite returned his solitary Yang.<a id="trans-75p" href="#orig-75p" class="marker">[75p]</a> The distinction between reality and illusion must be carefully observed. Relying solely on one’s own judgment can only treat emptiness. When confronted with a serious, critical illness, one must adapt treatment to the specific circumstances.<br/>
 <br/>
-To treat deficiency of Qi, use the “Four Gentleman Decoction” with ginseng, white atractylodes, fo-tseng, chuanxiong (ligusticum), cinnamon, ginger, juice of ginger, thick-leaved mu-dong (Angelica root), red maple (Paeonia), Chinese redysuckle (Crataegus), and each with an equal portion; add a piece of fresh ginger and two dates.<a id="trans-76p" href="#orig-76p" class="marker">[76p]</a><br/>
-Methods of the Simple Approach:<br/>
+To treat deficiency of Qi, use the “Four Gentleman Decoction” with ginseng, white atractylodes, fo-tseng, chuanxiong (ligusticum), cinnamon, ginger, juice of ginger, thick-leaved mu-dong (Angelica root), red maple (Paeonia), Chinese redysuckle (Crataegus), and each with an equal portion; add a piece of fresh ginger and two dates.<a id="trans-76p" href="#orig-76p" class="marker">[76p]</a> Methods of the Simple Approach:<br/>
 <br/>
 Not understanding the great difference between what is simple and what is complex, it is not a blockage of the five viscera; if the wheel turns irregularly or is misdirected, treat with methods of dampness, similarly eliminating the simple strategy.<br/>
 <br/>
 The simple blockage is a closure of the emptiness, with the interior being full and yet the exterior without discomfort; first attempt to transform with musk, then use yellow leaf to eliminate the blockage, subsequently adding ginger.<br/>
 <br/>
-When transforming with musk, use *dang* (当归) in small amounts, *chai* (柴) and *zhi* (枳实) and *hanxia* (半夏) and *pine* (pine) and *fu* (茯苓) and *ze* (泽泻) and *yukin* (郁金) and ginger.<a id="trans-77p" href="#orig-77p" class="marker">[77p]</a><br/>
-Methods for Nourishing the Stomach: Sichuan Nut, Gardenia Seed, Mu Dan (Chinese Red Flower), and Achyranthes sentaurea (枳实) each seven *qian* (small measures), white atractylodes (白术) and fo-mo (茯苓) each half *qian*, Chinese magnolia bark (半夏) and ginger juice each one *qian*, chuanbei (陈皮), cinnamon, thick朴 (huo po), ginger juice, and *zichuan* (炙草) each two *qian*, ginger two slices, jujube one piece.<br/>
+When transforming with musk, use *dang* (当归) in small amounts, *chai* (柴) and *zhi* (枳实) and *hanxia* (半夏) and *pine* (pine) and *fu* (茯苓) and *ze* (泽泻) and *yukin* (郁金) and ginger.<a id="trans-77p" href="#orig-77p" class="marker">[77p]</a> Methods for Nourishing the Stomach: Sichuan Nut, Gardenia Seed, Mu Dan (Chinese Red Flower), and Achyranthes sentaurea (枳实) each seven *qian* (small measures), white atractylodes (白术) and fo-mo (茯苓) each half *qian*, Chinese magnolia bark (半夏) and ginger juice each one *qian*, chuanbei (陈皮), cinnamon, thick朴 (huo po), ginger juice, and *zichuan* (炙草) each two *qian*, ginger two slices, jujube one piece.<br/>
 <br/>
-Taken after eating: For those with fullness in the lower abdomen, add yellow chrysanthemum (黄连) and remove half *hanxia* (半夏); for those with blood deficiency, add angelica root (当归) and white peony root (白芍) and remove half *hanxia* (半夏); for those with phlegm and greasy conditions, add melon seeds (瓜篓仁), mugwort (贝母), honeysuckle (桔梗), bamboo sap (竹沥), ginger juice, and a small amount of white atractylodes and half *hanxia* (半夏); for those with dampness and loose stools, add cooked yellow chamomile (炒苍术), white peony root and remove half *hanxia* (半夏).<a id="trans-78p" href="#orig-78p" class="marker">[78p]</a><br/>
-Methods for Enlargement<br/>
+Taken after eating: For those with fullness in the lower abdomen, add yellow chrysanthemum (黄连) and remove half *hanxia* (半夏); for those with blood deficiency, add angelica root (当归) and white peony root (白芍) and remove half *hanxia* (半夏); for those with phlegm and greasy conditions, add melon seeds (瓜篓仁), mugwort (贝母), honeysuckle (桔梗), bamboo sap (竹沥), ginger juice, and a small amount of white atractylodes and half *hanxia* (半夏); for those with dampness and loose stools, add cooked yellow chamomile (炒苍术), white peony root and remove half *hanxia* (半夏).<a id="trans-78p" href="#orig-78p" class="marker">[78p]</a> Methods for Enlargement<br/>
 <br/>
 Fullness constitutes enlargement; limbs not swollen, head without ailment; no protrusion of the navel, no stiffness of the muscles, no small water. Men begin from below, women from above.<br/>
 <br/>
@@ -511,22 +466,19 @@ Pressing does not provoke the obstruction – this is the correct method; it dif
 <br/>
 Fēnxiāng Tāng:<br/>
 <br/>
-Fēnxiāng Tāng contains茯苓, cāngpǔ, bái shù, zhīshā, rén;  chenpí, mùxiāng, fùzéxiě, dàbùpí, xiē, kě tān píng.<a id="trans-79p" href="#orig-79p" class="marker">[79p]</a><br/>
-This area uses ginger and musk to alleviate acute distress, and swelling is treated with Chinese artichokes.<br/>
+Fēnxiāng Tāng contains茯苓, cāngpǔ, bái shù, zhīshā, rén;  chenpí, mùxiāng, fùzéxiě, dàbùpí, xiē, kě tān píng.<a id="trans-79p" href="#orig-79p" class="marker">[79p]</a> This area uses ginger and musk to alleviate acute distress, and swelling is treated with Chinese artichokes.<br/>
 <br/>
 A family tradition, the “Zheng Qi” (Rectification of Qi) formula: Chinese artichokes, fragrant reed flower, ligusticum, citrus peel, half-summer mallow, greater celosia, large abdomen shell, to regulate the spleen and eliminate swelling, and to promote the driving and relieving of stagnation.<br/>
 <br/>
 Regarding edema: Edema arises from the spleen; the common people do not understand and make random guesses. The kidney earth and spleen earth are both essential to maintain; if the spleen earth is deficient, water has no boundaries.<br/>
 <br/>
-Excessive fluid flows throughout the limbs, causing a bloated, yellow appearance. Wind-induced swelling, gas-induced swelling, and blood-induced swelling – both yin and yang water must be understood.<a id="trans-80p" href="#orig-80p" class="marker">[80p]</a><br/>
-Wind swelling, the skin becomes numb and stiff, the air swelling follows the air’s slight increase; how to recognize blood swelling, red strands and blood marks are seen within the skin.<br/>
+Excessive fluid flows throughout the limbs, causing a bloated, yellow appearance. Wind-induced swelling, gas-induced swelling, and blood-induced swelling – both yin and yang water must be understood.<a id="trans-80p" href="#orig-80p" class="marker">[80p]</a> Wind swelling, the skin becomes numb and stiff, the air swelling follows the air’s slight increase; how to recognize blood swelling, red strands and blood marks are seen within the skin.<br/>
 <br/>
 The hot Yang water naturally heats, the cold Yin water lacks virtue like ginseng; the path to consider is level and smooth, yet it adds to shortness of breath and the question of life’s fate is uncertain.<br/>
 <br/>
 Wood fragrance disperses gas; wood fragrance disperses gas with aged peach bark, fragrant chuanbei, large intestine bark, wood melon to open cinnamon, ginseng and fructus pericarpus.<br/>
 <br/>
-True spleen drinks; true spleen, ze xia, zhu luing, cang pu, bai shu, kizha, ren; wood fragrance, chuanbei, aged peach bark, etc., large intestine bark adds the most spirit.<a id="trans-81p" href="#orig-81p" class="marker">[81p]</a><br/>
-Eight Correcting Decoction<br/>
+True spleen drinks; true spleen, ze xia, zhu luing, cang pu, bai shu, kizha, ren; wood fragrance, chuanbei, aged peach bark, etc., large intestine bark adds the most spirit.<a id="trans-81p" href="#orig-81p" class="marker">[81p]</a> Eight Correcting Decoction<br/>
 <br/>
 Eight Correcting Decoction treats swelling in the scrotum. It uses瞿麦 (qū mài – buckwheat), floret (扁蓄 – biǎn xù – likely a type of root), mountain quince (山栀子 – shān zhī zǐ), smooth stone (滑石 – huá shí), wood tong (木通 – mù tōng – a medicinal herb), and charred large yellow (炙大黄 – zhì dà huáng).<br/>
 <br/>
@@ -538,15 +490,13 @@ Accumulation Methods<br/>
 <br/>
 Accumulation of internal yin and blood is primarily for maintaining tangible form, while the five organs’ imbalances must be addressed. The heart says, “The ‘伏梁’ (fú liáng – ‘buried beam’) is the stagnation of the liver, and the fatness of the liver is a sign of imbalance.” The spleen says, “The ‘痞’ (pí – stagnation) and the ‘气息’ (qì xī – stagnant air) are the symptoms of the ‘金’ (jīn – metal element) deficiency.”<br/>
 <br/>
-The kidneys are like the ‘奔豚’ (bēn tún – turbulent streams), each part occupying its position; the five accumulations have ancient fame and reputation. Once the accumulation is transformed into yang energy, there is no longer a tangible form, and the six internal organs harmonize with the environment, creating new conditions.<a id="trans-82p" href="#orig-82p" class="marker">[82p]</a><br/>
-Although the accumulation of karma lacks a firm foundation, it extends eastwards and causes swelling and pain in the west; there are also masses that consistently possess a name and color, requiring distinct differentiation of their symptoms, sores, and habits.<br/>
+The kidneys are like the ‘奔豚’ (bēn tún – turbulent streams), each part occupying its position; the five accumulations have ancient fame and reputation. Once the accumulation is transformed into yang energy, there is no longer a tangible form, and the six internal organs harmonize with the environment, creating new conditions.<a id="trans-82p" href="#orig-82p" class="marker">[82p]</a> Although the accumulation of karma lacks a firm foundation, it extends eastwards and causes swelling and pain in the west; there are also masses that consistently possess a name and color, requiring distinct differentiation of their symptoms, sores, and habits.<br/>
 <br/>
 Those symptoms that are slight do not move, the abdomen is hard and painful, a matter of compassion; those sores, though seemingly able to move, intermittently gather and disperse, proving difficult to control.<br/>
 <br/>
 The sores reside in the corners of the orifices and the tips of fingers, frequently causing pain and difficulty in extension; the habits dwell in the side ribs, appearing coherent, though beset by thorns, they remain for a time.<br/>
 <br/>
-All of this stems from the disharmony of yin and yang, resulting in the accumulation of phlegm, food, stagnant blood, and true yang; the Seven-Ingredient Soup is adjusted with appropriate herbs, and the ‘溃坚饮子’ (Ku Zhan Yin Zi – a specific herbal formula) is sought again.<a id="trans-83p" href="#orig-83p" class="marker">[83p]</a><br/>
-Seven Essence Broth<br/>
+All of this stems from the disharmony of yin and yang, resulting in the accumulation of phlegm, food, stagnant blood, and true yang; the Seven-Ingredient Soup is adjusted with appropriate herbs, and the ‘溃坚饮子’ (Ku Zhan Yin Zi – a specific herbal formula) is sought again.<a id="trans-83p" href="#orig-83p" class="marker">[83p]</a> Seven Essence Broth<br/>
 <br/>
 Seven Essence Broth utilizes ginseng, mu-shu (ginger root), huang-xiang (star anise), and go-ju (Chinese flower bud); also includes aged tangerine peel, cinnamon, and桔梗 (ko-kyo – white atractylodes).  First, taste it before adding fragrant atractylodes and sweet woodruff.<br/>
 <br/>
@@ -554,16 +504,13 @@ Seven Essence Broth utilizes ginseng, mu-shu (ginger root), huang-xiang (star an
 <br/>
 Ulcer and Hardness Decoction contains che-sha (rhubarb), ren (Chinese peony root), half-xia (Mai Men Dong – Bupleurum root), thick-pu (Peelings), and fragrant atractylodes; also includes Dang Gui (Angelica sinensis), mu-xiang (Chinese cinnamon), and mu-shu.  All ingredients are used to level the conditions.<br/>
 <br/>
-When a mass is present in the left side, Sichuan flower (川芎 – xuan xiong) is added.  When a mass is present in the right side, aged tangerine peel (青皮 – qing pi) is added.  When meat is formed into blocks, ginger juice is sautéed with Huang Lian (licorice root).<a id="trans-84p" href="#orig-84p" class="marker">[84p]</a><br/>
-Powdered food residue added to Shenqi; blood clots added to peach kernel, red flower, and cassia, with half-summer mountain楂 (bianhua). Phlegm clots added to枳实 (zhishi), pumpkin basket, and sea stone, with mountain楂 (bianhua).  Swelling added to radish seed, betel nut, and nutmeg, with the latter removed.<a id="trans-85p" href="#orig-85p" class="marker">[85p]</a><br/>
-Strong and healthy people should take hawthorn. Thin people should take ginseng in small amounts.<br/>
+When a mass is present in the left side, Sichuan flower (川芎 – xuan xiong) is added.  When a mass is present in the right side, aged tangerine peel (青皮 – qing pi) is added.  When meat is formed into blocks, ginger juice is sautéed with Huang Lian (licorice root).<a id="trans-84p" href="#orig-84p" class="marker">[84p]</a> Powdered food residue added to Shenqi; blood clots added to peach kernel, red flower, and cassia, with half-summer mountain楂 (bianhua). Phlegm clots added to枳实 (zhishi), pumpkin basket, and sea stone, with mountain楂 (bianhua).  Swelling added to radish seed, betel nut, and nutmeg, with the latter removed.<a id="trans-85p" href="#orig-85p" class="marker">[85p]</a> Strong and healthy people should take hawthorn. Thin people should take ginseng in small amounts.<br/>
 <br/>
 ○ Five Methods for Jaundice ○<br/>
 <br/>
 Jaundice causes the body to appear yellow and unattractive, and yellow sweat and jaundice occur in many ways. Wine and grains, though beneficial, cannot treat it; rather, water and stopping methods are necessary at both ends.<br/>
 <br/>
-Chamomilla Decoction can restore the natural flow, and in a short time, it produces a pleasing effect.<a id="trans-86p" href="#orig-86p" class="marker">[86p]</a><br/>
-茵陈汤<br/>
+Chamomilla Decoction can restore the natural flow, and in a short time, it produces a pleasing effect.<a id="trans-86p" href="#orig-86p" class="marker">[86p]</a> 茵陈汤<br/>
 <br/>
 *   *Inchen Tang*<br/>
 <br/>
@@ -589,8 +536,7 @@ Chamomilla Decoction can restore the natural flow, and in a short time, it produ
 <br/>
 虚劳俗语即怯劳，多因酒色太煎熬；手足心热痰作嗽，遗精汗雨咯血多。<br/>
 <br/>
-*   *“Deficiency and overwork” is a common saying referring to avoiding strenuous labor; it often results from excessive indulgence in wine and women, causing excessive heat in the hands and feet, the formation of phlegm and cough, frequent ejaculation, excessive sweating, and frequent spitting up of blood.*<a id="trans-87p" href="#orig-87p" class="marker">[87p]</a><br/>
-The body was hot and steaming, truly the yin dissipated, shedding skin and hair. The sores were infested with insects, capable of changing and infecting, penetrating and settling into the skin.<br/>
+*   *“Deficiency and overwork” is a common saying referring to avoiding strenuous labor; it often results from excessive indulgence in wine and women, causing excessive heat in the hands and feet, the formation of phlegm and cough, frequent ejaculation, excessive sweating, and frequent spitting up of blood.*<a id="trans-87p" href="#orig-87p" class="marker">[87p]</a> The body was hot and steaming, truly the yin dissipated, shedding skin and hair. The sores were infested with insects, capable of changing and infecting, penetrating and settling into the skin.<br/>
 <br/>
 Color and form were difficult to distinguish between five, six, and seven; fine, weak, and feeble pulses were impossible to escape. To treat fear and excess yin, one must reduce heat; how could flesh be stripped of dragon’s essence?<br/>
 <br/>
@@ -598,20 +544,17 @@ Excess yin and reducing heat – the knowledge of the whole is in the bamboo gro
 <br/>
 ○ Methods of Blood Loss<br/>
 <br/>
-Blood loss originated from heat becoming a calamity; prolonged weakness and deficiency required careful examination; when the upper body rose without descending, the yang was trapped within the yin, affecting the large and small intestines.<a id="trans-88p" href="#orig-88p" class="marker">[88p]</a><br/>
-Deficient heat in the blood arises, accompanied by blood, and the treatment is to fortify yin and restrain yang; the vital energy descends, and blood fails to return, nothing should be forgotten; the Horn Antelope and Lo Han Root Decoction is not cold.<br/>
+Blood loss originated from heat becoming a calamity; prolonged weakness and deficiency required careful examination; when the upper body rose without descending, the yang was trapped within the yin, affecting the large and small intestines.<a id="trans-88p" href="#orig-88p" class="marker">[88p]</a> Deficient heat in the blood arises, accompanied by blood, and the treatment is to fortify yin and restrain yang; the vital energy descends, and blood fails to return, nothing should be forgotten; the Horn Antelope and Lo Han Root Decoction is not cold.<br/>
 <br/>
 The Horn Antelope and Lo Han Root Decoction is most efficacious; safflower, red sandalwood, lo Han Root, and Schizandra Root are added; the wine of Angelica Root should be used in its preparation, and there is no fear of blood loss not returning to the meridians.<br/>
 <br/>
-The Gui Pi Decoction (with added powdered Cinnamon Flower, Hairy Peach Bark, Astragalus Root, and Poria Cocos) ; ginseng, white atractylodes, astragalus, and Poria Cocos, dragon fruit, lychee, almonds, each two *qian*;  Mulberry Leaf, Wood Sage, *Sphenanthera japonica*, each two *qian*.<a id="trans-89p" href="#orig-89p" class="marker">[89p]</a><br/>
-The sweating fever, upon awakening, the sweat ceases immediately, while the deficiency of yin and excess of yang manifests as extreme fever. This is all due to the imbalance of yin and yang; furthermore, the following three treatments are ineffective.<br/>
+The Gui Pi Decoction (with added powdered Cinnamon Flower, Hairy Peach Bark, Astragalus Root, and Poria Cocos) ; ginseng, white atractylodes, astragalus, and Poria Cocos, dragon fruit, lychee, almonds, each two *qian*;  Mulberry Leaf, Wood Sage, *Sphenanthera japonica*, each two *qian*.<a id="trans-89p" href="#orig-89p" class="marker">[89p]</a> The sweating fever, upon awakening, the sweat ceases immediately, while the deficiency of yin and excess of yang manifests as extreme fever. This is all due to the imbalance of yin and yang; furthermore, the following three treatments are ineffective.<br/>
 <br/>
 The sweat is thick, like the fluid of the gallbladder, and the gallbladder fluid is exhausted; the sweat congeals, resembling pearl and bean blood, damaging the vital essence; sweat emerges like flowing ice, pale in color, and building the center and drawing in the vital essence is the most effective method.<br/>
 <br/>
 The Method for Vertigo<br/>
 <br/>
-Vertigo occurs suddenly and without cause, leading to unconsciousness; the ears become deaf and the eyes closed, causing one to suspect a dangerous situation. If one is about to fall from a boat or carriage due to the rising of liver wind and the downward deficiency, this is the time to treat it.<a id="trans-90p" href="#orig-90p" class="marker">[90p]</a><br/>
-Too much deficiency manifests in all conditions, and in illness, after childbirth, various remedies are employed.  Furthermore, the regulation of phlegm and dampness constitutes an excellent method; the Clear-Head Decoction is practiced by scholars of the past.<br/>
+Vertigo occurs suddenly and without cause, leading to unconsciousness; the ears become deaf and the eyes closed, causing one to suspect a dangerous situation. If one is about to fall from a boat or carriage due to the rising of liver wind and the downward deficiency, this is the time to treat it.<a id="trans-90p" href="#orig-90p" class="marker">[90p]</a> Too much deficiency manifests in all conditions, and in illness, after childbirth, various remedies are employed.  Furthermore, the regulation of phlegm and dampness constitutes an excellent method; the Clear-Head Decoction is practiced by scholars of the past.<br/>
 <br/>
 Clear-Head Decoction:<br/>
 <br/>
@@ -621,8 +564,7 @@ Clear-Head Decoction includes half a south star, sweet flag, ligraphy root, smal
 <br/>
 Paralysis originally has shallow and deep manifestations, also involves the hands and feet and the entire body; paralysis is due to deficiency of qi and awareness of pain and sensation; supplementing qi and benefiting qi is akin to a friendly approach.<br/>
 <br/>
-Wood’s blood is deficient, forgetting pain and sensation; two chens (herbs) at the point should not be retained; often combined with dampness and stagnant blood, the Clear Wind Decoction can be used to search for them.<a id="trans-91p" href="#orig-91p" class="marker">[91p]</a><br/>
-Clear wind, borne in the drink, utilizes goldenflower, betelnut, prickly ash, and white gourd.  Mulberry, schizandra, and ginger are used to invigorate.  Candlepods are used with black mallow.<br/>
+Wood’s blood is deficient, forgetting pain and sensation; two chens (herbs) at the point should not be retained; often combined with dampness and stagnant blood, the Clear Wind Decoction can be used to search for them.<a id="trans-91p" href="#orig-91p" class="marker">[91p]</a> Clear wind, borne in the drink, utilizes goldenflower, betelnut, prickly ash, and white gourd.  Mulberry, schizandra, and ginger are used to invigorate.  Candlepods are used with black mallow.<br/>
 <br/>
 ○ Methods for Mania<br/>
 <br/>
@@ -630,16 +572,14 @@ Mania presents with both yin and yang symptoms; mania is primarily yang; rage bu
 <br/>
 One approaches with nakedness, dancing with relatives and strangers alike, clearly defining the symptoms for treatment; lost heart, shattered spirit, madness, self-laughter and self-sorrow.<br/>
 <br/>
-This is how difficult to recognize mania; sandalwood to dispel evil influences; far-reaching heart-soothing soup used sparingly, nourishing the stomach requires careful consideration.<a id="trans-92p" href="#orig-92p" class="marker">[92p]</a><br/>
-Far-reaching desire transforms phlegm, half-white苓; cinnabar,硃砂, and sour dates are used. Stone-pupa, star-pupa, gold-leaf, and air—sky numbness, zema, pig苓.<br/>
+This is how difficult to recognize mania; sandalwood to dispel evil influences; far-reaching heart-soothing soup used sparingly, nourishing the stomach requires careful consideration.<a id="trans-92p" href="#orig-92p" class="marker">[92p]</a> Far-reaching desire transforms phlegm, half-white苓; cinnabar,硃砂, and sour dates are used. Stone-pupa, star-pupa, gold-leaf, and air—sky numbness, zema, pig苓.<br/>
 <br/>
 (Treating Epilepsy Formula) Star-pupa, complete scorpion, ox-yellow, white sub-pine, and the corpse-pine are taken together with dates, measuring five parts, and made into inner pills.  Jing Ai, ginger, and kaing soup are administered afterward.<br/>
 <br/>
 ○ Five Epilepsy Methods<br/>
 Epileptic syndromes are listed as causing itching, dizziness, and convulsions; before onset, the mother’s belly was touched, causing strange frights; after emergence, phlegm and air invaded the fetus.<br/>
 <br/>
-Suddenly, the corpse-pine caused rigidity, flowing saliva, distorted eyes and mouth, limbs bent and extended; the voice was like an animal’s cry, and in a moment, it awoke, unaware.<a id="trans-93p" href="#orig-93p" class="marker">[93p]</a><br/>
-If the heavens neglect their duty in the upper realms, the wood-elemental general can thoroughly cleanse them. The Clear Heart and Warm the Gall Decoction does not yield, and its method cannot escape internal and external causes.<br/>
+Suddenly, the corpse-pine caused rigidity, flowing saliva, distorted eyes and mouth, limbs bent and extended; the voice was like an animal’s cry, and in a moment, it awoke, unaware.<a id="trans-93p" href="#orig-93p" class="marker">[93p]</a> If the heavens neglect their duty in the upper realms, the wood-elemental general can thoroughly cleanse them. The Clear Heart and Warm the Gall Decoction does not yield, and its method cannot escape internal and external causes.<br/>
 <br/>
 The Clear Heart and Warm the Gall Decoction, with ginseng, chuanxiong, buckwheat seed, and fragrant white peony, and with stone lotus, fragrant stickiae, and white atractylodes, is complete.<br/>
 <br/>
@@ -647,22 +587,19 @@ The Clear Heart and Warm the Gall Decoction, with ginseng, chuanxiong, buckwheat
 <br/>
 Recovering memory means turning to hope and then forgetting; exerting oneself to remember, yet the record is incomplete; consistently losing one thing and finding another, unable to know the beginning and end of speech and conversation.<br/>
 <br/>
-Excessive labor of the heart and spleen, the spirit fails to guard its dwelling, thus treating the root; insufficient blood and qi, phlegm flows from the orifices, the Zizi Decoction can support and rectify it.<a id="trans-94p" href="#orig-94p" class="marker">[94p]</a><br/>
-Return Spleen Decoction is used to treat forgetfulness, with ginseng, astragalus, and divine thorn entering the wheat gate.  It includes Lycium fruit, Gastrodia tectorum, and Dragon Fruit.<br/>
+Excessive labor of the heart and spleen, the spirit fails to guard its dwelling, thus treating the root; insufficient blood and qi, phlegm flows from the orifices, the Zizi Decoction can support and rectify it.<a id="trans-94p" href="#orig-94p" class="marker">[94p]</a> Return Spleen Decoction is used to treat forgetfulness, with ginseng, astragalus, and divine thorn entering the wheat gate.  It includes Lycium fruit, Gastrodia tectorum, and Dragon Fruit.<br/>
 <br/>
 ○ Method for Treating Stupefaction<br/>
 <br/>
 Stupefaction is accompanied by anxiety and fear, and the disease shares a common name but differs in its pulse.  Essentially, the illness originates in the heart, and the blood nourished by the heart is also implicated.<br/>
 <br/>
-Deficiency of heart blood causes numerous ailments, such as restlessness and lack of peace for a person who cannot sleep.  The method of calming the mind and replenishing blood is the primary treatment for the deficiency; it combines Four Gentlemen Decoction with Lycium fruit, Gastrodia tectorum, and Dragon Fruit, and treats conditions such as stupefaction together.<a id="trans-95p" href="#orig-95p" class="marker">[95p]</a><br/>
-The urine flows turbid, with white and red hues, the white like fermented rice, the red like pus; dampness and heat in the spleen and stomach, accompanied by phlegm, seep and are transformed by the bladder’s gasification.<br/>
+Deficiency of heart blood causes numerous ailments, such as restlessness and lack of peace for a person who cannot sleep.  The method of calming the mind and replenishing blood is the primary treatment for the deficiency; it combines Four Gentlemen Decoction with Lycium fruit, Gastrodia tectorum, and Dragon Fruit, and treats conditions such as stupefaction together.<a id="trans-95p" href="#orig-95p" class="marker">[95p]</a> The urine flows turbid, with white and red hues, the white like fermented rice, the red like pus; dampness and heat in the spleen and stomach, accompanied by phlegm, seep and are transformed by the bladder’s gasification.<br/>
 <br/>
 It is like the clash and harmony of heaven and earth; pure water clears ripples completely; weather’s heat and steam cloud water, the principles of dampness and heat are clearly understood.<br/>
 <br/>
 Furthermore, the timing of release or non-release, and the causes of forgetting and distraction leading to muddiness, are considered; additionally, the tangled, sticky connection of clear and turbid substances, *bishie* (a specific herb) is distinguished, and the *yin* (nourishing fluids) are sought within.<br/>
 <br/>
-*Bishie* is the most efficacious when distinguished within the *yin*; longan root, *zhaixie* (a specific herb), red atractylodes, *shiqiu* (a specific herb), chuanximoss (a specific herb), licorice root, and turmeric are steamed.<a id="trans-96p" href="#orig-96p" class="marker">[96p]</a><br/>
-Five Methods of Drainage<br/>
+*Bishie* is the most efficacious when distinguished within the *yin*; longan root, *zhaixie* (a specific herb), red atractylodes, *shiqiu* (a specific herb), chuanximoss (a specific herb), licorice root, and turmeric are steamed.<a id="trans-96p" href="#orig-96p" class="marker">[96p]</a> Five Methods of Drainage<br/>
 <br/>
 The symptoms of drainage are established as arising from the combination of blood essence, phlegm, fat, sand, and labor; the vital energy is difficult to expel, and the blood is painful and difficult to extend.<br/>
 <br/>
@@ -670,22 +607,19 @@ The fat is a weak watery fat, the sand is a solidified sand and stone form, and 
 <br/>
 These are all caused by internal damage from the seven emotions and external invasion of the six airs. If seeking a miraculous medicine or treating early illness, the Five Drainage Powder can be used to pursue the appropriate remedies.<br/>
 <br/>
-The Five Drainage Powder contains red buckthorn root, sweet flag, and yellow chrysanthemum; plus slippery elm, red peony, at your discretion, to treat all forms of drainage.<a id="trans-97p" href="#orig-97p" class="marker">[97p]</a><br/>
-The doors of excretion. Because of what cause urination to be blocked, the heart’s mind is excessively hot and frequent; gold can generate water from the source, encountering obstruction becomes air and governs it.<br/>
+The Five Drainage Powder contains red buckthorn root, sweet flag, and yellow chrysanthemum; plus slippery elm, red peony, at your discretion, to treat all forms of drainage.<a id="trans-97p" href="#orig-97p" class="marker">[97p]</a> The doors of excretion. Because of what cause urination to be blocked, the heart’s mind is excessively hot and frequent; gold can generate water from the source, encountering obstruction becomes air and governs it.<br/>
 <br/>
 Like a writing box’s water receptacle, the upper opening is clear, but the lower is not; difficulty in urination is like this difficulty of a short supply.<br/>
 <br/>
 There is also the case of a turning of the abdominal cavity, blocked and incurable, where the male and female officials go as usual. The treatment is to raise, release, and stop the seepage, then open and adjust it – a good remedy.<br/>
 <br/>
-Concerning the passage of feces, it is because the lungs originally lack transformation; this causes the middle channel to lose its transmission, resulting in waste and dregs contending with food and fire.<a id="trans-98p" href="#orig-98p" class="marker">[98p]</a><br/>
-Pity the kidneys, exhausted of their essence; Yang Ming becomes increasingly hardened and unable to ascend; the elderly man’s blood diminishes, with much of it secreted and congealed within, reducing the efficacy of nourishing fluids.<br/>
+Concerning the passage of feces, it is because the lungs originally lack transformation; this causes the middle channel to lose its transmission, resulting in waste and dregs contending with food and fire.<a id="trans-98p" href="#orig-98p" class="marker">[98p]</a> Pity the kidneys, exhausted of their essence; Yang Ming becomes increasingly hardened and unable to ascend; the elderly man’s blood diminishes, with much of it secreted and congealed within, reducing the efficacy of nourishing fluids.<br/>
 <br/>
 If there is blockage of both stool and urine, yin and yang become intertwined, generating heat and wind; turning over a beetle would open the channels and organs; without clear water and cooling, it is as if the viscera are collapsing.<br/>
 <br/>
 Lubricating the Intestines Pill: *Dang Gui* (Angelica Root), *Shui Zhu* (Mulberry Root), *Hua Ma Tao* (Fire Root), *Xing Li* (Honey Vine), *Kua* (Shell), *Huang Cao* (Radix Rehmanniae), *Huang Cao* (Radix Rehmanniae).<br/>
 <br/>
-The Lubricating the Intestines Pill treats difficult defecation; the nature of *Nitro-sulfate* generates honey, and what is cold, is not beneficial; *Shui Zhu*, *Dang Gui*, *Ping Lou*, *Zhi* (Chinese Olive).<a id="trans-99p" href="#orig-99p" class="marker">[99p]</a><br/>
-Reverse Mantis Pill: Joint-Bone Mantis, Large Yellow, Greater Burdock<br/>
+The Lubricating the Intestines Pill treats difficult defecation; the nature of *Nitro-sulfate* generates honey, and what is cold, is not beneficial; *Shui Zhu*, *Dang Gui*, *Ping Lou*, *Zhi* (Chinese Olive).<a id="trans-99p" href="#orig-99p" class="marker">[99p]</a> Reverse Mantis Pill: Joint-Bone Mantis, Large Yellow, Greater Burdock<br/>
 <br/>
 ○ The condition of Joint-Bone is perilous, leading to vomiting of water and the loss of vital essence. Cold resides in the upper regions, preventing entry into the body’s interior; this is the cause of the Joint-Bone condition’s inability to transmit.<br/>
 <br/>
@@ -693,15 +627,13 @@ Reverse Mantis Pill: Joint-Bone Mantis, Large Yellow, Greater Burdock<br/>
 <br/>
 ○ Headache Method<br/>
 <br/>
-○ The Yuan-Sho (Primary Yang) resides within, and must be subdued at its root. Gentle heating can alleviate the pain, restoring vitality to the affected area.<a id="trans-100p" href="#orig-100p" class="marker">[100p]</a><br/>
-The heart governs the brain, the liver the bones; the spleen resides at the waist angle, the lung at the front of the forehead. The kidney is located at the top of the head, behind the temples; the left side belongs to blood and qi, the right to blood and qi.<br/>
+○ The Yuan-Sho (Primary Yang) resides within, and must be subdued at its root. Gentle heating can alleviate the pain, restoring vitality to the affected area.<a id="trans-100p" href="#orig-100p" class="marker">[100p]</a> The heart governs the brain, the liver the bones; the spleen resides at the waist angle, the lung at the front of the forehead. The kidney is located at the top of the head, behind the temples; the left side belongs to blood and qi, the right to blood and qi.<br/>
 <br/>
 If blood and qi are both deficient, the head is completely tormented; if wind, phlegm, and six airs intermingle; furthermore, if following the principle of the true yang causes headache, with four limbs experiencing cold and reversed qi, one hears sounds like the heavens.<br/>
 <br/>
 The *Bǔ Zhōng Yì Qì Tāng* is the primary medicine; at the end of the course, add *Yǐng Jīng* (Lead Nettle) to supplement it; if there is an external pathogenic factor, remove it with warmth and coolness, and let the patient experience heat or cold as they wish.<br/>
 <br/>
-The *Bǔ Zhōng Yì Qì Tāng* is as described above.<a id="trans-101p" href="#orig-101p" class="marker">[101p]</a><br/>
-Headache Verses<br/>
+The *Bǔ Zhōng Yì Qì Tāng* is as described above.<a id="trans-101p" href="#orig-101p" class="marker">[101p]</a> Headache Verses<br/>
 <br/>
 The Sun, Sichuan Hawthorn, Yang Ming, and White Ginger, half a li; Tai Yin, Huang Sha, Shao Yin.<br/>
 <br/>
@@ -711,8 +643,7 @@ As the Two Ears are said to be the kidneys’ orifices, deficiency causes ringin
 <br/>
 Men often have multiple hearings on the right side, cutting it causes a desire to move liver fire; if both ears ring, fat and rich people’s spleen and sweet move stomach fire.<br/>
 <br/>
-Also, there is swelling, pain, and pus and water, this is the kidney’s wind-dampness and heat; try the Ear-Opening Soup to nourish the kidney, also there is phlegm-fire, deficiency, and blood stasis.<a id="trans-102p" href="#orig-102p" class="marker">[102p]</a><br/>
-To nourish the kidneys and open the air with the four fundamental medicines, yellow peony and motherwort are perfectly harmonious; aloe, horny goat weed, and dragon bile grass, no concern that the ears would be deafened.<br/>
+Also, there is swelling, pain, and pus and water, this is the kidney’s wind-dampness and heat; try the Ear-Opening Soup to nourish the kidney, also there is phlegm-fire, deficiency, and blood stasis.<a id="trans-102p" href="#orig-102p" class="marker">[102p]</a> To nourish the kidneys and open the air with the four fundamental medicines, yellow peony and motherwort are perfectly harmonious; aloe, horny goat weed, and dragon bile grass, no concern that the ears would be deafened.<br/>
 <br/>
 ○ Methods for Nasal Afflictions<br/>
 <br/>
@@ -720,8 +651,7 @@ The nose is the vital orifice of the lung, requiring emptiness and clarity; when
 <br/>
 When the nose runs with turbid discharge, the gall meridian expels evil heat from the head; when the head is full, constant watery discharge, excessive indulgence in wine and sex causes emptiness in the head.<br/>
 <br/>
-Control the head with sand, and the head also aches; worms eat the brain, causing pain that cannot be removed; external wet heat and evil in the nose cause blockage in the nasal passages, removing the wax and evil in the lungs.<a id="trans-103p" href="#orig-103p" class="marker">[103p]</a><br/>
-Consider the aftermath of rain from the earth, suddenly emerging are clumps of *zhi cao* (a type of grass) worthy of contemplation.  The principles of law are like clear gold, encompassing both cooling and fire, necessary ingredients for a formula to open the channels.<br/>
+Control the head with sand, and the head also aches; worms eat the brain, causing pain that cannot be removed; external wet heat and evil in the nose cause blockage in the nasal passages, removing the wax and evil in the lungs.<a id="trans-103p" href="#orig-103p" class="marker">[103p]</a> Consider the aftermath of rain from the earth, suddenly emerging are clumps of *zhi cao* (a type of grass) worthy of contemplation.  The principles of law are like clear gold, encompassing both cooling and fire, necessary ingredients for a formula to open the channels.<br/>
 <br/>
 The formula’s head consists of *xin yi jun* (Synamol), *chuan xiong* (Perilla), *bai zhi* (Chuanxizi), *fang feng* (Fo-ti), *cang mu* (Coptis), *xi xin* (White Peppercorn), *sheng gan cao* (Glycyrrhiza), *sheng ma* (麻黄 – Ephedra), *jiang* (Ginger), *huang xin ma* (麻黄 – Ephedra).<br/>
 <br/>
@@ -729,8 +659,7 @@ The formula’s head consists of *xin yi jun* (Synamol), *chuan xiong* (Perilla)
 <br/>
 The spleen corresponds to the central earth element of Wu and Ji; the mouth and tongue reside in the same channel, connected to the viscera.  Dry mouth and heat from the spleen and liver and gallbladder cause sourness; lung heat produces a pungent taste, heart heat and bitterness.<br/>
 <br/>
-A tongue that cannot be retracted is a sign of excessive yang; a tongue that shrinks and cannot speak causes “zi mu” (a symptom); the rotting of the mouth and tongue leads to the sudden appearance of sores; the flowing of saliva from the mouth and throat, accompanied by bitterness, is difficult to treat.<a id="trans-104p" href="#orig-104p" class="marker">[104p]</a><br/>
-Heavy tongue, the tongue’s strength originates from a strong tongue; use ginger and jujube to make a tonic for strengthening the tongue. When attending a banquet, this soup was sufficient; golden needles pierced, causing pain, creating a vast and limited space.<br/>
+A tongue that cannot be retracted is a sign of excessive yang; a tongue that shrinks and cannot speak causes “zi mu” (a symptom); the rotting of the mouth and tongue leads to the sudden appearance of sores; the flowing of saliva from the mouth and throat, accompanied by bitterness, is difficult to treat.<a id="trans-104p" href="#orig-104p" class="marker">[104p]</a> Heavy tongue, the tongue’s strength originates from a strong tongue; use ginger and jujube to make a tonic for strengthening the tongue. When attending a banquet, this soup was sufficient; golden needles pierced, causing pain, creating a vast and limited space.<br/>
 <br/>
 The soup for attending a banquet used three yellow powders, with bitter orange, chuanxiong, and heavenly wheat root; dried ginger, fine star anise, and borax powder were added; a cup removed the fever and extinguished the source of inflammation.<br/>
 <br/>
@@ -738,15 +667,13 @@ The soup for attending a banquet used three yellow powders, with bitter orange, 
 <br/>
 The mouth is the outward manifestation of the kidney and bone; pain in the upper teeth indicates kidney heat, while the upper teeth being weakened indicates emptiness and heat in the stomach. Pain in the lower teeth indicates wind heat and emptiness in the large intestine.<br/>
 <br/>
-Patients with stomach ailments benefit from cold and should avoid drinking hot liquids; those with pain in the mouth, opening their mouths to drink cold air, the Yangming wind can be expelled.<a id="trans-105p" href="#orig-105p" class="marker">[105p]</a><br/>
-The teeth shake without firmness, the stomach’s essence is weak and afflicted with lesions; the spaces between the teeth flow with thick fluid and bleed, the gums reveal bone, what is to be done?<br/>
+Patients with stomach ailments benefit from cold and should avoid drinking hot liquids; those with pain in the mouth, opening their mouths to drink cold air, the Yangming wind can be expelled.<a id="trans-105p" href="#orig-105p" class="marker">[105p]</a> The teeth shake without firmness, the stomach’s essence is weak and afflicted with lesions; the spaces between the teeth flow with thick fluid and bleed, the gums reveal bone, what is to be done?<br/>
 <br/>
 The channels of the bone marrow are stirred by wind, the damp heat of Yang Ming should not be lingered upon; prescribe Clear Stomach Soup and Pill, with adjustments, the spirit will be free of constraint.<br/>
 <br/>
 Within Clear Stomach Soup: Yellow Horn Licorice, Angelica Sinensis, Cinnamon, and Nitre; Danpi (Danpi Bark), Dizhu (Dizhu Root), and Shou Han (Black Peppercorn) are used together;  Shengma (Cannabis Sativa) is added to assist with the use of Shou Han.<br/>
 <br/>
-Da Zun San: Calciuum Carbonatis 1 Liang (2g) White Angelica (Bai Zhi) 5 Qian (25g) Cinnabar (Xing Ren) 5 Qian (25g) Sweet Flag (Gan Cao) 1 Qian (5g).<a id="trans-106p" href="#orig-106p" class="marker">[106p]</a><br/>
-The Method of the Throat<br/>
+Da Zun San: Calciuum Carbonatis 1 Liang (2g) White Angelica (Bai Zhi) 5 Qian (25g) Cinnabar (Xing Ren) 5 Qian (25g) Sweet Flag (Gan Cao) 1 Qian (5g).<a id="trans-106p" href="#orig-106p" class="marker">[106p]</a> The Method of the Throat<br/>
 <br/>
 The throat opens to the stomach via the throat-stuff (咽物). The larynx opens to the five internal organs via the reception of breath. They drive together and stand in opposition between the lung gates, with turbidity and filth drifting, heat and cold.<br/>
 <br/>
@@ -754,13 +681,11 @@ If the internal organs are hot, swellings are hot, and there is much pain and it
 <br/>
 If the two sides of the *huì yàn* (会厌 – a membrane in the throat) are both swollen and painful, this is commonly known as the onset of throat dysfunction, manifesting as double pain. If one side of the *huì yàn* is swollen and protruding, this is the onset of throat dysfunction manifesting as single pain.<br/>
 <br/>
-This is due to the transmission of external fire, and can be treated with golden needles to relieve the obstruction.<a id="trans-107p" href="#orig-107p" class="marker">[107p]</a><br/>
-○Heartache Constant Heartache Time to Use:<br/>
+This is due to the transmission of external fire, and can be treated with golden needles to relieve the obstruction.<a id="trans-107p" href="#orig-107p" class="marker">[107p]</a> ○Heartache Constant Heartache Time to Use:<br/>
 Angelica sinensis one *qian* (approximately 1.5g), Sichuan Citronella eight *fen* (approximately 0.5g), Dried Orange Peel eight *fen* (approximately 0.5g), Achillea millefolium one *qian* (approximately 1.5g), Salvia miltiorrhiza one *qian* (approximately 1.5g), Cinnabar (Wu Yao) one *qian* (approximately 1.5g), Cinnamon one *qian* (approximately 1.5g), Ligusticum chuanxiong one *qian* (approximately 1.5g), prepared with powdered ingredients, to be taken twice.<br/>
 <br/>
 ○For Heartache with Fetal Air:<br/>
-Angelica sinensis two *qian* (approximately 3g), Sichuan Citronella one *qian* (approximately 1.5g), Gastrodia Rhizome one *qian* (approximately 1.5g), Paeonia lactiflora one *qian* (approximately 1.5g), Salvia miltiorrhiza one *qian* (approximately 1.5g), Auranticum one *qian* (approximately 1.5g), Sichuan Citronella eight *fen* (approximately 0.5g), Chinese Apricot six *fen* (approximately 0.75g), Cinnamon seven *fen* (approximately 0.875g), Glycyrrhiza glabra three *qian* (approximately 3g), Ginger one slice, Jujube three grains, pain severe, add Sichuan Citronella eight *fen* (approximately 0.5g). Vomiting add Ginger juice half *qian* (approximately 0.75g) of Achillea millefolium. Swelling large abdomen, wash with dried orange peel one *fen* (approximately 0.125g), thirst add Chinese Apricot one *fen* (approximately 0.125g).<a id="trans-108p" href="#orig-108p" class="marker">[108p]</a><br/>
-Methods for Disturbance of Mind<br/>
+Angelica sinensis two *qian* (approximately 3g), Sichuan Citronella one *qian* (approximately 1.5g), Gastrodia Rhizome one *qian* (approximately 1.5g), Paeonia lactiflora one *qian* (approximately 1.5g), Salvia miltiorrhiza one *qian* (approximately 1.5g), Auranticum one *qian* (approximately 1.5g), Sichuan Citronella eight *fen* (approximately 0.5g), Chinese Apricot six *fen* (approximately 0.75g), Cinnamon seven *fen* (approximately 0.875g), Glycyrrhiza glabra three *qian* (approximately 3g), Ginger one slice, Jujube three grains, pain severe, add Sichuan Citronella eight *fen* (approximately 0.5g). Vomiting add Ginger juice half *qian* (approximately 0.75g) of Achillea millefolium. Swelling large abdomen, wash with dried orange peel one *fen* (approximately 0.125g), thirst add Chinese Apricot one *fen* (approximately 0.125g).<a id="trans-108p" href="#orig-108p" class="marker">[108p]</a> Methods for Disturbance of Mind<br/>
 <br/>
 Disturbance of mind, commonly called “violent dryness,” is caused by the deficiency of the yang in the Lung, manifesting as restlessness of the index finger; deficiency of the yang in the Pericardium manifests as chills of the body. It occurs after illness and is due to deficiency of blood.<br/>
 <br/>
@@ -770,8 +695,7 @@ Warm-liver decoction to treat disturbance of mind, two-Chen with bamboo-starch t
 <br/>
 Methods for Insomnia<br/>
 <br/>
-Insomnia originates from multiple causes, with phlegm and viscous fluid accumulating along the Pericardium; it is often caused by excessive thinking and delusions. Widows and nuns do not typically experience this.<a id="trans-109p" href="#orig-109p" class="marker">[109p]</a><br/>
-If one encounters difficulty with old age in waking and sleeping, it is due to the decline of blood qi and its stagnation in circulation. White-haired individuals, relying on the Four Substances and Four Gentlemen, should sleep soundly without worry.<br/>
+Insomnia originates from multiple causes, with phlegm and viscous fluid accumulating along the Pericardium; it is often caused by excessive thinking and delusions. Widows and nuns do not typically experience this.<a id="trans-109p" href="#orig-109p" class="marker">[109p]</a> If one encounters difficulty with old age in waking and sleeping, it is due to the decline of blood qi and its stagnation in circulation. White-haired individuals, relying on the Four Substances and Four Gentlemen, should sleep soundly without worry.<br/>
 <br/>
 ○ Methods for Treating Sperm Deficiency<br/>
 <br/>
@@ -779,8 +703,7 @@ All the internal organs and viscera possess sperm; the kidney serves as the cent
 <br/>
 Youthful vigor is forced upon through excessive indulgence; like a bottle filled with dreams and sperm leakage, this is the most damaging of interactions with the spirit.<br/>
 <br/>
-Sperm deficiency leads to a flowing, unstable state, as if a pot is overturned; excessive indulgence in wine and women exhausts the remaining sperm, and the residue manifests as strands resembling lotus roots.<a id="trans-110p" href="#orig-110p" class="marker">[110p]</a><br/>
-Deficient yang with fire moving and not uniting manifests as discharge; clear heart strengthens the kidneys, and its principles are worthy of reliance. Furthermore, if the spleen and stomach clearly differentiate between pure and turbid, the use of lotus seeds for clear heart is wondrous, like a divine art.<br/>
+Sperm deficiency leads to a flowing, unstable state, as if a pot is overturned; excessive indulgence in wine and women exhausts the remaining sperm, and the residue manifests as strands resembling lotus roots.<a id="trans-110p" href="#orig-110p" class="marker">[110p]</a> Deficient yang with fire moving and not uniting manifests as discharge; clear heart strengthens the kidneys, and its principles are worthy of reliance. Furthermore, if the spleen and stomach clearly differentiate between pure and turbid, the use of lotus seeds for clear heart is wondrous, like a divine art.<br/>
 <br/>
 Lotus seeds treat seminal discharge, ginseng promotes clarity of mind, and buckbean (茯神) alongside lotus seeds must be cooked with their kernels.<br/>
 <br/>
@@ -788,15 +711,13 @@ Lotus seeds treat seminal discharge, ginseng promotes clarity of mind, and buckb
 <br/>
 Men and women are created with the same natural laws of creation and transformation, with five elements and one principle divided into yin and yang; men primarily focus on replenishing vital energy, while women focus on replenishing blood and establishing it as their foundation.<br/>
 <br/>
-The nature of women has differences before gestation and after childbirth; they frequently suffer from illness, largely due to imbalances in the flow of vital energy.<a id="trans-111p" href="#orig-111p" class="marker">[111p]</a><br/>
-Early arrival of the glory of Rong and the heat of Xu, followed by the generation of resentment and the flow of cold blood; the pulse reverses yin and yang, left and right; the four fundamental substances are used in ancient formulas.<br/>
+The nature of women has differences before gestation and after childbirth; they frequently suffer from illness, largely due to imbalances in the flow of vital energy.<a id="trans-111p" href="#orig-111p" class="marker">[111p]</a> Early arrival of the glory of Rong and the heat of Xu, followed by the generation of resentment and the flow of cold blood; the pulse reverses yin and yang, left and right; the four fundamental substances are used in ancient formulas.<br/>
 <br/>
 Regarding the regulation of the channels:<br/>
 <br/>
 The flow of yin blood nourishes the entire body, ascending as breast milk and descending as the channels.  Do not allow blockage by cold or heat; particularly when departing, avoid anger and resentment.<br/>
 <br/>
-Long-standing illnesses injure the fetus, thereby obstructing the flow of the upper channels.  A feeling of heaviness and sluggishness accompanied by a sensation of coldness is called “touching the channels”; pain in the waist and abdomen, and weakness of the limbs, indicates the blood has overstepped and disrupted the proper course of the channels.<a id="trans-112p" href="#orig-112p" class="marker">[112p]</a><br/>
-January twice ascended the meridian, March established the dwelling in the meridian; in July, the meridian was lost, seeking the medicine of the Turtle and Bamboo for the sick.<br/>
+Long-standing illnesses injure the fetus, thereby obstructing the flow of the upper channels.  A feeling of heaviness and sluggishness accompanied by a sensation of coldness is called “touching the channels”; pain in the waist and abdomen, and weakness of the limbs, indicates the blood has overstepped and disrupted the proper course of the channels.<a id="trans-112p" href="#orig-112p" class="marker">[112p]</a> January twice ascended the meridian, March established the dwelling in the meridian; in July, the meridian was lost, seeking the medicine of the Turtle and Bamboo for the sick.<br/>
 <br/>
 The opening of the womb, the delivery of the fetus.<br/>
 <br/>
@@ -804,8 +725,7 @@ The medicine of the Turtle and Bamboo for the child’s tea, with frankincense, 
 <br/>
 The flow of yang attacking the meridian is called a miscarriage; a woman’s fertility ceases at fifty; when the flow breaks after several years, it suddenly returns, and if not properly managed, it is not harmonious.<br/>
 <br/>
-The flow of yang in the meridian continues without stopping, called a leakage, not a miscarriage; using chuanwu (芎) to prepare the soup, do not use the doulu (兜) to stop or plug the flow.<a id="trans-113p" href="#orig-113p" class="marker">[113p]</a><br/>
-And one brings down red and white turbidity, supplementing emptiness and fullness, stopping diarrhea, pausing bleeding, and piercing and cutting; ten women, nine with belts, a fraction of an inch in the middle; learning about belt-dissolving soup is a matter of study.<br/>
+The flow of yang in the meridian continues without stopping, called a leakage, not a miscarriage; using chuanwu (芎) to prepare the soup, do not use the doulu (兜) to stop or plug the flow.<a id="trans-113p" href="#orig-113p" class="marker">[113p]</a> And one brings down red and white turbidity, supplementing emptiness and fullness, stopping diarrhea, pausing bleeding, and piercing and cutting; ten women, nine with belts, a fraction of an inch in the middle; learning about belt-dissolving soup is a matter of study.<br/>
 <br/>
 Belt-dissolving soup: Four things – pale green, white dragon bone, fragrant sandalwood, and dried tangerine peel, with茯 (buckwheat) – sweet dates, licorice, and mu-mu (white parasol seed) – earth elm bark, ginger, turmeric, and fragrant pine.<a id="trans-114p" href="#orig-114p" class="marker">[114p]</a></div>
     </div>

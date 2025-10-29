@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>One action stated: Tadpoles are the ancestors of characters; they resemble the shape of a toad</title>
+  <title>三十五举 - One action stated: Tadpoles are the ancestors of characters; they resemble the shape of a toad</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,9 +15,7 @@
       color: #0077cc;
       text-decoration: underline;
       cursor: pointer;
-    }
-    .back-link {
-      margin-bottom: 1rem;
+      scroll-margin-top: 5.5rem;
     }
     .section {
       margin-bottom: 2rem;
@@ -33,12 +31,27 @@
       margin: 0.75rem 0 1.25rem;
     }
     .view-toggle {
+      position: sticky;
+      top: 0;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: flex-start;
+      margin: -1rem -1rem 1.5rem;
+      padding: 0.75rem 1rem;
+      background: #fff;
+      z-index: 10;
+      border-bottom: 1px solid #d5d5d5;
+    }
+    .view-toggle-group {
       display: flex;
       gap: 0.5rem;
-      margin: 1.5rem 0 1rem;
       flex-wrap: wrap;
+      align-items: center;
     }
-    .toggle-button {
+    .toggle-button,
+    .return-link {
       padding: 0.4rem 0.9rem;
       border: 1px solid #0077cc;
       background: #fff;
@@ -48,12 +61,18 @@
       font-size: 0.95rem;
       transition: all 0.15s ease-in-out;
     }
-    .toggle-button:hover {
+    .toggle-button:hover,
+    .return-link:hover {
       background: rgba(0, 119, 204, 0.08);
     }
     .toggle-button.active {
       background: #0077cc;
       color: #fff;
+    }
+    .return-link {
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: auto;
     }
     .view {
       display: none;
@@ -87,6 +106,18 @@
       margin: 0.5rem 0;
     }
     @media (max-width: 600px) {
+      .view-toggle {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.6rem;
+      }
+      .view-toggle-group {
+        justify-content: center;
+      }
+      .return-link {
+        margin-left: 0;
+        text-align: center;
+      }
       .toggle-button {
         flex: 1 1 auto;
         text-align: center;
@@ -95,24 +126,23 @@
   </style>
 </head>
 <body>
-  <div class="back-link"><a href="../../index.html">&larr; Back to index</a></div>
-  <h1>One action stated: Tadpoles are the ancestors of characters; they resemble the shape of a toad</h1>
+  <h1>三十五举 - One action stated: Tadpoles are the ancestors of characters; they resemble the shape of a toad</h1>
   <p class="doc-header">Translation created with model: gemma3</p>
 
-  <div class="view-toggle" role="tablist" aria-label="View mode">
-    <button type="button" class="toggle-button active" data-target="stacked-view" aria-pressed="true">Stacked</button>
-    <button type="button" class="toggle-button" data-target="interlaced-view" aria-pressed="false">Interlaced</button>
+  <div class="view-toggle" role="toolbar" aria-label="Page controls">
+    <div class="view-toggle-group" role="group" aria-label="View mode">
+      <button type="button" class="toggle-button active" data-target="stacked-view" aria-pressed="true">Stacked</button>
+      <button type="button" class="toggle-button" data-target="interlaced-view" aria-pressed="false">Interlaced</button>
+    </div>
+    <a class="return-link" href="../../index.html">Return to index</a>
   </div>
 
   <div id="stacked-view" class="view active" aria-hidden="false">
     <div class="section">
       <h3>Translation</h3>
-      <div>One action stated: Tadpoles are the ancestors of characters; they resemble the shape of a toad. Nowadays people do not understand this, they merely skillfully draw a shape, losing the original meaning. In the ancient times there was no brush and ink; they used a bamboo stick to mark lacquer, writing on bamboo strips. The bamboo was hardened with lacquer paste, drawing could not be executed, therefore the head was thick and the tail was thin, resembling its form. The ancients called the brush “yu,” and the scribe wrote from a bamboo stick held in his hand, adding a drawing to make it “yu.” Qin said that it was not regulated, relying on the method of phonetic characters.<a id="trans-1p" href="#orig-1p" class="marker">[1p]</a><br/>
-Now, it is said:<br/>
+      <div>One action stated: Tadpoles are the ancestors of characters; they resemble the shape of a toad. Nowadays people do not understand this, they merely skillfully draw a shape, losing the original meaning. In the ancient times there was no brush and ink; they used a bamboo stick to mark lacquer, writing on bamboo strips. The bamboo was hardened with lacquer paste, drawing could not be executed, therefore the head was thick and the tail was thin, resembling its form. The ancients called the brush “yu,” and the scribe wrote from a bamboo stick held in his hand, adding a drawing to make it “yu.” Qin said that it was not regulated, relying on the method of phonetic characters.<a id="trans-1p" href="#orig-1p" class="marker">[1p]</a> Now, it is said:<br/>
 <br/>
-The current writing is simply the ancient direct speech; the current seal script is simply the ancient common characters, having changed and varied through the ages, now revealing their differences. One does not know that in the ancient times, when the first brush was made, it was merely bamboo with hair bound upon it, convenient for writing and drawing, therefore the seal script is uniformly fat and thin, lacking sharp angles. Afterwards, people used true cursive to write, sometimes thin and sometimes fat, considering it beautiful and vigorous. The brush, if without intention, cannot form a body; now people make seal script with this brush, it is more difficult than for the ancients, and when those who are newly learning cannot use it properly, it is like burning on a lamp, hoping to achieve ease.<a id="trans-2p" href="#orig-2p" class="marker">[2p]</a><br/>
-Three things must be done: to study seal script, one must be broad in their knowledge of the past, able to recognize ancient artifacts, and understand the characters inscribed upon them, with a spirit of earnestness. This can aid others. Furthermore, one can see that ancient characters retain their original forms of pictograms, indicators, and compound meanings, which possess a certain charm. It was only through studying *Sishu* (*Shuowen*) that one began to appreciate this. Previously, scholars of seal script lacked vigor; they had not exerted themselves on this matter. If one merely examines molds, one will never achieve it.<a id="trans-3p" href="#orig-3p" class="marker">[3p]</a><br/>
-Four instances state:<br/>
+The current writing is simply the ancient direct speech; the current seal script is simply the ancient common characters, having changed and varied through the ages, now revealing their differences. One does not know that in the ancient times, when the first brush was made, it was merely bamboo with hair bound upon it, convenient for writing and drawing, therefore the seal script is uniformly fat and thin, lacking sharp angles. Afterwards, people used true cursive to write, sometimes thin and sometimes fat, considering it beautiful and vigorous. The brush, if without intention, cannot form a body; now people make seal script with this brush, it is more difficult than for the ancients, and when those who are newly learning cannot use it properly, it is like burning on a lamp, hoping to achieve ease.<a id="trans-2p" href="#orig-2p" class="marker">[2p]</a> Three things must be done: to study seal script, one must be broad in their knowledge of the past, able to recognize ancient artifacts, and understand the characters inscribed upon them, with a spirit of earnestness. This can aid others. Furthermore, one can see that ancient characters retain their original forms of pictograms, indicators, and compound meanings, which possess a certain charm. It was only through studying *Sishu* (*Shuowen*) that one began to appreciate this. Previously, scholars of seal script lacked vigor; they had not exerted themselves on this matter. If one merely examines molds, one will never achieve it.<a id="trans-3p" href="#orig-3p" class="marker">[3p]</a> Four instances state:<br/>
 <br/>
 All who study sealscripts, *Sishu* [Saying of Things] serves as the foundation; if one can understand *Sishu*, their writing will not be deficient. Furthermore, they should also study *Tongshi* [Comprehensive Explanation] concurrently.<br/>
 <br/>
@@ -122,8 +152,7 @@ Characters possess variations between ancient and modern times. If one examines 
 <br/>
 Six instances state:<br/>
 <br/>
-Seal scripts often contain one or two strokes within a character, such as the sun and eye characters. If one begins with a single stroke within a character, the strokes should not adhere to the two ends; afterward, they should all be done this way; this is a method of head and tail. If, however, some connect and some do not, and they are different from each other, this is a violation of the method, and it should not be done this way. Furthermore, dots and circles; small seal scripts do not employ this method; ancient texts do.<a id="trans-4p" href="#orig-4p" class="marker">[4p]</a><br/>
-The mouth-shaped character should not be formed into a triangle, and it should not be cited. Scholars should be cautious not to add their own interpretations to difficult passages.<br/>
+Seal scripts often contain one or two strokes within a character, such as the sun and eye characters. If one begins with a single stroke within a character, the strokes should not adhere to the two ends; afterward, they should all be done this way; this is a method of head and tail. If, however, some connect and some do not, and they are different from each other, this is a violation of the method, and it should not be done this way. Furthermore, dots and circles; small seal scripts do not employ this method; ancient texts do.<a id="trans-4p" href="#orig-4p" class="marker">[4p]</a> The mouth-shaped character should not be formed into a triangle, and it should not be cited. Scholars should be cautious not to add their own interpretations to difficult passages.<br/>
 <br/>
 Seven examples:<br/>
 <br/>
@@ -135,40 +164,32 @@ There is only one type of small seal script, yet each has its own brushwork: Li 
 <br/>
 Nine examples:<br/>
 <br/>
-When writing prose, only small seal script should be used; the two Xus and the two Lis should follow their own convenience, but it is absolutely forbidden to write lyrics and songs.<a id="trans-5p" href="#orig-5p" class="marker">[5p]</a><br/>
-Ten measures are as follows:<br/>
+When writing prose, only small seal script should be used; the two Xus and the two Lis should follow their own convenience, but it is absolutely forbidden to write lyrics and songs.<a id="trans-5p" href="#orig-5p" class="marker">[5p]</a> Ten measures are as follows:<br/>
 <br/>
 Small seal script, all are fond of length, but it cannot be too long, for length is impossible. Taking square script as a standard, one character is half a measure, one measure is the standard form, and half a measure is the drooping foot. How beautiful is this! The foot should not exceed three, and there is nothing to be regretted; it should take the standard foot as its main form. I merely slightly shorten it, as with a banner-like character, it is permissible. There are characters with no foot, such as *sheng*, *yue*, *zi*, etc., which are instead adorned with branches, like grass and trees in their natural state; when they are born, they emerge from branches, and when they hang, they emerge from branches.<br/>
 <br/>
 Eleven measures are as follows:<br/>
 <br/>
-For writing on banners and paintings, the characters should be plump, and the form should be square and round.<a id="trans-6p" href="#orig-6p" class="marker">[6p]</a><br/>
-The inscriptions on these stones are to be taken from this style, but should employ small seal script as the standard, and not use mixed forms. Twelve examples are as follows: When bronze models and archaic script are mixed, it is best to avoid them. But all should be written in the method of small seal script, with a single, consistent method. Though this is easy to obtain, it is very difficult to memorize; without thorough familiarity with the method, one is inevitably ridiculed like a follower of all schools of thought.<a id="trans-7p" href="#orig-7p" class="marker">[7p]</a><br/>
-This is a method of calligraphy, correctly employing this technique. Thirteen says: All characters within a circle must not be filled completely; but if a character is set within a container, leave space beneath it, so it does not appear large. The circle itself must be slightly contracted. The circle should not be round nor square, but only use the charcoal block as a measure.<a id="trans-8p" href="#orig-8p" class="marker">[8p]</a><br/>
-If the sun’s rays are reflected, the characters must be made smaller; if the seal script contains a horizontal “mouth” character, and a “mouth” above the “child” character, it must be slightly wider, so that the space within the “mouth” is somewhat greater, and the characters will then appear substantial. All Han seals are thus made.<br/>
+For writing on banners and paintings, the characters should be plump, and the form should be square and round.<a id="trans-6p" href="#orig-6p" class="marker">[6p]</a> The inscriptions on these stones are to be taken from this style, but should employ small seal script as the standard, and not use mixed forms. Twelve examples are as follows: When bronze models and archaic script are mixed, it is best to avoid them. But all should be written in the method of small seal script, with a single, consistent method. Though this is easy to obtain, it is very difficult to memorize; without thorough familiarity with the method, one is inevitably ridiculed like a follower of all schools of thought.<a id="trans-7p" href="#orig-7p" class="marker">[7p]</a> This is a method of calligraphy, correctly employing this technique. Thirteen says: All characters within a circle must not be filled completely; but if a character is set within a container, leave space beneath it, so it does not appear large. The circle itself must be slightly contracted. The circle should not be round nor square, but only use the charcoal block as a measure.<a id="trans-8p" href="#orig-8p" class="marker">[8p]</a> If the sun’s rays are reflected, the characters must be made smaller; if the seal script contains a horizontal “mouth” character, and a “mouth” above the “child” character, it must be slightly wider, so that the space within the “mouth” is somewhat greater, and the characters will then appear substantial. All Han seals are thus made.<br/>
 <br/>
 Fourteen examples state:<br/>
 <br/>
-To write seal script, one must only use a single hook, but extend the middle finger downwards to hold the bracket; the curves and straight lines must be level and unyielding. Nothing is impossible in this way. Many people cannot obtain a teacher’s instruction, and it is like simply holding a brush; this is why so many characters are tilted and crooked, and the character forms lack vitality. When first learning, one should hold the palm of the hand open, extend the middle finger, and with two other fingers, draw on the table in this manner; if it is done in this way, without being forced, then one can begin to wield the brush. This point is of utmost importance; scholars should consider it, and its benefits are considerable.<a id="trans-9p" href="#orig-9p" class="marker">[9p]</a><br/>
-Fifteenth Discourse:<br/>
+To write seal script, one must only use a single hook, but extend the middle finger downwards to hold the bracket; the curves and straight lines must be level and unyielding. Nothing is impossible in this way. Many people cannot obtain a teacher’s instruction, and it is like simply holding a brush; this is why so many characters are tilted and crooked, and the character forms lack vitality. When first learning, one should hold the palm of the hand open, extend the middle finger, and with two other fingers, draw on the table in this manner; if it is done in this way, without being forced, then one can begin to wield the brush. This point is of utmost importance; scholars should consider it, and its benefits are considerable.<a id="trans-9p" href="#orig-9p" class="marker">[9p]</a> Fifteenth Discourse:<br/>
 All large seals should be written with the arm extended, the wrist touching the paper, so that the characters do not come to life. Many people could not use a brush, instead using palm strips and paper tubes – this is the work of commoners, and a scholar-official should not employ it.<br/>
 <br/>
 Sixteenth Discourse:<br/>
 The Han seal is changeable, following an ancient method. Xu Shen wrote *Sishu* [Shuowen Dictionary] in order to correct its errors.<br/>
 <br/>
 Seventeenth Discourse:<br/>
-Those who write the script of the隸 (Lì) characters say that it should be written with a broad stroke, but in fact the beauty lies in not broadening the stroke, instead picking up and leveling hard materials, like folding the blade of a knife – this is the true Han Lì.<a id="trans-10p" href="#orig-10p" class="marker">[10p]</a><br/>
-《Book of Ritual, Section on Script》says: Square and ancient styles, cutting through nails and iron, that is sufficient. The system of established laws was quite profound, and it contained its main points.<br/>
+Those who write the script of the隸 (Lì) characters say that it should be written with a broad stroke, but in fact the beauty lies in not broadening the stroke, instead picking up and leveling hard materials, like folding the blade of a knife – this is the true Han Lì.<a id="trans-10p" href="#orig-10p" class="marker">[10p]</a> 《Book of Ritual, Section on Script》says: Square and ancient styles, cutting through nails and iron, that is sufficient. The system of established laws was quite profound, and it contained its main points.<br/>
 <br/>
 Eighteen examples stated:<br/>
 <br/>
-There were Han Dynasty seals that were cast in relief, and their method was merely square and upright. The seal script method was connected with the script of established laws, and later people, not understanding ancient seals, wrongly assumed a curved and bent form, and considered it a method; it could be greatly ridiculed. Many examples were found in the collections of the old families, with characters all square and upright, resembling the script of established laws; this was the script of cast seals.<a id="trans-11p" href="#orig-11p" class="marker">[11p]</a><br/>
-Wang Qu’s *Xiao Tang Ji*’s records of ancient seals are precisely consistent with what is known. All the curves and windings, the Tang Seal began thus, and the ancient seals on stone tablets, such as the official decrees of Yan and Lu Gong, and the seal of the Province, demonstrate this. <br/>
+There were Han Dynasty seals that were cast in relief, and their method was merely square and upright. The seal script method was connected with the script of established laws, and later people, not understanding ancient seals, wrongly assumed a curved and bent form, and considered it a method; it could be greatly ridiculed. Many examples were found in the collections of the old families, with characters all square and upright, resembling the script of established laws; this was the script of cast seals.<a id="trans-11p" href="#orig-11p" class="marker">[11p]</a> Wang Qu’s *Xiao Tang Ji*’s records of ancient seals are precisely consistent with what is known. All the curves and windings, the Tang Seal began thus, and the ancient seals on stone tablets, such as the official decrees of Yan and Lu Gong, and the seal of the Province, demonstrate this. <br/>
 <br/>
 Nineteen stated that:<br/>
 <br/>
-Han and Wei seals were all made with white script, no more than a cun (a Chinese measure of length) in size, and were cast for ceremonies of appointment and sealing, representing a hasty action. Military seals were often carved, reflecting the urgency of issuing orders, and could not be delayed.<a id="trans-12p" href="#orig-12p" class="marker">[12p]</a><br/>
-In the ancient times, official positions were established through seals rather than written characters, therefore it is so. From the Tang dynasty onward, vermilion script was used, but the ancient method gradually declined, and by the Song dynasty, after the migration south, there were no longer any knowledgeable individuals, hence the later Song dynasty seals were all fundamentally flawed.<br/>
+Han and Wei seals were all made with white script, no more than a cun (a Chinese measure of length) in size, and were cast for ceremonies of appointment and sealing, representing a hasty action. Military seals were often carved, reflecting the urgency of issuing orders, and could not be delayed.<a id="trans-12p" href="#orig-12p" class="marker">[12p]</a> In the ancient times, official positions were established through seals rather than written characters, therefore it is so. From the Tang dynasty onward, vermilion script was used, but the ancient method gradually declined, and by the Song dynasty, after the migration south, there were no longer any knowledgeable individuals, hence the later Song dynasty seals were all fundamentally flawed.<br/>
 <br/>
 Twenty examples state:<br/>
 <br/>
@@ -176,44 +197,33 @@ White seals were all used in the style of Han篆, with square and upright charac
 <br/>
 Twenty-one examples state:<br/>
 <br/>
-Seals with three characters, where one character is on the right side and one character is on the left side, should be considered equal to a seal with one character on the left side; the characters should not be broken in the middle, nor should they be nearly joined.<a id="trans-13p" href="#orig-13p" class="marker">[13p]</a><br/>
-Twenty-two measures state:<br/>
+Seals with three characters, where one character is on the right side and one character is on the left side, should be considered equal to a seal with one character on the left side; the characters should not be broken in the middle, nor should they be nearly joined.<a id="trans-13p" href="#orig-13p" class="marker">[13p]</a> Twenty-two measures state:<br/>
 <br/>
 Four-character seals should have a slight emptiness at the intersection of the first two characters, and the last two characters should not have any emptiness; these should be distinguished by leaving a blank space. Because characters have feet and lack feet, this is what is said. If one side is clearly divided and the other is not, it is an improper measurement.<br/>
 <br/>
 Twenty-three measures state:<br/>
 <br/>
-Seals of the Xu-Zhai style and similar styles had no such pattern in the past; only Li Yi, the Tang official, had a three-character seal reading “Duan Ju Shi” (Enduring Residence) carved in white jade, which may be followed as a model.<a id="trans-14p" href="#orig-14p" class="marker">[14p]</a><br/>
-Ultimately, it is white script, not ancient methods, far inferior to simply using Zhu’s script. Twenty-four examples state: Zhu’s script, sometimes employing a mixed style seal, should not be overly strange; instead, choose the one closest to human understanding, and free verbal explanations are permissible. Twenty-five examples state: White script seals should be based on the characters from Cui Zi Yu’s transcription of the Zhang Ping Zu Stele, and also on the characters on Han-era artifacts and accompanying seals and tablets, representing the best. Twenty-six examples state: For lists of names, there were ancient stylistic conventions, and one should not use mixed seals or Zhu’s script arbitrarily.<a id="trans-15p" href="#orig-15p" class="marker">[15p]</a><br/>
-Twenty-seventh day’s instruction:<br/>
+Seals of the Xu-Zhai style and similar styles had no such pattern in the past; only Li Yi, the Tang official, had a three-character seal reading “Duan Ju Shi” (Enduring Residence) carved in white jade, which may be followed as a model.<a id="trans-14p" href="#orig-14p" class="marker">[14p]</a> Ultimately, it is white script, not ancient methods, far inferior to simply using Zhu’s script. Twenty-four examples state: Zhu’s script, sometimes employing a mixed style seal, should not be overly strange; instead, choose the one closest to human understanding, and free verbal explanations are permissible. Twenty-five examples state: White script seals should be based on the characters from Cui Zi Yu’s transcription of the Zhang Ping Zu Stele, and also on the characters on Han-era artifacts and accompanying seals and tablets, representing the best. Twenty-six examples state: For lists of names, there were ancient stylistic conventions, and one should not use mixed seals or Zhu’s script arbitrarily.<a id="trans-15p" href="#orig-15p" class="marker">[15p]</a> Twenty-seventh day’s instruction:<br/>
 <br/>
 White script seals must be pressed against the edge, there must be no emptiness; emptiness leads to a lack of antiquity.<br/>
 <br/>
 Twenty-eighth day’s instruction:<br/>
 <br/>
-Red script seals must not be pressed against the edge, but must instead take the blank space within the character as the point of contact, in order to avoid the seal issuing with a meaning that coincides with the edge, without purpose. The characters should be fine, with outward strokes on all four sides, they should be restrained by the edge, the edge must be finer than the character itself; if the edge is one piece, when the seal is issued, the four sides will be empty, the paper will rise, it will inevitably make the edge thicker than the character; this cannot be understood from seeing the seal many times. The sticky edge red script seal is the method of the building of the writing room, established by.<a id="trans-16p" href="#orig-16p" class="marker">[16p]</a><br/>
-On the twenty-ninth day:<br/>
+Red script seals must not be pressed against the edge, but must instead take the blank space within the character as the point of contact, in order to avoid the seal issuing with a meaning that coincides with the edge, without purpose. The characters should be fine, with outward strokes on all four sides, they should be restrained by the edge, the edge must be finer than the character itself; if the edge is one piece, when the seal is issued, the four sides will be empty, the paper will rise, it will inevitably make the edge thicker than the character; this cannot be understood from seeing the seal many times. The sticky edge red script seal is the method of the building of the writing room, established by.<a id="trans-16p" href="#orig-16p" class="marker">[16p]</a> On the twenty-ninth day:<br/>
 <br/>
-Many people make seals by copying characters in a standardized format. This is a great error, because during the Han dynasty, seals had never been like this, and in the three preceding dynasties there were no seals at all. Scholars should be cautious about this. *Zhouli* contains descriptions of seals, including the seal-holding devices and the golden seals used to judge their beauty, and there is a saying that one should adorn them with seals. It is stated: “Seal, is the actual part held in the hand.” The Qin dynasty seals, which are inscribed with characters, are unusable, but when seals are made, the characters are all reversed.<a id="trans-17p" href="#orig-17p" class="marker">[17p]</a><br/>
-Ancient people used it to demonstrate sincerity, not inquiring about the words themselves, but valuing its genuine nature. If it were during the Warring States period, Sima Qian’s six seals would be unheard of, a system never before seen. *Hainan Zi* says, “Lu Jun Gong entrusted Zou Gong with a seal of a general.” Liu An’s allegory was lost in the words.<a id="trans-18p" href="#orig-18p" class="marker">[18p]</a><br/>
-Thirty-sixth year: The Way is called a name, though the Tang people had it, they never made an official seal. Therefore, it could not be used as a seal. A three-character house bracket had a method in the Tang.<br/>
+Many people make seals by copying characters in a standardized format. This is a great error, because during the Han dynasty, seals had never been like this, and in the three preceding dynasties there were no seals at all. Scholars should be cautious about this. *Zhouli* contains descriptions of seals, including the seal-holding devices and the golden seals used to judge their beauty, and there is a saying that one should adorn them with seals. It is stated: “Seal, is the actual part held in the hand.” The Qin dynasty seals, which are inscribed with characters, are unusable, but when seals are made, the characters are all reversed.<a id="trans-17p" href="#orig-17p" class="marker">[17p]</a> Ancient people used it to demonstrate sincerity, not inquiring about the words themselves, but valuing its genuine nature. If it were during the Warring States period, Sima Qian’s six seals would be unheard of, a system never before seen. *Hainan Zi* says, “Lu Jun Gong entrusted Zou Gong with a seal of a general.” Liu An’s allegory was lost in the words.<a id="trans-18p" href="#orig-18p" class="marker">[18p]</a> Thirty-sixth year: The Way is called a name, though the Tang people had it, they never made an official seal. Therefore, it could not be used as a seal. A three-character house bracket had a method in the Tang.<br/>
 <br/>
 Thirty-seventh year: All seals, I have two volumes of seals from ancient people, one for official seals, one for private seals, and they are very detailed in listing their purposes. It is to be noted that in seal script, words sometimes spontaneously disappear, and these should be left as they are; ancient seals were often like this.<br/>
 <br/>
-Thirty-eighth year: All seals, I have two volumes of seals from ancient people, one for official seals, one for private seals, and they are very detailed in listing their purposes.<a id="trans-19p" href="#orig-19p" class="marker">[19p]</a><br/>
-It is not as the *Xìngtángjí* records; it merely provides phonetic explanations. Thirty-three rules state: All names should not be arbitrarily written; some names are harmonized by adding “seal,” “chapter,” or other similar characters; or by using “seal” and “chapter” together, as in “surname seal chapter”; it is better to simply use “seal.” Two-character names may be written in reverse; when the surname is below, the “seal” character is placed to the right; when the surname is to the left, this is correct. Single-character names should be written as “surname seal,” but not in reverse.<a id="trans-20p" href="#orig-20p" class="marker">[20p]</a><br/>
-If one says “my private seal,” it should not be used to inscribe characters; it should only be used to seal documents, and it should not be used to write backward. Within the name seal, the character “氏” should not be affixed; within the seal of virtue, the character “氏” may be added; it should also be carefully examined.<br/>
+Thirty-eighth year: All seals, I have two volumes of seals from ancient people, one for official seals, one for private seals, and they are very detailed in listing their purposes.<a id="trans-19p" href="#orig-19p" class="marker">[19p]</a> It is not as the *Xìngtángjí* records; it merely provides phonetic explanations. Thirty-three rules state: All names should not be arbitrarily written; some names are harmonized by adding “seal,” “chapter,” or other similar characters; or by using “seal” and “chapter” together, as in “surname seal chapter”; it is better to simply use “seal.” Two-character names may be written in reverse; when the surname is below, the “seal” character is placed to the right; when the surname is to the left, this is correct. Single-character names should be written as “surname seal,” but not in reverse.<a id="trans-20p" href="#orig-20p" class="marker">[20p]</a> If one says “my private seal,” it should not be used to inscribe characters; it should only be used to seal documents, and it should not be used to write backward. Within the name seal, the character “氏” should not be affixed; within the seal of virtue, the character “氏” may be added; it should also be carefully examined.<br/>
 <br/>
 Thirty-four states:<br/>
 <br/>
-The seal of virtue should only use two characters, and this is the formal method. Recent people wish to add their surname and family name to it, saying “my surname and my family name,” which is incorrect.<a id="trans-21p" href="#orig-21p" class="marker">[21p]</a><br/>
-If one were to adopt the surname “Ao Fu,” in ancient times such a designation did exist, serving merely to enhance one’s own reputation. However, it was not permitted for use in seals. Many people favored the old ways, disregarding the prevailing vulgar customs. Han dynasty seals, those not consisting of the surname “Ao Fu” or lacking the character “印” (yì – seal), were all false names. It was improper to employ the character “印” in a seal to confuse names.<a id="trans-22p" href="#orig-22p" class="marker">[22p]</a><br/>
-Han Zhang Chang’an, with the character name *Yaojun* (right one character, left two), and Tang Lü Wēn, with the character name *Huaguang* (three characters), had seals named “Zhang Yaojun” and “Lü Huaguang,” respectively. Both were seals of the style of disciples of Wang, the Western Han King. “Huaguang” is similar to that in the writings of Lü Heng, and it was from Lü Province.<br/>
+The seal of virtue should only use two characters, and this is the formal method. Recent people wish to add their surname and family name to it, saying “my surname and my family name,” which is incorrect.<a id="trans-21p" href="#orig-21p" class="marker">[21p]</a> If one were to adopt the surname “Ao Fu,” in ancient times such a designation did exist, serving merely to enhance one’s own reputation. However, it was not permitted for use in seals. Many people favored the old ways, disregarding the prevailing vulgar customs. Han dynasty seals, those not consisting of the surname “Ao Fu” or lacking the character “印” (yì – seal), were all false names. It was improper to employ the character “印” in a seal to confuse names.<a id="trans-22p" href="#orig-22p" class="marker">[22p]</a> Han Zhang Chang’an, with the character name *Yaojun* (right one character, left two), and Tang Lü Wēn, with the character name *Huaguang* (three characters), had seals named “Zhang Yaojun” and “Lü Huaguang,” respectively. Both were seals of the style of disciples of Wang, the Western Han King. “Huaguang” is similar to that in the writings of Lü Heng, and it was from Lü Province.<br/>
 <br/>
 At thirty-five years of age, he said:<br/>
 <br/>
-The empty spaces beneath the seals should be left blank, and they should not be stretched out artificially, nor should they be bent and twisted in an attempt to fill them. If the writing is well-reasoned, it will naturally not appear empty.<a id="trans-23p" href="#orig-23p" class="marker">[23p]</a><br/>
-Too many words, need not ask about this.<a id="trans-24p" href="#orig-24p" class="marker">[24p]</a></div>
+The empty spaces beneath the seals should be left blank, and they should not be stretched out artificially, nor should they be bent and twisted in an attempt to fill them. If the writing is well-reasoned, it will naturally not appear empty.<a id="trans-23p" href="#orig-23p" class="marker">[23p]</a> Too many words, need not ask about this.<a id="trans-24p" href="#orig-24p" class="marker">[24p]</a></div>
     </div>
 
     <div class="section">
