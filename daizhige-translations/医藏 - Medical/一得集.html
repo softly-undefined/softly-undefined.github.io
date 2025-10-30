@@ -50,7 +50,14 @@
       flex-wrap: wrap;
       align-items: center;
     }
+    .jump-buttons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
     .toggle-button,
+    .jump-button,
     .return-link {
       padding: 0.4rem 0.9rem;
       border: 1px solid #0077cc;
@@ -62,12 +69,20 @@
       transition: all 0.15s ease-in-out;
     }
     .toggle-button:hover,
+    .jump-button:hover,
     .return-link:hover {
       background: rgba(0, 119, 204, 0.08);
     }
     .toggle-button.active {
       background: #0077cc;
       color: #fff;
+    }
+    .jump-button[disabled] {
+      border-color: #b8b8b8;
+      color: #9a9a9a;
+      background: #f3f3f3;
+      cursor: not-allowed;
+      pointer-events: none;
     }
     .return-link {
       text-decoration: none;
@@ -105,6 +120,10 @@
       font-style: italic;
       margin: 0.5rem 0;
     }
+    #translation-section,
+    #original-section {
+      scroll-margin-top: 5.5rem;
+    }
     @media (max-width: 600px) {
       .view-toggle {
         flex-direction: column;
@@ -114,11 +133,15 @@
       .view-toggle-group {
         justify-content: center;
       }
+      .jump-buttons {
+        justify-content: center;
+      }
       .return-link {
         margin-left: 0;
         text-align: center;
       }
-      .toggle-button {
+      .toggle-button,
+      .jump-button {
         flex: 1 1 auto;
         text-align: center;
       }
@@ -134,11 +157,15 @@
       <button type="button" class="toggle-button active" data-target="stacked-view" aria-pressed="true">Stacked</button>
       <button type="button" class="toggle-button" data-target="interlaced-view" aria-pressed="false">Interlaced</button>
     </div>
+    <div class="jump-buttons" role="group" aria-label="Jump to section">
+      <button type="button" class="jump-button" data-section-target="translation-section" aria-disabled="false">Jump to English</button>
+      <button type="button" class="jump-button" data-section-target="original-section" aria-disabled="false">Jump to Chinese</button>
+    </div>
     <a class="return-link" href="../index.html">Return to index</a>
   </div>
 
   <div id="stacked-view" class="view active" aria-hidden="false">
-    <div class="section">
+    <div id="translation-section" class="section">
       <h3>Translation</h3>
       <div>One obtains clarity of mind through Chan practice (by a Buddhist monk).<br/>
 <br/>
@@ -619,7 +646,7 @@ Postscript:<br/>
 Studying Buddhism does not involve grasping the ultimate truth. A physician cannot grasp the fundamental principle. Once the mind is relaxed, there is no need to add to it. The heart is like a luminous pearl within, and the mirror reflects it. Reading the ancient scriptures of emperors leads to a sincere aspiration.<a id="trans-394p" href="#orig-394p" class="marker">[394p]</a> Once, I rejoiced, and all things followed the flow of cause and effect. I carved insects and fish, leaned upon the nature of life and death. I gathered herbs and plants, exhausted my spirit. I reflected upon the compassion and mercy of the Buddha. I lowered my head and released you, pitying the suffering of all beings. I used ten fingers to revive people. When the pine smoke burned, the plum blossoms bloomed, the orchid and camellia were picked, their fragrance encircled the sandals.<a id="trans-395p" href="#orig-395p" class="marker">[395p]</a> The art embodies harmony. Clouds are woven into fabric. It is not comparable to the skill of the Tai Gong. It can be likened to the marvels of the Otter Woman. Purple books are held in the hand of the Buddha. Furthermore, it gathers scriptures from the imperial palace of the Phoenix. Golden chests and jade boxes. It explores treasures within the dragon’s palace. Toothpicks and brocade silks. With these, it examines the six energies, classifies the five elements, meticulously distinguishes yin and yang, and thoroughly consults the annals of the court.<a id="trans-396p" href="#orig-396p" class="marker">[396p]</a> To open the vessel of heaven and earth. To seize the scales of life and death. The jade disk is distant, the golden needle operates secretly. The pure intention has already reached perfection. The dark pearl quietly seeks. The peach trees are planted in the apricot grove. Cultivation need not rely on tribute and offerings. The tangerines are nourished in the orange spring. Irrigation need not be envied to Du Fan. The skill is manifested in playing the knife. The path is spacious in his maneuvering. The feet are lowered, and the heart follows his desire. It is like a god dwelling in the land of immortals.<a id="trans-397p" href="#orig-397p" class="marker">[397p]</a> He severed his flesh, this was the way of releasing himself. He fulfilled the wishes of the Bodhisattvas and their relatives. Therefore, he left his mountain to seek enlightenment. Extraordinary characters filled his cart. He entered the world, practicing Zen. He received invitations from successful men. He learned news from lower-level officials. He grasped the principles of skilled artisans. He felt ashamed of his lack of literary talent. He rejoiced in being guided and nurtured with skill. Love me, love me. He traveled to Lake Tai to gain insight into the teachings from the West. He was able to converse with wise people. He crossed the sea to reach the Southern Peak.<a id="trans-398p" href="#orig-398p" class="marker">[398p]</a> During the seventh year of the Xiling reign of the Emperor, in the middle of the spring season, on the third day of the period of washing clothes at Zhonghua River, Li Yi, from Jinzhou Village, sent his brother, Xu Ji, a woodcutter, to visit the Tiger Forest, and it was inscribed by Hu Lin, a guest.<a id="trans-399p" href="#orig-399p" class="marker">[399p]</a></div>
     </div>
 
-    <div class="section">
+    <div id="original-section" class="section">
       <h3>Original</h3>
       <div>一得集清心禅（释）　　叙　　唐时有西域治疾方一卷。乃西域仙人取传见艺文志。余小蓬莱谣有云。炼就金丹一粟黄。不堪大众共分尝。待游西域仙人到。备说人间治疾方。即谓此也。夫道家龙虎铅汞。徒托空谈。桐柏真人以大还丹。命张老沿门唤卖。　　究竟何人白日升天而去。不如王侯单方。<a id="orig-1p" href="#trans-1p" class="marker">[1p]</a><br/>
 救人疾苦。不失为菩萨心肠。心禅和尚隐于浮屠。而精于医。其论医诸条。无不入微。非精研轩岐之书。不能道只字。取附诸案。尤见运用灵机。不拘死法。和尚于此道三折肱矣。庚寅初夏。余住右台仙馆。<a id="orig-2p" href="#trans-2p" class="marker">[2p]</a><br/>
@@ -3905,6 +3932,32 @@ Studying Buddhism does not involve grasping the ultimate truth. A physician cann
     (function () {
       const buttons = document.querySelectorAll('.toggle-button');
       const views = document.querySelectorAll('.view');
+      const jumpButtons = document.querySelectorAll('.jump-button');
+
+      function setJumpButtonsEnabled(enabled) {
+        jumpButtons.forEach((jumpButton) => {
+          jumpButton.disabled = !enabled;
+          jumpButton.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+        });
+      }
+
+      jumpButtons.forEach((jumpButton) => {
+        jumpButton.addEventListener('click', () => {
+          if (jumpButton.disabled) {
+            return;
+          }
+          const sectionId = jumpButton.dataset.sectionTarget;
+          if (!sectionId) {
+            return;
+          }
+          const section = document.getElementById(sectionId);
+          if (section && typeof section.scrollIntoView === 'function') {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      setJumpButtonsEnabled(true);
 
       buttons.forEach((button) => {
         button.addEventListener('click', () => {
@@ -3919,6 +3972,7 @@ Studying Buddhism does not involve grasping the ultimate truth. A physician cann
             view.classList.toggle('active', isTarget);
             view.setAttribute('aria-hidden', isTarget ? 'false' : 'true');
           });
+          setJumpButtonsEnabled(targetId === 'stacked-view');
         });
       });
     })();

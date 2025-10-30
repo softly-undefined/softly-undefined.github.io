@@ -50,7 +50,14 @@
       flex-wrap: wrap;
       align-items: center;
     }
+    .jump-buttons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
     .toggle-button,
+    .jump-button,
     .return-link {
       padding: 0.4rem 0.9rem;
       border: 1px solid #0077cc;
@@ -62,12 +69,20 @@
       transition: all 0.15s ease-in-out;
     }
     .toggle-button:hover,
+    .jump-button:hover,
     .return-link:hover {
       background: rgba(0, 119, 204, 0.08);
     }
     .toggle-button.active {
       background: #0077cc;
       color: #fff;
+    }
+    .jump-button[disabled] {
+      border-color: #b8b8b8;
+      color: #9a9a9a;
+      background: #f3f3f3;
+      cursor: not-allowed;
+      pointer-events: none;
     }
     .return-link {
       text-decoration: none;
@@ -105,6 +120,10 @@
       font-style: italic;
       margin: 0.5rem 0;
     }
+    #translation-section,
+    #original-section {
+      scroll-margin-top: 5.5rem;
+    }
     @media (max-width: 600px) {
       .view-toggle {
         flex-direction: column;
@@ -114,11 +133,15 @@
       .view-toggle-group {
         justify-content: center;
       }
+      .jump-buttons {
+        justify-content: center;
+      }
       .return-link {
         margin-left: 0;
         text-align: center;
       }
-      .toggle-button {
+      .toggle-button,
+      .jump-button {
         flex: 1 1 auto;
         text-align: center;
       }
@@ -134,11 +157,15 @@
       <button type="button" class="toggle-button active" data-target="stacked-view" aria-pressed="true">Stacked</button>
       <button type="button" class="toggle-button" data-target="interlaced-view" aria-pressed="false">Interlaced</button>
     </div>
+    <div class="jump-buttons" role="group" aria-label="Jump to section">
+      <button type="button" class="jump-button" data-section-target="translation-section" aria-disabled="false">Jump to English</button>
+      <button type="button" class="jump-button" data-section-target="original-section" aria-disabled="false">Jump to Chinese</button>
+    </div>
     <a class="return-link" href="../../index.html">Return to index</a>
   </div>
 
   <div id="stacked-view" class="view active" aria-hidden="false">
-    <div class="section">
+    <div id="translation-section" class="section">
       <h3>Translation</h3>
       <div>The opening section states: Scholars first possessed awareness, then culture and art, and art is at the end. Ritual, music, archery, horsemanship, calligraphy, and arithmetic are all arts, yet calligraphy is at the furthest end. It proceeds from calligraphy, exploring the essence of craftsmanship, discerning the correctness of form and sound. It then confines and corrects the boundaries of propriety, examining the intentions of ancient sages and worthies, and those pursuing the Way may only grasp a small portion of it. It is then abandoned to focus on the learning of characters and paintings, discarding its purpose while pursuing the arrangement of symbols, and yet it remains at the end. My own understanding is shallow and humble, and I struggled with learning; therefore, I observed and copied the style of ancient texts, and when I saw them, I immediately copied them.<a id="trans-1p" href="#orig-1p" class="marker">[1p]</a> Having copied for a long time, each form was merely a likeness; after a while, one began to understand its meaning, then surveyed all the existing inscriptions and manuscripts, engaged in mutual examination, and only then did one regulate its laws, follow its method of positioning, examine its use of brushstrokes, and finally understand its spirit. It was only then that one realized it. The ancients’ intention in writing was often beyond the mere strokes and ink; those who sought its meaning could not escape being bound by the strokes and ink, and yet still could not transcend them. Few, if any, who had devoted themselves to it for a long time, gained insights, and then, like a dry stream, simplified the complex and disordered, achieving elegance that was worthy of observation.<a id="trans-2p" href="#orig-2p" class="marker">[2p]</a> There were those who considered my opinion worthy of attention, and they entrusted it to the carving tools. I consistently refused, because of my humble account of the circumstances by which I acquired my occupation, and my particular inclinations, and then named it “The Keeper of the Pool.” Alas, Confucius and Wang Yang fell, and countless people were replaced by those with names written on books, yet few achieved fame through a single skill! I have never truly mastered the classics, and after decades of effort, I can only vaguely grasp their general outlines; therefore, I proceed from the understanding of skills to further advancement. Truly, the essence of the classics is not easily grasped; what difficulty there is! The world now values only fleeting trends and trivial reputations, without seeking harmony with the ancients—this can only lead to ruin.<a id="trans-3p" href="#orig-3p" class="marker">[3p]</a> In the seventh year of the reign of Emperor Wu of the Han, in the sixth month of the summer of the Wuding year, Xing Lian began to write. Previously, people governed by knotting strings, and from the time of Fuxi, eight trigrams were drawn, and writing began. Therefore, the ancients created characters, calling them “characters and paintings,” referring to the division and boundaries. *Li Ye* defines “di” (涂) as “it emerges from the right and is then returned,” and “painting” (邱) refers to it.<a id="trans-4p" href="#orig-4p" class="marker">[4p]</a> To follow the Way, one must draw according to its rules. The name’s explanation: Since the Way originates from the right, it is called “Hua Qiu” (drawing in the fields), and people still favor the right hand. Therefore, when drawing, one should use the right hand. Whether in seal script, cursive script, regular script, semi-cursive script, or cursive script, one must never forget the meaning of the character “Hua.”<a id="trans-5p" href="#orig-5p" class="marker">[5p]</a> The brush, when used for painting, will never be crooked, never be uneven, while the characters themselves exhibit a thousand variations, refined through painstaking effort and skillful technique, from which it originates. Afterwards, posterity does not call it painting, but writing. “Write” has a double meaning: “Write” as in “to place objects” (referring to the initial act of placing the brush and ink).<a id="trans-6p" href="#orig-6p" class="marker">[6p]</a> The *Yueh Shu* states: “To write, it is to transmit. To ‘set’ (置者), one sets the form of objects; to ‘transmit’ (输者), one transmits my heart. These two meanings do not contradict each other, therefore the character is a drawing of the heart. If one can only set the form of objects and cannot transmit my heart, then the meaning of drawing and writing would be lost.”<a id="trans-7p" href="#orig-7p" class="marker">[7p]</a> The fault lies not in the failing of calligraphy. Characters and paintings originate from the same craftsman; characters are valued for their writing, and paintings are likewise valued for their writing. When calligraphy penetrates into painting, the painting is invariably perfect; when painting methods are incorporated into calligraphy, the calligraphy is invariably sublime. Therefore it is said: a good calligrapher must be a good painter, and a good painter must be a good calligrapher.<a id="trans-8p" href="#orig-8p" class="marker">[8p]</a> Those who excel in calligraphy and painting, such as Mi Xiangyang, Ni Yunlin, Zhao Songxue, Shen Shitian, Wen Hengshan, and Dong Sibei, possess a singular ability. Their calligraphy and paintings demonstrate a single-minded application, a consistent understanding of principles, with calligraphy containing paintings and paintings containing calligraphy. Mi Yuanzhang said: “Dongpo is a master of the brush character.” He himself said he was “brushing” characters.<a id="trans-9p" href="#orig-9p" class="marker">[9p]</a> This is merely surpassing those who came before, a saying of striving for perfection, not implying inability to write, but actually copying and drawing to form characters. From桧 onward, there is no shame. Those who followed and wrote sought to emulate the brushwork and drawings of Su Shi and Mi Fu, but it was unattainable.<br/>
 <a id="trans-10p" href="#orig-10p" class="marker">[10p]</a> Using his saying, I have heard of it. Some say ‘correct the锋,’ others say ‘middle锋,’ others say ‘concealed锋,’ others say ‘forthcoming锋,’ others say ‘lateral锋,’ others say ‘flattened锋.’ Those who know the classics find it within their minds, their words are clear and distinct, while those who know but do not know, each hold to their own view, and they speak of it repeatedly. Ultimately, they gather disputes and conflicting opinions, unable to arrive at a definitive judgment. This is because they follow the instructions of previous generations, not bothering to elaborate, and do not venture to expand upon them. Afterwards, those who follow imitate the wise ancients, understanding only half and failing to pursue to the extreme, and therefore, they contemplate it.<a id="trans-11p" href="#orig-11p" class="marker">[11p]</a> Liǔ Gōngquán yuē: Heart being correct, the brush is correct; the brush being correct, the brush’s edge becomes easily correct. The central edge is the true straight edge; it need not be explained. Yet I have a different saying about this: the brush handle is made of bamboo, which is naturally straight and does not curve; its nature is firm. If one wishes to make it straight, it is ultimately made straight. The brush head is made of hair, which is naturally easy to raise and easy to lower; its nature is yielding. Yet, to make it straight, it is difficult to preserve its not bending.<a id="trans-12p" href="#orig-12p" class="marker">[12p]</a> If it cannot be achieved through urging and persuasion, the brushstick is firm and the brushhead lies still, does this represent a central strategy? Or perhaps one exerts extreme effort to control the brushhead, confining the sharpness within the tip, pressing the hair against the blank paper, like using chopsticks to draw characters. In this case, the brush is correct, balanced. However, the sharpness is already lost, and can it still be called sharpness? Some say: this is a method of concealing sharpness. Ask: does concealing sharpness mean concealing it within the brushhead? Or does it mean concealing it within the character and painting? It is a saying that people already know. Knowing it and saying that only concealing sharpness is the central strategy, and that the central strategy does not involve not concealing sharpness, is also incomplete.<a id="trans-13p" href="#orig-13p" class="marker">[13p]</a> To conceal the sharp edge, the method of the central edge is like a craftsman drilling wood; first, one extends and moves the hands in four directions, then it is possible to penetrate the wood in three parts. Once it is established, the drill has already penetrated deeply, then one holds it steadily in a straight line. The same applies to characters. Those that accurately capture the central edge can also conceal the sharp edge; like a needle drawing sand, like an inkstone and ink, this is precisely what it is. However, there are also instances where the brushstroke extends beyond its termination, at the points of cessation, at the junctions of the brushstroke and the binding, these also have instances of extending the edge.<a id="trans-14p" href="#orig-14p" class="marker">[14p]</a> The brushstroke’s edge emerges, and the brushstroke’s edge also emerges. Though the brushstroke’s edge emerges, it is still the sharpness of the brushpoint itself, then the concealed sharpness and the emerging sharpness are both called the ‘central’ sharpness; one must not exclusively regard the concealed sharpness as the central sharpness. The method of the lateral edge is to take its advantage using lateral movement; this has also existed in the ancient world. If a common brush produces a straight stroke, then it intends for a straight force, and it will inevitably stop at a lack of sharpness.<a id="trans-15p" href="#orig-15p" class="marker">[15p]</a> To make the brushstrokes lean to one side, one must intend to lean to the prevailing trend, and only then will it cease. The strings of the zither, when unified, who can hear them? Their principle is one. The painter’s method of rendering stone—three sides are sharp, one must use the leaning edge to achieve it. The brushstroke emerges, and then the stone edge emerges.<a id="trans-16p" href="#orig-16p" class="marker">[16p]</a> If one lies prostrate across his brush, then it becomes utterly blurred, and it cannot be used as stone. In short, the method of writing is to first make the wrist flexible and the brush lively, seizing the air, calm and unrestrained, fluent and joyous, purely relying on nature, indescribable, able to use the brush in every way—straight, sideways, following, heavy, light, empty, solid, grasping and fixing, even when drawn out, tight and firm, expanded and open; the whole body is a calculation, entirely relying on the brushpoint and its bristles to direct it, thus achieving perfect harmony. A dull person presses a sticky column against a lute, carves a sword from a raft, and says: “If it is the center, then it is; if it is not, it is not.” This is merely nonsense! Therefore, one knows that even though this relies on the assistance of others, it is also dependent on innate talent; within the Dao, and outside the Dao, there are fixed rules. Even in the minutest details of an art, one must seek to understand the wisdom of others and yet still cannot obtain it.<a id="trans-17p" href="#orig-17p" class="marker">[17p]</a> Ah, how difficult! The method of ink—it is both intensely dark as when the subject lives, and exceedingly pale as when it fades. Intense darkness and extreme lightness cannot be achieved with narrow ink; it is clear that ancient seal stones were designed to concentrate ink in small areas. The large brush, when wet, produces a dripping effect, and the two characters “dripping” are deliberately chosen. Wetting the brush also has its own established method.<a id="trans-18p" href="#orig-18p" class="marker">[18p]</a> When writing, one must open the brush fully, letting the ink drop into the inkstone, like a pole striking water, so that the ink enters from the brush tip. Thus, the brush is full of ink, and with vigorous strokes, the ink flows out from the brush tip. Conversely, if the ink is merely dropped into the brush, the brush is dry and the ink is sparse. The ancients’ calligraphy and paintings have been passed down for a long time, and after many years, they retain their original vitality, spirit, and brilliance, unerasable. A person unskilled in the use of ink will make it too dark and easily dry, or too pale and thin; within a few years, it will become dull and lifeless.<a id="trans-19p" href="#orig-19p" class="marker">[19p]</a> I do not know how to use a brush, and I do not know how to use ink. This matter is difficult for common artisans to understand. It is said by Dong Si Weng that all works on paper should not be trusted with the brush, because if one trusts the brush, there will be no master to guide it, and the lines will easily rise and fall. I believe that trusting the brush too much is not to be overly valued, nor should it be given too much consideration.<a id="trans-20p" href="#orig-20p" class="marker">[20p]</a> If one relies on rote memorization, the brushstrokes become stiff, and the brush obeys the mind, then the brush dies. To allow the brush to follow my natural movement, so that we are in harmony, then we become one; this is the way to achieve a harmonious union. And the true essence of characters arises from this. Characters have a certain rhythm, a certain measure, a certain length—one need not fabricate them.<a id="trans-21p" href="#orig-21p" class="marker">[21p]</a> The military strategy, through the acceptance of things, is purely natural, reaching the utmost naturalness, and consequently, can change according to one’s will, encompassing all things. It is appropriate for one to maintain this state for a thousand generations.<br/>
@@ -168,7 +195,7 @@ The characters possess numerical interpretations, and their primary purpose is t
 Writing can nourish and sustain one’s spirit, and it can also invigorate it. Through quiet sitting and the practice of writing楷法, even a few dozen or several hundred characters brought a sense of restlessness to a standstill. If writing in running script, one could freely pour out one’s feelings until a state of exhilaration and clarity was achieved.<a id="trans-66p" href="#orig-66p" class="marker">[66p]</a> Writing poetry, writing prose, has from the outset a clear principle; one perceives the flow of its development. Therefore, understanding the way of learning is sufficient to expand and broaden one’s talents and abilities, and to mature one’s scholarship.<a id="trans-67p" href="#orig-67p" class="marker">[67p]</a></div>
     </div>
 
-    <div class="section">
+    <div id="original-section" class="section">
       <h3>Original</h3>
       <div>序　　　　士先器识而后文艺，艺末也。礼、乐、射、御、书、数皆艺，而书居其末，由书而言，探制作之精，辨形声之正，于以穷苞，苻匡伪谬，上窥古圣贤之用心，志道者犹或少之。至舍意义而讲字画，遗宗旨而究标格，抑又末已。余志识浅陋，艰于问学，顾雅爱古人法书，见辄临摹。<a id="orig-1p" href="#trans-1p" class="marker">[1p]</a><br/>
 临摹之久，每苦形似，既而思得其意，乃遍览诸家碑帖，参观互证，始规其立法，因玩其取势，进勘其用笔，继悟其行神，夫而后觉。古人作书之意，往往超乎笔画行墨之外，而求其意者不可泥笔画行墨之迹，而仍不能越乎笔画行墨之中。苟非会而通之，神而明之，其不为刻舟求剑、买椟还珠者，盖亦鲜矣。余从事既久，间有心得，更于前人所论稍有发明，得如干则，冗杂无次，雅不足观。<a id="orig-2p" href="#trans-2p" class="marker">[2p]</a><br/>
@@ -679,6 +706,32 @@ Writing can nourish and sustain one’s spirit, and it can also invigorate it. T
     (function () {
       const buttons = document.querySelectorAll('.toggle-button');
       const views = document.querySelectorAll('.view');
+      const jumpButtons = document.querySelectorAll('.jump-button');
+
+      function setJumpButtonsEnabled(enabled) {
+        jumpButtons.forEach((jumpButton) => {
+          jumpButton.disabled = !enabled;
+          jumpButton.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+        });
+      }
+
+      jumpButtons.forEach((jumpButton) => {
+        jumpButton.addEventListener('click', () => {
+          if (jumpButton.disabled) {
+            return;
+          }
+          const sectionId = jumpButton.dataset.sectionTarget;
+          if (!sectionId) {
+            return;
+          }
+          const section = document.getElementById(sectionId);
+          if (section && typeof section.scrollIntoView === 'function') {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      setJumpButtonsEnabled(true);
 
       buttons.forEach((button) => {
         button.addEventListener('click', () => {
@@ -693,6 +746,7 @@ Writing can nourish and sustain one’s spirit, and it can also invigorate it. T
             view.classList.toggle('active', isTarget);
             view.setAttribute('aria-hidden', isTarget ? 'false' : 'true');
           });
+          setJumpButtonsEnabled(targetId === 'stacked-view');
         });
       });
     })();

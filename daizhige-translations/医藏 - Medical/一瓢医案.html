@@ -50,7 +50,14 @@
       flex-wrap: wrap;
       align-items: center;
     }
+    .jump-buttons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
     .toggle-button,
+    .jump-button,
     .return-link {
       padding: 0.4rem 0.9rem;
       border: 1px solid #0077cc;
@@ -62,12 +69,20 @@
       transition: all 0.15s ease-in-out;
     }
     .toggle-button:hover,
+    .jump-button:hover,
     .return-link:hover {
       background: rgba(0, 119, 204, 0.08);
     }
     .toggle-button.active {
       background: #0077cc;
       color: #fff;
+    }
+    .jump-button[disabled] {
+      border-color: #b8b8b8;
+      color: #9a9a9a;
+      background: #f3f3f3;
+      cursor: not-allowed;
+      pointer-events: none;
     }
     .return-link {
       text-decoration: none;
@@ -105,6 +120,10 @@
       font-style: italic;
       margin: 0.5rem 0;
     }
+    #translation-section,
+    #original-section {
+      scroll-margin-top: 5.5rem;
+    }
     @media (max-width: 600px) {
       .view-toggle {
         flex-direction: column;
@@ -114,11 +133,15 @@
       .view-toggle-group {
         justify-content: center;
       }
+      .jump-buttons {
+        justify-content: center;
+      }
       .return-link {
         margin-left: 0;
         text-align: center;
       }
-      .toggle-button {
+      .toggle-button,
+      .jump-button {
         flex: 1 1 auto;
         text-align: center;
       }
@@ -134,11 +157,15 @@
       <button type="button" class="toggle-button active" data-target="stacked-view" aria-pressed="true">Stacked</button>
       <button type="button" class="toggle-button" data-target="interlaced-view" aria-pressed="false">Interlaced</button>
     </div>
+    <div class="jump-buttons" role="group" aria-label="Jump to section">
+      <button type="button" class="jump-button" data-section-target="translation-section" aria-disabled="false">Jump to English</button>
+      <button type="button" class="jump-button" data-section-target="original-section" aria-disabled="false">Jump to Chinese</button>
+    </div>
     <a class="return-link" href="../index.html">Return to index</a>
   </div>
 
   <div id="stacked-view" class="view active" aria-hidden="false">
-    <div class="section">
+    <div id="translation-section" class="section">
       <h3>Translation</h3>
       <div>A Case of Medicine<br/>
 <br/>
@@ -336,7 +363,7 @@ It is recorded that “Women establish their lives and principles with the roots
 *   Powder all to a fine paste.  Take a full dose of *Zhen Shen Qu* (True God’s Music – a medicinal powder) made into a large dose of green bean paste.  Take one hundred doses daily, dissolved in cold water and swallowed on an empty stomach.<a id="trans-70p" href="#orig-70p" class="marker">[70p]</a></div>
     </div>
 
-    <div class="section">
+    <div id="original-section" class="section">
       <h3>Original</h3>
       <div>一瓢医案　　清·薛雪生白著　　清·吴金寿子音篡　　骨小肉脆，定非松柏之姿。脉数经停，已现虚劳之候。先天既弱而水亏，壮火复炽而金燥。岁气一周一损，岂容再损？秋风乍荐已伤，难免重伤。证具如前，药惟补北，非敢说梦，聊以解嘲：生地、沙参、地骨皮、麦冬、金石斛、生鳖甲。<a id="orig-1p" href="#trans-1p" class="marker">[1p]</a><br/>
 　　苏禄国贡使久咳不能卧案：辨八方之风，测五土之性，大率贵邦偏在中华之巽上，箕尾之前，翼轸之外，阳气偏泄，即有风寒，易感易散。来此华夏，已属三焦。况不得卧下，肺气大伤，止宜润降而已：蜜炙枇杷叶、麦冬、川贝、甜杏仁、经霜桑叶、米仁。　　《内经》谓：骨肉柔脆之人，其质本弱。然以脉症较之，其咳原属手太阴得之。<a id="orig-2p" href="#trans-2p" class="marker">[2p]</a><br/>
@@ -1036,6 +1063,32 @@ It is recorded that “Women establish their lives and principles with the roots
     (function () {
       const buttons = document.querySelectorAll('.toggle-button');
       const views = document.querySelectorAll('.view');
+      const jumpButtons = document.querySelectorAll('.jump-button');
+
+      function setJumpButtonsEnabled(enabled) {
+        jumpButtons.forEach((jumpButton) => {
+          jumpButton.disabled = !enabled;
+          jumpButton.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+        });
+      }
+
+      jumpButtons.forEach((jumpButton) => {
+        jumpButton.addEventListener('click', () => {
+          if (jumpButton.disabled) {
+            return;
+          }
+          const sectionId = jumpButton.dataset.sectionTarget;
+          if (!sectionId) {
+            return;
+          }
+          const section = document.getElementById(sectionId);
+          if (section && typeof section.scrollIntoView === 'function') {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      setJumpButtonsEnabled(true);
 
       buttons.forEach((button) => {
         button.addEventListener('click', () => {
@@ -1050,6 +1103,7 @@ It is recorded that “Women establish their lives and principles with the roots
             view.classList.toggle('active', isTarget);
             view.setAttribute('aria-hidden', isTarget ? 'false' : 'true');
           });
+          setJumpButtonsEnabled(targetId === 'stacked-view');
         });
       });
     })();

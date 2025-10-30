@@ -50,7 +50,14 @@
       flex-wrap: wrap;
       align-items: center;
     }
+    .jump-buttons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
     .toggle-button,
+    .jump-button,
     .return-link {
       padding: 0.4rem 0.9rem;
       border: 1px solid #0077cc;
@@ -62,12 +69,20 @@
       transition: all 0.15s ease-in-out;
     }
     .toggle-button:hover,
+    .jump-button:hover,
     .return-link:hover {
       background: rgba(0, 119, 204, 0.08);
     }
     .toggle-button.active {
       background: #0077cc;
       color: #fff;
+    }
+    .jump-button[disabled] {
+      border-color: #b8b8b8;
+      color: #9a9a9a;
+      background: #f3f3f3;
+      cursor: not-allowed;
+      pointer-events: none;
     }
     .return-link {
       text-decoration: none;
@@ -105,6 +120,10 @@
       font-style: italic;
       margin: 0.5rem 0;
     }
+    #translation-section,
+    #original-section {
+      scroll-margin-top: 5.5rem;
+    }
     @media (max-width: 600px) {
       .view-toggle {
         flex-direction: column;
@@ -114,11 +133,15 @@
       .view-toggle-group {
         justify-content: center;
       }
+      .jump-buttons {
+        justify-content: center;
+      }
       .return-link {
         margin-left: 0;
         text-align: center;
       }
-      .toggle-button {
+      .toggle-button,
+      .jump-button {
         flex: 1 1 auto;
         text-align: center;
       }
@@ -134,11 +157,15 @@
       <button type="button" class="toggle-button active" data-target="stacked-view" aria-pressed="true">Stacked</button>
       <button type="button" class="toggle-button" data-target="interlaced-view" aria-pressed="false">Interlaced</button>
     </div>
+    <div class="jump-buttons" role="group" aria-label="Jump to section">
+      <button type="button" class="jump-button" data-section-target="translation-section" aria-disabled="false">Jump to English</button>
+      <button type="button" class="jump-button" data-section-target="original-section" aria-disabled="false">Jump to Chinese</button>
+    </div>
     <a class="return-link" href="../index.html">Return to index</a>
   </div>
 
   <div id="stacked-view" class="view active" aria-hidden="false">
-    <div class="section">
+    <div id="translation-section" class="section">
       <h3>Translation</h3>
       <div>Seventy-Two Sicknesses and Their Treatment Methods<br/>
 <br/>
@@ -730,7 +757,7 @@ The flow of yang in the meridian continues without stopping, called a leakage, n
 Belt-dissolving soup: Four things – pale green, white dragon bone, fragrant sandalwood, and dried tangerine peel, with茯 (buckwheat) – sweet dates, licorice, and mu-mu (white parasol seed) – earth elm bark, ginger, turmeric, and fragrant pine.<a id="trans-114p" href="#orig-114p" class="marker">[114p]</a></div>
     </div>
 
-    <div class="section">
+    <div id="original-section" class="section">
       <h3>Original</h3>
       <div>七十二症辨治方法　　○发热　　翕翕发热为表热，风寒甫客皮肤烈；此为表热里无恙，无汗解发功方捷。　　蒸蒸发热为里热，阳邪下陷入阴辙；譬之蒸笼气达外，有渴下之休跋涉。　　又有表邪未罢症，欲传入里兴妖孽；里来作热难容受，半表半里发为热。　　治法不外和为贵，伤寒重大不论舌；无汗麻黄汗桂枝，太阳分野别须知。<a id="orig-1p" href="#trans-1p" class="marker">[1p]</a><br/>
 　　○潮热　　潮热有常如潮水，阳明荆棘使之然；潮于寅卯属肝木，其余仿此细思量。　　消导疏通为治法，温能除热忌寒凉；又有劳伤潮热症，不比伤寒一样腔。　　○恶寒恶热寒热往来似疟非疟　　寒热如何似往来，邪气分争胆受灾；恶寒以卜邪居表，恶热先知邪内栽。　　若是邪居半里表，所以寒热有往来；日夜发作无定数，传过别经即不来。<a id="orig-2p" href="#trans-2p" class="marker">[2p]</a><br/>
@@ -2132,6 +2159,32 @@ Belt-dissolving soup: Four things – pale green, white dragon bone, fragrant sa
     (function () {
       const buttons = document.querySelectorAll('.toggle-button');
       const views = document.querySelectorAll('.view');
+      const jumpButtons = document.querySelectorAll('.jump-button');
+
+      function setJumpButtonsEnabled(enabled) {
+        jumpButtons.forEach((jumpButton) => {
+          jumpButton.disabled = !enabled;
+          jumpButton.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+        });
+      }
+
+      jumpButtons.forEach((jumpButton) => {
+        jumpButton.addEventListener('click', () => {
+          if (jumpButton.disabled) {
+            return;
+          }
+          const sectionId = jumpButton.dataset.sectionTarget;
+          if (!sectionId) {
+            return;
+          }
+          const section = document.getElementById(sectionId);
+          if (section && typeof section.scrollIntoView === 'function') {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      setJumpButtonsEnabled(true);
 
       buttons.forEach((button) => {
         button.addEventListener('click', () => {
@@ -2146,6 +2199,7 @@ Belt-dissolving soup: Four things – pale green, white dragon bone, fragrant sa
             view.classList.toggle('active', isTarget);
             view.setAttribute('aria-hidden', isTarget ? 'false' : 'true');
           });
+          setJumpButtonsEnabled(targetId === 'stacked-view');
         });
       });
     })();

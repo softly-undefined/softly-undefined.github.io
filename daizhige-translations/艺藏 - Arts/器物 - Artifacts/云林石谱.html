@@ -50,7 +50,14 @@
       flex-wrap: wrap;
       align-items: center;
     }
+    .jump-buttons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
     .toggle-button,
+    .jump-button,
     .return-link {
       padding: 0.4rem 0.9rem;
       border: 1px solid #0077cc;
@@ -62,12 +69,20 @@
       transition: all 0.15s ease-in-out;
     }
     .toggle-button:hover,
+    .jump-button:hover,
     .return-link:hover {
       background: rgba(0, 119, 204, 0.08);
     }
     .toggle-button.active {
       background: #0077cc;
       color: #fff;
+    }
+    .jump-button[disabled] {
+      border-color: #b8b8b8;
+      color: #9a9a9a;
+      background: #f3f3f3;
+      cursor: not-allowed;
+      pointer-events: none;
     }
     .return-link {
       text-decoration: none;
@@ -105,6 +120,10 @@
       font-style: italic;
       margin: 0.5rem 0;
     }
+    #translation-section,
+    #original-section {
+      scroll-margin-top: 5.5rem;
+    }
     @media (max-width: 600px) {
       .view-toggle {
         flex-direction: column;
@@ -114,11 +133,15 @@
       .view-toggle-group {
         justify-content: center;
       }
+      .jump-buttons {
+        justify-content: center;
+      }
       .return-link {
         margin-left: 0;
         text-align: center;
       }
-      .toggle-button {
+      .toggle-button,
+      .jump-button {
         flex: 1 1 auto;
         text-align: center;
       }
@@ -134,11 +157,15 @@
       <button type="button" class="toggle-button active" data-target="stacked-view" aria-pressed="true">Stacked</button>
       <button type="button" class="toggle-button" data-target="interlaced-view" aria-pressed="false">Interlaced</button>
     </div>
+    <div class="jump-buttons" role="group" aria-label="Jump to section">
+      <button type="button" class="jump-button" data-section-target="translation-section" aria-disabled="false">Jump to English</button>
+      <button type="button" class="jump-button" data-section-target="original-section" aria-disabled="false">Jump to Chinese</button>
+    </div>
     <a class="return-link" href="../../index.html">Return to index</a>
   </div>
 
   <div id="stacked-view" class="view active" aria-hidden="false">
-    <div class="section">
+    <div id="translation-section" class="section">
       <h3>Translation</h3>
       <div>云林石谱<br/>
 <br/>
@@ -397,7 +424,7 @@
 　　云林石谱卷下</div>
     </div>
 
-    <div class="section">
+    <div id="original-section" class="section">
       <h3>Original</h3>
       <div></div>
     </div>
@@ -672,6 +699,32 @@
     (function () {
       const buttons = document.querySelectorAll('.toggle-button');
       const views = document.querySelectorAll('.view');
+      const jumpButtons = document.querySelectorAll('.jump-button');
+
+      function setJumpButtonsEnabled(enabled) {
+        jumpButtons.forEach((jumpButton) => {
+          jumpButton.disabled = !enabled;
+          jumpButton.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+        });
+      }
+
+      jumpButtons.forEach((jumpButton) => {
+        jumpButton.addEventListener('click', () => {
+          if (jumpButton.disabled) {
+            return;
+          }
+          const sectionId = jumpButton.dataset.sectionTarget;
+          if (!sectionId) {
+            return;
+          }
+          const section = document.getElementById(sectionId);
+          if (section && typeof section.scrollIntoView === 'function') {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      setJumpButtonsEnabled(true);
 
       buttons.forEach((button) => {
         button.addEventListener('click', () => {
@@ -686,6 +739,7 @@
             view.classList.toggle('active', isTarget);
             view.setAttribute('aria-hidden', isTarget ? 'false' : 'true');
           });
+          setJumpButtonsEnabled(targetId === 'stacked-view');
         });
       });
     })();

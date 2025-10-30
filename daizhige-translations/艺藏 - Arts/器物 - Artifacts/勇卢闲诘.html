@@ -50,7 +50,14 @@
       flex-wrap: wrap;
       align-items: center;
     }
+    .jump-buttons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
     .toggle-button,
+    .jump-button,
     .return-link {
       padding: 0.4rem 0.9rem;
       border: 1px solid #0077cc;
@@ -62,12 +69,20 @@
       transition: all 0.15s ease-in-out;
     }
     .toggle-button:hover,
+    .jump-button:hover,
     .return-link:hover {
       background: rgba(0, 119, 204, 0.08);
     }
     .toggle-button.active {
       background: #0077cc;
       color: #fff;
+    }
+    .jump-button[disabled] {
+      border-color: #b8b8b8;
+      color: #9a9a9a;
+      background: #f3f3f3;
+      cursor: not-allowed;
+      pointer-events: none;
     }
     .return-link {
       text-decoration: none;
@@ -105,6 +120,10 @@
       font-style: italic;
       margin: 0.5rem 0;
     }
+    #translation-section,
+    #original-section {
+      scroll-margin-top: 5.5rem;
+    }
     @media (max-width: 600px) {
       .view-toggle {
         flex-direction: column;
@@ -114,11 +133,15 @@
       .view-toggle-group {
         justify-content: center;
       }
+      .jump-buttons {
+        justify-content: center;
+      }
       .return-link {
         margin-left: 0;
         text-align: center;
       }
-      .toggle-button {
+      .toggle-button,
+      .jump-button {
         flex: 1 1 auto;
         text-align: center;
       }
@@ -134,11 +157,15 @@
       <button type="button" class="toggle-button active" data-target="stacked-view" aria-pressed="true">Stacked</button>
       <button type="button" class="toggle-button" data-target="interlaced-view" aria-pressed="false">Interlaced</button>
     </div>
+    <div class="jump-buttons" role="group" aria-label="Jump to section">
+      <button type="button" class="jump-button" data-section-target="translation-section" aria-disabled="false">Jump to English</button>
+      <button type="button" class="jump-button" data-section-target="original-section" aria-disabled="false">Jump to Chinese</button>
+    </div>
     <a class="return-link" href="../../index.html">Return to index</a>
   </div>
 
   <div id="stacked-view" class="view active" aria-hidden="false">
-    <div class="section">
+    <div id="translation-section" class="section">
       <h3>Translation</h3>
       <div>勇卢闲诘<br/>
 　　<br/>
@@ -197,7 +224,7 @@
 　　会稽赵撝叔作勇卢闲诘。以志鼻烟。叙释淹雅。若诂经。若拟子。非寻常谱录家言矣。余雅不嗜此。不识其品。顾颇忆干嘉以来诸老佚事。用缀卷末。以补此书之阙。宣南随笔云。乾隆中。纪文达召对。上所用鼻烟壶。刻此地有崇山峻岭茂林修竹十一字。举示之曰。汝善属对。能对此乎。文达应声曰。若周之赤刀大训天球河图。上悦。即赐之。一作彭文勤事。或云刘金门事。洋程纪略云。李忠毅总统水师。鋭意平蔡牵。牵与忠毅故同乡。凂其戚某。馈安南肉桂十束。西洋鼻烟十匣。哀词乞缓师。忠毅怒判其后曰。食汝之肉。劓汝之鼻。万斧交加。烟销灰灭。立斥还之。荩臣刚介。儒将风流。略可见已。金壶七墨云。浙中某观察。以衙参列坐官厅。忘携鼻烟。命其仆归取署中壶。少顷仆至。却立于后。观察诘之。敬对曰。壶在此。恐不雅观。不敢献也。观察趣出之。探手袴下。而后以献。一虎子耳。众大笑。盖彼误闻为合音也。此得之纪载者。某尚书典试事。不阅文字。怀中置二鼻烟壶。一红色。一黑色。大小相等。积试卷于案。抽其一。辄取一壶视之。红者中。黑者斥落。如额而止。人称为鼻烟壶老师。某相国督剑南。牙前设骨董肆。鼻烟壶累累。人以大府所好也。咸往售焉。主者曰。此值五千金。犍为县所购者。此二千金。万县所购者。其人悟。如数购之。献诸相国。不旬日。遂莅某任。相国还都。资装累千乘。蜀人为之语曰。前有献忠。后有相公。蔡麟洲观察官词苑。贫甚。而癖耆鼻烟。一日。晤宝文荘。文荘以鼻烟奉蔡。蔡亦以所佩答之。屡出屡易。味益奇。文荘大喜。蔡后简外任。不能治装。文荘知之。贷二千金。以资其行。又某公获罪时。于权贵家搜得其书柬。内一帖云。送上鼻烟一蜡。上层不便用。中层最精。而书蜡作刺。司谳者读如字。几陷大辟。两县令同官于浙。一吴人起科第。一闽人以资进者。并负才谞。为上游器重。闽人以鼻烟壶示吴人曰。此壶之红。可首称否。吴人曰。红则红矣。惜地子不佳也。闽人恚。遂成隙。终身不解。此得之传闻者。凡此诸事。撝叔固稔知之。然不欲以稗官委琐之语。羼入本书。致乖著述之体。则其慎也。博物君子。就所见闻。益我未备。傥亦有裨于多识乎。光绪六年六月。鄞董沛盂如甫撰。</div>
     </div>
 
-    <div class="section">
+    <div id="original-section" class="section">
       <h3>Original</h3>
       <div></div>
     </div>
@@ -272,6 +299,32 @@
     (function () {
       const buttons = document.querySelectorAll('.toggle-button');
       const views = document.querySelectorAll('.view');
+      const jumpButtons = document.querySelectorAll('.jump-button');
+
+      function setJumpButtonsEnabled(enabled) {
+        jumpButtons.forEach((jumpButton) => {
+          jumpButton.disabled = !enabled;
+          jumpButton.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+        });
+      }
+
+      jumpButtons.forEach((jumpButton) => {
+        jumpButton.addEventListener('click', () => {
+          if (jumpButton.disabled) {
+            return;
+          }
+          const sectionId = jumpButton.dataset.sectionTarget;
+          if (!sectionId) {
+            return;
+          }
+          const section = document.getElementById(sectionId);
+          if (section && typeof section.scrollIntoView === 'function') {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+      setJumpButtonsEnabled(true);
 
       buttons.forEach((button) => {
         button.addEventListener('click', () => {
@@ -286,6 +339,7 @@
             view.classList.toggle('active', isTarget);
             view.setAttribute('aria-hidden', isTarget ? 'false' : 'true');
           });
+          setJumpButtonsEnabled(targetId === 'stacked-view');
         });
       });
     })();
