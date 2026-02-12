@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stopwatch with Splits</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 500px;
+      margin: 40px auto;
+      text-align: center;
+    }
+
+    #time {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 8px 14px;
+      margin: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    input.split-name {
+      border: 1px solid #ccc;
+      padding: 3px 6px;
+      font-size: 0.9rem;
+      flex: 1;
+    }
+
+    .split-time {
+      font-family: monospace;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="time">00:00.000</div>
+
+  <div>
+    <button onclick="start()">Start</button>
+    <button onclick="stop()">Stop</button>
+    <button onclick="reset()">Reset</button>
+    <button onclick="split()">Split</button>
+  </div>
+
+  <ul id="splits"></ul>
+
+<script>
+  let startTime = null;
+  let elapsed = 0;
+  let timer = null;
+  let splitCount = 0;
+
+  function format(ms) {
+    const totalSeconds = ms / 1000;
+    const rounded = Math.round(totalSeconds * 10) / 10; // 0.1s precision
+
+    const minutes = Math.floor(rounded / 60);
+    const seconds = Math.floor(rounded % 60);
+    const tenths = Math.floor((rounded * 10) % 10);
+
+    return (
+      String(minutes).padStart(2, '0') + ':' +
+      String(seconds).padStart(2, '0') + '.' +
+      tenths
+    );
+  }
+
+  function update() {
+    const now = performance.now();
+    const diff = elapsed + (now - startTime);
+    document.getElementById('time').textContent = format(diff);
+  }
+
+  function start() {
+    if (timer) return;
+    startTime = performance.now();
+    timer = setInterval(update, 100); // 0.1s updates
+  }
+
+  function stop() {
+    if (!timer) return;
+    elapsed += performance.now() - startTime;
+    clearInterval(timer);
+    timer = null;
+  }
+
+  function reset() {
+    stop();
+    elapsed = 0;
+    splitCount = 0;
+    document.getElementById('time').textContent = '00:00.0';
+    document.getElementById('splits').innerHTML = '';
+  }
+
+  function split() {
+    const currentTime = timer
+      ? elapsed + (performance.now() - startTime)
+      : elapsed;
+
+    splitCount++;
+
+    const li = document.createElement('li');
+
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.className = 'split-name';
+    nameInput.value = `Split ${splitCount}`;
+
+    const timeSpan = document.createElement('span');
+    timeSpan.className = 'split-time';
+    timeSpan.textContent = format(currentTime);
+
+    li.appendChild(nameInput);
+    li.appendChild(timeSpan);
+
+    document.getElementById('splits').appendChild(li);
+  }
+</script>
+
+</body>
+</html>
+
