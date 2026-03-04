@@ -339,7 +339,7 @@
 <h1>OCR Error Viewer</h1>
 <p>This viewer compares each model output in <code>transcriptions.json</code> against the page ground truth after a light cleanup pass (HTML tags are stripped and paragraph tags become line breaks). Green spans are aligned matches. Red spans are mismatches, missing text, or extra text.</p>
 <p>Use the top tabs for each source document, then switch pages inside that document. Within a page, the models are sorted by lowest character error rate first.</p>
-<p class="generated-at">Generated locally on 2026-03-03 20:45:57.</p>
+<p class="generated-at">Generated locally on 2026-03-03 21:06:21.</p>
 </section>
 <div class="tab-strip">
 <button class="tab-button active" data-tab-target="doc-0-from" type="button">妖術 from (詳註)聊齋志異圖詠</button>
@@ -360,6 +360,10 @@
 <th>Model</th>
 <th>Weighted CER</th>
 <th>Total Edit Distance</th>
+<th>GT Chars</th>
+<th>Model Chars</th>
+<th>Char Delta</th>
+<th>Length Signal</th>
 </tr>
 </thead>
 <tbody>
@@ -367,21 +371,37 @@
 <td>qwen25vl7b</td>
 <td>13.64%</td>
 <td>150</td>
+<td>1100</td>
+<td>993</td>
+<td>-107</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>dharmaMITRAocr</td>
 <td>24.73%</td>
 <td>272</td>
+<td>1100</td>
+<td>1000</td>
+<td>-100</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>olmocr2</td>
 <td>41.91%</td>
 <td>461</td>
+<td>1100</td>
+<td>735</td>
+<td>-365</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>NDLocr</td>
 <td>56.91%</td>
 <td>626</td>
+<td>1100</td>
+<td>1352</td>
+<td>+252</td>
+<td>over-read</td>
 </tr>
 </tbody>
 </table>
@@ -404,7 +424,10 @@
 <th>Model</th>
 <th>Page CER</th>
 <th>Edit Distance</th>
-<th>Compared Chars</th>
+<th>GT Chars</th>
+<th>Model Chars</th>
+<th>Char Delta</th>
+<th>Length Signal</th>
 </tr>
 </thead>
 <tbody>
@@ -412,25 +435,37 @@
 <td>olmocr2</td>
 <td>11.03%</td>
 <td>15</td>
+<td>136</td>
 <td>126</td>
+<td>-10</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>qwen25vl7b</td>
 <td>17.65%</td>
 <td>24</td>
+<td>136</td>
 <td>117</td>
+<td>-19</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>dharmaMITRAocr</td>
 <td>43.38%</td>
 <td>59</td>
+<td>136</td>
 <td>130</td>
+<td>-6</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>NDLocr</td>
 <td>98.53%</td>
 <td>134</td>
+<td>136</td>
 <td>204</td>
+<td>+68</td>
+<td>over-read</td>
 </tr>
 </tbody>
 </table>
@@ -439,7 +474,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>olmocr2</h4>
-<p class="model-stats">CER 11.03% | 15 edits | 126 comparison chars</p>
+<p class="model-stats">CER 11.03% | 15 edits | GT 136 chars | Model 126 chars | Delta -10 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -536,7 +571,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>qwen25vl7b</h4>
-<p class="model-stats">CER 17.65% | 24 edits | 117 comparison chars</p>
+<p class="model-stats">CER 17.65% | 24 edits | GT 136 chars | Model 117 chars | Delta -19 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -631,7 +666,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>dharmaMITRAocr</h4>
-<p class="model-stats">CER 43.38% | 59 edits | 130 comparison chars</p>
+<p class="model-stats">CER 43.38% | 59 edits | GT 136 chars | Model 130 chars | Delta -6 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -787,7 +822,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>NDLocr</h4>
-<p class="model-stats">CER 98.53% | 134 edits | 204 comparison chars</p>
+<p class="model-stats">CER 98.53% | 134 edits | GT 136 chars | Model 204 chars | Delta +68 (over-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -1041,7 +1076,10 @@
 <th>Model</th>
 <th>Page CER</th>
 <th>Edit Distance</th>
-<th>Compared Chars</th>
+<th>GT Chars</th>
+<th>Model Chars</th>
+<th>Char Delta</th>
+<th>Length Signal</th>
 </tr>
 </thead>
 <tbody>
@@ -1049,25 +1087,37 @@
 <td>qwen25vl7b</td>
 <td>15.36%</td>
 <td>106</td>
+<td>690</td>
 <td>612</td>
+<td>-78</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>dharmaMITRAocr</td>
 <td>26.09%</td>
 <td>180</td>
+<td>690</td>
 <td>604</td>
+<td>-86</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>NDLocr</td>
 <td>54.64%</td>
 <td>377</td>
+<td>690</td>
 <td>845</td>
+<td>+155</td>
+<td>over-read</td>
 </tr>
 <tr>
 <td>olmocr2</td>
 <td>61.45%</td>
 <td>424</td>
+<td>690</td>
 <td>340</td>
+<td>-350</td>
+<td>under-read</td>
 </tr>
 </tbody>
 </table>
@@ -1076,7 +1126,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>qwen25vl7b</h4>
-<p class="model-stats">CER 15.36% | 106 edits | 612 comparison chars</p>
+<p class="model-stats">CER 15.36% | 106 edits | GT 690 chars | Model 612 chars | Delta -78 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -1477,7 +1527,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>dharmaMITRAocr</h4>
-<p class="model-stats">CER 26.09% | 180 edits | 604 comparison chars</p>
+<p class="model-stats">CER 26.09% | 180 edits | GT 690 chars | Model 604 chars | Delta -86 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -2045,7 +2095,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>NDLocr</h4>
-<p class="model-stats">CER 54.64% | 377 edits | 845 comparison chars</p>
+<p class="model-stats">CER 54.64% | 377 edits | GT 690 chars | Model 845 chars | Delta +155 (over-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -3346,7 +3396,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>olmocr2</h4>
-<p class="model-stats">CER 61.45% | 424 edits | 340 comparison chars</p>
+<p class="model-stats">CER 61.45% | 424 edits | GT 690 chars | Model 340 chars | Delta -350 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -3589,7 +3639,10 @@
 <th>Model</th>
 <th>Page CER</th>
 <th>Edit Distance</th>
-<th>Compared Chars</th>
+<th>GT Chars</th>
+<th>Model Chars</th>
+<th>Char Delta</th>
+<th>Length Signal</th>
 </tr>
 </thead>
 <tbody>
@@ -3597,25 +3650,37 @@
 <td>qwen25vl7b</td>
 <td>7.30%</td>
 <td>20</td>
+<td>274</td>
 <td>264</td>
+<td>-10</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>olmocr2</td>
 <td>8.03%</td>
 <td>22</td>
+<td>274</td>
 <td>269</td>
+<td>-5</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>dharmaMITRAocr</td>
 <td>12.04%</td>
 <td>33</td>
+<td>274</td>
 <td>266</td>
+<td>-8</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>NDLocr</td>
 <td>41.97%</td>
 <td>115</td>
+<td>274</td>
 <td>303</td>
+<td>+29</td>
+<td>over-read</td>
 </tr>
 </tbody>
 </table>
@@ -3624,7 +3689,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>qwen25vl7b</h4>
-<p class="model-stats">CER 7.30% | 20 edits | 264 comparison chars</p>
+<p class="model-stats">CER 7.30% | 20 edits | GT 274 chars | Model 264 chars | Delta -10 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -3806,7 +3871,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>olmocr2</h4>
-<p class="model-stats">CER 8.03% | 22 edits | 269 comparison chars</p>
+<p class="model-stats">CER 8.03% | 22 edits | GT 274 chars | Model 269 chars | Delta -5 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -3983,7 +4048,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>dharmaMITRAocr</h4>
-<p class="model-stats">CER 12.04% | 33 edits | 266 comparison chars</p>
+<p class="model-stats">CER 12.04% | 33 edits | GT 274 chars | Model 266 chars | Delta -8 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -4187,7 +4252,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>NDLocr</h4>
-<p class="model-stats">CER 41.97% | 115 edits | 303 comparison chars</p>
+<p class="model-stats">CER 41.97% | 115 edits | GT 274 chars | Model 303 chars | Delta +29 (over-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -4705,6 +4770,10 @@
 <th>Model</th>
 <th>Weighted CER</th>
 <th>Total Edit Distance</th>
+<th>GT Chars</th>
+<th>Model Chars</th>
+<th>Char Delta</th>
+<th>Length Signal</th>
 </tr>
 </thead>
 <tbody>
@@ -4712,21 +4781,37 @@
 <td>olmocr2</td>
 <td>21.24%</td>
 <td>181</td>
+<td>852</td>
+<td>732</td>
+<td>-120</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>qwen25vl7b</td>
 <td>22.18%</td>
 <td>189</td>
+<td>852</td>
+<td>743</td>
+<td>-109</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>dharmaMITRAocr</td>
 <td>80.52%</td>
 <td>686</td>
+<td>852</td>
+<td>1028</td>
+<td>+176</td>
+<td>over-read</td>
 </tr>
 <tr>
 <td>NDLocr</td>
 <td>98.00%</td>
 <td>835</td>
+<td>852</td>
+<td>1257</td>
+<td>+405</td>
+<td>over-read</td>
 </tr>
 </tbody>
 </table>
@@ -4751,7 +4836,10 @@
 <th>Model</th>
 <th>Page CER</th>
 <th>Edit Distance</th>
-<th>Compared Chars</th>
+<th>GT Chars</th>
+<th>Model Chars</th>
+<th>Char Delta</th>
+<th>Length Signal</th>
 </tr>
 </thead>
 <tbody>
@@ -4760,24 +4848,36 @@
 <td>0.00%</td>
 <td>0</td>
 <td>2</td>
+<td>2</td>
+<td>0</td>
+<td>matched length</td>
 </tr>
 <tr>
 <td>NDLocr</td>
 <td>100.00%</td>
 <td>2</td>
 <td>2</td>
+<td>2</td>
+<td>0</td>
+<td>matched length</td>
 </tr>
 <tr>
 <td>olmocr2</td>
 <td>200.00%</td>
 <td>4</td>
+<td>2</td>
 <td>6</td>
+<td>+4</td>
+<td>over-read</td>
 </tr>
 <tr>
 <td>dharmaMITRAocr</td>
 <td>4650.00%</td>
 <td>93</td>
+<td>2</td>
 <td>95</td>
+<td>+93</td>
+<td>over-read</td>
 </tr>
 </tbody>
 </table>
@@ -4786,7 +4886,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>qwen25vl7b</h4>
-<p class="model-stats">CER 0.00% | 0 edits | 2 comparison chars</p>
+<p class="model-stats">CER 0.00% | 0 edits | GT 2 chars | Model 2 chars | Delta 0 (matched length)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -4809,7 +4909,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>NDLocr</h4>
-<p class="model-stats">CER 100.00% | 2 edits | 2 comparison chars</p>
+<p class="model-stats">CER 100.00% | 2 edits | GT 2 chars | Model 2 chars | Delta 0 (matched length)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -4851,7 +4951,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>olmocr2</h4>
-<p class="model-stats">CER 200.00% | 4 edits | 6 comparison chars</p>
+<p class="model-stats">CER 200.00% | 4 edits | GT 2 chars | Model 6 chars | Delta +4 (over-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -4899,7 +4999,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>dharmaMITRAocr</h4>
-<p class="model-stats">CER 4650.00% | 93 edits | 95 comparison chars</p>
+<p class="model-stats">CER 4650.00% | 93 edits | GT 2 chars | Model 95 chars | Delta +93 (over-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -4958,7 +5058,10 @@
 <th>Model</th>
 <th>Page CER</th>
 <th>Edit Distance</th>
-<th>Compared Chars</th>
+<th>GT Chars</th>
+<th>Model Chars</th>
+<th>Char Delta</th>
+<th>Length Signal</th>
 </tr>
 </thead>
 <tbody>
@@ -4966,25 +5069,37 @@
 <td>olmocr2</td>
 <td>33.86%</td>
 <td>85</td>
+<td>251</td>
 <td>182</td>
+<td>-69</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>qwen25vl7b</td>
 <td>35.86%</td>
 <td>90</td>
+<td>251</td>
 <td>182</td>
+<td>-69</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>dharmaMITRAocr</td>
 <td>103.59%</td>
 <td>260</td>
+<td>251</td>
 <td>287</td>
+<td>+36</td>
+<td>over-read</td>
 </tr>
 <tr>
 <td>NDLocr</td>
 <td>121.51%</td>
 <td>305</td>
+<td>251</td>
 <td>419</td>
+<td>+168</td>
+<td>over-read</td>
 </tr>
 </tbody>
 </table>
@@ -4993,7 +5108,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>olmocr2</h4>
-<p class="model-stats">CER 33.86% | 85 edits | 182 comparison chars</p>
+<p class="model-stats">CER 33.86% | 85 edits | GT 251 chars | Model 182 chars | Delta -69 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -5136,7 +5251,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>qwen25vl7b</h4>
-<p class="model-stats">CER 35.86% | 90 edits | 182 comparison chars</p>
+<p class="model-stats">CER 35.86% | 90 edits | GT 251 chars | Model 182 chars | Delta -69 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -5306,7 +5421,7 @@
 <section class="model-card">
 <div class="model-header">
 <h4>dharmaMITRAocr</h4>
-<p class="model-stats">CER 103.59% | 260 edits | 287 comparison chars</p>
+<p class="model-stats">CER 103.59% | 260 edits | GT 251 chars | Model 287 chars | Delta +36 (over-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -5732,7 +5847,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>NDLocr</h4>
-<p class="model-stats">CER 121.51% | 305 edits | 419 comparison chars</p>
+<p class="model-stats">CER 121.51% | 305 edits | GT 251 chars | Model 419 chars | Delta +168 (over-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -6253,7 +6368,10 @@ C
 <th>Model</th>
 <th>Page CER</th>
 <th>Edit Distance</th>
-<th>Compared Chars</th>
+<th>GT Chars</th>
+<th>Model Chars</th>
+<th>Char Delta</th>
+<th>Length Signal</th>
 </tr>
 </thead>
 <tbody>
@@ -6261,25 +6379,37 @@ C
 <td>qwen25vl7b</td>
 <td>14.16%</td>
 <td>31</td>
+<td>219</td>
 <td>197</td>
+<td>-22</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>olmocr2</td>
 <td>18.26%</td>
 <td>40</td>
+<td>219</td>
 <td>189</td>
+<td>-30</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>dharmaMITRAocr</td>
 <td>18.72%</td>
 <td>41</td>
+<td>219</td>
 <td>193</td>
+<td>-26</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>NDLocr</td>
 <td>83.11%</td>
 <td>182</td>
+<td>219</td>
 <td>286</td>
+<td>+67</td>
+<td>over-read</td>
 </tr>
 </tbody>
 </table>
@@ -6288,7 +6418,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>qwen25vl7b</h4>
-<p class="model-stats">CER 14.16% | 31 edits | 197 comparison chars</p>
+<p class="model-stats">CER 14.16% | 31 edits | GT 219 chars | Model 197 chars | Delta -22 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -6430,7 +6560,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>olmocr2</h4>
-<p class="model-stats">CER 18.26% | 40 edits | 189 comparison chars</p>
+<p class="model-stats">CER 18.26% | 40 edits | GT 219 chars | Model 189 chars | Delta -30 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -6602,7 +6732,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>dharmaMITRAocr</h4>
-<p class="model-stats">CER 18.72% | 41 edits | 193 comparison chars</p>
+<p class="model-stats">CER 18.72% | 41 edits | GT 219 chars | Model 193 chars | Delta -26 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -6791,7 +6921,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>NDLocr</h4>
-<p class="model-stats">CER 83.11% | 182 edits | 286 comparison chars</p>
+<p class="model-stats">CER 83.11% | 182 edits | GT 219 chars | Model 286 chars | Delta +67 (over-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -7389,7 +7519,10 @@ C
 <th>Model</th>
 <th>Page CER</th>
 <th>Edit Distance</th>
-<th>Compared Chars</th>
+<th>GT Chars</th>
+<th>Model Chars</th>
+<th>Char Delta</th>
+<th>Length Signal</th>
 </tr>
 </thead>
 <tbody>
@@ -7397,25 +7530,37 @@ C
 <td>olmocr2</td>
 <td>16.24%</td>
 <td>38</td>
+<td>234</td>
 <td>214</td>
+<td>-20</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>qwen25vl7b</td>
 <td>24.79%</td>
 <td>58</td>
+<td>234</td>
 <td>223</td>
+<td>-11</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>NDLocr</td>
 <td>100.85%</td>
 <td>236</td>
+<td>234</td>
 <td>337</td>
+<td>+103</td>
+<td>over-read</td>
 </tr>
 <tr>
 <td>dharmaMITRAocr</td>
 <td>120.94%</td>
 <td>283</td>
+<td>234</td>
 <td>307</td>
+<td>+73</td>
+<td>over-read</td>
 </tr>
 </tbody>
 </table>
@@ -7424,7 +7569,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>olmocr2</h4>
-<p class="model-stats">CER 16.24% | 38 edits | 214 comparison chars</p>
+<p class="model-stats">CER 16.24% | 38 edits | GT 234 chars | Model 214 chars | Delta -20 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -7650,7 +7795,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>qwen25vl7b</h4>
-<p class="model-stats">CER 24.79% | 58 edits | 223 comparison chars</p>
+<p class="model-stats">CER 24.79% | 58 edits | GT 234 chars | Model 223 chars | Delta -11 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -7787,7 +7932,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>NDLocr</h4>
-<p class="model-stats">CER 100.85% | 236 edits | 337 comparison chars</p>
+<p class="model-stats">CER 100.85% | 236 edits | GT 234 chars | Model 337 chars | Delta +103 (over-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -8345,7 +8490,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>dharmaMITRAocr</h4>
-<p class="model-stats">CER 120.94% | 283 edits | 307 comparison chars</p>
+<p class="model-stats">CER 120.94% | 283 edits | GT 234 chars | Model 307 chars | Delta +73 (over-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -8668,7 +8813,10 @@ C
 <th>Model</th>
 <th>Page CER</th>
 <th>Edit Distance</th>
-<th>Compared Chars</th>
+<th>GT Chars</th>
+<th>Model Chars</th>
+<th>Char Delta</th>
+<th>Length Signal</th>
 </tr>
 </thead>
 <tbody>
@@ -8677,24 +8825,36 @@ C
 <td>6.16%</td>
 <td>9</td>
 <td>146</td>
+<td>146</td>
+<td>0</td>
+<td>matched length</td>
 </tr>
 <tr>
 <td>qwen25vl7b</td>
 <td>6.85%</td>
 <td>10</td>
+<td>146</td>
 <td>139</td>
+<td>-7</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>olmocr2</td>
 <td>9.59%</td>
 <td>14</td>
+<td>146</td>
 <td>141</td>
+<td>-5</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>NDLocr</td>
 <td>75.34%</td>
 <td>110</td>
+<td>146</td>
 <td>213</td>
+<td>+67</td>
+<td>over-read</td>
 </tr>
 </tbody>
 </table>
@@ -8703,7 +8863,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>dharmaMITRAocr</h4>
-<p class="model-stats">CER 6.16% | 9 edits | 146 comparison chars</p>
+<p class="model-stats">CER 6.16% | 9 edits | GT 146 chars | Model 146 chars | Delta 0 (matched length)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -8817,7 +8977,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>qwen25vl7b</h4>
-<p class="model-stats">CER 6.85% | 10 edits | 139 comparison chars</p>
+<p class="model-stats">CER 6.85% | 10 edits | GT 146 chars | Model 139 chars | Delta -7 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -8925,7 +9085,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>olmocr2</h4>
-<p class="model-stats">CER 9.59% | 14 edits | 141 comparison chars</p>
+<p class="model-stats">CER 9.59% | 14 edits | GT 146 chars | Model 141 chars | Delta -5 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -9066,7 +9226,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>NDLocr</h4>
-<p class="model-stats">CER 75.34% | 110 edits | 213 comparison chars</p>
+<p class="model-stats">CER 75.34% | 110 edits | GT 146 chars | Model 213 chars | Delta +67 (over-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -9468,6 +9628,10 @@ C
 <th>Model</th>
 <th>Weighted CER</th>
 <th>Total Edit Distance</th>
+<th>GT Chars</th>
+<th>Model Chars</th>
+<th>Char Delta</th>
+<th>Length Signal</th>
 </tr>
 </thead>
 <tbody>
@@ -9475,21 +9639,37 @@ C
 <td>qwen25vl7b</td>
 <td>28.03%</td>
 <td>243</td>
+<td>867</td>
+<td>655</td>
+<td>-212</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>olmocr2</td>
 <td>34.37%</td>
 <td>298</td>
+<td>867</td>
+<td>602</td>
+<td>-265</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>NDLocr</td>
 <td>57.09%</td>
 <td>495</td>
+<td>867</td>
+<td>848</td>
+<td>-19</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>dharmaMITRAocr</td>
 <td>65.74%</td>
 <td>570</td>
+<td>867</td>
+<td>827</td>
+<td>-40</td>
+<td>under-read</td>
 </tr>
 </tbody>
 </table>
@@ -9512,7 +9692,10 @@ C
 <th>Model</th>
 <th>Page CER</th>
 <th>Edit Distance</th>
-<th>Compared Chars</th>
+<th>GT Chars</th>
+<th>Model Chars</th>
+<th>Char Delta</th>
+<th>Length Signal</th>
 </tr>
 </thead>
 <tbody>
@@ -9520,25 +9703,37 @@ C
 <td>dharmaMITRAocr</td>
 <td>30.56%</td>
 <td>44</td>
+<td>144</td>
 <td>140</td>
+<td>-4</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>qwen25vl7b</td>
 <td>37.50%</td>
 <td>54</td>
+<td>144</td>
 <td>99</td>
+<td>-45</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>olmocr2</td>
 <td>40.97%</td>
 <td>59</td>
+<td>144</td>
 <td>90</td>
+<td>-54</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>NDLocr</td>
 <td>52.08%</td>
 <td>75</td>
+<td>144</td>
 <td>133</td>
+<td>-11</td>
+<td>under-read</td>
 </tr>
 </tbody>
 </table>
@@ -9547,7 +9742,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>dharmaMITRAocr</h4>
-<p class="model-stats">CER 30.56% | 44 edits | 140 comparison chars</p>
+<p class="model-stats">CER 30.56% | 44 edits | GT 144 chars | Model 140 chars | Delta -4 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -9722,7 +9917,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>qwen25vl7b</h4>
-<p class="model-stats">CER 37.50% | 54 edits | 99 comparison chars</p>
+<p class="model-stats">CER 37.50% | 54 edits | GT 144 chars | Model 99 chars | Delta -45 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -9798,7 +9993,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>olmocr2</h4>
-<p class="model-stats">CER 40.97% | 59 edits | 90 comparison chars</p>
+<p class="model-stats">CER 40.97% | 59 edits | GT 144 chars | Model 90 chars | Delta -54 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -9903,7 +10098,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>NDLocr</h4>
-<p class="model-stats">CER 52.08% | 75 edits | 133 comparison chars</p>
+<p class="model-stats">CER 52.08% | 75 edits | GT 144 chars | Model 133 chars | Delta -11 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -10197,7 +10392,10 @@ C
 <th>Model</th>
 <th>Page CER</th>
 <th>Edit Distance</th>
-<th>Compared Chars</th>
+<th>GT Chars</th>
+<th>Model Chars</th>
+<th>Char Delta</th>
+<th>Length Signal</th>
 </tr>
 </thead>
 <tbody>
@@ -10205,25 +10403,37 @@ C
 <td>qwen25vl7b</td>
 <td>31.40%</td>
 <td>173</td>
+<td>551</td>
 <td>390</td>
+<td>-161</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>olmocr2</td>
 <td>40.47%</td>
 <td>223</td>
+<td>551</td>
 <td>340</td>
+<td>-211</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>NDLocr</td>
 <td>60.62%</td>
 <td>334</td>
+<td>551</td>
 <td>539</td>
+<td>-12</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>dharmaMITRAocr</td>
 <td>90.38%</td>
 <td>498</td>
+<td>551</td>
 <td>513</td>
+<td>-38</td>
+<td>under-read</td>
 </tr>
 </tbody>
 </table>
@@ -10232,7 +10442,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>qwen25vl7b</h4>
-<p class="model-stats">CER 31.40% | 173 edits | 390 comparison chars</p>
+<p class="model-stats">CER 31.40% | 173 edits | GT 551 chars | Model 390 chars | Delta -161 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -10478,7 +10688,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>olmocr2</h4>
-<p class="model-stats">CER 40.47% | 223 edits | 340 comparison chars</p>
+<p class="model-stats">CER 40.47% | 223 edits | GT 551 chars | Model 340 chars | Delta -211 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -10726,7 +10936,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>NDLocr</h4>
-<p class="model-stats">CER 60.62% | 334 edits | 539 comparison chars</p>
+<p class="model-stats">CER 60.62% | 334 edits | GT 551 chars | Model 539 chars | Delta -12 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -11573,7 +11783,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>dharmaMITRAocr</h4>
-<p class="model-stats">CER 90.38% | 498 edits | 513 comparison chars</p>
+<p class="model-stats">CER 90.38% | 498 edits | GT 551 chars | Model 513 chars | Delta -38 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -11992,7 +12202,10 @@ C
 <th>Model</th>
 <th>Page CER</th>
 <th>Edit Distance</th>
-<th>Compared Chars</th>
+<th>GT Chars</th>
+<th>Model Chars</th>
+<th>Char Delta</th>
+<th>Length Signal</th>
 </tr>
 </thead>
 <tbody>
@@ -12001,24 +12214,36 @@ C
 <td>9.30%</td>
 <td>16</td>
 <td>172</td>
+<td>172</td>
+<td>0</td>
+<td>matched length</td>
 </tr>
 <tr>
 <td>qwen25vl7b</td>
 <td>9.30%</td>
 <td>16</td>
+<td>172</td>
 <td>166</td>
+<td>-6</td>
+<td>under-read</td>
 </tr>
 <tr>
 <td>dharmaMITRAocr</td>
 <td>16.28%</td>
 <td>28</td>
+<td>172</td>
 <td>174</td>
+<td>+2</td>
+<td>over-read</td>
 </tr>
 <tr>
 <td>NDLocr</td>
 <td>50.00%</td>
 <td>86</td>
+<td>172</td>
 <td>176</td>
+<td>+4</td>
+<td>over-read</td>
 </tr>
 </tbody>
 </table>
@@ -12027,7 +12252,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>olmocr2</h4>
-<p class="model-stats">CER 9.30% | 16 edits | 172 comparison chars</p>
+<p class="model-stats">CER 9.30% | 16 edits | GT 172 chars | Model 172 chars | Delta 0 (matched length)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -12149,7 +12374,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>qwen25vl7b</h4>
-<p class="model-stats">CER 9.30% | 16 edits | 166 comparison chars</p>
+<p class="model-stats">CER 9.30% | 16 edits | GT 172 chars | Model 166 chars | Delta -6 (under-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -12295,7 +12520,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>dharmaMITRAocr</h4>
-<p class="model-stats">CER 16.28% | 28 edits | 174 comparison chars</p>
+<p class="model-stats">CER 16.28% | 28 edits | GT 172 chars | Model 174 chars | Delta +2 (over-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
@@ -12416,7 +12641,7 @@ C
 <section class="model-card">
 <div class="model-header">
 <h4>NDLocr</h4>
-<p class="model-stats">CER 50.00% | 86 edits | 176 comparison chars</p>
+<p class="model-stats">CER 50.00% | 86 edits | GT 172 chars | Model 176 chars | Delta +4 (over-read)</p>
 </div>
 <div class="model-section">
 <h5>Error Snapshots</h5>
