@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>志怪 - Records of Anomalies</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 1rem;
+      line-height: 1.6;
+    }
+    a.marker {
+      color: #0077cc;
+      text-decoration: underline;
+      cursor: pointer;
+      scroll-margin-top: 5.5rem;
+    }
+    .marker-text {
+      color: #0077cc;
+      font-weight: 600;
+    }
+    .reasoning-trigger {
+      display: inline;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: #0077cc;
+      cursor: pointer;
+      font-size: 0.8rem;
+      line-height: 1.2;
+      vertical-align: baseline;
+      text-decoration: underline;
+    }
+    .interlaced-reasoning-trigger-row {
+      margin-top: -0.2rem;
+    }
+    .interlaced-reasoning-trigger-row .reasoning-trigger {
+      font-size: 0.9rem;
+    }
+    .chunk-anchor {
+      display: block;
+      height: 0;
+      overflow: hidden;
+      scroll-margin-top: 5.5rem;
+    }
+    .marker-trailing {
+      margin-left: 0.3rem;
+      white-space: nowrap;
+    }
+    .reasoning-trigger:hover {
+      color: #005c99;
+    }
+    .reasoning-trigger:focus-visible,
+    .term-match:focus-visible,
+    .reasoning-term-item:focus-visible,
+    .view-toggle-button:focus-visible,
+    .reasoning-preview-more:focus-visible,
+    .return-link:focus-visible {
+      outline: 2px solid #0077cc;
+      outline-offset: 2px;
+    }
+    .section {
+      margin-bottom: 2rem;
+    }
+    .section h3 {
+      margin-top: 0;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.25rem;
+    }
+    .doc-header {
+      font-style: italic;
+      color: #444;
+      margin: 0.75rem 0 1.25rem;
+    }
+    .page-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      justify-content: space-between;
+      margin: 0 0 1.5rem;
+      padding: 0.85rem 0;
+      background: #fff;
+      border-bottom: 1px solid #dbe1ec;
+    }
+    .doc-search {
+      position: relative;
+      flex: 1 1 420px;
+      max-width: 520px;
+    }
+    .doc-search-input {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #b7c0d0;
+      box-sizing: border-box;
+    }
+    .doc-search-results {
+      position: absolute;
+      top: calc(100% + 0.45rem);
+      left: 0;
+      right: 0;
+      display: none;
+      border: 1px solid #dbe1ec;
+      border-radius: 8px;
+      padding: 0.25rem 1rem 1rem;
+      background: #fff;
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+      max-height: min(60vh, 32rem);
+      overflow-y: auto;
+    }
+    .doc-search-results-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .doc-search-count {
+      margin: 0.5rem 0 0.4rem;
+      font-size: 0.85rem;
+      color: #5e6673;
+    }
+    .doc-search-results.has-results .doc-search-results-list {
+      display: block;
+    }
+    .doc-search-results.has-results {
+      display: block;
+    }
+    .doc-search-result {
+      border-top: 1px solid #dfe3eb;
+      padding: 0.85rem 0;
+    }
+    .doc-search-result:first-child {
+      border-top: none;
+    }
+    .doc-search-result a {
+      color: #005c99;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .doc-search-result a:hover {
+      text-decoration: underline;
+    }
+    .doc-search-snippet {
+      margin: 0.35rem 0 0;
+      font-size: 0.95rem;
+      color: #353c48;
+    }
+    .doc-search-meta {
+      margin: 0.2rem 0 0;
+      font-size: 0.85rem;
+      color: #5e6673;
+    }
+    .doc-search-more-button {
+      margin-top: 0.75rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 4px;
+      border: 1px solid #0077cc;
+      background: #fff;
+      color: #0077cc;
+      cursor: pointer;
+      font-size: 0.95rem;
+      display: none;
+    }
+    .doc-search-more-button.visible {
+      display: inline-block;
+    }
+    .return-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid #0077cc;
+      background: #fff;
+      color: #0077cc;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      transition: all 0.15s ease-in-out;
+    }
+    .return-link:hover {
+      background: rgba(0, 119, 204, 0.08);
+    }
+    .return-link {
+      text-decoration: none;
+      font-weight: 600;
+      flex: 0 0 auto;
+    }
+    .page-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 0 0 auto;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .page-actions > * {
+      min-width: 7.5rem;
+      box-sizing: border-box;
+    }
+    .view-toggle-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid #0077cc;
+      background: #fff;
+      color: #0077cc;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+    }
+    .view-toggle-button:hover {
+      background: rgba(0, 119, 204, 0.08);
+    }
+    .view-toggle-button[aria-pressed="true"] {
+      background: #0077cc;
+      color: #fff;
+    }
+    .view-toggle-button[aria-pressed="true"]:hover {
+      background: #005c99;
+    }
+    .interlaced-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.95rem;
+    }
+    .interlaced-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .interlaced-block {
+      margin: 0;
+    }
+    .interlaced-reasoning-panel[hidden] {
+      display: none;
+    }
+    .interlaced-reasoning-panel {
+      position: relative;
+      left: 50%;
+      width: 100vw;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      background: #f8fafc;
+    }
+    .interlaced-reasoning-card {
+      border: none;
+      border-radius: 0;
+      padding: 1rem;
+      background: transparent;
+      box-sizing: border-box;
+    }
+    .interlaced-reasoning-preview[hidden],
+    .interlaced-reasoning-full[hidden] {
+      display: none;
+    }
+    .interlaced-reasoning-title {
+      margin: 0 0 0.55rem;
+      font-weight: 600;
+      color: #334155;
+    }
+    .interlaced-reasoning-preview-content {
+      margin-bottom: 0.75rem;
+    }
+    .interlaced-label {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .marker-code {
+      font-weight: 400;
+      color: #666;
+      margin-left: 0.35rem;
+    }
+    .term-match {
+      border-radius: 0.2rem;
+      cursor: pointer;
+      transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    }
+    .interlaced-group .term-match {
+      background: rgba(148, 163, 184, 0.35);
+    }
+    .interlaced-group .term-match:hover {
+      background: rgba(148, 163, 184, 0.55);
+    }
+    .term-match.is-active {
+      background: rgba(59, 130, 246, 0.35) !important;
+      color: #1d4ed8;
+    }
+    .reasoning-term-item[data-term-key] {
+      border-radius: 0.35rem;
+      cursor: pointer;
+      padding: 0.1rem 0.25rem;
+      transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    }
+    .reasoning-section + .reasoning-section,
+    .reasoning-preview-section + .reasoning-preview-section {
+      margin-top: 0.85rem;
+    }
+    .reasoning-section-title,
+    .reasoning-preview-category {
+      margin: 0 0 0.35rem;
+    }
+    .reasoning-section-list,
+    .reasoning-preview-list {
+      margin: 0;
+      padding-left: 1.25rem;
+    }
+    .reasoning-preview-item {
+      padding: 0.1rem 0;
+    }
+    .reasoning-preview-more {
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: #0077cc;
+      cursor: pointer;
+      font-size: 0.92rem;
+      text-decoration: underline;
+    }
+    .reasoning-preview-more:hover {
+      color: #005c99;
+    }
+    .reasoning-term-item.is-active,
+    .reasoning-preview-item.is-active {
+      background: rgba(59, 130, 246, 0.14);
+      color: #1d4ed8;
+    }
+    .interlaced-content {
+      margin: 0;
+    }
+    .interlaced-empty {
+      color: #666;
+      font-style: italic;
+      margin: 0.5rem 0;
+    }
+    body.hide-english .interlaced-block.translation {
+      display: none !important;
+    }
+    body.hide-chinese .interlaced-block.original,
+    body.hide-chinese .interlaced-reasoning-trigger-row {
+      display: none !important;
+    }
+    @media (max-width: 600px) {
+      .page-toolbar {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+      .page-actions {
+        width: 100%;
+      }
+      .view-toggle-button,
+      .return-link {
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .doc-search {
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>志怪 - Records of Anomalies</h1>
+  <p class="doc-header">Translation created with model: qwen3-14b-nothink-sbs-3step / step-by-step-3step-fewshot</p>
+
+  <div class="page-toolbar">
+    <div class="doc-search" id="doc-search">
+      <input
+        type="search"
+        id="doc-search-input"
+        class="doc-search-input"
+        placeholder="Search"
+        autocomplete="off"
+        aria-label="Search within this document"
+      />
+      <div class="doc-search-results" id="doc-search-results" aria-live="polite">
+        <p class="doc-search-count" id="doc-search-count" hidden></p>
+        <ul class="doc-search-results-list" id="doc-search-results-list"></ul>
+        <button type="button" class="doc-search-more-button" id="doc-search-more-button" aria-expanded="false">See more results</button>
+      </div>
+    </div>
+    <div class="page-actions">
+      <button type="button" class="view-toggle-button" id="toggle-english-button" aria-pressed="false">Hide English</button>
+      <button type="button" class="view-toggle-button" id="toggle-chinese-button" aria-pressed="false">Hide Chinese</button>
+      <a class="return-link" href="../index.html">Home</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="interlaced-container">
+      <div class="interlaced-group" data-marker="1">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-1" class="chunk-anchor" aria-hidden="true"></span><p><span class="term-match" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false">志怪</span> 晋 祖台之<br>　　<br>　　<span class="term-match" data-term-key="term-29" tabindex="0" role="button" aria-pressed="false">汉武帝</span>与近臣宴会于<span class="term-match" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false">未央殿</span>，忽闻人语云：“老臣<span class="term-match" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false">冒死自陈</span>。”乃见屋梁上有一翁，八九寸，拄杖偻步，笃老之极；<span class="term-match" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false">缘柱而下</span>，<span class="term-match" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false">放杖稽首</span>，<span class="term-match" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false">默而不言</span>；<span class="term-match" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false">因仰首视殿屋</span>，<span class="term-match" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false">俯指帝脚</span>，<span class="term-match" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false">忽然不见</span>。东方朔曰：“<span class="term-match" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false">其名‘藻居’</span>，<span class="term-match" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false">兼水木之精</span>，<span class="term-match" data-term-key="term-31" tabindex="0" role="button" aria-pressed="false">春巢幽林，冬潜深河</span>。<span class="term-match" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false">今造宫室</span>，斩伐 其居，<span class="term-match" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false">故来诉于帝</span>。<span class="term-match" data-term-key="term-17" tabindex="0" role="button" aria-pressed="false">曰仰视宫殿</span>，<span class="term-match" data-term-key="term-18" tabindex="0" role="button" aria-pressed="false">殿名未央</span>，<span class="term-match" data-term-key="term-19" tabindex="0" role="button" aria-pressed="false">诉陛下方侵其居宅未央也</span>；<span class="term-match" data-term-key="term-20" tabindex="0" role="button" aria-pressed="false">俯指陛下脚者</span>，<span class="term-match" data-term-key="term-21" tabindex="0" role="button" aria-pressed="false">足也</span>，<span class="term-match" data-term-key="term-32" tabindex="0" role="button" aria-pressed="false">愿陛下宫殿足于此，不愿更造也</span>。”<span class="term-match" data-term-key="term-24" tabindex="0" role="button" aria-pressed="false">上为之息宫寝之役</span>。<span class="term-match" data-term-key="term-25" tabindex="0" role="button" aria-pressed="false">居少时</span>，<span class="term-match" data-term-key="term-26" tabindex="0" role="button" aria-pressed="false">帝亲幸河都</span>，<span class="term-match" data-term-key="term-27" tabindex="0" role="button" aria-pressed="false">闻水底有弦歌之声</span>，<span class="term-match" data-term-key="term-28" tabindex="0" role="button" aria-pressed="false">又有善芥</span>。 <a href="#inter-trans-1" class="marker marker-trailing">[1]</a></p></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="1" aria-controls="interlaced-reasoning-1" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-1" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <p class="interlaced-reasoning-title">Relevant Explanation</p>
+      <div class="interlaced-content interlaced-reasoning-preview-content"></div>
+      <button type="button" class="reasoning-preview-more">See more</button>
+    </div>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content"><p><span class="marker-text">[1]</span></p><section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Idiomatic Expressions</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">志怪</span> - A genre of Chinese literature focused on recording strange and supernatural events, often with moral or philosophical undertones.</li><li class="reasoning-term-item" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">未央殿</span> - A specific palace within the imperial complex, known for its grandeur and significance in the Han dynasty.</li><li class="reasoning-term-item" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">冒死自陈</span> - Literally means &#39;to risk one&#39;s life to speak,&#39; indicating a bold and desperate plea.</li><li class="reasoning-term-item" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">缘柱而下</span> - Describes the action of descending a column, emphasizing the small size and agility of the figure.</li><li class="reasoning-term-item" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">放杖稽首</span> - &#39;放杖&#39; means to put down the staff, and &#39;稽首&#39; is a deep bow or prostration, showing respect or submission.</li><li class="reasoning-term-item" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">默而不言</span> - Means &#39;silent and not speaking,&#39; indicating a moment of contemplation or reluctance to speak.</li><li class="reasoning-term-item" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">因仰首视殿屋</span> - &#39;因&#39; means &#39;therefore&#39; or &#39;then,&#39; &#39;仰首&#39; means &#39;to look up,&#39; and &#39;视殿屋&#39; means &#39;to look at the palace hall,&#39; indicating the figure&#39;s gaze upward.</li><li class="reasoning-term-item" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">俯指帝脚</span> - &#39;俯&#39; means &#39;to look down,&#39; and &#39;指帝脚&#39; means &#39;to point at the emperor&#39;s feet,&#39; indicating a gesture of pointing downward.</li><li class="reasoning-term-item" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">忽然不见</span> - Means &#39;suddenly disappeared,&#39; indicating the sudden vanishing of the figure.</li><li class="reasoning-term-item" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">其名‘藻居’</span> - &#39;藻居&#39; is the name of the figure, which can be translated as &#39;Algae Dweller&#39; or &#39;Water Plant Dweller.&#39;</li><li class="reasoning-term-item" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">兼水木之精</span> - &#39;兼&#39; means &#39;both,&#39; &#39;水&#39; means &#39;water,&#39; &#39;木&#39; means &#39;wood,&#39; and &#39;之精&#39; means &#39;the essence,&#39; indicating that the figure embodies both water and wood elements.</li><li class="reasoning-term-item" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">春巢幽林</span> - &#39;春巢&#39; means &#39;nest in spring,&#39; and &#39;幽林&#39; means &#39;deep forest,&#39; indicating the figure&#39;s habitat in spring.</li><li class="reasoning-term-item" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">冬潜深河</span> - &#39;冬&#39; means &#39;winter,&#39; &#39;潜&#39; means &#39;to hide,&#39; and &#39;深河&#39; means &#39;deep river,&#39; indicating the figure&#39;s habitat in winter.</li><li class="reasoning-term-item" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">今造宫室</span> - &#39;今&#39; means &#39;now,&#39; &#39;造&#39; means &#39;to build,&#39; and &#39;宫室&#39; means &#39;palaces and halls,&#39; indicating the current construction of palaces.</li><li class="reasoning-term-item" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">斩伐其居</span> - &#39;斩伐&#39; means &#39;to cut down,&#39; and &#39;其居&#39; means &#39;its dwelling,&#39; indicating the destruction of the figure&#39;s habitat.</li><li class="reasoning-term-item" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">故来诉于帝</span> - &#39;故&#39; means &#39;therefore,&#39; &#39;来&#39; means &#39;to come,&#39; &#39;诉&#39; means &#39;to complain,&#39; and &#39;于帝&#39; means &#39;to the emperor,&#39; indicating the reason for the figure&#39;s appearance.</li><li class="reasoning-term-item" data-term-key="term-17" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">曰仰视宫殿</span> - &#39;曰&#39; means &#39;said,&#39; &#39;仰视&#39; means &#39;to look up,&#39; and &#39;宫殿&#39; means &#39;palace halls,&#39; indicating the figure&#39;s statement about looking up at the palace.</li><li class="reasoning-term-item" data-term-key="term-18" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">殿名未央</span> - &#39;殿&#39; means &#39;palace,&#39; &#39;名&#39; means &#39;named,&#39; and &#39;未央&#39; means &#39;unending,&#39; indicating the name of the palace.</li><li class="reasoning-term-item" data-term-key="term-19" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">诉陛下方侵其居宅未央也</span> - &#39;诉&#39; means &#39;to complain,&#39; &#39;陛下&#39; means &#39;your majesty,&#39; &#39;方&#39; means &#39;just,&#39; &#39;侵&#39; means &#39;to invade,&#39; &#39;其居宅&#39; means &#39;its dwelling,&#39; and &#39;未央&#39; means &#39;unending,&#39; indicating the figure&#39;s complaint about the invasion of its habitat.</li><li class="reasoning-term-item" data-term-key="term-20" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">俯指陛下脚者</span> - &#39;俯&#39; means &#39;to look down,&#39; &#39;指&#39; means &#39;to point,&#39; &#39;陛下&#39; means &#39;your majesty,&#39; and &#39;脚&#39; means &#39;feet,&#39; indicating the figure&#39;s gesture of pointing at the emperor&#39;s feet.</li><li class="reasoning-term-item" data-term-key="term-21" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">足也</span> - Means &#39;enough,&#39; indicating that the emperor&#39;s feet represent enough.</li><li class="reasoning-term-item" data-term-key="term-22" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">愿陛下宫殿足于此</span> - &#39;愿&#39; means &#39;wish,&#39; &#39;陛下&#39; means &#39;your majesty,&#39; &#39;宫殿&#39; means &#39;palaces,&#39; &#39;足&#39; means &#39;enough,&#39; and &#39;于此&#39; means &#39;here,&#39; indicating the figure&#39;s wish for the emperor to be satisfied with the current palaces.</li><li class="reasoning-term-item" data-term-key="term-23" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">不愿更造也</span> - &#39;不愿&#39; means &#39;do not wish,&#39; &#39;更&#39; means &#39;to build again,&#39; and &#39;造&#39; means &#39;to construct,&#39; indicating the figure&#39;s request not to build more palaces.</li><li class="reasoning-term-item" data-term-key="term-24" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">上为之息宫寝之役</span> - &#39;上&#39; means &#39;the emperor,&#39; &#39;为之&#39; means &#39;for this,&#39; &#39;息&#39; means &#39;to stop,&#39; &#39;宫寝&#39; means &#39;palaces and sleeping quarters,&#39; and &#39;之役&#39; means &#39;the construction,&#39; indicating the emperor&#39;s decision to halt the construction.</li><li class="reasoning-term-item" data-term-key="term-25" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">居少时</span> - &#39;居&#39; means &#39;after,&#39; &#39;少时&#39; means &#39;a short time,&#39; indicating the passage of a short time.</li><li class="reasoning-term-item" data-term-key="term-26" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">帝亲幸河都</span> - &#39;帝&#39; means &#39;the emperor,&#39; &#39;亲&#39; means &#39;personally,&#39; &#39;幸&#39; means &#39;to visit,&#39; and &#39;河都&#39; means &#39;the river capital,&#39; indicating the emperor&#39;s personal visit to the river capital.</li><li class="reasoning-term-item" data-term-key="term-27" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">闻水底有弦歌之声</span> - &#39;闻&#39; means &#39;heard,&#39; &#39;水底&#39; means &#39;underwater,&#39; &#39;有&#39; means &#39;there was,&#39; &#39;弦歌&#39; means &#39;music and singing,&#39; and &#39;之声&#39; means &#39;the sound,&#39; indicating the sound of music and singing underwater.</li><li class="reasoning-term-item" data-term-key="term-28" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">又有善芥</span> - &#39;又&#39; means &#39;also,&#39; &#39;有&#39; means &#39;there was,&#39; &#39;善芥&#39; means &#39;good herbs,&#39; indicating the presence of good herbs.</li></ul>
+</section>
+<section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Cultural and Historical Allusions</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-29" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">汉武帝</span> - Emperor Wu of Han, a powerful and influential ruler of the Han dynasty, known for his military campaigns and cultural achievements.</li><li class="reasoning-term-item" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">未央殿</span> - A famous palace in the imperial complex, often used for important ceremonies and meetings.</li><li class="reasoning-term-item" data-term-key="term-30" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">藻居</span> - A mythical creature or spirit, possibly a water plant or algae dweller, embodying both water and wood elements.</li><li class="reasoning-term-item" data-term-key="term-31" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">春巢幽林，冬潜深河</span> - Describes the habitat and behavior of the figure, reflecting the natural cycles and the interconnectedness of water and wood.</li><li class="reasoning-term-item" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">今造宫室</span> - Refers to the construction of palaces and halls, which is a significant activity in the imperial court.</li><li class="reasoning-term-item" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">斩伐其居</span> - Indicates the destruction of the figure&#39;s habitat, which is a common theme in classical Chinese literature, often used to highlight the consequences of human actions on nature.</li><li class="reasoning-term-item" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">故来诉于帝</span> - Reflects the belief in the supernatural and the idea that natural spirits can communicate with humans to express their grievances.</li><li class="reasoning-term-item" data-term-key="term-32" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">愿陛下宫殿足于此，不愿更造也</span> - Shows the emperor&#39;s response to the figure&#39;s plea, demonstrating a respect for the natural world and a willingness to halt construction to avoid further harm.</li></ul>
+</section>
+<section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Proper Nouns</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-29" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">汉武帝</span> - Emperor Wu of Han.</li><li class="reasoning-term-item" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">未央殿</span> - Weiyang Palace.</li><li class="reasoning-term-item" data-term-key="term-30" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">藻居</span> - Algae Dweller or Water Plant Dweller.</li><li class="reasoning-term-item" data-term-key="term-33" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">河都</span> - River Capital.</li></ul>
+</section></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-1" class="chunk-anchor" aria-hidden="true"></span><p>The Strange and the Marvelous<br>By Zǔ Tái Zhī, Jin Dynasty</p>
+<p>Emperor Wu of Han was hosting a banquet with his ministers in the Weiyang Palace when he suddenly heard a voice say, &quot;An old minister risks his life to speak.&quot; Looking up, he saw an elderly man, about eight or nine inches tall, leaning on a staff and hobbling, extremely aged. The man descended the column, put down his staff, bowed deeply, and remained silent. He then looked up at the palace hall and pointed down at the emperor&#39;s feet, and suddenly vanished. Dongfang Shuo said, &quot;His name is &#39;Algae Dweller,&#39; and he embodies the essence of both water and wood. In spring, he nests in deep forests, and in winter, he hides in deep rivers. Now that palaces and halls are being built, his dwelling is being cut down, so he has come to complain to the emperor. He said, looking up at the palace, &#39;The palace is named Unending, and I am complaining that Your Majesty is still invading my dwelling, which is unending.&#39; Pointing at the emperor&#39;s feet, he said, &#39;Enough,&#39; and wished that the emperor&#39;s palaces and halls be sufficient here, and not to build more.&quot; The emperor halted the construction of the palaces and sleeping quarters. After a short time, the emperor personally visited the river capital and heard the sound of music and singing underwater, as well as the presence of good herbs. <a href="#inter-orig-1" class="marker marker-trailing">[1]</a></p></div></div>
+</div>
+<div class="interlaced-group" data-marker="2">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-2" class="chunk-anchor" aria-hidden="true"></span><p>须臾，前梁上老翁及年少数人，绛衣素带，缨佩乘藻，甚为鲜丽，<span class="term-match" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false">凌波而出</span>，衣不沾濡。帝问曰：“闻水底奏乐声，为君耶？”老翁对曰：“老臣前<span class="term-match" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false">昧死</span>归诉，幸蒙陛下天地之施，即止息斧斤，得全其居宅，不胜嘉欢，故私相庆乐耳。”献帝一<span class="term-match" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false">紫螺壳</span>，状如牛脂。帝曰：“朕<span class="term-match" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false">闇无以识君</span>，<span class="term-match" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false">东方生</span>知耳；君可思以吴○贻之。”老翁乃顾命取洞穴之，一人即受命下没泉底，<span class="term-match" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false">倏忽</span>还到，奉大珠径寸，<span class="term-match" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false">明耀绝世</span>。帝甚玩焉，问朔：“<span class="term-match" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false">何以识此珠为洞穴之宝</span>？”朔曰：“<span class="term-match" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false">河底有洞穴之宝</span>。”帝以<span class="term-match" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false">五十万钱</span>赐朔，取其珠。《书钞》一百五十八 <a href="#inter-trans-2" class="marker marker-trailing">[2]</a></p></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="2" aria-controls="interlaced-reasoning-2" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-2" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <p class="interlaced-reasoning-title">Relevant Explanation</p>
+      <div class="interlaced-content interlaced-reasoning-preview-content"></div>
+      <button type="button" class="reasoning-preview-more">See more</button>
+    </div>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content"><p><span class="marker-text">[2]</span></p><section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Idiomatic Expressions</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">須臾</span> - Temporal expression meaning &#39;in a short while&#39; or &#39;soon.&#39;</li><li class="reasoning-term-item" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">凌波而出</span> - Poetic phrase meaning &#39;emerging from the waves,&#39; evoking a graceful appearance.</li><li class="reasoning-term-item" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">昧死</span> - Humble expression meaning &#39;at the risk of death&#39; or &#39;with utmost reverence,&#39; used in formal submissions.</li><li class="reasoning-term-item" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">闇无以识君</span> - Humble expression meaning &#39;I am ignorant and unable to recognize you,&#39; indicating the emperor&#39;s lack of knowledge.</li><li class="reasoning-term-item" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">倏忽</span> - Temporal expression meaning &#39;in a flash&#39; or &#39;very quickly.&#39;</li><li class="reasoning-term-item" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">明耀绝世</span> - Descriptive phrase meaning &#39;radiant beyond comparison,&#39; emphasizing the beauty of the pearl.</li><li class="reasoning-term-item" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">何以识此珠为洞穴之宝</span> - Question asking &#39;How do you know this pearl is from the cave?&#39; indicating the emperor&#39;s curiosity.</li></ul>
+</section>
+<section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Cultural and Historical Allusions</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">獻帝</span> - Emperor Xian of Han, the last emperor of the Eastern Han dynasty.</li><li class="reasoning-term-item" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">紫螺壳</span> - A purple conch shell, likely a valuable object in ancient China.</li><li class="reasoning-term-item" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">东方生</span> - Refers to Sima Qian&#39;s *Records of the Grand Historian* (史记), where &#39;Eastern Sheng&#39; is a nickname for Sima Qian himself, known for his knowledge and wisdom.</li><li class="reasoning-term-item" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">河底有洞穴之宝</span> - Reference to the belief that valuable treasures can be found at the bottom of rivers, particularly in caves.</li><li class="reasoning-term-item" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">五十万钱</span> - A significant sum of money, indicating the value placed on the pearl.</li></ul>
+</section>
+<section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Proper Nouns</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">獻帝</span> - Emperor Xian of Han.</li><li class="reasoning-term-item" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">东方生</span> - Sima Qian, a famous historian and writer.</li><li class="reasoning-term-item" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">河底有洞穴之宝</span> - Reference to the belief that valuable treasures can be found at the bottom of rivers, particularly in caves.</li><li class="reasoning-term-item" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">五十万钱</span> - A significant sum of money, indicating the value placed on the pearl.</li></ul>
+</section></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-2" class="chunk-anchor" aria-hidden="true"></span><p>Soon, an old man and a few young men appeared from the beams above, dressed in red robes and white sashes, adorned with ribbons and jade ornaments, looking very fresh and beautiful, emerging from the waves without their clothes becoming wet. The emperor asked, &quot;Did you hear the music playing at the bottom of the water? Is it you?&quot; The old man replied, &quot;Your humble servant risked his life to appeal to Your Majesty, and fortunately, you granted us your great mercy, stopping the axes and allowing us to preserve our homes. We are overwhelmed with joy, so we privately celebrated.&quot; The emperor then presented a purple conch shell, shaped like butter. He said, &quot;I am ignorant and unable to recognize you; only Eastern Sheng knows. Could you think of giving this to him?&quot; The old man then ordered someone to retrieve something from the cave. One person accepted the command and dived into the spring&#39;s depths, returning quickly with a large pearl, a foot in diameter, radiant beyond compare. The emperor admired it greatly and asked Sima Qian, &quot;How do you know this pearl is from the cave?&quot; Sima Qian replied, &quot;There are treasures in the caves at the bottom of the river.&quot; The emperor rewarded Sima Qian with fifty thousand coins and took the pearl. (From <em>Shu Chao</em>, Volume 158) <a href="#inter-orig-2" class="marker marker-trailing">[2]</a></p></div></div>
+</div>
+<div class="interlaced-group" data-marker="3">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-3" class="chunk-anchor" aria-hidden="true"></span><p><span class="term-match" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false">建安中</span>，<span class="term-match" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false">河间太守</span><span class="term-match" data-term-key="term-19" tabindex="0" role="button" aria-pressed="false">刘照</span>夫人卒于府。后太守至，梦见一好妇人，就为<span class="term-match" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false">室家</span>；持一双金  （古唤切）与，太守不能名，妇人乃曰：“此○（<span class="term-match" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false">竹恚切</span>）。”○者，其状如纽珠，大如指，<span class="term-match" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false">屈伸在人</span>。太守得置枕中。前太守迎丧，言有○，开棺，见夫人臂果无复有○焉。《<span class="term-match" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false">御览</span>》七百十八<br>　　<br>　　<span class="term-match" data-term-key="term-20" tabindex="0" role="button" aria-pressed="false">吴</span>未亡前，常有<span class="term-match" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false">紫赤色气</span>见牛斗之间，<span class="term-match" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false">星官及诸善占者</span>咸忧<span class="term-match" data-term-key="term-20" tabindex="0" role="button" aria-pressed="false">吴</span>方兴；惟<span class="term-match" data-term-key="term-21" tabindex="0" role="button" aria-pressed="false">张先</span>于天文尤精，独知为<span class="term-match" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false">神剑之气</span>，<span class="term-match" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false">非江南之祥</span>。《<span class="term-match" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false">御览</span>》六<br>　　<br>　　<span class="term-match" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false">陶太尉微时</span>，丧当葬，家贫，亲自营作；有一<span class="term-match" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false">斑牛</span>，已载致，忽然失去，便自寻觅。忽于道中逢一老翁，云君欲何所觅？太尉具答。更举手指云：“向于<span class="term-match" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false">山冈上见一牛眠山圩中</span>，必是君牛。此牛所眠，便好作墓安坟当之，致极贵；小复不当，位极人臣，<span class="term-match" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false">世为方岳</span>矣。 ”又指一山云：“此山亦好，但不如向耳，亦当世出刺史耳。”言讫，便不复见。太尉墓之，皆如其言。《<span class="term-match" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false">御览</span>》九百 <a href="#inter-trans-3" class="marker marker-trailing">[3]</a></p></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="3" aria-controls="interlaced-reasoning-3" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-3" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <p class="interlaced-reasoning-title">Relevant Explanation</p>
+      <div class="interlaced-content interlaced-reasoning-preview-content"></div>
+      <button type="button" class="reasoning-preview-more">See more</button>
+    </div>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content"><p><span class="marker-text">[3]</span></p><section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Idiomatic Expressions</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">建安中</span> - Refers to the Jian&#39;an era (196–220 AD), a significant period in Chinese history.</li><li class="reasoning-term-item" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">河间太守</span> - Refers to the governor of Hejian, a region in ancient China.</li><li class="reasoning-term-item" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">室家</span> - Refers to a household or family.</li><li class="reasoning-term-item" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">一双金○</span> - Refers to a pair of golden objects, with the character ○ being a placeholder for an unknown character.</li><li class="reasoning-term-item" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">竹恚切</span> - A phonetic annotation indicating the pronunciation of the character ○.</li><li class="reasoning-term-item" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">屈伸在人</span> - Means &#39;flexible and malleable according to one&#39;s will.&#39;</li><li class="reasoning-term-item" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">御览</span> - Refers to the *Wuying Palace Collection*, an encyclopedic work compiled during the Song dynasty.</li><li class="reasoning-term-item" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">紫赤色气</span> - Refers to a purple-red aura or vapor.</li><li class="reasoning-term-item" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">星官及诸善占者</span> - Refers to astronomers and skilled diviners.</li><li class="reasoning-term-item" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">神剑之气</span> - Refers to the aura of a divine sword.</li><li class="reasoning-term-item" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">非江南之祥</span> - Means &#39;not a good omen for the south.&#39;</li><li class="reasoning-term-item" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">陶太尉微时</span> - Refers to Tao, a high-ranking official, in his humble beginnings.</li><li class="reasoning-term-item" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">斑牛</span> - Refers to a spotted cow.</li><li class="reasoning-term-item" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">山冈上见一牛眠山圩中</span> - Refers to seeing a cow lying in a field on a hill.</li><li class="reasoning-term-item" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">世为方岳</span> - Means &#39;to be a governor of a major region.&#39;</li></ul>
+</section>
+<section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Cultural and Historical Allusions</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">建安中</span> - The Jian&#39;an era was marked by the rise of the Three Kingdoms period.</li><li class="reasoning-term-item" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">河间太守</span> - Hejian was an important region during the Han dynasty.</li><li class="reasoning-term-item" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">御览</span> - The *Wuying Palace Collection* is a significant historical text.</li><li class="reasoning-term-item" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">紫赤色气</span> - Such auras were often interpreted as omens in ancient China.</li><li class="reasoning-term-item" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">星官及诸善占者</span> - These were highly respected figures in ancient Chinese society.</li><li class="reasoning-term-item" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">神剑之气</span> - The concept of divine swords is prevalent in Chinese mythology.</li><li class="reasoning-term-item" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">陶太尉</span> - Tao was a notable historical figure in Chinese history.</li><li class="reasoning-term-item" data-term-key="term-17" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">方岳</span> - Refers to a high-ranking official governing a major region.</li></ul>
+</section>
+<section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Proper Nouns</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-18" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">建安</span> - The Jian&#39;an era.</li><li class="reasoning-term-item" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">河间太守</span> - The governor of Hejian.</li><li class="reasoning-term-item" data-term-key="term-19" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">刘照</span> - A historical figure.</li><li class="reasoning-term-item" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">御览</span> - The *Wuying Palace Collection*.</li><li class="reasoning-term-item" data-term-key="term-20" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">吴</span> - Refers to the state of Wu during the Three Kingdoms period.</li><li class="reasoning-term-item" data-term-key="term-21" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">张先</span> - A historical figure known for his expertise in astronomy.</li><li class="reasoning-term-item" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">陶太尉</span> - Tao, a high-ranking official.</li><li class="reasoning-term-item" data-term-key="term-17" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">方岳</span> - A high-ranking official governing a major region.</li></ul>
+</section></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-3" class="chunk-anchor" aria-hidden="true"></span><p>During the Jian&#39;an era, the wife of Liu Zhao, the governor of Hejian, died in the governor&#39;s mansion. Afterward, when the new governor arrived, he dreamed of a beautiful woman who became his household; she gave him a pair of golden objects, which the governor could not identify. The woman then said, &quot;This is ○ (pronounced as &#39;zhuì&#39;).&quot; ○ refers to an object shaped like a pearl, as large as a finger, and flexible according to one&#39;s will. The governor placed it in his pillow. When the previous governor came to attend the funeral, he mentioned the ○, and upon opening the coffin, he found that the woman&#39;s arm indeed no longer had the ○. This account is recorded in the <em>Wuying Palace Collection</em>, volume 718.</p>
+<p>Before the state of Wu fell, there was often a purple-red aura seen between the constellations of Ox and Dipper. Astronomers and skilled diviners all feared that Wu was rising; only Zhang Xian, who was particularly skilled in astronomy, knew it was the aura of a divine sword, not a good omen for the south. This is recorded in the <em>Wuying Palace Collection</em>, volume 6.</p>
+<p>When Tao, the Taiview, was in humble circumstances, he was preparing to bury his father. Being poor, he did it himself; he had a spotted cow, which he had already loaded, but it suddenly disappeared, so he went to look for it. Suddenly, he met an old man on the road who asked, &quot;What are you looking for?&quot; Tao replied in detail. The old man then pointed and said, &quot;I saw a cow lying in a field on a hill, it must be your cow. The place where this cow is lying is a good spot to build a tomb and bury your father, which will bring great fortune; even if it is slightly less, it will still bring you to the highest rank of an official, and your descendants will be governors of major regions.&quot; He then pointed to another mountain and said, &quot;This mountain is also good, but not as good as the previous one, but it will still produce a prefectural governor.&quot; After speaking, the old man disappeared. Tao built the tomb there, and everything happened as the old man had said. This is recorded in the <em>Wuying Palace Collection</em>, volume 900. <a href="#inter-orig-3" class="marker marker-trailing">[3]</a></p></div></div>
+</div>
+<div class="interlaced-group" data-marker="4">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-4" class="chunk-anchor" aria-hidden="true"></span><p>义兴郡溪渚长桥下有苍蛟吞啖人，周处执剑桥侧伺；<span class="term-match" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false">久之，遇出</span>，于是悬自桥上投下蛟背而刺蛟，数创，流血满溪，自郡渚至<span class="term-match" data-term-key="term-31" tabindex="0" role="button" aria-pressed="false">太湖句浦</span>乃死。《初学记》七<br>　　<br>　　晋怀帝<span class="term-match" data-term-key="term-35" tabindex="0" role="button" aria-pressed="false">永嘉中</span>，<span class="term-match" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false">谯国丁祚渡江至阴陵界</span>。时天昏雾，<span class="term-match" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false">在道北有社</span>，见一物如人，倒立，两眼垂血从额下，聚地两处，各有升余，祚与从弟齐声喝之，灭而不见。立处聚血皆化为萤火数千枚，纵横飞散。《御览》九百四十五<br>　　<br>　　<span class="term-match" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false">隆安中</span>，陈悝于江边作鱼罾（正匪切）。潮去，于罾中得一女人，长六尺，有容色，无衣服；水去不能动，卧沙中，与语不应。人有就辱之。悝夜梦云：“我是江黄，昨失道落君罾，小人遂见加淩；今当白尊神杀之。”悝不敢移，潮来自逐水去。奸者寻病。《御览》六十八 <a href="#inter-trans-4" class="marker marker-trailing">[4]</a></p></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="4" aria-controls="interlaced-reasoning-4" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-4" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <p class="interlaced-reasoning-title">Relevant Explanation</p>
+      <div class="interlaced-content interlaced-reasoning-preview-content"></div>
+      <button type="button" class="reasoning-preview-more">See more</button>
+    </div>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content"><p><span class="marker-text">[4]</span></p><section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Idiomatic Expressions</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">義興郡溪渚長橋下有蒼蛟吞啖人</span> - Descriptive phrase indicating a green dragon was consuming people in a stream near a long bridge in Yixing Prefecture.</li><li class="reasoning-term-item" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">周處執劍橋側伺</span> - Means &#39;Zhou Chu held a sword on the side of the bridge, waiting.&#39;</li><li class="reasoning-term-item" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">久之，遇出</span> - Means &#39;after a long time, it [the dragon] emerged.&#39;</li><li class="reasoning-term-item" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">於是懸自橋上投下蛟背而刺蛟</span> - Means &#39;he then hung himself from the bridge, leapt onto the dragon&#39;s back, and stabbed it.&#39;</li><li class="reasoning-term-item" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">數創，流血滿溪，自郡渚至太湖句浦乃死</span> - Means &#39;it was wounded several times, blood flowed throughout the stream, and it died from the prefectural stream to the Goupu of Taihu Lake.&#39;</li><li class="reasoning-term-item" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">晉懷帝永嘉中</span> - Refers to the Yongjia period of Emperor Huai of Jin.</li><li class="reasoning-term-item" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">谯国丁祚渡江至阴陵界</span> - Means &#39;Ding Zu from the commandery of Cao crossed the river to the Yinling area.&#39;</li><li class="reasoning-term-item" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">時天昏霧</span> - Means &#39;at that time, it was dark and foggy.&#39;</li><li class="reasoning-term-item" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">在道北有社</span> - Means &#39;there was a shrine on the north side of the road.&#39;</li><li class="reasoning-term-item" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">見一物如人，倒立，兩眼垂血從額下，聚地兩處，各有升余</span> - Means &#39;he saw something like a person, standing on its head, with blood dripping from its eyes, pooling on the ground in two places, each over a sheng (a unit of measure).&#39;</li><li class="reasoning-term-item" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">祚與從弟齊聲喝之，滅而 不見</span> - Means &#39;Zu and his younger brother shouted at it together, and it disappeared.&#39;</li><li class="reasoning-term-item" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">立處聚血皆化為螢火數千枚，縱橫飛散</span> - Means &#39;the blood pooled where it stood turned into thousands of fireflies, flying in all directions.&#39;</li><li class="reasoning-term-item" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">隆安中</span> - Refers to the Long&#39;an period.</li><li class="reasoning-term-item" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">陳悝於江邊作魚罾</span> - Means &#39;Chen Kui set up a fish net by the river.&#39;</li><li class="reasoning-term-item" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">潮去，於罾中得一女人</span> - Means &#39;when the tide receded, he found a woman in the net.&#39;</li><li class="reasoning-term-item" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">長六尺，有容色，無衣服</span> - Means &#39;she was six chi tall, had a beautiful appearance, but no clothes.&#39;</li><li class="reasoning-term-item" data-term-key="term-17" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">水去不能動，臥沙中，與語不應</span> - Means &#39;the water receded, and she could not move, lying in the sand; when spoken to, she did not respond.&#39;</li><li class="reasoning-term-item" data-term-key="term-18" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">悝夜夢云</span> - Means &#39;Kui had a dream at night.&#39;</li><li class="reasoning-term-item" data-term-key="term-19" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">我是江黃，昨失道落君罾，小人遂見加淩</span> - Means &#39;I am a river deity, I lost my way and fell into your net yesterday, and was subsequently mistreated.&#39;</li><li class="reasoning-term-item" data-term-key="term-20" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">今當白尊神殺之</span> - Means &#39;now I will report to my superior deity to have you killed.&#39;</li><li class="reasoning-term-item" data-term-key="term-21" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">悝不敢移，潮來自逐水去</span> - Means &#39;Kui dared not move her, and when the tide came, it carried her away with the water.&#39;</li><li class="reasoning-term-item" data-term-key="term-22" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">奸者尋病</span> - Means &#39;the man who had dishonored her soon fell ill.&#39;</li></ul>
+</section>
+<section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Cultural and Historical Allusions</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-23" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">義興郡</span> - Refers to Yixing Prefecture, an ancient Chinese administrative division.</li><li class="reasoning-term-item" data-term-key="term-24" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">蒼蛟</span> - A green dragon, often associated with water and sometimes with malevolent spirits.</li><li class="reasoning-term-item" data-term-key="term-25" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">周處</span> - A historical figure known for his bravery and moral integrity.</li><li class="reasoning-term-item" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">晉懷帝永嘉中</span> - The Yongjia period (307–313 AD) of the Western Jin Dynasty.</li><li class="reasoning-term-item" data-term-key="term-26" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">谯国</span> - An ancient Chinese commandery, located in present-day Anhui Province.</li><li class="reasoning-term-item" data-term-key="term-27" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">阴陵界</span> - The area of Yinling, which was part of the commandery of Cao.</li><li class="reasoning-term-item" data-term-key="term-28" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">社</span> - A shrine or temple, often dedicated to local deities or ancestors.</li><li class="reasoning-term-item" data-term-key="term-29" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">江黃</span> - A river deity, often associated with water and sometimes with protection.</li><li class="reasoning-term-item" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">隆安中</span> - The Long&#39;an period (397–402 AD) of the Eastern Jin Dynasty.</li><li class="reasoning-term-item" data-term-key="term-30" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">魚罾</span> - A fish net, used for fishing.</li><li class="reasoning-term-item" data-term-key="term-31" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">太湖句浦</span> - The Goupu of Taihu Lake, a specific location in the Taihu Lake area.</li><li class="reasoning-term-item" data-term-key="term-32" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">《初學記》</span> - A collection of historical and literary materials compiled during the Tang Dynasty.</li><li class="reasoning-term-item" data-term-key="term-33" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">《御覽》</span> - A massive encyclopedic compilation from the Song Dynasty.</li></ul>
+</section>
+<section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Proper Nouns</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-23" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">義興郡</span> - Yixing Prefecture.</li><li class="reasoning-term-item" data-term-key="term-24" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">蒼蛟</span> - Green dragon.</li><li class="reasoning-term-item" data-term-key="term-25" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">周處</span> - Zhou Chu.</li><li class="reasoning-term-item" data-term-key="term-34" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">晉懷帝</span> - Emperor Huai of Jin.</li><li class="reasoning-term-item" data-term-key="term-35" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">永嘉中</span> - Yongjia period.</li><li class="reasoning-term-item" data-term-key="term-26" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">谯国</span> - Commandery of Cao.</li><li class="reasoning-term-item" data-term-key="term-27" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">阴陵界</span> - Yinling area.</li><li class="reasoning-term-item" data-term-key="term-28" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">社</span> - Shrine.</li><li class="reasoning-term-item" data-term-key="term-29" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">江黃</span> - River deity.</li><li class="reasoning-term-item" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">隆安中</span> - Long&#39;an period.</li><li class="reasoning-term-item" data-term-key="term-30" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">魚罾</span> - Fish net.</li><li class="reasoning-term-item" data-term-key="term-31" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">太湖句浦</span> - Goupu of Taihu Lake.</li><li class="reasoning-term-item" data-term-key="term-32" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">《初學記》</span> - *Chuxue Ji*.</li><li class="reasoning-term-item" data-term-key="term-33" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">《御覽》</span> - *Yulüan*.</li></ul>
+</section></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-4" class="chunk-anchor" aria-hidden="true"></span><p>In the Yixing Prefecture, there was a green dragon in the stream beneath the long bridge that was devouring people. Zhou Chu held a sword on the side of the bridge, waiting. After a long time, the dragon emerged. He then hung himself from the bridge, leapt onto the dragon&#39;s back, and stabbed it. The dragon was wounded several times, blood flowed throughout the stream, and it died from the prefectural stream to the Goupu of Taihu Lake. (<em>Chuxue Ji</em>, Volume 7)</p>
+<p>During the Yongjia period of Emperor Huai of Jin, Ding Zu from the commandery of Cao crossed the river to the Yinling area. At that time, it was dark and foggy. There was a shrine on the north side of the road. He saw something like a person, standing on its head, with blood dripping from its eyes, pooling on the ground in two places, each over a sheng (a unit of measure). Zu and his younger brother shouted at it together, and it disappeared. The blood pooled where it stood turned into thousands of fireflies, flying in all directions. (<em>Yulüan</em>, Volume 68)</p>
+<p>During the Long&#39;an period, Chen Kui set up a fish net by the river. When the tide receded, he found a woman in the net. She was six chi tall, had a beautiful appearance, but no clothes. The water receded, and she could not move, lying in the sand; when spoken to, she did not respond. Someone dishonored her. Kui had a dream at night: &quot;I am a river deity, I lost my way and fell into your net yesterday, and was subsequently mistreated. Now I will report to my superior deity to have you killed.&quot; Kui dared not move her, and when the tide came, it carried her away with the water. The man who had dishonored her soon fell ill. (<em>Yulüan</em>, Volume 68) <a href="#inter-orig-4" class="marker marker-trailing">[4]</a></p></div></div>
+</div>
+<div class="interlaced-group" data-marker="5">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-5" class="chunk-anchor" aria-hidden="true"></span><p><span class="term-match" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false">建康</span>小吏曹着见<span class="term-match" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false">庐山夫人</span>，夫人为设酒馔（《御览》引作）。<span class="term-match" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false">啖余，鸟啄罂</span>，<span class="term-match" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false">其中镂刻奇饰异形，非人所名</span>（已上四句《御览》引有）；下七子盒盘，<span class="term-match" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false">盘中亦无俗间常肴敉</span>（《书钞》一百十四，《御览》八百四十九）。夫人<span class="term-match" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false">命女婉出与着相见</span>。<span class="term-match" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false">婉见着欣悦</span>，<span class="term-match" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false">命婢琼林令取琴出</span>，<span class="term-match" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false">婉抚琴歌曰</span>：“登<span class="term-match" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false">庐山</span>兮郁嵯峨，唏阳风兮拂紫霞，招若人兮濯灵波。欣良运兮畅云柯，弹鸣琴兮乐莫过，云龙会兮乐太和。”<span class="term-match" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false">歌毕，婉便辞去</span>。《御览》五百七十二<br>　　<br>　　<span class="term-match" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false">建康</span>小吏曹着，<span class="term-match" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false">为庐山使君所迎，配以女婉</span>。<span class="term-match" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false">着形意不安，屡求请退</span>；<span class="term-match" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false">婉潜然垂涕</span>，<span class="term-match" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false">赋诗叙别，并赠织成裈</span>（《书钞》一引作单衫也）。《书钞》七十七又一百二十九，《初学记》二十六 <a href="#inter-trans-5" class="marker marker-trailing">[5]</a></p></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="5" aria-controls="interlaced-reasoning-5" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-5" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <p class="interlaced-reasoning-title">Relevant Explanation</p>
+      <div class="interlaced-content interlaced-reasoning-preview-content"></div>
+      <button type="button" class="reasoning-preview-more">See more</button>
+    </div>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content"><p><span class="marker-text">[5]</span></p><section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Idiomatic Expressions</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">啖余，鸟啄罂</span> - Ambiguous phrase suggesting either birds eating from jars or a symbolic event.</li><li class="reasoning-term-item" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">其中镂刻奇饰异形，非人所名</span> - Describes intricately carved jars with strange, unnamed shapes, likely of otherworldly design.</li><li class="reasoning-term-item" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">盘中亦无俗间常肴敉</span> - Indicates the dishes were unusual, not ordinary food.</li><li class="reasoning-term-item" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">命女婉出与着相见</span> - Implies the Lady of Mount Lu summoned her daughter, Wan, to meet Cao Zhe.</li><li class="reasoning-term-item" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">婉见着欣悦</span> - Wan was pleased upon seeing Cao Zhe.</li><li class="reasoning-term-item" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">命婢琼林令取琴出</span> - Wan ordered her maid, Qionglin, to fetch a zither.</li><li class="reasoning-term-item" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">婉抚琴歌曰</span> - Wan played the zither and sang.</li><li class="reasoning-term-item" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">歌毕，婉便辞去</span> - After finishing her song, Wan took her leave.</li><li class="reasoning-term-item" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">为庐山使君所迎，配以女婉</span> - Cao Zhe was welcomed by the Lord of Mount Lu and married to Wan.</li><li class="reasoning-term-item" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">着形意不安，屡求请退</span> - Cao Zhe felt uneasy and repeatedly asked to withdraw from the marriage.</li><li class="reasoning-term-item" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">婉潜然垂涕</span> - Wan secretly shed tears, indicating her sorrow.</li><li class="reasoning-term-item" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">赋诗叙别，并赠织成裈</span> - Wan composed a poem to express her farewell and gave him a finely woven undergarment as a gift.</li></ul>
+</section>
+<section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Cultural and Historical Allusions</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">建康</span> - The capital of the Eastern Jin Dynasty, modern-day Nanjing, China.</li><li class="reasoning-term-item" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">庐山</span> - A famous mountain in Jiangxi Province, known for its spiritual and cultural significance.</li><li class="reasoning-term-item" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">庐山夫人</span> - A supernatural figure associated with Mount Lu, possibly a deity or spirit.</li><li class="reasoning-term-item" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">庐山使君</span> - The Lord of Mount Lu, a supernatural figure who may have authority over the mountain and its spirits.</li><li class="reasoning-term-item" data-term-key="term-17" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">婉</span> - The name of the Lady of Mount Lu&#39;s daughter, who becomes Cao Zhe&#39;s wife.</li><li class="reasoning-term-item" data-term-key="term-18" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">琼林</span> - The name of Wan&#39;s maid, who assists in the performance.</li><li class="reasoning-term-item" data-term-key="term-19" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">织成裈</span> - A finely woven undergarment, often associated with high-quality craftsmanship and luxury.</li></ul>
+</section>
+<section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Proper Nouns</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">建康</span> - The capital city of the Eastern Jin Dynasty.</li><li class="reasoning-term-item" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">庐山</span> - A famous mountain in Jiangxi Province.</li><li class="reasoning-term-item" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">庐山夫人</span> - A supernatural figure associated with Mount Lu.</li><li class="reasoning-term-item" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">庐山使君</span> - The Lord of Mount Lu.</li><li class="reasoning-term-item" data-term-key="term-17" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">婉</span> - The daughter of the Lady of Mount Lu.</li><li class="reasoning-term-item" data-term-key="term-18" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">琼林</span> - Wan&#39;s maid.</li><li class="reasoning-term-item" data-term-key="term-19" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">织成裈</span> - A finely woven undergarment.</li></ul>
+</section></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-5" class="chunk-anchor" aria-hidden="true"></span><p>A humble official from Jiankang named Cao Zhe encountered the Lady of Mount Lu. She provided him with a feast, and after eating the leftovers, birds pecked at the jars. The jars were intricately carved with strange and unnamed shapes. She then presented seven-tiered boxes and plates, which contained no ordinary food. The Lady of Mount Lu summoned her daughter, named Wan, to meet Cao Zhe. Wan was pleased upon seeing him and ordered her maid, named Qionglin, to fetch a zither. Wan played the zither and sang:</p>
+<p>&quot;Ascending Mount Lu, its peaks are majestic and towering.<br>Bathed in the warm breeze, the purple clouds caress me.<br>Summoning you, I cleanse myself in the divine waters.<br>Rejoicing in good fortune, I spread my wings among the clouds.<br>Playing the zither, joy knows no bounds.<br>Clouds and dragons unite in perfect harmony.&quot;</p>
+<p>After finishing her song, Wan took her leave.</p>
+<p>During the reign of the Lord of Mount Lu, Cao Zhe was welcomed and married to Wan. However, he felt uneasy and repeatedly asked to withdraw from the marriage. Wan secretly shed tears and composed a poem to express her farewell. She also gave him a finely woven undergarment as a gift. <a href="#inter-orig-5" class="marker marker-trailing">[5]</a></p></div></div>
+</div>
+<div class="interlaced-group" data-marker="6">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-6" class="chunk-anchor" aria-hidden="true"></span><p><span class="term-match" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false">吴中书郎盛冲</span>（《<span class="term-match" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false">御览</span>》一引作仲，下同）至孝，<span class="term-match" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false">母王氏失明</span>。冲<span class="term-match" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false">蹔行</span>，<span class="term-match" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false">敕婢为母作食</span>；婢乃取<span class="term-match" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false">蛴螬</span>蒸食之，王氏<span class="term-match" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false">甚以为美</span>，而不知是何物。儿还，王氏语曰：“汝行后，婢进吾一食，甚甘美极；然非鱼非肉，汝试问之。”既而问婢，婢服曰：“实是<span class="term-match" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false">蛴螬</span>！”冲抱母恸哭，母目<span class="term-match" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false">霍然开明</span>。《<span class="term-match" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false">珠林</span>》四十九，《<span class="term-match" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false">御览</span>》四百十一又九百四十八<br>　　<br>　　吴中有一<span class="term-match" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false">士大夫</span>，于都假还，行至曲阿塘上，见一女子，容貌端正，<span class="term-match" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false">便呼即来</span>（二句《书钞》引有）便留住宿。士<span class="term-match" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false">解臂上金钤</span>（《<span class="term-match" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false">御览</span>》引一作铃，一作合。下同），<span class="term-match" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false">系其臂</span>（《<span class="term-match" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false">御览</span>》一 引作肘），下令更来，遂不至。明日，<span class="term-match" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false">更使寻求</span>，都无此色。<span class="term-match" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false">忽过一猪圈边</span>，见<span class="term-match" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false">母猪臂上</span>（《 <span class="term-match" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false">御览</span>》一引作胛）系金钤。《<span class="term-match" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false">御览</span>》九百三十又七百十七，《书钞》一百三十五 <a href="#inter-trans-6" class="marker marker-trailing">[6]</a></p></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="6" aria-controls="interlaced-reasoning-6" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-6" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <p class="interlaced-reasoning-title">Relevant Explanation</p>
+      <div class="interlaced-content interlaced-reasoning-preview-content"></div>
+      <button type="button" class="reasoning-preview-more">See more</button>
+    </div>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content"><p><span class="marker-text">[6]</span></p><section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Idiomatic Expressions</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">蹔行</span> - Classical term meaning &#39;to take a brief trip&#39; or &#39;to go away temporarily.&#39;</li><li class="reasoning-term-item" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">敕婢为母作食</span> - &#39;Chì&#39; (敕) means &#39;to order&#39; or &#39;to command,&#39; and &#39;婢&#39; (bì) refers to a female servant. This phrase means &#39;to order the servant to prepare food for the mother.&#39;</li><li class="reasoning-term-item" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">甚以为美</span> - &#39;甚&#39; (shèn) means &#39;very&#39; or &#39;extremely,&#39; and &#39;以为&#39; (yǐ wéi) means &#39;to consider&#39; or &#39;to think.&#39; This phrase means &#39;to think it very delicious.&#39;</li><li class="reasoning-term-item" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">霍然开明</span> - &#39;霍然&#39; (huò rán) means &#39;suddenly&#39; or &#39;immediately,&#39; and &#39;开明&#39; (kāi míng) means &#39;to open&#39; or &#39;to become enlightened.&#39; This phrase means &#39;suddenly became enlightened.&#39;</li><li class="reasoning-term-item" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">便呼即来</span> - &#39;便呼&#39; (biàn hū) means &#39;to call immediately,&#39; and &#39;即来&#39; (jí lái) means &#39;to come right away.&#39; This phrase means &#39;to call her to come immediately.&#39;</li><li class="reasoning-term-item" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">解臂上金钤</span> - &#39;解&#39; (jiě) means &#39;to remove&#39; or &#39;to take off,&#39; &#39;臂上&#39; (bì shàng) means &#39;on the arm,&#39; and &#39;金钤&#39; (jīn qián) means &#39;a golden bell&#39; or &#39;a golden ornament.&#39; This phrase means &#39;to take off the golden ornament on the arm.&#39;</li><li class="reasoning-term-item" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">系其臂</span> - &#39;系&#39; (xì) means &#39;to tie&#39; or &#39;to fasten,&#39; and &#39;其臂&#39; (qí bì) means &#39;her arm.&#39; This phrase means &#39;to fasten it on her arm.&#39;</li><li class="reasoning-term-item" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">更使寻求</span> - &#39;更&#39; (gèng) means &#39;again&#39; or &#39;further,&#39; &#39;使&#39; (shǐ) means &#39;to send,&#39; and &#39;寻求&#39; (xún qiú) means &#39;to seek.&#39; This phrase means &#39;to send someone again to seek.&#39;</li><li class="reasoning-term-item" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">忽过一猪圈边</span> - &#39;忽&#39; (hū) means &#39;suddenly,&#39; &#39;过&#39; (guò) means &#39;to pass by,&#39; and &#39;猪圈边&#39; (zhū quān biān) means &#39;by the pigpen.&#39; This phrase means &#39;suddenly passed by the pigpen.&#39;</li><li class="reasoning-term-item" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">母猪臂上</span> - &#39;母猪&#39; (mǔ zhū) means &#39;sow,&#39; and &#39;臂上&#39; (bì shàng) means &#39;on the arm.&#39; This phrase means &#39;on the sow&#39;s arm.&#39;</li></ul>
+</section>
+<section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Cultural and Historical Allusions</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">吴中书郎盛冲</span> - &#39;吴中&#39; (Wú zhōng) refers to the region around modern-day Suzhou, Jiangsu Province. &#39;书郎&#39; (shū láng) is a low-ranking official position in the imperial bureaucracy. &#39;盛冲&#39; (Shèng Chōng) is the name of the person.</li><li class="reasoning-term-item" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">母王氏失明</span> - &#39;母王氏&#39; (mǔ Wáng shì) refers to the mother, whose surname is Wang. &#39;失明&#39; (shī míng) means &#39;to lose sight.&#39;</li><li class="reasoning-term-item" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">蛴螬</span> - &#39;蛴螬&#39; (qí cáo) is the larva of a beetle, often used as food in some regions.</li><li class="reasoning-term-item" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">珠林</span> - &#39;珠林&#39; (Zhū Lín) is a collection of anecdotes and stories from the Southern Dynasties period.</li><li class="reasoning-term-item" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">御览</span> - &#39;御览&#39; (Yù Lǎn) is a large encyclopedia compiled during the Song Dynasty, containing a vast array of historical and literary materials.</li><li class="reasoning-term-item" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">士大夫</span> - &#39;士大夫&#39; (shì dà fū) refers to a scholar-official or a member of the educated elite class.</li><li class="reasoning-term-item" data-term-key="term-17" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">臂上金钤</span> - &#39;金钤&#39; (jīn qián) is a golden ornament, often worn as a symbol of status or wealth.</li></ul>
+</section>
+<section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Proper Nouns</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-18" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">盛冲</span> - The name of the person in the first story.</li><li class="reasoning-term-item" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">珠林</span> - The name of the collection of anecdotes and stories.</li><li class="reasoning-term-item" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">御览</span> - The name of the large encyclopedia.</li><li class="reasoning-term-item" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">士大夫</span> - The title of the man in the second story.</li></ul>
+</section></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-6" class="chunk-anchor" aria-hidden="true"></span><h3>Translation</h3>
+<p>A Clerk in Wu, named Sheng Chong (referred to as Zhong in some sources), was known for his filial piety. His mother, Lady Wang, had lost her sight. When Sheng Chong went on a brief trip, he ordered a servant to prepare food for his mother. The servant took a larva of a beetle, cooked it, and served it to Lady Wang, who found it very delicious but did not know what it was. Upon returning, Sheng Chong asked his mother about the food. She told him, &quot;After you left, the servant brought me a dish that was extremely delicious; however, it was neither fish nor meat. You should ask her about it.&quot; Sheng Chong then questioned the servant, who admitted, &quot;It was indeed a larva of a beetle!&quot; Sheng Chong wept bitterly and embraced his mother, and she suddenly regained her sight. This story is recorded in <em>Zhu Lin</em> (49) and <em>Yuelan</em> (411 and 948).</p>
+<p>In Wu, there was a scholar-official who was on a temporary leave from the capital. On his way back, he reached a place called Qu&#39;atai. There, he saw a beautiful woman and called her to come immediately. He then invited her to stay with him. The official removed a golden ornament from his arm and fastened it on her arm, ordering her to return. She did not come back. The next day, he sent someone to search for her, but no one could find her. Suddenly, as he passed by a pigpen, he saw a sow with a golden ornament on its arm. This story is recorded in <em>Yuelan</em> (930 and 717) and <em>Shu Chao</em> (135). <a href="#inter-orig-6" class="marker marker-trailing">[6]</a></p></div></div>
+</div>
+<div class="interlaced-group" data-marker="7">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-7" class="chunk-anchor" aria-hidden="true"></span><p><span class="term-match" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false">廷尉徐元礼</span><span class="term-match" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false">嫁女</span>，从祖与<span class="term-match" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false">外兄</span><span class="term-match" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false">孔正阳</span>共诣徐家。道中有土墙，见一小儿，裸身，正赤手持刀，长五六寸，企墙上磨甚駃，独语；因跳车上曲阑中坐，反复视刀，辄之。至徐家门前桑树下，又跳下，坐灰中，复更磨刀。日晡，新妇就车中，见小儿持刀入室，便刺新妇，新妇应刀而倒；扶还解衣，视小腹紫色，如酒槃大，<span class="term-match" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false">炊顷</span>便亡。鬼子出门<span class="term-match" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false">儛刀</span>，上有血，涂桑树叶，<span class="term-match" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false">火然</span>，斯须烧。<span class="term-match" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false">《御览》三百四十五</span><br>　　<br>　　<span class="term-match" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false">苟晞为兖州镇</span>，去<span class="term-match" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false">京师</span>五百里。有贡 珍异食者，欲贻都邑亲贵，虑经信宿之间，不复鲜美；募有牛能日行数百里者，当厚赏之。有人进一牛云：“此日行千里。”晞乃命具丁车善驭，书疏发遣。旦发，日中到<span class="term-match" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false">京师</span>；取答书还，至一更始进便达。晞以其骏快，筋骨必将有异，遂杀而观之；亦无灵异，惟双肋如小竹大，自头挟脊着肉裹，故外不觉也。<span class="term-match" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false">《御览》九百</span> <a href="#inter-trans-7" class="marker marker-trailing">[7]</a></p></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="7" aria-controls="interlaced-reasoning-7" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-7" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <p class="interlaced-reasoning-title">Relevant Explanation</p>
+      <div class="interlaced-content interlaced-reasoning-preview-content"></div>
+      <button type="button" class="reasoning-preview-more">See more</button>
+    </div>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content"><p><span class="marker-text">[7]</span></p><section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Idiomatic Expressions</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">廷尉</span> - A high-ranking official in charge of judicial affairs, equivalent to a modern-day chief justice.</li><li class="reasoning-term-item" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">嫁女</span> - Refers to a daughter getting married.</li><li class="reasoning-term-item" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">從祖</span> - Refers to a cousin from the father&#39;s side.</li><li class="reasoning-term-item" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">外兄</span> - Refers to a maternal uncle or a cousin from the mother&#39;s side.</li><li class="reasoning-term-item" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">獨語</span> - Means &#39;to talk to oneself.&#39;</li><li class="reasoning-term-item" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">跳車</span> - Means &#39;to jump onto a carriage.&#39;</li><li class="reasoning-term-item" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">炊顷</span> - A time expression meaning &#39;in a short while.&#39;</li><li class="reasoning-term-item" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">儛刀</span> - Means &#39;to dance with a knife.&#39;</li><li class="reasoning-term-item" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">火然</span> - Means &#39;to ignite&#39; or &#39;to burn.&#39;</li></ul>
+</section>
+<section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Cultural and Historical Allusions</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">廷尉徐元礼</span> - Refers to Xu Yuanli, a high-ranking official in charge of judicial affairs.</li><li class="reasoning-term-item" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">孔正阳</span> - Refers to Kong Zhengyang, a historical figure.</li><li class="reasoning-term-item" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">《御览》三百四十五</span> - Refers to a specific entry in the *Yuzhuan* (Imperial Review) encyclopedia.</li><li class="reasoning-term-item" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">苟晞为兖州镇</span> - Refers to Gou Xi, who served as the governor of Yan Province.</li><li class="reasoning-term-item" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">京师</span> - Refers to the capital city, which in this context is likely Luoyang.</li><li class="reasoning-term-item" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">《御览》九百</span> - Refers to another specific entry in the *Yuzhuan* encyclopedia.</li></ul>
+</section>
+<section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Proper Nouns</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">廷尉徐元礼</span> - Xu Yuanli, a high-ranking official.</li><li class="reasoning-term-item" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">孔正阳</span> - Kong Zhengyang, a historical figure.</li><li class="reasoning-term-item" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">苟晞</span> - Gou Xi, a governor.</li><li class="reasoning-term-item" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">京师</span> - The capital city, likely Luoyang.</li><li class="reasoning-term-item" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">《御览》三百四十五</span> - A specific entry in the *Yuzhuan* encyclopedia.</li><li class="reasoning-term-item" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">《御览》九百</span> - Another specific entry in the *Yuzhuan* encyclopedia.</li></ul>
+</section></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-7" class="chunk-anchor" aria-hidden="true"></span><p>The Chief Justice Xu Yuanli was holding a wedding for his daughter. His cousin and maternal uncle, Kong Zhengyang, went together to Xu&#39;s house. On the way, they saw a small boy, naked, holding a small knife, about five or six inches long, sharpening it on a wall. He was talking to himself. Then he jumped onto a carriage and sat in the curved railing, repeatedly looking at the knife. When they arrived at Xu&#39;s house, in front of the mulberry tree, the boy jumped down again and sat in the ashes, sharpening the knife once more. By the time the sun was high, the new bride got into the carriage and saw the boy with the knife enter the room. He immediately stabbed her, and she fell to the ground. They carried her back, undressed her, and found that her abdomen was purple, about the size of a wine tray. She died shortly after. The ghost child went out, dancing with the knife, which had blood on it. He smeared the blood on the mulberry leaves, and soon the leaves caught fire and burned. (See <em>Yuzhuan</em> 345)</p>
+<p>Gou Xi, the governor of Yan Province, was five hundred miles away from the capital. Someone brought him a rare and precious delicacy and wanted to send it to his relatives and nobles in the capital, but he was worried that it would lose its freshness over the two-day journey. He offered a reward for a horse that could travel hundreds of miles in a day. Someone offered a horse and said, &quot;This horse can travel a thousand miles in a day.&quot; Gou Xi then ordered a carriage and a skilled driver to prepare for the journey. The horse left early in the morning and arrived in the capital at noon. After picking up a reply, it returned to Yan Province, reaching the governor&#39;s residence by the first watch of the night. Gou Xi was amazed by the horse&#39;s speed and suspected that its bones must be different. He had the horse killed to examine it, but found no supernatural qualities. The only unusual thing was that its ribs were as thick as small bamboo, running from its head to its spine, hidden under the flesh, which is why no one noticed it before. (See <em>Yuzhuan</em> 900) <a href="#inter-orig-7" class="marker marker-trailing">[7]</a></p></div></div>
+</div>
+<div class="interlaced-group" data-marker="8">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-8" class="chunk-anchor" aria-hidden="true"></span><p>骞<span class="term-match" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false">保至坛丘上北楼宿</span>，<span class="term-match" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false">鼓二中</span>，有人<span class="term-match" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false">着黄练单衣白帢</span>，<span class="term-match" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false">将人持炬火上楼</span>。<span class="term-match" data-term-key="term-25" tabindex="0" role="button" aria-pressed="false">保</span>惧，<span class="term-match" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false">藏壁中</span>。<span class="term-match" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false">须臾</span>，有<span class="term-match" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false">三婢上帐</span>，<span class="term-match" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false">使迎一女子上</span>，与白帢人入帐中宿。<span class="term-match" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false">未明</span>，白帢人辄先去。<span class="term-match" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false">如此四五宿</span>。后<span class="term-match" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false">向晨</span>，白帢人才去（已上十三字《御览》引有），<span class="term-match" data-term-key="term-25" tabindex="0" role="button" aria-pressed="false">保</span>因入帐中，问侍女子：“向去者谁 ？”答曰：“<span class="term-match" data-term-key="term-22" tabindex="0" role="button" aria-pressed="false">桐郎</span>；道东庙树是。”至<span class="term-match" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false">鼓二中</span>，<span class="term-match" data-term-key="term-22" tabindex="0" role="button" aria-pressed="false">桐郎</span>复来，<span class="term-match" data-term-key="term-25" tabindex="0" role="button" aria-pressed="false">保</span>乃斫取之，缚着楼柱。明日视之 ，<span class="term-match" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false">形如人，长三尺余</span>。<span class="term-match" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false">槛送诣丞相</span>，<span class="term-match" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false">渡江未半</span>，<span class="term-match" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false">风浪起</span>；<span class="term-match" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false">桐郎得投入水</span>，<span class="term-match" data-term-key="term-17" tabindex="0" role="button" aria-pressed="false">风波乃息</span>。《类聚》八十八，《御览》九百五十六<br>　　<br>　　会稽山阴东郭氏女，先与县人私通，此人估还于县东灵慈桥；女往入船就之，因共寝接，为设食蝥。食，女将两蝥上岸去。船还来至郭，逢人语此女已死。乃往省之，尚未殡也；发衾视之，两手各把一蝥。《御览》九百四十三 <a href="#inter-trans-8" class="marker marker-trailing">[8]</a></p></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="8" aria-controls="interlaced-reasoning-8" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-8" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <p class="interlaced-reasoning-title">Relevant Explanation</p>
+      <div class="interlaced-content interlaced-reasoning-preview-content"></div>
+      <button type="button" class="reasoning-preview-more">See more</button>
+    </div>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content"><p><span class="marker-text">[8]</span></p><section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Idiomatic Expressions</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">保至坛丘上北楼宿</span> - Bao arrived at the northern tower on the ritual platform for the night.</li><li class="reasoning-term-item" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">鼓二中</span> - Refers to the second drumbeat, indicating a specific time of day, possibly around noon or late afternoon.</li><li class="reasoning-term-item" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">着黄练单衣白帢</span> - Describes wearing a yellow linen single-layered garment and a white cap.</li><li class="reasoning-term-item" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">将人持炬火上楼</span> - Describes someone carrying a torch up the stairs.</li><li class="reasoning-term-item" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">藏壁中</span> - Indicates hiding inside the wall.</li><li class="reasoning-term-item" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">须臾</span> - Means &#39;in a short while&#39; or &#39;soon.&#39;</li><li class="reasoning-term-item" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">三婢上帐</span> - Describes three maids entering the tent.</li><li class="reasoning-term-item" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">使迎一女子上</span> - Indicates sending the maids to greet a woman.</li><li class="reasoning-term-item" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">未明</span> - Means &#39;before dawn&#39; or &#39;at night.&#39;</li><li class="reasoning-term-item" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">如此四五宿</span> - Indicates that this event occurred over four or five nights.</li><li class="reasoning-term-item" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">向晨</span> - Means &#39;at dawn&#39; or &#39;early morning.&#39;</li><li class="reasoning-term-item" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">槛送诣丞相</span> - Describes sending the captured creature to the Chancellor in a cage-like structure.</li><li class="reasoning-term-item" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">渡江未半</span> - Indicates that the creature was being transported across the river when the event occurred.</li><li class="reasoning-term-item" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">形如人，长三尺余</span> - Describes the captured creature&#39;s appearance as human-like, about three feet long.</li><li class="reasoning-term-item" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">风浪起</span> - Describes the sudden onset of a storm.</li><li class="reasoning-term-item" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">桐郎得投入水</span> - Indicates that the creature was thrown into the water.</li><li class="reasoning-term-item" data-term-key="term-17" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">风波乃息</span> - Describes the storm stopping after the creature was thrown into the water.</li></ul>
+</section>
+<section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Cultural and Historical Allusions</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-18" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">坛丘</span> - Likely refers to a ritual platform or mound, possibly associated with religious or ceremonial activities.</li><li class="reasoning-term-item" data-term-key="term-19" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">北楼</span> - Refers to a northern tower or building, possibly a watchtower or a place of refuge.</li><li class="reasoning-term-item" data-term-key="term-20" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">黄练单衣白帢</span> - Describes a specific type of attire, possibly associated with a deity, spirit, or ritual figure.</li><li class="reasoning-term-item" data-term-key="term-21" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">三婢</span> - Refers to three maids or attendants, possibly servants of a deity or spirit.</li><li class="reasoning-term-item" data-term-key="term-22" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">桐郎</span> - Likely a deity or spirit associated with a tree, possibly a local folk deity.</li><li class="reasoning-term-item" data-term-key="term-23" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">丞相</span> - Refers to a high-ranking official, likely the Chancellor of the state or kingdom.</li><li class="reasoning-term-item" data-term-key="term-24" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">渡江</span> - Refers to crossing a river, possibly a significant body of water in the region.</li></ul>
+</section>
+<section class="reasoning-section">
+  <p class="reasoning-section-title"><strong>Proper Nouns</strong></p>
+  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-25" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">保</span> - Likely a proper name, possibly a person involved in the story.</li><li class="reasoning-term-item" data-term-key="term-22" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">桐郎</span> - Likely a proper name, possibly a deity or spirit associated with a tree.</li><li class="reasoning-term-item" data-term-key="term-23" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">丞相</span> - Refers to a high-ranking official, likely the Chancellor of the state or kingdom.</li></ul>
+</section></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-8" class="chunk-anchor" aria-hidden="true"></span><p>Bao arrived at the northern tower on the ritual mound to spend the night. At the second drumbeat, a person wearing a yellow linen single-layered garment and a white cap appeared, accompanied by someone holding a torch up the stairs. Bao, frightened, hid inside the wall. Soon after, three maids entered the tent, sent to greet a woman, who then entered the tent with the person in the white cap. Before dawn, the person in the white cap always left first. This happened over four or five nights. Later, at dawn, the person in the white cap finally left (as noted in the <em>Taiping Yulan</em>). Bao then entered the tent and asked the serving woman, &quot;Who was the person who left earlier?&quot; The woman replied, &quot;It was Tonglang; he is the tree east of the road near the temple.&quot; At the second drumbeat, Tonglang returned, and Bao seized him, binding him to the tower pillar. The next day, he examined him and found that he was shaped like a person, about three feet long. Bao had him caged and sent to the Chancellor. While crossing the river, halfway through, a storm arose; Tonglang was thrown into the water, and the storm then ceased. (<em>Lüshi Chunqiu</em> 88, <em>Taiping Yulan</em> 956)</p>
+<hr>
+<p>A woman from the Dongguo family in Shanyin, Kuaiji, had previously had an affair with a man from the county. This man returned to the east of the county on the Lingci Bridge; the woman went aboard his boat to meet him, and they spent the night together. She prepared a meal of scorpions for them. After eating, the woman took two scorpions ashore. When the boat returned to the village, someone encountered her and said that the woman had died. They went to check on her, and she had not yet been buried; when they lifted the blanket to look at her, they found that each of her hands held a scorpion. (<em>Taiping Yulan</em> 943) <a href="#inter-orig-8" class="marker marker-trailing">[8]</a></p></div></div>
+</div>
+<div class="interlaced-block original">
+  <div class="interlaced-content"><p>骞保至坛丘上北楼宿，鼓二中，有人着黄练单衣白帢，将人持炬火上楼。保惧，藏壁中。须臾，有三婢上帐，使迎一女子上，与白帢人入帐中宿。未明，白帢人辄先去。如此四五宿。后向晨，白帢人才去（已上十三字《御览》引有），保因入帐中，问侍女子：“向去者谁 ？”答曰：“桐郎；道东庙树是。”至鼓二中，桐郎复来，保乃斫取之，缚着楼柱。明日视之 ，形如人，长三尺余。槛送诣丞相，渡江未半，风浪起；桐郎得投入水，风波乃息。《类聚》八十八，《御览》九百五十六<br>　　<br>　　会稽山阴东郭氏女，先与县人私通，此人估还于县东灵慈桥；女往入船就之，因共寝接，为设食蝥。食，女将两蝥上岸去。船还来至郭，逢人语此女已死。乃往省之，尚未殡也；发衾视之，两手各把一蝥。《御览》九百四十三</p></div>
+</div>
+<div class="interlaced-block translation">
+  <div class="interlaced-content"><p>Bao arrived at the northern tower on the ritual mound to spend the night. At the second drumbeat, a person wearing a yellow linen single-layered garment and a white cap appeared, accompanied by someone holding a torch up the stairs. Bao, frightened, hid inside the wall. Soon after, three maids entered the tent, sent to greet a woman, who then entered the tent with the person in the white cap. Before dawn, the person in the white cap always left first. This happened over four or five nights. Later, at dawn, the person in the white cap finally left (as noted in the <em>Taiping Yulan</em>). Bao then entered the tent and asked the serving woman, &quot;Who was the person who left earlier?&quot; The woman replied, &quot;It was Tonglang; he is the tree east of the road near the temple.&quot; At the second drumbeat, Tonglang returned, and Bao seized him, binding him to the tower pillar. The next day, he examined him and found that he was shaped like a person, about three feet long. Bao had him caged and sent to the Chancellor. While crossing the river, halfway through, a storm arose; Tonglang was thrown into the water, and the storm then ceased. (<em>Lüshi Chunqiu</em> 88, <em>Taiping Yulan</em> 956)</p>
+<hr>
+<p>A woman from the Dongguo family in Shanyin, Kuaiji, had previously had an affair with a man from the county. This man returned to the east of the county on the Lingci Bridge; the woman went aboard his boat to meet him, and they spent the night together. She prepared a meal of scorpions for them. After eating, the woman took two scorpions ashore. When the boat returned to the village, someone encountered her and said that the woman had died. They went to check on her, and she had not yet been buried; when they lifted the blanket to look at her, they found that each of her hands held a scorpion. (<em>Taiping Yulan</em> 943)</p></div>
+</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const docSearchData = [{"anchor":"inter-trans-2","marker":"2","type":"translation","text":"The Strange and the Marvelous By Zǔ Tái Zhī, Jin Dynasty Emperor Wu of Han was hosting a banquet with his ministers in the Weiyang Palace when he suddenly heard a voice say, \"An old minister risks his life to speak.\" Looking up, he saw an elderly man, about eight or nine inches tall, leaning on a staff and hobbling, extremely aged. The man descended the column, put down his staff, bowed deeply, and remained silent. He then looked up at the palace hall and pointed down at the emperor's feet, and suddenly vanished. Dongfang Shuo said, \"His name is 'Algae Dweller,' and he embodies the essence of both water and wood. In spring, he nests in deep forests, and in winter, he hides in deep rivers. Now that palaces and halls are being built, his dwelling is being cut down, so he has come to complain to the emperor. He said, looking up at the palace, 'The palace is named Unending, and I am complaining that Your Majesty is still invading my dwelling, which is unending.' Pointing at the emperor's feet, he said, 'Enough,' and wished that the emperor's palaces and halls be sufficient here, and not to build more.\" The emperor halted the construction of the palaces and sleeping quarters. After a short time, the emperor personally visited the river capital and heard the sound of music and singing underwater, as well as the presence of good herbs."},{"anchor":"inter-trans-3","marker":"3","type":"translation","text":"Soon, an old man and a few young men appeared from the beams above, dressed in red robes and white sashes, adorned with ribbons and jade ornaments, looking very fresh and beautiful, emerging from the waves without their clothes becoming wet. The emperor asked, \"Did you hear the music playing at the bottom of the water? Is it you?\" The old man replied, \"Your humble servant risked his life to appeal to Your Majesty, and fortunately, you granted us your great mercy, stopping the axes and allowing us to preserve our homes. We are overwhelmed with joy, so we privately celebrated.\" The emperor then presented a purple conch shell, shaped like butter. He said, \"I am ignorant and unable to recognize you; only Eastern Sheng knows. Could you think of giving this to him?\" The old man then ordered someone to retrieve something from the cave. One person accepted the command and dived into the spring's depths, returning quickly with a large pearl, a foot in diameter, radiant beyond compare. The emperor admired it greatly and asked Sima Qian, \"How do you know this pearl is from the cave?\" Sima Qian replied, \"There are treasures in the caves at the bottom of the river.\" The emperor rewarded Sima Qian with fifty thousand coins and took the pearl. (From *Shu Chao*, Volume 158)"},{"anchor":"inter-trans-4","marker":"4","type":"translation","text":"During the Jian'an era, the wife of Liu Zhao, the governor of Hejian, died in the governor's mansion. Afterward, when the new governor arrived, he dreamed of a beautiful woman who became his household; she gave him a pair of golden objects, which the governor could not identify. The woman then said, \"This is ○ (pronounced as 'zhuì').\" ○ refers to an object shaped like a pearl, as large as a finger, and flexible according to one's will. The governor placed it in his pillow. When the previous governor came to attend the funeral, he mentioned the ○, and upon opening the coffin, he found that the woman's arm indeed no longer had the ○. This account is recorded in the *Wuying Palace Collection*, volume 718. Before the state of Wu fell, there was often a purple-red aura seen between the constellations of Ox and Dipper. Astronomers and skilled diviners all feared that Wu was rising; only Zhang Xian, who was particularly skilled in astronomy, knew it was the aura of a divine sword, not a good omen for the south. This is recorded in the *Wuying Palace Collection*, volume 6. When Tao, the Taiview, was in humble circumstances, he was preparing to bury his father. Being poor, he did it himself; he had a spotted cow, which he had already loaded, but it suddenly disappeared, so he went to look for it. Suddenly, he met an old man on the road who asked, \"What are you looking for?\" Tao replied in detail. The old man then pointed and said, \"I saw a cow lying in a field on a hill, it must be your cow. The place where this cow is lying is a good spot to build a tomb and bury your father, which will bring great fortune; even if it is slightly less, it will still bring you to the highest rank of an official, and your descendants will be governors of major regions.\" He then pointed to another mountain and said, \"This mountain is also good, but not as good as the previous one, but it will still produce a prefectural governor.\" After speaking, the old man disappeared. Tao built the tomb there, and everything happened as the old man had said. This is recorded in the *Wuying Palace Collection*, volume 900."},{"anchor":"inter-trans-5","marker":"5","type":"translation","text":"In the Yixing Prefecture, there was a green dragon in the stream beneath the long bridge that was devouring people. Zhou Chu held a sword on the side of the bridge, waiting. After a long time, the dragon emerged. He then hung himself from the bridge, leapt onto the dragon's back, and stabbed it. The dragon was wounded several times, blood flowed throughout the stream, and it died from the prefectural stream to the Goupu of Taihu Lake. (*Chuxue Ji*, Volume 7) During the Yongjia period of Emperor Huai of Jin, Ding Zu from the commandery of Cao crossed the river to the Yinling area. At that time, it was dark and foggy. There was a shrine on the north side of the road. He saw something like a person, standing on its head, with blood dripping from its eyes, pooling on the ground in two places, each over a sheng (a unit of measure). Zu and his younger brother shouted at it together, and it disappeared. The blood pooled where it stood turned into thousands of fireflies, flying in all directions. (*Yulüan*, Volume 68) During the Long'an period, Chen Kui set up a fish net by the river. When the tide receded, he found a woman in the net. She was six chi tall, had a beautiful appearance, but no clothes. The water receded, and she could not move, lying in the sand; when spoken to, she did not respond. Someone dishonored her. Kui had a dream at night: \"I am a river deity, I lost my way and fell into your net yesterday, and was subsequently mistreated. Now I will report to my superior deity to have you killed.\" Kui dared not move her, and when the tide came, it carried her away with the water. The man who had dishonored her soon fell ill. (*Yulüan*, Volume 68)"},{"anchor":"inter-trans-6","marker":"6","type":"translation","text":"A humble official from Jiankang named Cao Zhe encountered the Lady of Mount Lu. She provided him with a feast, and after eating the leftovers, birds pecked at the jars. The jars were intricately carved with strange and unnamed shapes. She then presented seven-tiered boxes and plates, which contained no ordinary food. The Lady of Mount Lu summoned her daughter, named Wan, to meet Cao Zhe. Wan was pleased upon seeing him and ordered her maid, named Qionglin, to fetch a zither. Wan played the zither and sang: \"Ascending Mount Lu, its peaks are majestic and towering. Bathed in the warm breeze, the purple clouds caress me. Summoning you, I cleanse myself in the divine waters. Rejoicing in good fortune, I spread my wings among the clouds. Playing the zither, joy knows no bounds. Clouds and dragons unite in perfect harmony.\" After finishing her song, Wan took her leave. During the reign of the Lord of Mount Lu, Cao Zhe was welcomed and married to Wan. However, he felt uneasy and repeatedly asked to withdraw from the marriage. Wan secretly shed tears and composed a poem to express her farewell. She also gave him a finely woven undergarment as a gift."},{"anchor":"inter-trans-7","marker":"7","type":"translation","text":"### Translation A Clerk in Wu, named Sheng Chong (referred to as Zhong in some sources), was known for his filial piety. His mother, Lady Wang, had lost her sight. When Sheng Chong went on a brief trip, he ordered a servant to prepare food for his mother. The servant took a larva of a beetle, cooked it, and served it to Lady Wang, who found it very delicious but did not know what it was. Upon returning, Sheng Chong asked his mother about the food. She told him, \"After you left, the servant brought me a dish that was extremely delicious; however, it was neither fish nor meat. You should ask her about it.\" Sheng Chong then questioned the servant, who admitted, \"It was indeed a larva of a beetle!\" Sheng Chong wept bitterly and embraced his mother, and she suddenly regained her sight. This story is recorded in *Zhu Lin* (49) and *Yuelan* (411 and 948). In Wu, there was a scholar-official who was on a temporary leave from the capital. On his way back, he reached a place called Qu'atai. There, he saw a beautiful woman and called her to come immediately. He then invited her to stay with him. The official removed a golden ornament from his arm and fastened it on her arm, ordering her to return. She did not come back. The next day, he sent someone to search for her, but no one could find her. Suddenly, as he passed by a pigpen, he saw a sow with a golden ornament on its arm. This story is recorded in *Yuelan* (930 and 717) and *Shu Chao* (135)."},{"anchor":"inter-trans-8","marker":"8","type":"translation","text":"The Chief Justice Xu Yuanli was holding a wedding for his daughter. His cousin and maternal uncle, Kong Zhengyang, went together to Xu's house. On the way, they saw a small boy, naked, holding a small knife, about five or six inches long, sharpening it on a wall. He was talking to himself. Then he jumped onto a carriage and sat in the curved railing, repeatedly looking at the knife. When they arrived at Xu's house, in front of the mulberry tree, the boy jumped down again and sat in the ashes, sharpening the knife once more. By the time the sun was high, the new bride got into the carriage and saw the boy with the knife enter the room. He immediately stabbed her, and she fell to the ground. They carried her back, undressed her, and found that her abdomen was purple, about the size of a wine tray. She died shortly after. The ghost child went out, dancing with the knife, which had blood on it. He smeared the blood on the mulberry leaves, and soon the leaves caught fire and burned. (See *Yuzhuan* 345) Gou Xi, the governor of Yan Province, was five hundred miles away from the capital. Someone brought him a rare and precious delicacy and wanted to send it to his relatives and nobles in the capital, but he was worried that it would lose its freshness over the two-day journey. He offered a reward for a horse that could travel hundreds of miles in a day. Someone offered a horse and said, \"This horse can travel a thousand miles in a day.\" Gou Xi then ordered a carriage and a skilled driver to prepare for the journey. The horse left early in the morning and arrived in the capital at noon. After picking up a reply, it returned to Yan Province, reaching the governor's residence by the first watch of the night. Gou Xi was amazed by the horse's speed and suspected that its bones must be different. He had the horse killed to examine it, but found no supernatural qualities. The only unusual thing was that its ribs were as thick as small bamboo, running from its head to its spine, hidden under the flesh, which is why no one noticed it before. (See *Yuzhuan* 900)"},{"anchor":"inter-orig-2","marker":"2","type":"original","text":"志怪 晋 祖台之 汉武帝与近臣宴会于未央殿，忽闻人语云：“老臣冒死自陈。”乃见屋梁上有一翁，八九寸，拄杖偻步，笃老之极；缘柱而下，放杖稽首，默而不言；因仰首视殿屋，俯指帝脚，忽然不见。东方朔曰：“其名‘藻居’，兼水木之精，春巢幽林，冬潜深河。今造宫室，斩伐 其居，故来诉于帝。曰仰视宫殿，殿名未央，诉陛下方侵其居宅未央也；俯指陛下脚者，足也，愿陛下宫殿足于此，不愿更造也。”上为之息宫寝之役。居少时，帝亲幸河都，闻水底有弦歌之声，又有善芥。"},{"anchor":"inter-orig-3","marker":"3","type":"original","text":"须臾，前梁上老翁及年少数人，绛衣素带，缨佩乘藻，甚为鲜丽，凌波而出，衣不沾濡。帝问曰：“闻水底奏乐声，为君耶？”老翁对曰：“老臣前昧死归诉，幸蒙陛下天地之施，即止息斧斤，得全其居宅，不胜嘉欢，故私相庆乐耳。”献帝一紫螺壳，状如牛脂。帝曰：“朕闇无以识君，东方生知耳；君可思以吴○贻之。”老翁乃顾命取洞穴之，一人即受命下没泉底，倏忽还到，奉大珠径寸，明耀绝世。帝甚玩焉，问朔：“何以识此珠为洞穴之宝？”朔曰：“河底有洞穴之宝。”帝以五十万钱赐朔，取其珠。《书钞》一百五十八"},{"anchor":"inter-orig-4","marker":"4","type":"original","text":"建安中，河间太守刘照夫人卒于府。后太守至，梦见一好妇人，就为室家；持一双金 （古唤切）与，太守不能名，妇人乃曰：“此○（竹恚切）。”○者，其状如纽珠，大如指，屈伸在人。太守得置枕中。前太守迎丧，言有○，开棺，见夫人臂果无复有○焉。《御览》七百十八 吴未亡前，常有紫赤色气见牛斗之间，星官及诸善占者咸忧吴方兴；惟张先于天文尤精，独知为神剑之气，非江南之祥。《御览》六 陶太尉微时，丧当葬，家贫，亲自营作；有一斑牛，已载致，忽然失去，便自寻觅。忽于道中逢一老翁，云君欲何所觅？太尉具答。更举手指云：“向于山冈上见一牛眠山圩中，必是君牛。此牛所眠，便好作墓安坟当之，致极贵；小复不当，位极人臣，世为方岳矣。 ”又指一山云：“此山亦好，但不如向耳，亦当世出刺史耳。”言讫，便不复见。太尉墓之，皆如其言。《御览》九百"},{"anchor":"inter-orig-5","marker":"5","type":"original","text":"义兴郡溪渚长桥下有苍蛟吞啖人，周处执剑桥侧伺；久之，遇出，于是悬自桥上投下蛟背而刺蛟，数创，流血满溪，自郡渚至太湖句浦乃死。《初学记》七 晋怀帝永嘉中，谯国丁祚渡江至阴陵界。时天昏雾，在道北有社，见一物如人，倒立，两眼垂血从额下，聚地两处，各有升余，祚与从弟齐声喝之，灭而不见。立处聚血皆化为萤火数千枚，纵横飞散。《御览》九百四十五 隆安中，陈悝于江边作鱼罾（正匪切）。潮去，于罾中得一女人，长六尺，有容色，无衣服；水去不能动，卧沙中，与语不应。人有就辱之。悝夜梦云：“我是江黄，昨失道落君罾，小人遂见加淩；今当白尊神杀之。”悝不敢移，潮来自逐水去。奸者寻病。《御览》六十八"},{"anchor":"inter-orig-6","marker":"6","type":"original","text":"建康小吏曹着见庐山夫人，夫人为设酒馔（《御览》引作）。啖余，鸟啄罂，其中镂刻奇饰异形，非人所名（已上四句《御览》引有）；下七子盒盘，盘中亦无俗间常肴敉（《书钞》一百十四，《御览》八百四十九）。夫人命女婉出与着相见。婉见着欣悦，命婢琼林令取琴出，婉抚琴歌曰：“登庐山兮郁嵯峨，唏阳风兮拂紫霞，招若人兮濯灵波。欣良运兮畅云柯，弹鸣琴兮乐莫过，云龙会兮乐太和。”歌毕，婉便辞去。《御览》五百七十二 建康小吏曹着，为庐山使君所迎，配以女婉。着形意不安，屡求请退；婉潜然垂涕，赋诗叙别，并赠织成裈（《书钞》一引作单衫也）。《书钞》七十七又一百二十九，《初学记》二十六"},{"anchor":"inter-orig-7","marker":"7","type":"original","text":"吴中书郎盛冲（《御览》一引作仲，下同）至孝，母王氏失明。冲蹔行，敕婢为母作食；婢乃取蛴螬蒸食之，王氏甚以为美，而不知是何物。儿还，王氏语曰：“汝行后，婢进吾一食，甚甘美极；然非鱼非肉，汝试问之。”既而问婢，婢服曰：“实是蛴螬！”冲抱母恸哭，母目霍然开明。《珠林》四十九，《御览》四百十一又九百四十八 吴中有一士大夫，于都假还，行至曲阿塘上，见一女子，容貌端正，便呼即来（二句《书钞》引有）便留住宿。士解臂上金钤（《御览》引一作铃，一作合。下同），系其臂（《御览》一 引作肘），下令更来，遂不至。明日，更使寻求，都无此色。忽过一猪圈边，见母猪臂上（《 御览》一引作胛）系金钤。《御览》九百三十又七百十七，《书钞》一百三十五"},{"anchor":"inter-orig-8","marker":"8","type":"original","text":"廷尉徐元礼嫁女，从祖与外兄孔正阳共诣徐家。道中有土墙，见一小儿，裸身，正赤手持刀，长五六寸，企墙上磨甚駃，独语；因跳车上曲阑中坐，反复视刀，辄之。至徐家门前桑树下，又跳下，坐灰中，复更磨刀。日晡，新妇就车中，见小儿持刀入室，便刺新妇，新妇应刀而倒；扶还解衣，视小腹紫色，如酒槃大，炊顷便亡。鬼子出门儛刀，上有血，涂桑树叶，火然，斯须烧。《御览》三百四十五 苟晞为兖州镇，去京师五百里。有贡 珍异食者，欲贻都邑亲贵，虑经信宿之间，不复鲜美；募有牛能日行数百里者，当厚赏之。有人进一牛云：“此日行千里。”晞乃命具丁车善驭，书疏发遣。旦发，日中到京师；取答书还，至一更始进便达。晞以其骏快，筋骨必将有异，遂杀而观之；亦无灵异，惟双肋如小竹大，自头挟脊着肉裹，故外不觉也。《御览》九百"}];
+      const inlineReasoningButtons = document.querySelectorAll('.reasoning-trigger-inline');
+      const docSearchContainer = document.getElementById('doc-search');
+      const docSearchInput = document.getElementById('doc-search-input');
+      const docSearchResults = document.getElementById('doc-search-results');
+      const docSearchList = document.getElementById('doc-search-results-list');
+      const docSearchMoreButton = document.getElementById('doc-search-more-button');
+      const docSearchCount = document.getElementById('doc-search-count');
+      const toggleEnglishButton = document.getElementById('toggle-english-button');
+      const toggleChineseButton = document.getElementById('toggle-chinese-button');
+      const closedExplanationLabel = 'See Explanation';
+      const openExplanationLabel = 'Hide Explanation';
+
+      function setActiveTerm(group, termKey) {
+        if (!group) {
+          return;
+        }
+        group.querySelectorAll('.term-match[data-term-key], .reasoning-term-item[data-term-key]').forEach((element) => {
+          const isActive = !!termKey && element.dataset.termKey === termKey;
+          element.classList.toggle('is-active', isActive);
+          element.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      }
+
+      function getReasoningElements(group) {
+        if (!group) {
+          return null;
+        }
+        return {
+          panel: group.querySelector('.interlaced-reasoning-panel'),
+          previewCard: group.querySelector('.interlaced-reasoning-preview'),
+          previewContent: group.querySelector('.interlaced-reasoning-preview-content'),
+          fullCard: group.querySelector('.interlaced-reasoning-full'),
+          button: group.querySelector('.reasoning-trigger-inline'),
+        };
+      }
+
+      function setReasoningButtonState(button, isFullOpen) {
+        if (!button) {
+          return;
+        }
+        const buttonText = isFullOpen ? openExplanationLabel : closedExplanationLabel;
+        const markerLabel = button.dataset.marker ? ' [' + button.dataset.marker + ']' : '';
+        button.textContent = buttonText;
+        button.setAttribute('aria-expanded', isFullOpen ? 'true' : 'false');
+        button.setAttribute('aria-label', buttonText + markerLabel);
+        button.setAttribute('title', buttonText + markerLabel);
+      }
+
+      function buildReasoningPreview(group, termKey) {
+        const reasoningElements = getReasoningElements(group);
+        if (!reasoningElements || !reasoningElements.previewContent) {
+          return false;
+        }
+        const matchingItems = Array.from(
+          group.querySelectorAll('.interlaced-reasoning-full .reasoning-term-item[data-term-key]')
+        ).filter((item) => item.dataset.termKey === termKey);
+
+        reasoningElements.previewContent.innerHTML = '';
+        if (!matchingItems.length) {
+          return false;
+        }
+
+        const sectionMap = new Map();
+        matchingItems.forEach((item) => {
+          const section = item.closest('.reasoning-section');
+          const sectionKey = section || item;
+          let list = sectionMap.get(sectionKey);
+
+          if (!list) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'reasoning-preview-section';
+
+            const category = document.createElement('p');
+            category.className = 'reasoning-preview-category';
+            const title = section && section.querySelector('.reasoning-section-title');
+            category.textContent = title ? title.textContent.trim() : 'Explanation';
+
+            list = document.createElement('ul');
+            list.className = 'reasoning-preview-list';
+
+            wrapper.appendChild(category);
+            wrapper.appendChild(list);
+            reasoningElements.previewContent.appendChild(wrapper);
+            sectionMap.set(sectionKey, list);
+          }
+
+          const clone = item.cloneNode(true);
+          clone.classList.remove('reasoning-term-item');
+          clone.classList.add('reasoning-preview-item', 'is-active');
+          clone.removeAttribute('data-term-key');
+          clone.removeAttribute('tabindex');
+          clone.removeAttribute('role');
+          clone.removeAttribute('aria-pressed');
+          list.appendChild(clone);
+        });
+
+        return true;
+      }
+
+      function openReasoningPreview(group, termKey) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !termKey || !reasoningElements || !reasoningElements.panel) {
+          return;
+        }
+        if (!buildReasoningPreview(group, termKey)) {
+          openReasoningFull(group);
+          return;
+        }
+        reasoningElements.panel.hidden = false;
+        if (reasoningElements.previewCard) {
+          reasoningElements.previewCard.hidden = false;
+        }
+        if (reasoningElements.fullCard) {
+          reasoningElements.fullCard.hidden = true;
+        }
+        setReasoningButtonState(reasoningElements.button, false);
+      }
+
+      function openReasoningFull(group) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !reasoningElements || !reasoningElements.panel || !reasoningElements.fullCard) {
+          return;
+        }
+        reasoningElements.panel.hidden = false;
+        reasoningElements.fullCard.hidden = false;
+        if (reasoningElements.previewCard) {
+          reasoningElements.previewCard.hidden = true;
+        }
+        setReasoningButtonState(reasoningElements.button, true);
+      }
+
+      function closeReasoning(group) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !reasoningElements) {
+          return;
+        }
+        if (reasoningElements.panel) {
+          reasoningElements.panel.hidden = true;
+        }
+        if (reasoningElements.previewCard) {
+          reasoningElements.previewCard.hidden = true;
+        }
+        if (reasoningElements.fullCard) {
+          reasoningElements.fullCard.hidden = true;
+        }
+        if (reasoningElements.previewContent) {
+          reasoningElements.previewContent.innerHTML = '';
+        }
+        setReasoningButtonState(reasoningElements.button, false);
+        setActiveTerm(group, '');
+      }
+
+      function closeAllReasoning() {
+        document.querySelectorAll('.interlaced-group').forEach((group) => {
+          closeReasoning(group);
+        });
+      }
+
+      function updateLanguageToggleButtons() {
+        const englishHidden = document.body.classList.contains('hide-english');
+        const chineseHidden = document.body.classList.contains('hide-chinese');
+        if (toggleEnglishButton) {
+          toggleEnglishButton.textContent = 'Hide English';
+          toggleEnglishButton.setAttribute('aria-pressed', englishHidden ? 'true' : 'false');
+        }
+        if (toggleChineseButton) {
+          toggleChineseButton.textContent = 'Hide Chinese';
+          toggleChineseButton.setAttribute('aria-pressed', chineseHidden ? 'true' : 'false');
+        }
+      }
+
+      function activateTermAssociation(group, termKey, options = {}) {
+        if (!group || !termKey) {
+          return;
+        }
+        const { openFull = false } = options;
+        const reasoningElements = getReasoningElements(group);
+        if (!reasoningElements) {
+          return;
+        }
+        setActiveTerm(group, termKey);
+        if (openFull) {
+          openReasoningFull(group);
+          return;
+        }
+        if (reasoningElements.fullCard && !reasoningElements.fullCard.hidden) {
+          return;
+        }
+        openReasoningPreview(group, termKey);
+      }
+
+      function bindTermSelection(element) {
+        if (!element) {
+          return;
+        }
+        const activate = () => {
+          const group = element.closest('.interlaced-group');
+          if (!group) {
+            return;
+          }
+          activateTermAssociation(group, element.dataset.termKey || '', {
+            openFull: false,
+          });
+        };
+        element.addEventListener('click', activate);
+        element.addEventListener('keydown', (event) => {
+          if (event.key !== 'Enter' && event.key !== ' ') {
+            return;
+          }
+          event.preventDefault();
+          activate();
+        });
+      }
+
+      inlineReasoningButtons.forEach((button) => {
+        setReasoningButtonState(button, false);
+        button.addEventListener('click', () => {
+          const group = button.closest('.interlaced-group');
+          const reasoningElements = getReasoningElements(group);
+          if (!group || !reasoningElements || !reasoningElements.fullCard) {
+            return;
+          }
+          const isFullOpen = !reasoningElements.fullCard.hidden;
+          if (isFullOpen) {
+            closeReasoning(group);
+            return;
+          }
+          openReasoningFull(group);
+        });
+      });
+
+      document.querySelectorAll('.reasoning-preview-more').forEach((button) => {
+        button.addEventListener('click', () => {
+          const group = button.closest('.interlaced-group');
+          if (!group) {
+            return;
+          }
+          openReasoningFull(group);
+        });
+      });
+
+      document.querySelectorAll('.term-match[data-term-key]').forEach(bindTermSelection);
+      document.querySelectorAll('.reasoning-term-item[data-term-key]').forEach(bindTermSelection);
+
+      if (toggleEnglishButton) {
+        toggleEnglishButton.addEventListener('click', () => {
+          const willHideEnglish = !document.body.classList.contains('hide-english');
+          if (willHideEnglish) {
+            document.body.classList.remove('hide-chinese');
+          }
+          document.body.classList.toggle('hide-english', willHideEnglish);
+          closeAllReasoning();
+          updateLanguageToggleButtons();
+        });
+      }
+
+      if (toggleChineseButton) {
+        toggleChineseButton.addEventListener('click', () => {
+          const willHideChinese = !document.body.classList.contains('hide-chinese');
+          if (willHideChinese) {
+            document.body.classList.remove('hide-english');
+          }
+          document.body.classList.toggle('hide-chinese', willHideChinese);
+          closeAllReasoning();
+          updateLanguageToggleButtons();
+        });
+      }
+
+      updateLanguageToggleButtons();
+
+      // Document-level search (mirrors index search experience)
+      if (docSearchContainer && docSearchInput && docSearchList && docSearchResults) {
+        const normalized = (Array.isArray(docSearchData) ? docSearchData : [])
+          .filter((entry) => entry && entry.anchor && entry.text)
+          .map((entry) => ({
+            entry,
+            textLower: (entry.text || '').toLowerCase(),
+            markerLower: (entry.marker || '').toLowerCase(),
+            typeLower: (entry.type || '').toLowerCase(),
+          }));
+
+        const MAX_INITIAL_RESULTS = 6;
+        let currentMatches = [];
+        let showingAll = false;
+        let currentTokens = [];
+
+        function updateDocSearchCount(count) {
+          if (!docSearchCount) {
+            return;
+          }
+          docSearchCount.textContent = count === 1 ? '1 result' : count + ' results';
+          docSearchCount.hidden = false;
+        }
+
+        function resetSearchResults() {
+          docSearchResults.classList.remove('has-results');
+          docSearchList.innerHTML = '';
+          docSearchResults.style.display = 'none';
+          if (docSearchCount) {
+            docSearchCount.hidden = true;
+            docSearchCount.textContent = '';
+          }
+          if (docSearchMoreButton) {
+            docSearchMoreButton.classList.remove('visible');
+            docSearchMoreButton.setAttribute('aria-expanded', 'false');
+          }
+        }
+
+        function escapeRegex(text) {
+          return text.replace(/[-/\^$*+?.()|[]{}]/g, '\$&');
+        }
+
+        function countOccurrences(haystack, needle) {
+          if (!needle || !haystack) {
+            return 0;
+          }
+          let count = 0;
+          let index = haystack.indexOf(needle);
+          while (index !== -1) {
+            count += 1;
+            index = haystack.indexOf(needle, index + needle.length);
+          }
+          return count;
+        }
+
+        function buildSnippet(text, tokens) {
+          if (!text) {
+            return 'No preview available.';
+          }
+          const lower = text.toLowerCase();
+          let matchIndex = -1;
+          let matchLength = 0;
+          for (const token of tokens) {
+            const idx = lower.indexOf(token);
+            if (idx !== -1) {
+              matchIndex = idx;
+              matchLength = token.length;
+              break;
+            }
+          }
+          if (matchIndex === -1) {
+            matchIndex = 0;
+          }
+          const radius = 70;
+          const start = Math.max(0, matchIndex - radius);
+          const end = Math.min(text.length, matchIndex + matchLength + radius);
+          let snippet = text.slice(start, end);
+          if (start > 0) {
+            snippet = '...' + snippet;
+          }
+          if (end < text.length) {
+            snippet = snippet + '...';
+          }
+          let highlighted = snippet;
+          if (tokens && tokens.length) {
+            tokens.forEach((token) => {
+              if (!token) return;
+              const regex = new RegExp(escapeRegex(token), 'gi');
+              highlighted = highlighted.replace(regex, (matchValue) => '<mark>' + matchValue + '</mark>');
+            });
+          }
+          return highlighted;
+        }
+
+        function renderResults() {
+          docSearchResults.style.display = 'block';
+          docSearchList.innerHTML = '';
+          updateDocSearchCount(currentMatches.length);
+          if (!currentMatches.length) {
+            docSearchResults.classList.remove('has-results');
+            if (docSearchMoreButton) {
+              docSearchMoreButton.classList.remove('visible');
+              docSearchMoreButton.setAttribute('aria-expanded', 'false');
+            }
+            return;
+          }
+          docSearchResults.classList.add('has-results');
+          docSearchList.innerHTML = '';
+          const visibleCount = showingAll
+            ? currentMatches.length
+            : Math.min(MAX_INITIAL_RESULTS, currentMatches.length);
+          const fragment = document.createDocumentFragment();
+          for (let i = 0; i < visibleCount; i += 1) {
+            const { entry } = currentMatches[i];
+            const item = document.createElement('li');
+            item.className = 'doc-search-result';
+            const link = document.createElement('a');
+            link.href = '#' + entry.anchor;
+            link.textContent = entry.marker ? '[' + entry.marker + '] ' + entry.type : entry.type;
+            link.addEventListener('click', () => {
+              const target = document.getElementById(entry.anchor);
+              if (target && typeof target.scrollIntoView === 'function') {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+              docSearchInput.value = '';
+              resetSearchResults();
+              docSearchInput.blur();
+            });
+            const meta = document.createElement('p');
+            meta.className = 'doc-search-meta';
+            const markerLabel = entry.marker ? '[' + entry.marker + '] ' : '';
+            const typeLabel = entry.type === 'original' ? 'Original text' : 'Translation';
+            meta.textContent = markerLabel + typeLabel;
+            const snippet = document.createElement('p');
+            snippet.className = 'doc-search-snippet';
+            snippet.innerHTML = buildSnippet(entry.text || '', currentTokens);
+            item.appendChild(link);
+            item.appendChild(meta);
+            item.appendChild(snippet);
+            fragment.appendChild(item);
+          }
+          docSearchList.appendChild(fragment);
+          if (docSearchMoreButton) {
+            if (currentMatches.length > MAX_INITIAL_RESULTS) {
+              docSearchMoreButton.classList.add('visible');
+              docSearchMoreButton.textContent = showingAll ? 'Show fewer results' : 'See more results';
+              docSearchMoreButton.setAttribute('aria-expanded', showingAll ? 'true' : 'false');
+            } else {
+              docSearchMoreButton.classList.remove('visible');
+              docSearchMoreButton.setAttribute('aria-expanded', 'false');
+            }
+          }
+        }
+
+        function handleSearch() {
+          const query = docSearchInput.value.trim().toLowerCase();
+          if (!query) {
+            currentMatches = [];
+            currentTokens = [];
+            showingAll = false;
+            resetSearchResults();
+            return;
+          }
+          const tokens = query.split(/s+/).filter(Boolean);
+          if (!tokens.length) {
+            currentMatches = [];
+            currentTokens = [];
+            showingAll = false;
+            resetSearchResults();
+            return;
+          }
+          const matches = normalized
+            .map((item) => {
+              for (const token of tokens) {
+                if (
+                  !item.textLower.includes(token) &&
+                  !item.markerLower.includes(token) &&
+                  !item.typeLower.includes(token)
+                ) {
+                  return null;
+                }
+              }
+              let score = 0;
+              tokens.forEach((token) => {
+                score += countOccurrences(item.textLower, token) * 4;
+                score += countOccurrences(item.markerLower, token) * 6;
+                if (item.typeLower.includes(token)) {
+                  score += 3;
+                }
+              });
+              return { entry: item.entry, score };
+            })
+            .filter(Boolean)
+            .sort((a, b) => b.score - a.score);
+          currentMatches = matches;
+          currentTokens = tokens;
+          showingAll = false;
+          renderResults();
+        }
+
+        if (docSearchMoreButton) {
+          docSearchMoreButton.addEventListener('click', () => {
+            if (!currentMatches.length) {
+              return;
+            }
+            showingAll = !showingAll;
+            renderResults();
+          });
+        }
+        docSearchInput.addEventListener('input', handleSearch);
+        resetSearchResults();
+      }
+    })();
+  </script>
+</body>
+</html>
