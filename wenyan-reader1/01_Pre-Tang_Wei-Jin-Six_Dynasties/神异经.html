@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>神异经 - Classic of Divine Marvels</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 1rem;
+      line-height: 1.6;
+    }
+    a.marker {
+      color: #0077cc;
+      text-decoration: underline;
+      cursor: pointer;
+      scroll-margin-top: 5.5rem;
+    }
+    .marker-text {
+      color: #0077cc;
+      font-weight: 600;
+    }
+    .reasoning-trigger {
+      display: inline;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: #0077cc;
+      cursor: pointer;
+      font-size: 0.8rem;
+      line-height: 1.2;
+      vertical-align: baseline;
+      text-decoration: underline;
+    }
+    .interlaced-reasoning-trigger-row {
+      margin-top: -0.2rem;
+      margin-left: 3.55rem;
+    }
+    .interlaced-reasoning-trigger-row .reasoning-trigger {
+      font-size: 0.9rem;
+    }
+    .chunk-anchor {
+      display: block;
+      height: 0;
+      overflow: hidden;
+      scroll-margin-top: 5.5rem;
+    }
+    .chunk-layout {
+      display: grid;
+      grid-template-columns: minmax(2.8rem, max-content) minmax(0, 1fr);
+      column-gap: 0.75rem;
+      align-items: center;
+    }
+    .chunk-marker-column {
+      line-height: 1.6;
+      text-align: right;
+      white-space: nowrap;
+      align-self: center;
+    }
+    .chunk-text-column {
+      min-width: 0;
+    }
+    .chunk-text-column > :first-child {
+      margin-top: 0;
+    }
+    .chunk-text-column > :last-child {
+      margin-bottom: 0;
+    }
+    .marker-trailing {
+      margin-left: 0.3rem;
+      white-space: nowrap;
+    }
+    .chunk-marker-column .marker-trailing {
+      margin-left: 0;
+      color: #9aa3af;
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .chunk-marker-column .marker-trailing:hover {
+      color: #6b7280;
+      text-decoration: underline;
+    }
+    .reasoning-trigger:hover {
+      color: #005c99;
+    }
+    .reasoning-trigger:focus-visible,
+    .term-match:focus-visible,
+    .reasoning-term-item:focus-visible,
+    .view-toggle-button:focus-visible,
+    .reasoning-preview-more:focus-visible,
+    .return-link:focus-visible {
+      outline: 2px solid #0077cc;
+      outline-offset: 2px;
+    }
+    .section {
+      margin-bottom: 2rem;
+    }
+    .section h3 {
+      margin-top: 0;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.25rem;
+    }
+    .doc-header {
+      font-style: italic;
+      color: #444;
+      margin: 0.75rem 0 1.25rem;
+    }
+    .page-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      justify-content: space-between;
+      margin: 0 0 1.5rem;
+      padding: 0.85rem 0;
+      background: #fff;
+      border-bottom: 1px solid #dbe1ec;
+    }
+    .doc-search {
+      position: relative;
+      flex: 1 1 420px;
+      max-width: 520px;
+    }
+    .doc-search-input {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #b7c0d0;
+      box-sizing: border-box;
+    }
+    .doc-search-results {
+      position: absolute;
+      top: calc(100% + 0.45rem);
+      left: 0;
+      right: 0;
+      display: none;
+      border: 1px solid #dbe1ec;
+      border-radius: 8px;
+      padding: 0.25rem 1rem 1rem;
+      background: #fff;
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+      max-height: min(60vh, 32rem);
+      overflow-y: auto;
+    }
+    .doc-search-results-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .doc-search-count {
+      margin: 0.5rem 0 0.4rem;
+      font-size: 0.85rem;
+      color: #5e6673;
+    }
+    .doc-search-results.has-results .doc-search-results-list {
+      display: block;
+    }
+    .doc-search-results.has-results {
+      display: block;
+    }
+    .doc-search-result {
+      border-top: 1px solid #dfe3eb;
+      padding: 0.85rem 0;
+    }
+    .doc-search-result:first-child {
+      border-top: none;
+    }
+    .doc-search-result a {
+      color: #005c99;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .doc-search-result a:hover {
+      text-decoration: underline;
+    }
+    .doc-search-snippet {
+      margin: 0.35rem 0 0;
+      font-size: 0.95rem;
+      color: #353c48;
+    }
+    .doc-search-meta {
+      margin: 0.2rem 0 0;
+      font-size: 0.85rem;
+      color: #5e6673;
+    }
+    .doc-search-more-button {
+      margin-top: 0.75rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 4px;
+      border: 1px solid #0077cc;
+      background: #fff;
+      color: #0077cc;
+      cursor: pointer;
+      font-size: 0.95rem;
+      display: none;
+    }
+    .doc-search-more-button.visible {
+      display: inline-block;
+    }
+    .return-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid #0077cc;
+      background: #fff;
+      color: #0077cc;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      transition: all 0.15s ease-in-out;
+    }
+    .return-link:hover {
+      background: rgba(0, 119, 204, 0.08);
+    }
+    .return-link {
+      text-decoration: none;
+      font-weight: 600;
+      flex: 0 0 auto;
+    }
+    .page-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 0 0 auto;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .page-actions > * {
+      min-width: 7.5rem;
+      box-sizing: border-box;
+    }
+    .view-toggle-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid #0077cc;
+      background: #fff;
+      color: #0077cc;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+    }
+    .view-toggle-button:hover {
+      background: rgba(0, 119, 204, 0.08);
+    }
+    .view-toggle-button[aria-pressed="true"] {
+      background: #0077cc;
+      color: #fff;
+    }
+    .view-toggle-button[aria-pressed="true"]:hover {
+      background: #005c99;
+    }
+    .interlaced-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.95rem;
+      overflow-anchor: none;
+    }
+    .interlaced-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .interlaced-block {
+      margin: 0;
+    }
+    .interlaced-reasoning-panel[hidden] {
+      display: none;
+    }
+    .interlaced-reasoning-panel {
+      position: relative;
+      left: 50%;
+      width: 100vw;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      background: #f8fafc;
+    }
+    .interlaced-reasoning-card {
+      border: none;
+      border-radius: 0;
+      padding: 1rem;
+      background: transparent;
+      box-sizing: border-box;
+    }
+    .interlaced-reasoning-preview[hidden],
+    .interlaced-reasoning-full[hidden] {
+      display: none;
+    }
+    .interlaced-reasoning-title {
+      margin: 0 0 0.55rem;
+      font-weight: 600;
+      color: #334155;
+    }
+    .interlaced-reasoning-preview-content {
+      margin-bottom: 0.75rem;
+    }
+    .interlaced-label {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .marker-code {
+      font-weight: 400;
+      color: #666;
+      margin-left: 0.35rem;
+    }
+    .term-match {
+      border-radius: 0.2rem;
+      cursor: pointer;
+      transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    }
+    .interlaced-group .term-match {
+      background: rgba(148, 163, 184, 0.35);
+    }
+    .interlaced-group .term-match:hover {
+      background: rgba(148, 163, 184, 0.55);
+    }
+    .term-match.is-active {
+      background: rgba(59, 130, 246, 0.35) !important;
+      color: #1d4ed8;
+    }
+    .search-hit {
+      background: #fff176;
+      color: inherit;
+      border-radius: 0.15rem;
+      padding: 0 0.08rem;
+      box-shadow: 0 0 0 1px rgba(202, 138, 4, 0.18);
+    }
+    .search-hit.is-current {
+      background: #ffd54f;
+      box-shadow: 0 0 0 2px rgba(202, 138, 4, 0.32);
+    }
+    .search-focused-block {
+      scroll-margin-top: 5.5rem;
+    }
+    .reasoning-term-item[data-term-key] {
+      border-radius: 0.35rem;
+      cursor: pointer;
+      padding: 0.1rem 0.25rem;
+      transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    }
+    .reasoning-section + .reasoning-section,
+    .reasoning-preview-section + .reasoning-preview-section {
+      margin-top: 0.85rem;
+    }
+    .reasoning-section-title,
+    .reasoning-preview-category {
+      margin: 0 0 0.35rem;
+    }
+    .reasoning-section-list,
+    .reasoning-preview-list {
+      margin: 0;
+      padding-left: 1.25rem;
+    }
+    .reasoning-preview-item {
+      padding: 0.1rem 0;
+    }
+    .reasoning-preview-more {
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: #0077cc;
+      cursor: pointer;
+      font-size: 0.92rem;
+      text-decoration: underline;
+    }
+    .reasoning-preview-more:hover {
+      color: #005c99;
+    }
+    .reasoning-term-item.is-active,
+    .reasoning-preview-item.is-active {
+      background: rgba(59, 130, 246, 0.14);
+      color: #1d4ed8;
+    }
+    .interlaced-content {
+      margin: 0;
+    }
+    .interlaced-empty {
+      color: #666;
+      font-style: italic;
+      margin: 0.5rem 0;
+    }
+    body.hide-english .interlaced-block.translation {
+      display: none !important;
+    }
+    body.hide-chinese .interlaced-block.original,
+    body.hide-chinese .interlaced-reasoning-trigger-row {
+      display: none !important;
+    }
+    @media (max-width: 600px) {
+      .page-toolbar {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+      .page-actions {
+        width: 100%;
+      }
+      .view-toggle-button,
+      .return-link {
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .doc-search {
+        max-width: none;
+      }
+      .chunk-layout {
+        grid-template-columns: minmax(2.35rem, max-content) minmax(0, 1fr);
+        column-gap: 0.55rem;
+      }
+      .interlaced-reasoning-trigger-row {
+        margin-left: 2.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>神异经 - Classic of Divine Marvels</h1>
+  <p class="doc-header">Translation created with model: qwen3-14b-nothink-sbs-3step / step-by-step-3step-fewshot</p>
+
+  <div class="page-toolbar">
+    <div class="doc-search" id="doc-search">
+      <input
+        type="search"
+        id="doc-search-input"
+        class="doc-search-input"
+        placeholder="Search"
+        autocomplete="off"
+        aria-label="Search within this document"
+      />
+      <div class="doc-search-results" id="doc-search-results" aria-live="polite">
+        <p class="doc-search-count" id="doc-search-count" hidden></p>
+        <ul class="doc-search-results-list" id="doc-search-results-list"></ul>
+        <button type="button" class="doc-search-more-button" id="doc-search-more-button" aria-expanded="false">See more results</button>
+      </div>
+    </div>
+    <div class="page-actions">
+      <button type="button" class="view-toggle-button" id="toggle-english-button" aria-pressed="false">Hide English</button>
+      <button type="button" class="view-toggle-button" id="toggle-chinese-button" aria-pressed="false">Hide Chinese</button>
+      <a class="return-link" href="../index.html">Home</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="interlaced-container">
+      <div class="interlaced-group" data-marker="1">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-1" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-1" class="marker marker-trailing">1</a></div>
+  <div class="chunk-text-column"><p>神异经　　汉 东方朔</p>
+<p>　　东方荒外有豫章焉（樟木），树主九州。其高千丈，围百丈，本上三百丈，本如有条枝，敷张如帐，上有玄狐黑猿。枝主一州，南北并列，面向西南。有九力士操斧伐之，以占九州吉凶。斫复，其州有福；迟者州伯有病；积岁不复者，其州灭亡（亡言州伯死，复者木创复也）。 </p>
+<p>　　东方有桑树焉，高八十丈，敷张自辅。其叶长一丈，广六七尺。其上自有蚕，作茧长三尺，缲一茧，得丝一斤。有椹焉，长三尺五寸，围如长（此桑是间桑，但树长大）。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="1" aria-controls="interlaced-reasoning-1" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-1" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="1"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-1" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-1" class="marker marker-trailing">1</a></div>
+  <div class="chunk-text-column"><p>The Book of Strange and Marvelous Things　　Han Dynasty, Dongfang Shuo</p>
+<p>Beyond the eastern wilderness, there is a magnolia tree, which governs the nine regions. The tree is a thousand feet tall and a hundred feet in circumference, with its trunk rising three hundred feet. Its branches and leaves spread out like a tent, and there are black foxes and black apes on it. Each branch governs one region, arranged north and south, facing southwest. There are nine strong men wielding axes to cut it, to predict the good or bad fortune of the nine regions. If it is cut and regrows, the region will have good fortune; if it grows slowly, the governor of the region will be ill; if it does not regrow after many years, the region will perish (the phrase &quot;亡言州伯死&quot; means &quot;the governor of the region will die,&quot; and &quot;复者木创复也&quot; means &quot;regrowing is the tree healing itself&quot;).</p>
+<p>In the east, there is a mulberry tree, eighty feet high and spreading out to support itself. Its leaves are a foot long and six or seven feet wide. The tree has its own silkworms, which produce cocoons three feet long, and one cocoon produces one pound of silk. There are mulberries, three feet and five inches long, with a circumference as long as their length (this mulberry is a special kind, but the tree is very large).</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="2">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-2" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-2" class="marker marker-trailing">2</a></div>
+  <div class="chunk-text-column"><p>荒外有火山，其中生不昼之木，昼夜火燃，得暴风不猛，猛雨不灭。 </p>
+<p>　　南方大荒之中有树焉，名曰祖、稼、■〈木匿〉。祖，柤梨也；稼，株稼也；■〈木匿〉，亲■〈木匿〉也。三千岁作花，九千岁作实。其花蕊紫色，其实赤色，其高百丈，或千丈也。敷张自辅，东西南北方。枝各近五十丈，叶长七尺，广四尺，色如绿青，禾皮如桂，树理如甘草，味饴，实长九尺，围如长，无瓤核，竹刀割之如酥，得食复见实即灭矣（张茂先注曰：言复见后实熟者，寿一万二千岁）。 </p>
+<p>　　南方大荒有树焉，名曰如何。三百岁作花，九百岁作实。花色朱，其实正黄。高五十丈，敷张如盖，叶长一丈，广二尺馀，似菅苎，色青，厚五分，可以絮如厚朴材理如支九子，味如饴，实有核，形如棘子。长五尺，围如长，金刀剖之则酸，芦刀剖之则辛。食之者地仙，不畏水火，不畏白刃（刃刀之属。言地仙者，不能飞在地，从人去也）。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="2" aria-controls="interlaced-reasoning-2" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-2" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="2"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-2" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-2" class="marker marker-trailing">2</a></div>
+  <div class="chunk-text-column"><p>In the outer wilderness, there is a volcano, within which grows a tree that never sleeps, burning day and night. This tree does not diminish in the face of strong winds, nor does it extinguish in heavy rain.</p>
+<p>In the southern wilderness, there is a tree known as Zu, Jia, and ■〈木匿〉. Zu is a pear tree; Jia is a fruit-bearing tree; ■〈木匿〉 is a specific type of tree. After three thousand years, it blooms; after nine thousand years, it bears fruit. Its flower buds are purple, and its fruit is red. It stands a hundred or even a thousand feet tall. It spreads out and supports itself, extending in all directions. Each branch is nearly fifty feet long, with leaves that are seven feet long and four feet wide, colored like greenish-blue. The bark is like that of cinnamon, and the wood is like licorice, with a sweet taste. The fruit is nine feet long, as wide as it is long, and contains no pulp or seeds. When cut with a bamboo knife, it is as smooth as butter, and if eaten, it will disappear immediately (as noted by Zhang Maoxian: &quot;If one sees the fruit ripen again, they will live for twelve thousand years&quot;).</p>
+<p>In the southern wilderness, there is another tree named &quot;How.&quot; After three hundred years, it blooms; after nine hundred years, it bears fruit. Its flowers are red, and its fruit is bright yellow. It stands fifty feet tall, spreading out like an umbrella. Its leaves are ten feet long and over two feet wide, resembling reeds or hemp, with a green color and a thickness of five fen. It can be used like thick bark, with a texture like that of nine children, and a sweet taste. The fruit has a core, shaped like a thorn. It is five feet long and as wide as it is long. When cut with a golden knife, it is sour; when cut with a reed knife, it is spicy. Those who eat it become earth immortals, not fearing water and fire, nor fearing sharp blades (referring to earth immortals who cannot fly but stay on the ground, accompanying humans).</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="3">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-3" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-3" class="marker marker-trailing">3</a></div>
+  <div class="chunk-text-column"><p>东方有树焉，高百丈，敷张自辅。叶长一丈，广六七尺，名梨，如今之柤梨，但树大耳。其子径三尺，剖之少瓤，白如素，和羹食之，为地仙。衣服不败，辟穀，可以入水火也。 </p>
+<p>　　东南荒中有邪木焉，高三千丈，或十馀围，或七八尺。其枝乔直上不可■〈冉阝〉也。叶如甘瓜，二百岁叶落而生花，花形如甘瓜，复二百岁落尽而生萼，萼下生子，三岁而成熟。成熟之后，不长不减，子形如寒瓜（似冬瓜也），长七八寸，径四五寸。萼复覆生顶（言发萼而得成实），此不取，万世如故。若取子而留萼，萼复生子如初，年月复成熟，复二年则成萼，而复生子。其子形如甘瓤，少■〈柬见〉，甘美，食之令人身泽。不可过三升，令人冥醉，半曰乃醒。木高，人取不能得，唯木下有多罗之人，缘能得之（多罗国名）。一名无叶，世人后生不见叶，故谓之无叶也。一名倚骄（张茂先注曰：骄直上不可那也）。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="3" aria-controls="interlaced-reasoning-3" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-3" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="3"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-3" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-3" class="marker marker-trailing">3</a></div>
+  <div class="chunk-text-column"><p>In the east, there is a tree that stands a hundred zhang tall, spreading and supporting itself. Its leaves are one zhang long and six or seven chi wide. It is called the plum tree, similar to modern plums, but much larger. Its fruit is three chi in diameter, has little flesh, and is white like silk. Eating it with soup makes one a local immortal. It preserves clothing, allows one to abstain from food, and enables one to enter water and fire.</p>
+<p>In the southeast wilderness, there is a strange tree that is 3,000 zhang tall, with a circumference of over ten zhang or seven or eight chi. Its branches are tall and straight, making it impossible to climb. Its leaves are like melons, and after 200 years, the leaves fall and flowers bloom. The flowers are like melons, and after another 200 years, the flowers fall and calyces grow. The calyces produce fruit, which matures in three years. After maturation, the fruit does not grow or shrink and is shaped like a winter melon, about seven or eight cun long and four or five cun in diameter. The calyces continue to grow at the top, forming the fruit. If not harvested, the tree will remain unchanged for eternity. If the fruit is harvested but the calyces are left, they will regrow the fruit in the same manner, repeating the cycle. The fruit is like a sweet melon, slightly bitter, and eating it makes one&#39;s skin smooth. One should not eat more than three sheng, as it can cause deep intoxication, taking half a day to sober up. The tree is too high for people to reach, but those from the Dora people can climb it. Another name is &quot;leafless,&quot; as later generations do not see the leaves, hence the name. Another name is &quot;arrogant,&quot; meaning the tree is so tall and straight that it cannot be reached.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="4">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-4" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-4" class="marker marker-trailing">4</a></div>
+  <div class="chunk-text-column"><p>东方有树，高五十丈，叶长八尺，名曰桃。其子径三尺二寸，小核味和，和核羹食之，令人益寿。食核中仁，可以治嗽。小桃温润，既嗽，人食之即止。 </p>
+<p>　　北方荒中有枣林焉，其高五十丈，敷张枝条数里馀，疾风不能偃，雷电不能摧。其子长六七寸，围过其长，熟赤如朱，乾之不缩，气味润泽，殊於常枣，食之可以安躯，益於气力。此枣枝条盛於常枣，亦益气安躯。赤松子云，北方大枣，味有殊，既可益气，又安躯。 </p>
+<p>　　南方荒中有涕竹，长数百丈，围三丈五六尺，厚八九寸，可以为船。其笋甘美，煮食之可以止创疠（张茂先注曰：子笋也）。 </p>
+<p>　　南方山有邯■〈甘庶〉之林，其高百丈，围三尺八寸。促节多汁，甜如蜜，咋啮其汁，令人润泽，可以节蚘虫。人腹中蚘虫，其状如蚓，此消穀虫也，多则伤人，少则穀不消，是甘蔗能减多益少，凡蔗亦然。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="4" aria-controls="interlaced-reasoning-4" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-4" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="4"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-4" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-4" class="marker marker-trailing">4</a></div>
+  <div class="chunk-text-column"><p>In the east, there is a tree fifty zhang tall, with leaves eight chi long, named peach. Its fruit has a diameter of three chi two cun, and the small pit has a harmonious taste. When eaten in a soup, it can make one live longer. Eating the kernel inside the pit can cure cough. The small peach is warm and moist, and when someone has a cough, eating it can stop the cough.</p>
+<p>In the northern wilderness, there is a date forest fifty zhang tall, with branches spread out for several li. Strong winds cannot bend it, and lightning cannot destroy it. The fruits are six or seven cun long, with a circumference greater than their length. When ripe, they are red like cinnabar, and when dried, they do not shrink. Their flavor and aroma are moist and lustrous, different from ordinary dates. Eating them can strengthen the body and enhance physical strength. This date tree has more abundant branches than ordinary date trees and also strengthens the body and enhances physical strength. The Red Pine Sage says that northern dates have a unique flavor and can both enhance physical strength and strengthen the body.</p>
+<p>In the southern wilderness, there is a bamboo called &quot;tis&quot; hundreds of zhang long, with a circumference of three zhang five or six chi, and a thickness of eight or nine cun. It can be used to make boats. The bamboo shoots are sweet and delicious, and when cooked and eaten, they can stop sores and leprosy.</p>
+<p>In the southern mountains, there is a grove of sugarcane one hundred zhang tall, with a circumference of three chi eight cun. The joints are short and the cane is juicy, sweet like honey. Chewing the juice makes one&#39;s skin moist and lustrous, and it can control worms. Worms in the human body are like earthworms, and these are grain-eating worms. Too many worms can harm a person, and too few can prevent grains from being digested. Sugarcane can reduce the number of worms and increase their beneficial effects. All sugarcane is the same.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="5">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-5" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-5" class="marker marker-trailing">5</a></div>
+  <div class="chunk-text-column"><p>不昼木火中有鼠，重千斤，毛长二尺余，细如丝。但居火中洞赤，时时出外。而毛白，以水逐而沃之即死。取其毛绩纺织以为布，用之若有垢涴，以火烧之则净也。 </p>
+<p>　　北方层冰万里，厚百丈。有磎鼠在水下土中焉，形如鼠，食草木，肉重千斤，可以作脯，食之已热。其毛八尺，可以为褥，卧之却寒。其皮可以蒙鼓，闻千里。其毛可以来鼠，此尾所在鼠聚。今江南鼠，食草木为灾，此类也。 </p>
+<p>　　西方山中有蛇，头尾差大，有色五彩。人物触之者，中头则尾至，中尾则头至，中腰则头尾并至，名曰率然（张茂先注曰：会稽常山最多此蛇。故孙子兵法“三军势如率然者”是也）。 </p>
+<p>　　北海有大鸟，其高千尺，头文曰天，胸文曰侯，左翼丈曰鷖，右翼文曰勒。头向东正，海中央捕鱼。或时举翼而飞，其羽相切如风雷也。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="5" aria-controls="interlaced-reasoning-5" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-5" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="5"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-5" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-5" class="marker marker-trailing">5</a></div>
+  <div class="chunk-text-column"><p>In the firewood that is not diurnal, there is a rat that weighs a thousand catties, with hair growing more than two feet long, fine as silk. It resides in the fire, its body deeply red, and often comes out. Its hair is white, and if chased with water and doused, it dies. Its hair can be spun and woven into cloth, which, if used, becomes dirty, but burning it with fire makes it clean.</p>
+<p>In the north, layers of ice stretch for ten thousand miles, thick for a hundred feet. There are rats in the water and soil beneath, shaped like rats, feeding on grass and trees, with flesh weighing a thousand catties, which can be made into dried meat, eating which cures heat. Its hair is eight feet long, which can be made into a cushion, lying on which wards off cold. Its skin can be used to cover drums, heard for a thousand miles. Its hair can attract rats, and where its tail is, rats gather. Today, rats in the south of the Yangtze River, feeding on grass and trees, cause disasters, such as these.</p>
+<p>In the mountains of the west, there are snakes with heads and tails slightly larger, with five colors. People and things that touch it: if it touches the head, the tail arrives; if it touches the tail, the head arrives; if it touches the waist, both head and tail arrive. It is called <em>Shuoran</em> (Zhang Maoxian commented: the most of this snake are in Kuaiji and Changshan. So the <em>Sunzi Art of War</em> says, &quot;the three armies are like <em>Shuoran</em>&quot;).</p>
+<p>In the north sea, there is a large bird, its height a thousand feet, its head marked with the character <em>Tian</em>, its chest marked with the character <em>Hou</em>, its left wing marked with the character <em>Yi</em>, its right wing marked with the character <em>Le</em>. Its head faces east, straight, fishing in the middle of the sea. Sometimes it raises its wings and flies, its feathers brushing together like wind and thunder.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="6">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-6" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-6" class="marker marker-trailing">6</a></div>
+  <div class="chunk-text-column"><p>北方荒中有石湖，方千里，岸深五丈余，恒冰，惟夏至左右五六十曰解耳。有横公鱼，长七八尺，形如鲤而目赤，昼在湖中，夜化为人，刺之不入，煮之不死。以乌梅二枚煮之则熟，食之可止邪病。其湖无凸凹，平满无高下。 </p>
+<p>　　南方蚊翼下有蜚虫焉，目明者见之。每生九卵。复未常有孵复成九子。蜚而俱去，蚊遂不知。亦食人及百兽。食者知言虫小食人不去也。此虫既细且小，因曰细蠛，陈章对齐桓公小虫是也。此虫常春生，以季夏藏于鹿耳中，名婴蜺，亦细小也。 </p>
+<p>　　八荒之中有毛人焉，长七八尺，皆如人形。身及头上，皆有毛，如猕猴。毛长尺馀，■〈生毛〉■〈丽毛〉，见人则瞑目，开口吐舌，上唇覆面，下唇覆胸。喜食人。舌鼻牵引共戏，不与即去，名曰髯公，俗曰髯丽。一名髯狎小儿，髯狎，可畏也（字未详）。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="6" aria-controls="interlaced-reasoning-6" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-6" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="6"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-6" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-6" class="marker marker-trailing">6</a></div>
+  <div class="chunk-text-column"><p>In the remote northern wilderness, there is a stone lake, measuring a thousand li in extent, with shores deep by more than five zhang, perpetually frozen. It thaws only for about fifty to sixty days around the summer solstice. There is a fish known as the Henggong fish, which grows to a length of seven or eight chi, resembling a carp but with red eyes. By day, it resides in the lake, but by night, it transforms into a human. It cannot be pierced by a spear and cannot be killed by boiling. Cooking it with two pieces of plum makes it edible, and eating it can cure evil diseases. The lake is flat and level, without any elevation or depression.</p>
+<p>Under the wings of mosquitoes in the south, there are tiny insects that can only be seen by those with keen eyesight. Each insect lays nine eggs, and when they hatch, they produce nine offspring. The insects fly away together, and the mosquitoes remain unaware. These insects also feed on humans and animals. Those who eat them know that despite their small size, they do not leave the body. These insects are both small and minute, hence named &quot;Ximai.&quot; They are the same small insects mentioned by Chen Zhang to Duke Huan of Qi. These insects are born in spring and hide in deer ears during late summer, named &quot;Yingni,&quot; which are also small and minute.</p>
+<p>In the remote and desolate regions of the eight directions, there are hairy people, about seven to eight feet tall, all resembling humans in shape. Their entire body and head are covered with hair, like that of a macaque. Their hair is about a foot long, lush and beautiful. When they see people, they close their eyes, stick out their tongues, and their upper lip covers their face while their lower lip covers their chest. They enjoy eating humans. They playfully pull people&#39;s tongues and noses; if they are not allowed to play, they will leave. They are called &quot;Rangan Gong&quot; or &quot;Ranli,&quot; and another name for them is &quot;Ranxia Xiao&#39;er.&quot; &quot;Ranxia&quot; suggests that they are to be feared due to their playful and potentially harmful nature.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="7">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-7" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-7" class="marker marker-trailing">7</a></div>
+  <div class="chunk-text-column"><p>西海之外有鹄国焉，男女皆长七寸，为人自然有礼，好经编跪拜。其人皆寿三百岁。行如飞，曰行千里，百物不敢犯之。惟畏海鹄，过辄吞之，亦寿三百岁。此人在鹄腹中不死，而鹄亦一举千里（张茂先注曰：陈章与齐桓公论小儿是也）。 </p>
+<p>　　西北荒中有玉馈之酒，酒泉注焉，广一丈长，深三丈，酒美如肉，澄清如镜，上有玉尊玉笾。取一尊，一尊复生焉。与天同休，无乾时。石边有脯焉，味如獐鹿脯，饮此酒，人不生死。此（阙）间人与天生同，虽男不（阙）妇，故言不生死。 </p>
+<p>　　西荒中有人焉，面目手足皆人形，而胁下有翼，不能飞，名曰苗民。《书》曰：窜三苗于三危，西裔，为人饕餮淫泆无礼，故窜於此。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="7" aria-controls="interlaced-reasoning-7" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-7" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="7"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-7" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-7" class="marker marker-trailing">7</a></div>
+  <div class="chunk-text-column"><p>Beyond the Western Sea lies the land of the Swans, where the men and women are all seven inches tall. They are naturally polite and enjoy performing rituals such as kneeling and bowing. The people there all live for three hundred years. They can fly like birds, covering a thousand miles in a single leap, and nothing dares to harm them. However, they fear the sea swans, which, when they pass by, will swallow them whole, also granting them a lifespan of three hundred years. These people remain unharmed within the swan&#39;s belly, and the swan can also fly a thousand miles in one leap (as Zhang Maoxian noted: &quot;Chen Zhang and Duke Huan of Qi discussed the matter of the child&quot;). </p>
+<p>In the northwest wasteland, there is the Jade Wine, flowing from a spring of wine. It is one zhang wide and three zhang deep, with wine that tastes like meat and is as clear as a mirror. Above it are jade cups and plates. When one cup is taken, another immediately replenishes. It lasts as long as heaven and never runs out. Beside the stone, there is a kind of dried meat that tastes like deer meat. Drinking this wine, one does not experience death or life. The people in this (missing) land are the same as heaven, even though they are not (missing) women, so it is said that they do not experience death or life.</p>
+<p>In the far west, there are people who have human faces and hands but have wings on their sides, unable to fly. They are called the Miao people. The <em>Book of Documents</em> says: &quot;The Miao were exiled to the Three Dangers in the western frontier, where they were gluttonous, licentious, and disrespectful, hence they were exiled there.&quot;</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="8">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-8" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-8" class="marker marker-trailing">8</a></div>
+  <div class="chunk-text-column"><p>西北荒中有小人，长一分。其君朱衣玄冠，乘辂车马，引为威仪。居人遇其乘车，抓而食之，其味辛，终年不为（阙）所咋并识万物名字。又杀腹中三虫，三虫死，便可食仙药也（一分字恐有误）。 </p>
+<p>　　南有人焉，周行天下。其长七丈，腹围如其长，朱衣缟带，以赤蛇绕其项，不饮不食，朝吞恶鬼三千，暮吞三百。此人以鬼为饭，以露为浆，名曰尺郭，一名黄父。 </p>
+<p>　　西方曰宫之外有山焉，其长十余里，广二三里，高百余丈，皆大黄之金。其色殊美，不杂土石，不生草木，上有金人，高五丈余，皆纯金，名曰金犀。入山下一丈有银，又入一丈有锡，又入一丈有铅，又入一丈有丹阳铜，似金可锻，以作错涂之器也（张茂先注曰：淮南子术曰“饵丹阳之为金”是也）。 </p>
+<p>　　西荒之中有人焉，长短如人，著败衣，手虎爪，名獏■〈犭为〉。伺人独行，辄食人脑。或舌出盘地丈馀，人先闻声，烧大石以投其舌，乃气绝而死，不然食人脑矣。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="8" aria-controls="interlaced-reasoning-8" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-8" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="8"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-8" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-8" class="marker marker-trailing">8</a></div>
+  <div class="chunk-text-column"><p>In the remote northwest, there are small people, each a mere inch in height. Their ruler wears a red robe and black cap, rides in a grand carriage, and serves as a symbol of dignity and respect. When residents encounter them riding in their carriages, they grab and eat them, and the taste is pungent. Throughout the year, they are not affected by (something) and know the names of all things. They also kill three worms inside their bodies, and upon the worms&#39; death, they can eat elixirs of immortality (the character &quot;分&quot; may be in error).</p>
+<p>In the south, there is someone who travels throughout the world. This person is seven zhang tall, with a waist circumference equal to their height, wears a red robe and white belt, and has a red snake coiling around their neck. They do not drink or eat, swallowing 3,000 evil spirits in the morning and 300 in the evening. This person uses ghosts as food and dew as drink, and is known as Chige, also called Huangfu.</p>
+<p>Outside the palace in the west, there is a mountain, stretching over ten li in length, two or three li in width, and more than a hundred zhang in height. It is filled with a type of gold called &quot;dahuang,&quot; which has exceptionally beautiful colors, is not mixed with earth or stones, and does not grow plants. On top of the mountain, there are golden figures, each over five zhang tall, all made of pure gold, known as &quot;jinxi.&quot; At one zhang below the mountain, there is silver; another zhang down, tin; another zhang down, lead; and another zhang down, &quot;danyang&quot; copper, which looks like gold and can be forged, used to make polished and decorated objects (as noted by Zhang Maoxian: the <em>Huainanzi</em> technique states that &quot;the essence of danyang is gold&quot;).</p>
+<p>In the remote west, there are people whose height is like that of ordinary humans, wearing tattered clothes and having tiger claws. They wait for people to walk alone and immediately eat their brains. Sometimes their tongue extends over a distance of more than one zhang, and people hear the sound first. By throwing a heated stone at the tongue, they can be killed from lack of breath; otherwise, they would eat human brains.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="9">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-9" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-9" class="marker marker-trailing">9</a></div>
+  <div class="chunk-text-column"><p>南荒之外有火山，昼夜火燃。火中有鼠重百斤，毛长二尺余，细如丝，可以作布。恒居火中，时时出外而白，以水逐而沃之乃死，取其毛缉织以为布。 </p>
+<p>　　南方之兽如鹿豕头，善依人求五穀，名无损兽。人割取肉不病，肉自复，其肉惟可作鮓，使■〈米审〉肥美，而咋肉不坏，吞之不入。■〈米审〉尽更澡肉，复作鮓如初，愈美，名不尽鮓是也。 </p>
+<p>　　西南荒中出讹兽，其状若菟，人面能言。常欺人，言东而西，言恶而善。其肉美，食之言不真矣。 </p>
+<p>　　东海之外荒海中，有山焦炎而峙，高深莫测，盖禀至阳之为质也。海水激浪投其上，噏然而尽，计其昼夜嗡摄无极，若熬鼎受其洒汗耳。 </p>
+<p>　　大荒之东极至鬼府山臂沃椒山脚巨洋海中升载海曰，盖扶桑山。有玉鸡，王鸡鸣则金鸡鸣，金鸡鸣则石鸡鸣，石鸡鸣则天下之鸡鸣，悉鸣则潮水应之矣。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="9" aria-controls="interlaced-reasoning-9" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-9" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="9"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-9" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-9" class="marker marker-trailing">9</a></div>
+  <div class="chunk-text-column"><p>Beyond the southern wilderness, there is a volcano that burns day and night. In the fire, there is a mouse that weighs a hundred pounds, with fur two feet long, fine as silk, and capable of being made into cloth. The mouse constantly lives in the fire, occasionally coming out to cool off, and can only be killed by pouring water on it. Its fur can be used to make cloth.</p>
+<p>In the south, there is a beast with a deer-like head, good at following people to ask for grains, and named &quot;无损兽&quot; (non-damaging beast). The meat can be cut without causing illness, and it regenerates. It can only be made into pickled meat, which makes the ■〈米审〉 (a type of bird) fat and delicious, but eating the meat does not digest. After the ■〈米审〉 finishes eating, the meat regenerates, and the pickled meat can be made again, even more delicious, hence the name &quot;不尽鮓&quot; (unending pickled meat).</p>
+<p>In the southwestern wilderness, there is a deceptive beast that looks like a rabbit, has a human face, and can speak. It often deceives people, saying east when it means west, and saying evil when it means good. The meat is delicious, but eating it makes one&#39;s words unreliable.</p>
+<p>In the eastern sea, beyond the vast ocean, there is a mountain that is fiery and stands tall, with height and depth that cannot be measured, and is said to be made of pure yang energy. The sea water, when thrown onto the mountain, is absorbed instantly, and the amount of water absorbed day and night is immeasurable, like a pot being filled with sweat.</p>
+<p>In the easternmost part of the vast wilderness, near the foot of Mount Wuoji, where the giant ocean rises, known as Mount Fusang, there is a jade chicken, a king chicken, a gold chicken, and a stone chicken. The sound of each chicken triggers the next, and when all chickens crow, the tides respond.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="10">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-10" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-10" class="marker marker-trailing">10</a></div>
+  <div class="chunk-text-column"><p>西南大荒中有人焉，长一丈，其腹围九尺，践龟蛇，戴朱鸟。右手凭青龙，左手凭白虎。知河海斗斛，识山石多少，知天下鸟兽言语，知百穀草木盐苦，名曰圣，一名哲，一名贤，一名无不达。凡人见而拜者，令人神智。又西北海外有人焉，长二千里，两脚中间相去千里，腹围一千六百里，但曰饮天酒五斗（张华注曰：天酒，甘露也），不食五谷鱼肉，惟饮天酒。好游山海间，不犯百姓，不干万物，与天地同生，名无路之人，一名仁，一名信，一名神。 </p>
+<p>　　西荒中兽如虎，豪长三尺，人面虎足口牙一丈八尺。人或食之，兽斗终不退却，唯死而已。荒中人张捕之，复黠逆知。一名倒寿焉。 </p>
+<p>　　东方外有东明山，有宫焉，左右有阙而立，其高百尺，画以五色，青石为墙。高三仞，门有银榜，以青石碧镂，题曰“天地长男之宫”。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="10" aria-controls="interlaced-reasoning-10" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-10" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="10"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-10" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-10" class="marker marker-trailing">10</a></div>
+  <div class="chunk-text-column"><p>In the remote southwestern regions, there is a person who stands one zhang tall with a waist circumference of nine chi, standing on turtles and snakes, and wearing a red bird. Leaning on the Azure Dragon with his right hand and the White Tiger with his left, he knows the measurements of rivers and seas, the quantities of mountains and stones, understands the languages of birds and beasts, and perceives the flavors of grains, grasses, and plants. He is called the Holy One, the Wise One, the Virtuous One, and the All-Knowing One. Anyone who sees and worships him becomes more intelligent and spiritually enlightened. In the remote western regions, there is another person who is two thousand li tall, with a distance of one thousand li between his feet and a waist circumference of one thousand six hundred li. He only drinks five dou of Tianjiu (Heavenly Wine), which is a metaphor for the sweet dew or nectar of the heavens. He does not eat grains, fish, or meat, only drinking Tianjiu. He enjoys traveling through mountains and seas, not harming ordinary people, and not interfering with the natural world. He is named the &quot;Pathless One,&quot; the Benevolent One, the Trustworthy One, and the Divine One.</p>
+<p>In the remote western regions, there is a creature resembling a tiger, with whiskers or hair three chi long, a human face, tiger feet, and a mouth and teeth measuring one zhang eight chi. If someone eats the creature, it will fight to the death without retreating. People in the remote areas hunt the creature, using cunning and foresight. It is also known as the &quot;Reversed Lifespan&quot; creature.</p>
+<p>To the east lies Dongming Mountain, where there is a palace with two gate towers standing on either side. The palace is one hundred chi high, painted in five colors, and constructed with blue stone walls. The walls are three ren high, and the door has a silver plaque made of blue stone with green carvings, inscribed with the words &quot;The Palace of the Eldest Son of Heaven and Earth.&quot;</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="11">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-11" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-11" class="marker marker-trailing">11</a></div>
+  <div class="chunk-text-column"><p>西北荒有遗酒，追复脯焉。其味如鹿獐，食一斤复一斤。东南荒中邪木，高二三十丈。叶如甘瓜，子如寒瓜，蔓覆其顶，子味甘如蜜，食之令人身有泽。不可过三升，令人冥醉，半曰乃醒。惟多罗氏之民缘能得之。 </p>
+<p>　　东海沧浪洲生强木焉，洲人多用作舟楫。其上多以珠玉为戏，物终无所负。其木方一寸，可载百许斤，纵石镇之，不能没矣。 </p>
+<p>　　木梨生南方，梨径三尺，剖之少瓤白素。和羹食之地仙，可以水火不焦溺矣。 </p>
+<p>　　木栗出东北荒中，有木高四十丈，叶长五尺，广三寸，名栗。其实径三尺二寸，其壳赤，其肉黄白，味甜，食之令人短气而渴也。 </p>
+<p>　　昆仑山上有柰，冬生子，碧色，须玉井水洗之方可食也。 </p>
+<p>　　刀味核生南荒中，树形高五十丈，实如枣，长五尺。金刀剖之则甜，若竹刀剖之则饴，木刀剖之则酸，芦刀剖之则辛。食之地仙，不畏水火白刃。 </p>
+<p>　　东南隅大荒中有朴父焉，其高千里，腹围自辅。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="11" aria-controls="interlaced-reasoning-11" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-11" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="11"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-11" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-11" class="marker marker-trailing">11</a></div>
+  <div class="chunk-text-column"><p>In the northwest, there is a place where leftover wine and preserved meat can be found. The taste of the meat is similar to that of deer or gazelle, and eating one pound will make one crave another pound. In the southeast, there is a strange tree that grows to a height of twenty to thirty zhang. Its leaves resemble sweet melons, and its fruits resemble cold melons, with vines covering the top. The fruits taste as sweet as honey and make one&#39;s skin radiant. However, consuming more than three sheng will cause a deep intoxication that lasts half a day. Only the people of the Doro clan can obtain this fruit.</p>
+<p>On the island of Canglang in the East Sea, there grows a strong wood that is commonly used by the islanders for making boats. The wood is often used for games involving jewels and jade, and despite its value, it does not carry any negative consequences. A piece of the wood one inch square can support up to a hundred pounds and will not sink even if weighed down with stones.</p>
+<p>In the south, there grows a large pear-like fruit with a diameter of three chi. When cut open, it has a small amount of white, pure flesh inside. The fruit is so pure that it can be used in soups and stews, and those who eat it can become immortals who are unaffected by fire and water.</p>
+<p>In the northeast, there is a tall tree that produces a type of chestnut. The tree is forty zhang tall, with leaves that are five chi long and three cun wide. The fruits have a diameter of three chi two cun, a red shell, and yellowish-white flesh that is sweet but causes shortness of breath and thirst when eaten.</p>
+<p>On Mount Kunlun, there grows a fruit that ripens in winter. It has a green color and must be washed with water from the Jade Well before it can be eaten.</p>
+<p>In the south, there grows a tree that is fifty zhang tall and produces fruit resembling dates, each five chi long. The fruit tastes differently depending on the type of knife used to cut it: sweet with a gold knife, sticky with a bamboo knife, sour with a wooden knife, and pungent with a reed knife. Those who eat the fruit can become immortals who are not afraid of water, fire, or sharp weapons.</p>
+<p>In the southeast, there is a giant tree that is a thousand li tall and has a circumference of its trunk that is self-supporting.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="12">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-12" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-12" class="marker marker-trailing">12</a></div>
+  <div class="chunk-text-column"><p>西方深山中有山臊，长尺馀，犯人则病，长爆竹声。 </p>
+<p>　　西北裔外有大夏山，有宫，以金为墙。南方裔外冈明山，有宫，以赤石为墙。西南裔外老寿山，有宫，以黄铜为墙。东南裔外阓清山，有宫，以青石为墙。西方裔外西明山，有宫，以白石为墙。 </p>
+<p>　　北方异国有银盘，大五十丈，中有明珠，大数丈，照千里。 </p>
+<p>　　穷其兽似牛，而色狸，尾长曳地。其声似狗，狗头人形，钩爪锯牙，逢忠信之人啮而食之，逢奸邪者则擒禽兽而饲之。迅疾亦食诸禽兽也。 </p>
+<p>　　东方荒中有木，名曰栗，有壳径三尺三寸。壳刺长丈余，实径三尺。壳亦黄，其味甜，食之多，令人短气而渴。 </p>
+<p>　　东南海中有烜洲，洲有温湖，鳐鱼生焉。长八尺，食之宜暑，辟风寒。北方有石湖，其水恒赤。 </p>
+<p>　　西北荒中有二金阙，相去百丈。有明月珠，径二尺，光照二千里。 </p>
+<p>　　东方裔外有建山，其上多橘柚。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="12" aria-controls="interlaced-reasoning-12" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-12" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="12"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-12" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-12" class="marker marker-trailing">12</a></div>
+  <div class="chunk-text-column"><p>In the deep western mountains, there lives a creature called <em>shān sào</em>, about a foot long. When it attacks people, they fall ill, and loud firecracker sounds can scare it away.</p>
+<p>Beyond the northwest border lies the <em>Dà Xià Shān</em>, where there is a palace with walls made of gold. Beyond the southern border is the <em>Gāng Míng Shān</em>, where there is a palace with walls made of red stone. Beyond the southwest border is the <em>Lǎo Shòu Shān</em>, where there is a palace with walls made of yellow copper. Beyond the southeast border is the <em>Huì Qīng Shān</em>, where there is a palace with walls made of green stone. Beyond the western border is the <em>Xī Míng Shān</em>, where there is a palace with walls made of white stone.</p>
+<p>In a foreign land to the north, there is a silver plate, fifty zhang in size, inside which there is a pearl, several zhang in size, that illuminates for a thousand li.</p>
+<p>There is an animal that resembles a cow, with the color of a fox, and a tail that drags on the ground. Its sound is like a dog, with a dog&#39;s head and human form, hooked claws, and saw-like teeth. When it encounters a loyal and trustworthy person, it bites and eats them; when it encounters a wicked person, it captures animals and feeds them to them. It also quickly eats various animals.</p>
+<p>In the eastern wilderness, there is a tree called <em>lì</em>, with a shell diameter of three feet and three inches. The spikes on the shell are more than one zhang long, and the fruit has a diameter of three feet. The shell is also yellow, and its taste is sweet. If eaten in large quantities, it causes one to feel short of breath and thirsty.</p>
+<p>In the southeastern sea, there is an island called <em>Xuǎn Zhōu</em>, which has a warm lake where the ray fish lives. The ray fish is eight chi long, and eating it is suitable for hot weather, preventing wind and cold. In the north, there is a stone lake whose water is always red.</p>
+<p>In the northwest wilderness, there are two golden palaces, separated by a hundred zhang. There is a pearl called <em>Míng Yuè Zhū</em>, with a diameter of two feet, whose light illuminates for two thousand li.</p>
+<p>Beyond the eastern border is the <em>Jiàn Shān</em>, on top of which there are many tangerines and pomelos.</p></div>
+</div></div></div>
+</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const docReasoningUrl = "../reasoning-index/01_Pre-Tang_Wei-Jin-Six_Dynasties/神异经/manifest.json";
+      const inlineReasoningButtons = document.querySelectorAll('.reasoning-trigger-inline');
+      const docSearchContainer = document.getElementById('doc-search');
+      const docSearchInput = document.getElementById('doc-search-input');
+      const docSearchResults = document.getElementById('doc-search-results');
+      const docSearchList = document.getElementById('doc-search-results-list');
+      const docSearchMoreButton = document.getElementById('doc-search-more-button');
+      const docSearchCount = document.getElementById('doc-search-count');
+      const toggleEnglishButton = document.getElementById('toggle-english-button');
+      const toggleChineseButton = document.getElementById('toggle-chinese-button');
+      const closedExplanationLabel = 'See Explanation';
+      const openExplanationLabel = 'Hide Explanation';
+      let reasoningManifestPromise = null;
+      let reasoningMarkerToShard = null;
+      const reasoningShardCache = new Map();
+
+      function getReasoningShardUrl(shard) {
+        if (!docReasoningUrl || !shard) {
+          return '';
+        }
+        const baseIndex = docReasoningUrl.lastIndexOf('/');
+        const basePath = baseIndex === -1 ? '' : docReasoningUrl.slice(0, baseIndex + 1);
+        return basePath + shard;
+      }
+
+      function loadReasoningManifest() {
+        if (reasoningMarkerToShard) {
+          return Promise.resolve(reasoningMarkerToShard);
+        }
+        if (!docReasoningUrl) {
+          reasoningMarkerToShard = new Map();
+          return Promise.resolve(reasoningMarkerToShard);
+        }
+        if (!reasoningManifestPromise) {
+          reasoningManifestPromise = fetch(docReasoningUrl)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error('Unable to load explanation manifest.');
+              }
+              return response.json();
+            })
+            .then((manifest) => {
+              reasoningMarkerToShard = new Map();
+              const entries = manifest && Array.isArray(manifest.entries) ? manifest.entries : [];
+              entries.forEach((entry) => {
+                if (entry && entry.safeMarker && entry.shard) {
+                  reasoningMarkerToShard.set(entry.safeMarker, entry.shard);
+                }
+              });
+              return reasoningMarkerToShard;
+            });
+        }
+        return reasoningManifestPromise;
+      }
+
+      function loadReasoningShard(shard) {
+        if (!shard) {
+          return Promise.resolve(new Map());
+        }
+        if (!reasoningShardCache.has(shard)) {
+          const shardUrl = getReasoningShardUrl(shard);
+          const shardPromise = fetch(shardUrl)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error('Unable to load explanation shard.');
+              }
+              return response.json();
+            })
+            .then((entries) => {
+              const shardMap = new Map();
+              (Array.isArray(entries) ? entries : []).forEach((entry) => {
+                if (entry && entry.safeMarker) {
+                  shardMap.set(entry.safeMarker, entry.html || '');
+                }
+              });
+              return shardMap;
+            });
+          reasoningShardCache.set(shard, shardPromise);
+        }
+        return reasoningShardCache.get(shard);
+      }
+
+      function loadReasoningHtml(marker) {
+        return loadReasoningManifest()
+          .then((markerMap) => loadReasoningShard(markerMap.get(marker)))
+          .then((shardMap) => shardMap.get(marker) || '');
+      }
+
+      function getGroupMarker(group) {
+        return group ? group.dataset.marker || '' : '';
+      }
+
+      function extractTermDefsFromReasoningHtml(html) {
+        if (!html) {
+          return [];
+        }
+        const container = document.createElement('div');
+        container.innerHTML = html;
+        const byKey = new Map();
+        container.querySelectorAll('.reasoning-term-item[data-term-key]').forEach((item) => {
+          const termKey = item.dataset.termKey || '';
+          const termElement = item.querySelector('.reasoning-term-text');
+          const term = (termElement ? termElement.textContent : (item.textContent || '').split(' - ')[0]).trim();
+          if (termKey && term && !byKey.has(termKey)) {
+            byKey.set(termKey, {
+              termKey,
+              term,
+            });
+          }
+        });
+        return Array.from(byKey.values()).sort((a, b) => b.term.length - a.term.length);
+      }
+
+      function findTermMatchesInText(text, termDefs) {
+        const matches = [];
+        for (const termDef of termDefs) {
+          if (!termDef || !termDef.term) {
+            continue;
+          }
+          let startIndex = 0;
+          while (startIndex < text.length) {
+            const foundAt = text.indexOf(termDef.term, startIndex);
+            if (foundAt === -1) {
+              break;
+            }
+            matches.push({
+              start: foundAt,
+              end: foundAt + termDef.term.length,
+              termKey: termDef.termKey,
+            });
+            startIndex = foundAt + termDef.term.length;
+          }
+        }
+        matches.sort((a, b) => {
+          if (a.start !== b.start) {
+            return a.start - b.start;
+          }
+          return (b.end - b.start) - (a.end - a.start);
+        });
+        const chosen = [];
+        let lastEnd = -1;
+        matches.forEach((match) => {
+          if (match.start < lastEnd) {
+            return;
+          }
+          chosen.push(match);
+          lastEnd = match.end;
+        });
+        return chosen;
+      }
+
+      function shouldSkipTermHighlightNode(node) {
+        const parent = node && node.parentElement;
+        if (!parent) {
+          return true;
+        }
+        return !!parent.closest('script, style, button, a, .term-match, .chunk-marker-column, .interlaced-reasoning-panel');
+      }
+
+      function highlightTermsInElement(root, termDefs) {
+        if (!root || !termDefs.length) {
+          return;
+        }
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode(node) {
+            if (shouldSkipTermHighlightNode(node) || !node.nodeValue || !node.nodeValue.trim()) {
+              return NodeFilter.FILTER_REJECT;
+            }
+            return findTermMatchesInText(node.nodeValue, termDefs).length
+              ? NodeFilter.FILTER_ACCEPT
+              : NodeFilter.FILTER_SKIP;
+          },
+        });
+        const textNodes = [];
+        while (walker.nextNode()) {
+          textNodes.push(walker.currentNode);
+        }
+        textNodes.forEach((node) => {
+          const matches = findTermMatchesInText(node.nodeValue || '', termDefs);
+          if (!matches.length) {
+            return;
+          }
+          const fragment = document.createDocumentFragment();
+          const text = node.nodeValue || '';
+          let cursor = 0;
+          matches.forEach((match) => {
+            if (match.start > cursor) {
+              fragment.appendChild(document.createTextNode(text.slice(cursor, match.start)));
+            }
+            const span = document.createElement('span');
+            span.className = 'term-match';
+            span.dataset.termKey = match.termKey;
+            span.tabIndex = 0;
+            span.setAttribute('role', 'button');
+            span.setAttribute('aria-pressed', 'false');
+            span.textContent = text.slice(match.start, match.end);
+            fragment.appendChild(span);
+            cursor = match.end;
+          });
+          if (cursor < text.length) {
+            fragment.appendChild(document.createTextNode(text.slice(cursor)));
+          }
+          if (node.parentNode) {
+            node.parentNode.replaceChild(fragment, node);
+          }
+        });
+        root.querySelectorAll('.term-match[data-term-key]').forEach(bindTermSelection);
+      }
+
+      function highlightTermsForGroup(group) {
+        if (!group || group.dataset.termsHighlighted === 'true' || group.dataset.termsHighlighting === 'true') {
+          return;
+        }
+        const marker = getGroupMarker(group);
+        const originalRoot = group.querySelector('.interlaced-block.original .chunk-text-column')
+          || group.querySelector('.interlaced-block.original .interlaced-content');
+        if (!marker || !originalRoot) {
+          return;
+        }
+        group.dataset.termsHighlighting = 'true';
+        loadReasoningHtml(marker)
+          .then((html) => {
+            const termDefs = extractTermDefsFromReasoningHtml(html);
+            highlightTermsInElement(originalRoot, termDefs);
+            group.dataset.termsHighlighted = 'true';
+          })
+          .catch(() => {
+            delete group.dataset.termsHighlighted;
+          })
+          .finally(() => {
+            delete group.dataset.termsHighlighting;
+          });
+      }
+
+      function setupLazyTermHighlighting() {
+        const groups = Array.from(document.querySelectorAll('.interlaced-group[data-marker]'))
+          .filter((group) => group.querySelector('.reasoning-trigger-inline'));
+        if (!groups.length) {
+          return;
+        }
+        groups.forEach((group) => {
+          group.addEventListener('mouseenter', () => highlightTermsForGroup(group), { once: true });
+          group.addEventListener('focusin', () => highlightTermsForGroup(group), { once: true });
+        });
+        if (!('IntersectionObserver' in window)) {
+          groups.slice(0, 30).forEach(highlightTermsForGroup);
+          return;
+        }
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+            observer.unobserve(entry.target);
+            highlightTermsForGroup(entry.target);
+          });
+        }, {
+          rootMargin: '700px 0px',
+        });
+        groups.forEach((group) => observer.observe(group));
+      }
+
+      function ensureReasoningLoaded(group) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !reasoningElements || !reasoningElements.fullCard) {
+          return Promise.resolve(false);
+        }
+        const content = reasoningElements.fullCard.querySelector('[data-reasoning-content]');
+        if (!content) {
+          return Promise.resolve(false);
+        }
+        if (content.dataset.loaded === 'true') {
+          return Promise.resolve(true);
+        }
+        const marker = group.dataset.marker || content.dataset.marker || '';
+        content.innerHTML = '<p class="interlaced-empty">Loading explanation...</p>';
+        return loadReasoningHtml(marker)
+          .then((html) => {
+            content.innerHTML = html || '<p class="interlaced-empty">Explanation not available.</p>';
+            content.dataset.loaded = 'true';
+            content.querySelectorAll('.reasoning-term-item[data-term-key]').forEach(bindTermSelection);
+            if (group.dataset.activeTermKey) {
+              setActiveTerm(group, group.dataset.activeTermKey);
+            }
+            return true;
+          })
+          .catch(() => {
+            content.innerHTML = '<p class="interlaced-empty">Explanation could not be loaded.</p>';
+            content.dataset.loaded = 'true';
+            return false;
+          });
+      }
+
+      function setActiveTerm(group, termKey) {
+        if (!group) {
+          return;
+        }
+        group.querySelectorAll('.term-match[data-term-key], .reasoning-term-item[data-term-key]').forEach((element) => {
+          const isActive = !!termKey && element.dataset.termKey === termKey;
+          element.classList.toggle('is-active', isActive);
+          element.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      }
+
+      function getReasoningElements(group) {
+        if (!group) {
+          return null;
+        }
+        return {
+          panel: group.querySelector('.interlaced-reasoning-panel'),
+          previewCard: group.querySelector('.interlaced-reasoning-preview'),
+          previewContent: group.querySelector('.interlaced-reasoning-preview-content'),
+          fullCard: group.querySelector('.interlaced-reasoning-full'),
+          button: group.querySelector('.reasoning-trigger-inline'),
+        };
+      }
+
+      function setReasoningButtonState(button, isFullOpen) {
+        if (!button) {
+          return;
+        }
+        const buttonText = isFullOpen ? openExplanationLabel : closedExplanationLabel;
+        const markerLabel = button.dataset.marker ? ' [' + button.dataset.marker + ']' : '';
+        button.textContent = buttonText;
+        button.setAttribute('aria-expanded', isFullOpen ? 'true' : 'false');
+        button.setAttribute('aria-label', buttonText + markerLabel);
+        button.setAttribute('title', buttonText + markerLabel);
+      }
+
+      function buildReasoningPreview(group, termKey) {
+        const reasoningElements = getReasoningElements(group);
+        if (!reasoningElements || !reasoningElements.previewContent) {
+          return false;
+        }
+        const matchingItems = Array.from(
+          group.querySelectorAll('.interlaced-reasoning-full .reasoning-term-item[data-term-key]')
+        ).filter((item) => item.dataset.termKey === termKey);
+
+        reasoningElements.previewContent.innerHTML = '';
+        if (!matchingItems.length) {
+          return false;
+        }
+
+        const sectionMap = new Map();
+        matchingItems.forEach((item) => {
+          const section = item.closest('.reasoning-section');
+          const sectionKey = section || item;
+          let list = sectionMap.get(sectionKey);
+
+          if (!list) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'reasoning-preview-section';
+
+            const category = document.createElement('p');
+            category.className = 'reasoning-preview-category';
+            const title = section && section.querySelector('.reasoning-section-title');
+            category.textContent = title ? title.textContent.trim() : 'Explanation';
+
+            list = document.createElement('ul');
+            list.className = 'reasoning-preview-list';
+
+            wrapper.appendChild(category);
+            wrapper.appendChild(list);
+            reasoningElements.previewContent.appendChild(wrapper);
+            sectionMap.set(sectionKey, list);
+          }
+
+          const clone = item.cloneNode(true);
+          clone.classList.remove('reasoning-term-item');
+          clone.classList.add('reasoning-preview-item', 'is-active');
+          clone.removeAttribute('data-term-key');
+          clone.removeAttribute('tabindex');
+          clone.removeAttribute('role');
+          clone.removeAttribute('aria-pressed');
+          list.appendChild(clone);
+        });
+
+        return true;
+      }
+
+      function openReasoningPreview(group, termKey) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !termKey || !reasoningElements || !reasoningElements.panel) {
+          return;
+        }
+        if (!buildReasoningPreview(group, termKey)) {
+          openReasoningFull(group);
+          return;
+        }
+        reasoningElements.panel.hidden = false;
+        if (reasoningElements.previewCard) {
+          reasoningElements.previewCard.hidden = false;
+        }
+        if (reasoningElements.fullCard) {
+          reasoningElements.fullCard.hidden = true;
+        }
+        setReasoningButtonState(reasoningElements.button, false);
+      }
+
+      function openReasoningFull(group) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !reasoningElements || !reasoningElements.panel || !reasoningElements.fullCard) {
+          return;
+        }
+        reasoningElements.panel.hidden = false;
+        reasoningElements.fullCard.hidden = false;
+        if (reasoningElements.previewCard) {
+          reasoningElements.previewCard.hidden = true;
+        }
+        setReasoningButtonState(reasoningElements.button, true);
+        ensureReasoningLoaded(group);
+      }
+
+      function closeReasoning(group) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !reasoningElements) {
+          return;
+        }
+        if (reasoningElements.panel) {
+          reasoningElements.panel.hidden = true;
+        }
+        if (reasoningElements.previewCard) {
+          reasoningElements.previewCard.hidden = true;
+        }
+        if (reasoningElements.fullCard) {
+          reasoningElements.fullCard.hidden = true;
+        }
+        if (reasoningElements.previewContent) {
+          reasoningElements.previewContent.innerHTML = '';
+        }
+        setReasoningButtonState(reasoningElements.button, false);
+        delete group.dataset.activeTermKey;
+        setActiveTerm(group, '');
+      }
+
+      function closeAllReasoning() {
+        document.querySelectorAll('.interlaced-group').forEach((group) => {
+          closeReasoning(group);
+        });
+      }
+
+      function updateLanguageToggleButtons() {
+        const englishHidden = document.body.classList.contains('hide-english');
+        const chineseHidden = document.body.classList.contains('hide-chinese');
+        if (toggleEnglishButton) {
+          toggleEnglishButton.textContent = 'Hide English';
+          toggleEnglishButton.setAttribute('aria-pressed', englishHidden ? 'true' : 'false');
+        }
+        if (toggleChineseButton) {
+          toggleChineseButton.textContent = 'Hide Chinese';
+          toggleChineseButton.setAttribute('aria-pressed', chineseHidden ? 'true' : 'false');
+        }
+      }
+
+      function activateTermAssociation(group, termKey, options = {}) {
+        if (!group || !termKey) {
+          return;
+        }
+        const { openFull = false } = options;
+        const reasoningElements = getReasoningElements(group);
+        if (!reasoningElements) {
+          return;
+        }
+        group.dataset.activeTermKey = termKey;
+        setActiveTerm(group, termKey);
+        if (openFull) {
+          openReasoningFull(group);
+          return;
+        }
+        if (reasoningElements.fullCard && !reasoningElements.fullCard.hidden) {
+          return;
+        }
+        openReasoningPreview(group, termKey);
+      }
+
+      function bindTermSelection(element) {
+        if (!element) {
+          return;
+        }
+        if (element.dataset.termBound === 'true') {
+          return;
+        }
+        element.dataset.termBound = 'true';
+        const activate = () => {
+          const group = element.closest('.interlaced-group');
+          if (!group) {
+            return;
+          }
+          activateTermAssociation(group, element.dataset.termKey || '', {
+            openFull: false,
+          });
+        };
+        element.addEventListener('click', activate);
+        element.addEventListener('keydown', (event) => {
+          if (event.key !== 'Enter' && event.key !== ' ') {
+            return;
+          }
+          event.preventDefault();
+          activate();
+        });
+      }
+
+      inlineReasoningButtons.forEach((button) => {
+        setReasoningButtonState(button, false);
+        button.addEventListener('click', () => {
+          const group = button.closest('.interlaced-group');
+          const reasoningElements = getReasoningElements(group);
+          if (!group || !reasoningElements || !reasoningElements.fullCard) {
+            return;
+          }
+          const isFullOpen = !reasoningElements.fullCard.hidden;
+          if (isFullOpen) {
+            closeReasoning(group);
+            return;
+          }
+          openReasoningFull(group);
+        });
+      });
+
+      document.querySelectorAll('.reasoning-preview-more').forEach((button) => {
+        button.addEventListener('click', () => {
+          const group = button.closest('.interlaced-group');
+          if (!group) {
+            return;
+          }
+          openReasoningFull(group);
+        });
+      });
+
+      document.querySelectorAll('.term-match[data-term-key]').forEach(bindTermSelection);
+      document.querySelectorAll('.reasoning-term-item[data-term-key]').forEach(bindTermSelection);
+      setupLazyTermHighlighting();
+
+      if (toggleEnglishButton) {
+        toggleEnglishButton.addEventListener('click', () => {
+          const willHideEnglish = !document.body.classList.contains('hide-english');
+          if (willHideEnglish) {
+            document.body.classList.remove('hide-chinese');
+          }
+          document.body.classList.toggle('hide-english', willHideEnglish);
+          closeAllReasoning();
+          updateLanguageToggleButtons();
+        });
+      }
+
+      if (toggleChineseButton) {
+        toggleChineseButton.addEventListener('click', () => {
+          const willHideChinese = !document.body.classList.contains('hide-chinese');
+          if (willHideChinese) {
+            document.body.classList.remove('hide-english');
+          }
+          document.body.classList.toggle('hide-chinese', willHideChinese);
+          closeAllReasoning();
+          updateLanguageToggleButtons();
+        });
+      }
+
+      updateLanguageToggleButtons();
+
+      // Document-level search (mirrors index search experience)
+      if (docSearchContainer && docSearchInput && docSearchList && docSearchResults) {
+        function normalizeSearchText(text) {
+          return String(text || '')
+            .normalize('NFKC')
+            .toLowerCase()
+            .replace(/s+/g, ' ')
+            .trim();
+        }
+
+        function getSearchQueryFromUrl() {
+          try {
+            return new URLSearchParams(window.location.search).get('q') || '';
+          } catch (error) {
+            return '';
+          }
+        }
+
+        function removeSearchHighlights() {
+          document.querySelectorAll('.search-hit').forEach((hit) => {
+            const parent = hit.parentNode;
+            if (!parent) {
+              return;
+            }
+            parent.replaceChild(document.createTextNode(hit.textContent || ''), hit);
+            parent.normalize();
+          });
+          document.querySelectorAll('.search-focused-block').forEach((element) => {
+            element.classList.remove('search-focused-block');
+          });
+        }
+
+        function buildHighlightRegex(query) {
+          const parts = String(query || '').trim().split(/s+/).filter(Boolean);
+          if (!parts.length) {
+            return null;
+          }
+          const escaped = parts.map((part) => part.replace(/[-/\^$*+?.()|[]{}]/g, '\$&'));
+          return new RegExp(escaped.join('\s+'), 'gi');
+        }
+
+        function shouldSkipSearchHighlightNode(node) {
+          const parent = node && node.parentElement;
+          if (!parent) {
+            return true;
+          }
+          return !!parent.closest('script, style, mark, .search-hit, button');
+        }
+
+        function highlightSearchInElement(root, query) {
+          const regex = buildHighlightRegex(query);
+          if (!root || !regex) {
+            return [];
+          }
+          const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+            acceptNode(node) {
+              if (shouldSkipSearchHighlightNode(node) || !node.nodeValue || !node.nodeValue.trim()) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              regex.lastIndex = 0;
+              return regex.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+            },
+          });
+          const textNodes = [];
+          while (walker.nextNode()) {
+            textNodes.push(walker.currentNode);
+          }
+          const highlights = [];
+          textNodes.forEach((node) => {
+            const fragment = document.createDocumentFragment();
+            const text = node.nodeValue || '';
+            let cursor = 0;
+            regex.lastIndex = 0;
+            let match;
+            while ((match = regex.exec(text)) !== null) {
+              if (match.index > cursor) {
+                fragment.appendChild(document.createTextNode(text.slice(cursor, match.index)));
+              }
+              const hit = document.createElement('mark');
+              hit.className = 'search-hit';
+              hit.textContent = match[0];
+              fragment.appendChild(hit);
+              highlights.push(hit);
+              cursor = match.index + match[0].length;
+              if (match[0].length === 0) {
+                regex.lastIndex += 1;
+              }
+            }
+            if (cursor < text.length) {
+              fragment.appendChild(document.createTextNode(text.slice(cursor)));
+            }
+            if (node.parentNode) {
+              node.parentNode.replaceChild(fragment, node);
+            }
+          });
+          return highlights;
+        }
+
+        function applySearchHighlight(anchor, query, options = {}) {
+          const { scroll = false } = options;
+          removeSearchHighlights();
+          const normalizedQuery = normalizeSearchText(query);
+          if (!anchor || !normalizedQuery) {
+            return;
+          }
+          const target = document.getElementById(anchor);
+          if (!target) {
+            return;
+          }
+          const block = target.closest('.interlaced-block') || target.closest('.interlaced-group') || target;
+          const documentRoot = document.querySelector('.interlaced-container') || document.body;
+          block.classList.add('search-focused-block');
+          const highlights = highlightSearchInElement(documentRoot, query);
+          const currentHighlight = highlights.find((hit) => block.contains(hit)) || highlights[0];
+          if (currentHighlight) {
+            currentHighlight.classList.add('is-current');
+          }
+          if (scroll) {
+            const scrollTarget = currentHighlight || block;
+            if (scrollTarget && typeof scrollTarget.scrollIntoView === 'function') {
+              scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+            }
+          }
+        }
+
+        const MAX_INITIAL_RESULTS = 6;
+        let normalizedDocSearchData = null;
+        let docSearchLoadPromise = null;
+        let docSearchRunId = 0;
+        let currentMatches = [];
+        let showingAll = false;
+        let currentQuery = '';
+
+        function getBlockAnchor(block) {
+          const anchor = block && block.querySelector('.chunk-anchor[id]');
+          return anchor ? anchor.id : '';
+        }
+
+        function getBlockMarker(block) {
+          const group = block && block.closest('.interlaced-group');
+          if (group && group.dataset.marker) {
+            return group.dataset.marker;
+          }
+          const marker = block && block.querySelector('.marker-trailing');
+          return marker ? marker.textContent.trim() : '';
+        }
+
+        function buildDocSearchEntriesFromPage() {
+          const blocks = Array.from(
+            document.querySelectorAll('.interlaced-block.original, .interlaced-block.translation')
+          );
+          return blocks
+            .map((block) => {
+              const anchor = getBlockAnchor(block);
+              const text = block.textContent.replace(/s+/g, ' ').trim();
+              if (!anchor || !text) {
+                return null;
+              }
+              const type = block.classList.contains('original') ? 'original' : 'translation';
+              return {
+                anchor,
+                marker: getBlockMarker(block),
+                type,
+                text,
+              };
+            })
+            .filter(Boolean);
+        }
+
+        function normalizeDocSearchEntries(entries) {
+          return entries
+            .filter((entry) => entry && entry.anchor && entry.text)
+            .map((entry) => ({
+              entry,
+              textSearch: normalizeSearchText(entry.text || ''),
+              markerSearch: normalizeSearchText(entry.marker || ''),
+              typeSearch: normalizeSearchText(entry.type || ''),
+            }));
+        }
+
+        function loadDocSearchData() {
+          if (normalizedDocSearchData) {
+            return Promise.resolve(normalizedDocSearchData);
+          }
+          if (!docSearchLoadPromise) {
+            docSearchLoadPromise = new Promise((resolve) => {
+              window.setTimeout(() => {
+                normalizedDocSearchData = normalizeDocSearchEntries(buildDocSearchEntriesFromPage());
+                resolve(normalizedDocSearchData);
+              }, 0);
+            });
+          }
+          return docSearchLoadPromise;
+        }
+
+        function updateDocSearchCount(count) {
+          if (!docSearchCount) {
+            return;
+          }
+          docSearchCount.textContent = count === 1 ? '1 result' : count + ' results';
+          docSearchCount.hidden = false;
+        }
+
+        function resetSearchResults() {
+          docSearchResults.classList.remove('has-results');
+          docSearchList.innerHTML = '';
+          docSearchResults.style.display = 'none';
+          if (docSearchCount) {
+            docSearchCount.hidden = true;
+            docSearchCount.textContent = '';
+          }
+          if (docSearchMoreButton) {
+            docSearchMoreButton.classList.remove('visible');
+            docSearchMoreButton.setAttribute('aria-expanded', 'false');
+          }
+        }
+
+        function escapeRegex(text) {
+          return text.replace(/[-/\^$*+?.()|[]{}]/g, '\$&');
+        }
+
+        function countOccurrences(haystack, needle) {
+          if (!needle || !haystack) {
+            return 0;
+          }
+          let count = 0;
+          let index = haystack.indexOf(needle);
+          while (index !== -1) {
+            count += 1;
+            index = haystack.indexOf(needle, index + needle.length);
+          }
+          return count;
+        }
+
+        function buildSnippet(text, query) {
+          if (!text) {
+            return 'No preview available.';
+          }
+          const lower = text.toLowerCase();
+          const needle = String(query || '').trim().toLowerCase();
+          const foundAt = needle ? lower.indexOf(needle) : -1;
+          const matchIndex = foundAt === -1 ? 0 : foundAt;
+          const matchLength = foundAt === -1 ? 0 : needle.length;
+          const radius = 70;
+          const start = Math.max(0, matchIndex - radius);
+          const end = Math.min(text.length, matchIndex + matchLength + radius);
+          let snippet = text.slice(start, end);
+          if (start > 0) {
+            snippet = '...' + snippet;
+          }
+          if (end < text.length) {
+            snippet = snippet + '...';
+          }
+          let highlighted = snippet;
+          if (needle) {
+            const regex = new RegExp(escapeRegex(needle), 'gi');
+            highlighted = highlighted.replace(regex, (matchValue) => '<mark>' + matchValue + '</mark>');
+          }
+          return highlighted;
+        }
+
+        function renderResults() {
+          docSearchResults.style.display = 'block';
+          docSearchList.innerHTML = '';
+          updateDocSearchCount(currentMatches.length);
+          if (!currentMatches.length) {
+            docSearchResults.classList.remove('has-results');
+            if (docSearchMoreButton) {
+              docSearchMoreButton.classList.remove('visible');
+              docSearchMoreButton.setAttribute('aria-expanded', 'false');
+            }
+            return;
+          }
+          docSearchResults.classList.add('has-results');
+          docSearchList.innerHTML = '';
+          const visibleCount = showingAll
+            ? currentMatches.length
+            : Math.min(MAX_INITIAL_RESULTS, currentMatches.length);
+          const fragment = document.createDocumentFragment();
+          for (let i = 0; i < visibleCount; i += 1) {
+            const { entry } = currentMatches[i];
+            const item = document.createElement('li');
+            item.className = 'doc-search-result';
+            const link = document.createElement('a');
+            link.href = '#' + entry.anchor;
+            link.textContent = entry.marker ? '[' + entry.marker + '] ' + entry.type : entry.type;
+            link.addEventListener('click', (event) => {
+              event.preventDefault();
+              applySearchHighlight(entry.anchor, currentQuery, { scroll: true });
+              if (window.history && typeof window.history.replaceState === 'function') {
+                const url = new URL(window.location.href);
+                if (currentQuery) {
+                  url.searchParams.set('q', currentQuery);
+                } else {
+                  url.searchParams.delete('q');
+                }
+                url.hash = entry.anchor;
+                window.history.replaceState(null, '', url);
+              }
+              resetSearchResults();
+              docSearchInput.blur();
+            });
+            const meta = document.createElement('p');
+            meta.className = 'doc-search-meta';
+            const markerLabel = entry.marker ? '[' + entry.marker + '] ' : '';
+            const typeLabel = entry.type === 'original' ? 'Original text' : 'Translation';
+            meta.textContent = markerLabel + typeLabel;
+            const snippet = document.createElement('p');
+            snippet.className = 'doc-search-snippet';
+            snippet.innerHTML = buildSnippet(entry.text || '', currentQuery);
+            item.appendChild(link);
+            item.appendChild(meta);
+            item.appendChild(snippet);
+            fragment.appendChild(item);
+          }
+          docSearchList.appendChild(fragment);
+          if (docSearchMoreButton) {
+            if (currentMatches.length > MAX_INITIAL_RESULTS) {
+              docSearchMoreButton.classList.add('visible');
+              docSearchMoreButton.textContent = showingAll ? 'Show fewer results' : 'See more results';
+              docSearchMoreButton.setAttribute('aria-expanded', showingAll ? 'true' : 'false');
+            } else {
+              docSearchMoreButton.classList.remove('visible');
+              docSearchMoreButton.setAttribute('aria-expanded', 'false');
+            }
+          }
+        }
+
+        function setDocSearchMessage(message) {
+          docSearchResults.style.display = 'block';
+          docSearchResults.classList.remove('has-results');
+          docSearchList.innerHTML = '';
+          if (docSearchCount) {
+            docSearchCount.textContent = message;
+            docSearchCount.hidden = false;
+          }
+          if (docSearchMoreButton) {
+            docSearchMoreButton.classList.remove('visible');
+            docSearchMoreButton.setAttribute('aria-expanded', 'false');
+          }
+        }
+
+        function runDocSearch(normalized, query) {
+          return normalized
+            .map((item) => {
+              const textMatch = item.textSearch.includes(query);
+              const markerMatch = item.markerSearch === query;
+              const typeMatch = item.typeSearch === query;
+              if (!textMatch && !markerMatch && !typeMatch) {
+                return null;
+              }
+              let score = 0;
+              score += countOccurrences(item.textSearch, query) * 20;
+              if (markerMatch) {
+                score += 12;
+              }
+              if (typeMatch) {
+                score += 6;
+              }
+              if (item.textSearch.startsWith(query)) {
+                score += 4;
+              }
+              return { entry: item.entry, score };
+            })
+            .filter(Boolean)
+            .sort((a, b) => b.score - a.score);
+        }
+
+        function handleSearch() {
+          const rawQuery = docSearchInput.value.trim();
+          const query = normalizeSearchText(rawQuery);
+          docSearchRunId += 1;
+          const runId = docSearchRunId;
+          if (!query) {
+            currentMatches = [];
+            currentQuery = '';
+            showingAll = false;
+            resetSearchResults();
+            return;
+          }
+          currentQuery = rawQuery;
+          showingAll = false;
+          setDocSearchMessage('Preparing document search...');
+          loadDocSearchData()
+            .then((normalized) => {
+              if (runId !== docSearchRunId) {
+                return;
+              }
+              currentMatches = runDocSearch(normalized, query);
+              renderResults();
+            })
+            .catch(() => {
+              if (runId !== docSearchRunId) {
+                return;
+              }
+              currentMatches = [];
+              setDocSearchMessage('Document search could not be prepared.');
+            });
+        }
+
+        if (docSearchMoreButton) {
+          docSearchMoreButton.addEventListener('click', () => {
+            if (!currentMatches.length) {
+              return;
+            }
+            showingAll = !showingAll;
+            renderResults();
+          });
+        }
+        docSearchInput.addEventListener('input', handleSearch);
+        const initialQuery = getSearchQueryFromUrl();
+        const initialAnchor = window.location.hash ? decodeURIComponent(window.location.hash.slice(1)) : '';
+        if (initialQuery) {
+          docSearchInput.value = initialQuery;
+          currentQuery = initialQuery;
+          if (initialAnchor) {
+            window.setTimeout(() => {
+              applySearchHighlight(initialAnchor, initialQuery, { scroll: true });
+            }, 0);
+          }
+        }
+        resetSearchResults();
+      }
+    })();
+  </script>
+</body>
+</html>

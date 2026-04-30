@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>续异记 - Continuation of Records of Marvels</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 1rem;
+      line-height: 1.6;
+    }
+    a.marker {
+      color: #0077cc;
+      text-decoration: underline;
+      cursor: pointer;
+      scroll-margin-top: 5.5rem;
+    }
+    .marker-text {
+      color: #0077cc;
+      font-weight: 600;
+    }
+    .reasoning-trigger {
+      display: inline;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: #0077cc;
+      cursor: pointer;
+      font-size: 0.8rem;
+      line-height: 1.2;
+      vertical-align: baseline;
+      text-decoration: underline;
+    }
+    .interlaced-reasoning-trigger-row {
+      margin-top: -0.2rem;
+      margin-left: 3.55rem;
+    }
+    .interlaced-reasoning-trigger-row .reasoning-trigger {
+      font-size: 0.9rem;
+    }
+    .chunk-anchor {
+      display: block;
+      height: 0;
+      overflow: hidden;
+      scroll-margin-top: 5.5rem;
+    }
+    .chunk-layout {
+      display: grid;
+      grid-template-columns: minmax(2.8rem, max-content) minmax(0, 1fr);
+      column-gap: 0.75rem;
+      align-items: center;
+    }
+    .chunk-marker-column {
+      line-height: 1.6;
+      text-align: right;
+      white-space: nowrap;
+      align-self: center;
+    }
+    .chunk-text-column {
+      min-width: 0;
+    }
+    .chunk-text-column > :first-child {
+      margin-top: 0;
+    }
+    .chunk-text-column > :last-child {
+      margin-bottom: 0;
+    }
+    .marker-trailing {
+      margin-left: 0.3rem;
+      white-space: nowrap;
+    }
+    .chunk-marker-column .marker-trailing {
+      margin-left: 0;
+      color: #9aa3af;
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .chunk-marker-column .marker-trailing:hover {
+      color: #6b7280;
+      text-decoration: underline;
+    }
+    .reasoning-trigger:hover {
+      color: #005c99;
+    }
+    .reasoning-trigger:focus-visible,
+    .term-match:focus-visible,
+    .reasoning-term-item:focus-visible,
+    .view-toggle-button:focus-visible,
+    .reasoning-preview-more:focus-visible,
+    .return-link:focus-visible {
+      outline: 2px solid #0077cc;
+      outline-offset: 2px;
+    }
+    .section {
+      margin-bottom: 2rem;
+    }
+    .section h3 {
+      margin-top: 0;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.25rem;
+    }
+    .doc-header {
+      font-style: italic;
+      color: #444;
+      margin: 0.75rem 0 1.25rem;
+    }
+    .page-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      justify-content: space-between;
+      margin: 0 0 1.5rem;
+      padding: 0.85rem 0;
+      background: #fff;
+      border-bottom: 1px solid #dbe1ec;
+    }
+    .doc-search {
+      position: relative;
+      flex: 1 1 420px;
+      max-width: 520px;
+    }
+    .doc-search-input {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #b7c0d0;
+      box-sizing: border-box;
+    }
+    .doc-search-results {
+      position: absolute;
+      top: calc(100% + 0.45rem);
+      left: 0;
+      right: 0;
+      display: none;
+      border: 1px solid #dbe1ec;
+      border-radius: 8px;
+      padding: 0.25rem 1rem 1rem;
+      background: #fff;
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+      max-height: min(60vh, 32rem);
+      overflow-y: auto;
+    }
+    .doc-search-results-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .doc-search-count {
+      margin: 0.5rem 0 0.4rem;
+      font-size: 0.85rem;
+      color: #5e6673;
+    }
+    .doc-search-results.has-results .doc-search-results-list {
+      display: block;
+    }
+    .doc-search-results.has-results {
+      display: block;
+    }
+    .doc-search-result {
+      border-top: 1px solid #dfe3eb;
+      padding: 0.85rem 0;
+    }
+    .doc-search-result:first-child {
+      border-top: none;
+    }
+    .doc-search-result a {
+      color: #005c99;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .doc-search-result a:hover {
+      text-decoration: underline;
+    }
+    .doc-search-snippet {
+      margin: 0.35rem 0 0;
+      font-size: 0.95rem;
+      color: #353c48;
+    }
+    .doc-search-meta {
+      margin: 0.2rem 0 0;
+      font-size: 0.85rem;
+      color: #5e6673;
+    }
+    .doc-search-more-button {
+      margin-top: 0.75rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 4px;
+      border: 1px solid #0077cc;
+      background: #fff;
+      color: #0077cc;
+      cursor: pointer;
+      font-size: 0.95rem;
+      display: none;
+    }
+    .doc-search-more-button.visible {
+      display: inline-block;
+    }
+    .return-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid #0077cc;
+      background: #fff;
+      color: #0077cc;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      transition: all 0.15s ease-in-out;
+    }
+    .return-link:hover {
+      background: rgba(0, 119, 204, 0.08);
+    }
+    .return-link {
+      text-decoration: none;
+      font-weight: 600;
+      flex: 0 0 auto;
+    }
+    .page-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 0 0 auto;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .page-actions > * {
+      min-width: 7.5rem;
+      box-sizing: border-box;
+    }
+    .view-toggle-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid #0077cc;
+      background: #fff;
+      color: #0077cc;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+    }
+    .view-toggle-button:hover {
+      background: rgba(0, 119, 204, 0.08);
+    }
+    .view-toggle-button[aria-pressed="true"] {
+      background: #0077cc;
+      color: #fff;
+    }
+    .view-toggle-button[aria-pressed="true"]:hover {
+      background: #005c99;
+    }
+    .interlaced-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.95rem;
+      overflow-anchor: none;
+    }
+    .interlaced-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .interlaced-block {
+      margin: 0;
+    }
+    .interlaced-reasoning-panel[hidden] {
+      display: none;
+    }
+    .interlaced-reasoning-panel {
+      position: relative;
+      left: 50%;
+      width: 100vw;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      background: #f8fafc;
+    }
+    .interlaced-reasoning-card {
+      border: none;
+      border-radius: 0;
+      padding: 1rem;
+      background: transparent;
+      box-sizing: border-box;
+    }
+    .interlaced-reasoning-preview[hidden],
+    .interlaced-reasoning-full[hidden] {
+      display: none;
+    }
+    .interlaced-reasoning-title {
+      margin: 0 0 0.55rem;
+      font-weight: 600;
+      color: #334155;
+    }
+    .interlaced-reasoning-preview-content {
+      margin-bottom: 0.75rem;
+    }
+    .interlaced-label {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .marker-code {
+      font-weight: 400;
+      color: #666;
+      margin-left: 0.35rem;
+    }
+    .term-match {
+      border-radius: 0.2rem;
+      cursor: pointer;
+      transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    }
+    .interlaced-group .term-match {
+      background: rgba(148, 163, 184, 0.35);
+    }
+    .interlaced-group .term-match:hover {
+      background: rgba(148, 163, 184, 0.55);
+    }
+    .term-match.is-active {
+      background: rgba(59, 130, 246, 0.35) !important;
+      color: #1d4ed8;
+    }
+    .search-hit {
+      background: #fff176;
+      color: inherit;
+      border-radius: 0.15rem;
+      padding: 0 0.08rem;
+      box-shadow: 0 0 0 1px rgba(202, 138, 4, 0.18);
+    }
+    .search-hit.is-current {
+      background: #ffd54f;
+      box-shadow: 0 0 0 2px rgba(202, 138, 4, 0.32);
+    }
+    .search-focused-block {
+      scroll-margin-top: 5.5rem;
+    }
+    .reasoning-term-item[data-term-key] {
+      border-radius: 0.35rem;
+      cursor: pointer;
+      padding: 0.1rem 0.25rem;
+      transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    }
+    .reasoning-section + .reasoning-section,
+    .reasoning-preview-section + .reasoning-preview-section {
+      margin-top: 0.85rem;
+    }
+    .reasoning-section-title,
+    .reasoning-preview-category {
+      margin: 0 0 0.35rem;
+    }
+    .reasoning-section-list,
+    .reasoning-preview-list {
+      margin: 0;
+      padding-left: 1.25rem;
+    }
+    .reasoning-preview-item {
+      padding: 0.1rem 0;
+    }
+    .reasoning-preview-more {
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: #0077cc;
+      cursor: pointer;
+      font-size: 0.92rem;
+      text-decoration: underline;
+    }
+    .reasoning-preview-more:hover {
+      color: #005c99;
+    }
+    .reasoning-term-item.is-active,
+    .reasoning-preview-item.is-active {
+      background: rgba(59, 130, 246, 0.14);
+      color: #1d4ed8;
+    }
+    .interlaced-content {
+      margin: 0;
+    }
+    .interlaced-empty {
+      color: #666;
+      font-style: italic;
+      margin: 0.5rem 0;
+    }
+    body.hide-english .interlaced-block.translation {
+      display: none !important;
+    }
+    body.hide-chinese .interlaced-block.original,
+    body.hide-chinese .interlaced-reasoning-trigger-row {
+      display: none !important;
+    }
+    @media (max-width: 600px) {
+      .page-toolbar {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+      .page-actions {
+        width: 100%;
+      }
+      .view-toggle-button,
+      .return-link {
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .doc-search {
+        max-width: none;
+      }
+      .chunk-layout {
+        grid-template-columns: minmax(2.35rem, max-content) minmax(0, 1fr);
+        column-gap: 0.55rem;
+      }
+      .interlaced-reasoning-trigger-row {
+        margin-left: 2.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>续异记 - Continuation of Records of Marvels</h1>
+  <p class="doc-header">Translation created with model: qwen3-14b-nothink-sbs-3step / step-by-step-3step-fewshot</p>
+
+  <div class="page-toolbar">
+    <div class="doc-search" id="doc-search">
+      <input
+        type="search"
+        id="doc-search-input"
+        class="doc-search-input"
+        placeholder="Search"
+        autocomplete="off"
+        aria-label="Search within this document"
+      />
+      <div class="doc-search-results" id="doc-search-results" aria-live="polite">
+        <p class="doc-search-count" id="doc-search-count" hidden></p>
+        <ul class="doc-search-results-list" id="doc-search-results-list"></ul>
+        <button type="button" class="doc-search-more-button" id="doc-search-more-button" aria-expanded="false">See more results</button>
+      </div>
+    </div>
+    <div class="page-actions">
+      <button type="button" class="view-toggle-button" id="toggle-english-button" aria-pressed="false">Hide English</button>
+      <button type="button" class="view-toggle-button" id="toggle-chinese-button" aria-pressed="false">Hide Chinese</button>
+      <a class="return-link" href="../index.html">Home</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="interlaced-container">
+      <div class="interlaced-group" data-marker="1">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-1" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-1" class="marker marker-trailing">1</a></div>
+  <div class="chunk-text-column"><p>《续异记》佚名</p>
+<p>　　后汉黄门郎萧士义，和帝永元二年被戮。数日前，家中常所养狗，来向其妇前而语曰：“汝极无相禄；汝家寻当破败，当奈何！”其妇默然，亦不骇。狗少时自去。及士义还内，妇仍学说狗语，未毕，收捕便至。广记一百四十一</p>
+<p>　　徐邈，晋孝武帝时为中书侍郎，在省直，左右人恒觉邈独在帐内，以与人共语。有旧门生，一夕伺之，无所见。天时微有光，始开窗，瞥睹一物从屏风里飞出，直入铁镬中。仍逐视之，无余物，唯见镬中聚菖蒲根，下有大青蚱蜢；虽疑此为魅，而古来未闻，但摘除其两翼。至夜，遂入邈梦云：“为君门生所困，往来道绝；相去虽近，有若山河。”邈得梦，甚凄惨。门生知其意，乃微发其端。邈初时疑不即道。语之曰：“我始来直者，便见一青衣女子从前度，犹作两髻，姿色甚美。聊试挑谑，即来就己。且爱之，仍溺情。亦不知其从何而至此。”兼告梦。门生因具以状白，亦不复追杀蚱蜢。广记四百七十三</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="1" aria-controls="interlaced-reasoning-1" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-1" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="1"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-1" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-1" class="marker marker-trailing">1</a></div>
+  <div class="chunk-text-column"><p><strong>The Continuation of Strange Records (续异记)</strong> Anonymous</p>
+<p>In the Eastern Han dynasty, Huangmenlang Xiao Shiyi was executed in the second year of Emperor He&#39;s Yongyuan era. Several days before, a dog that had been regularly kept in the household came to the woman&#39;s presence and spoke to her, saying, &quot;You have no good fortune; your family will soon be ruined, what shall we do?&quot; The woman remained silent and did not show fear. The dog left after a short while. When Xiao Shiyi returned home, the woman continued to imitate the dog&#39;s speech. Before she finished, the authorities arrived to arrest her. (Recorded in the <em>Taiping Guangji</em>, Volume 141)</p>
+<p>During the reign of Emperor Xiaowu of Jin, Xu Miao served as a Zhongshu Shilang (a mid-level official in the central government). People around him often sensed that Xu Miao was alone in his tent, as if he were conversing with someone. An old student of his once watched secretly one night and saw nothing. When the sky was faintly lit, he opened the window and suddenly saw something fly out from behind the screen and dart straight into an iron pot. He followed it and found nothing else but a cluster of cattail roots with a large green grasshopper beneath them. Although he suspected it was a spirit, he had never heard of such a thing before, so he merely picked off its two wings. That night, it entered Xu Miao&#39;s dream and said, &quot;Trapped by your disciple, the path of coming and going is cut off; although close, it feels like mountains and rivers.&quot; Xu Miao was deeply moved by the dream. The student realized the meaning and gently hinted at it. Xu Miao initially doubted and did not immediately speak. He told the student, &quot;When I first arrived to serve, I saw a young woman in green clothes pass by, still wearing two buns, very beautiful in appearance. I lightly teased her, and she came to me. I liked her and became infatuated. I also did not know where she came from.&quot; He also shared the dream with the student. The student then reported the entire situation, and Xu Miao no longer pursued or killed the grasshopper. (Recorded in the <em>Taiping Guangji</em>, Volume 473)</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="2">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-2" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-2" class="marker marker-trailing">2</a></div>
+  <div class="chunk-text-column"><p>晋义熙中，零陵施子然，虽出自单门，而神情辨悟。家大作田。至作蜗牛庐于田侧守视，恒宿在中。其夜，独自未眠之顷，见一丈夫来，长短是中形人，着黄练单衣袷，直造席，捧手与子然语。子然问其姓名。即答云：“仆姓卢，名钩。家在粽溪边，临水。”复经半旬中，其作人掘田塍西沟边蚁垤，忽见大坎，满中蝼蛄，将近斗许，而有数头极壮，一个弥大。子然自是始悟曰：“近日客卢钩，反音则蝼蛄也。家在粽溪，即西坎也。”悉灌以沸汤，于是遂绝。同上</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="2" aria-controls="interlaced-reasoning-2" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-2" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="2"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-2" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-2" class="marker marker-trailing">2</a></div>
+  <div class="chunk-text-column"><p>During the reign of Emperor Xiaowu of Jin, in the year 405, there was a man named Shi Ziran from Lingling who, despite being born into a humble family, possessed a sharp and perceptive mind. His family owned a large farm, and he built a small, makeshift shelter near the fields to monitor the crops, where he would often stay overnight. One night, while he was still awake, he saw a man approach. The man was of average height, dressed in a simple yellow linen robe, and walked straight up to Shi Ziran, raising his hands in greeting. Shi Ziran asked the man his name, and the man replied, &quot;My surname is Lu, and my given name is Gou. My home is by the Zong Stream, beside the water.&quot; A few days later, one of the farm workers dug into the ant hill on the western side of the field and suddenly discovered a large pit filled with mole crickets, nearly a peck in quantity, with several particularly large ones, one of which was especially massive. Shi Ziran then realized, &quot;The guest named Lu Gou, whose name sounds like &#39;mole cricket.&#39; His home by the Zong Stream is the western pit.&quot; He then poured boiling water into the pit, and thus the mole crickets were finally eradicated.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="3">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-3" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-3" class="marker marker-trailing">3</a></div>
+  <div class="chunk-text-column"><p>刘穆之梦有人称刘镇军相迎。旦占之，曰：“吾死矣。今岂有刘镇军邪？”后宋武遣人迎，共定大业。武帝时为镇军将军。广记二百七十六</p>
+<p>　　吴兴俞亮，以永明八年补护军府使。于常眠处，闻有羊声。疑为神怪。窃于户窥之，见其床下有一羊，高可二尺，毛色若丹，光耀满室。初学记二十九六帖九十六御览九百二</p>
+<p>　　秣陵令中山刘沼，梁天监三年为建康监，与门生作食，于灶里得一龟，长尺许，在灰中了不以燔炙为弊。刘为设斋会，放之于娄胡。刘俄迁秣陵令。广记一百十八</p>
+<p>　　零陵太守广陵刘兴道，罢郡住斋中。安床在西壁下，忽见东壁边有一眼，斯须之间便有四，渐渐见多，遂至满室；久乃消散，不知所在。又见床前有头发，从土中稍稍繁多。见一头而出，乃是方相头，奄忽自灭。刘忧怖，沈疾不起。广记一百四十一</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="3" aria-controls="interlaced-reasoning-3" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-3" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="3"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-3" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-3" class="marker marker-trailing">3</a></div>
+  <div class="chunk-text-column"><p>Liu Mu dreamed that someone was calling out to meet Liu Zhenjun. In the morning, he divined it and said, &quot;I am going to die. Is there even a Liu Zhenjun now?&quot; Later, Emperor Wu of Liu Song sent someone to welcome him, and together they established the great cause. At that time, Emperor Wu was the General of the Army. <em>Guangji</em> 276.</p>
+<p>Yu Liang of Wuxing was appointed as the Military Governor in the eighth year of Yongming. While lying in his usual sleeping place, he heard the sound of sheep. He suspected it to be a supernatural phenomenon. Peering through the door, he saw a sheep under his bed, about two feet tall, with red-colored fur, its radiance filling the room. <em>Chuxueji</em> 29, <em>Liuji</em> 96, <em>Yuelan</em> 902.</p>
+<p>Liu Zhao of Zhongshan, the magistrate of Moling, was the supervisor of Jiankang in the third year of Tianjian. While cooking with his disciples, he found a turtle in the stove, about a foot long, which was not harmed by the ashes. Liu held a vegetarian feast and released it into the Louhu. Soon after, Liu Zhao was promoted to the position of magistrate of Moling. <em>Guangji</em> 118.</p>
+<p>Liu Xingdao of Guangling, the governor of Lingling, retired to his study after leaving office. He placed his bed against the western wall, but suddenly saw an eye appear on the eastern wall. Soon, there were four eyes, and they gradually increased in number until the room was full; after a while, they disappeared without a trace. He also saw hair growing from the ground, which became more numerous over time. He saw a head emerge, which turned out to be the head of a Fangxiang, and it vanished suddenly. Liu was filled with fear and anxiety, falling ill and unable to get up. <em>Guangji</em> 141.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="4">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-4" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-4" class="marker marker-trailing">4</a></div>
+  <div class="chunk-text-column"><p>晋陵无锡尉严无欲，贮谷，后开乃成蛇草，焚之，使贫。御览一百九十</p>
+<p>　　竟陵王诞，广记引作刘诞在广陵左右侍直。眠中梦人告之曰，官须发为矛旄。觉则已失发矣。如此者数十人。御览三百四十一广记二百七十六</p>
+<p>　　孙氏妻黄氏，忽见一童子在前，以?掷之，跃入云去。夜闻户外歌曰：“昔御览引作首填夏家冢，辇泥头欲秃。今居黄氏居，非意伤我目。”寻觅巢中，得一白燕，其左目伤。事类赋注十九御览九百二十二</p>
+<p>　　山阴朱法公者，尝出行，憩于台城东橘树下。忽有女子，年可十六七，形甚端丽。薄晚，遣婢与法公相闻，方夕欲诣宿。至人定后，乃来。自称姓檀，住在城侧。因共眠寝，至晓而去。明日复来。如此数夜。每晓去，婢辄来迎。复有男子可六七岁，端丽可爱；女云是其弟。后晓去，女衣裙开，见龟尾及龟脚。法公方悟是魅，欲执之。向夕复来，即然火照觅，寻失所在。广记四百六十九</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="4" aria-controls="interlaced-reasoning-4" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-4" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="4"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-4" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-4" class="marker marker-trailing">4</a></div>
+  <div class="chunk-text-column"><p>Yan Wu Yu, the magistrate of Wuxi, Jinling, stored grain, which later opened up to become snake grass. He burned it, causing poverty. (Recorded in <em>Yuyan</em> 190)</p>
+<p>King Jingling Duan, also referred to as Liu Duan in <em>Guangji</em>, had his attendants around Guangling. In his sleep, he dreamed of someone telling him that the official needed his hair for a spear flag. Upon waking, he found his hair gone. This happened to dozens of people. (Recorded in <em>Yuyan</em> 341 and <em>Guangji</em> 276)</p>
+<p>Huang, the wife of Sun, suddenly saw a child in front of her. He threw something at her, and it leaped into the clouds and disappeared. At night, she heard a song outside the door: &quot;In the past, it filled the tomb of the Xia family, carting mud to their heads to make them bald. Now it resides in Huang&#39;s home, unintentionally hurting my eyes.&quot; She searched in the nest and found a white swallow, whose left eye was injured. (Recorded in <em>Shilie Fu</em> 19 and <em>Yuyan</em> 922)</p>
+<p>Zhu Fagong of Shanyin once traveled and rested under an orange tree east of Taicheng. Suddenly, a woman appeared, about sixteen or seventeen years old, with a very beautiful appearance. Late in the afternoon, she sent a maid to inform Fagong, saying she wanted to stay overnight as evening approached. After the hour of people had settled, she came. She introduced herself as surnamed Tan, living on the outskirts of the city. They slept together until dawn and then she left. The next day, she came again. This happened for several nights. Every morning when she left, the maid would come to greet her. There was also a boy, about six or seven years old, who was very handsome and lovely; the woman said he was her brother. The next morning when she left, the woman&#39;s skirt opened, revealing a turtle&#39;s tail and feet. Fagong then realized she was a spirit and wanted to seize her. As evening approached, she came again. He immediately lit a fire to search for her, but she was gone. (Recorded in <em>Guangji</em> 469)</p></div>
+</div></div></div>
+</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const docReasoningUrl = "../reasoning-index/02_Tang/续异记/manifest.json";
+      const inlineReasoningButtons = document.querySelectorAll('.reasoning-trigger-inline');
+      const docSearchContainer = document.getElementById('doc-search');
+      const docSearchInput = document.getElementById('doc-search-input');
+      const docSearchResults = document.getElementById('doc-search-results');
+      const docSearchList = document.getElementById('doc-search-results-list');
+      const docSearchMoreButton = document.getElementById('doc-search-more-button');
+      const docSearchCount = document.getElementById('doc-search-count');
+      const toggleEnglishButton = document.getElementById('toggle-english-button');
+      const toggleChineseButton = document.getElementById('toggle-chinese-button');
+      const closedExplanationLabel = 'See Explanation';
+      const openExplanationLabel = 'Hide Explanation';
+      let reasoningManifestPromise = null;
+      let reasoningMarkerToShard = null;
+      const reasoningShardCache = new Map();
+
+      function getReasoningShardUrl(shard) {
+        if (!docReasoningUrl || !shard) {
+          return '';
+        }
+        const baseIndex = docReasoningUrl.lastIndexOf('/');
+        const basePath = baseIndex === -1 ? '' : docReasoningUrl.slice(0, baseIndex + 1);
+        return basePath + shard;
+      }
+
+      function loadReasoningManifest() {
+        if (reasoningMarkerToShard) {
+          return Promise.resolve(reasoningMarkerToShard);
+        }
+        if (!docReasoningUrl) {
+          reasoningMarkerToShard = new Map();
+          return Promise.resolve(reasoningMarkerToShard);
+        }
+        if (!reasoningManifestPromise) {
+          reasoningManifestPromise = fetch(docReasoningUrl)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error('Unable to load explanation manifest.');
+              }
+              return response.json();
+            })
+            .then((manifest) => {
+              reasoningMarkerToShard = new Map();
+              const entries = manifest && Array.isArray(manifest.entries) ? manifest.entries : [];
+              entries.forEach((entry) => {
+                if (entry && entry.safeMarker && entry.shard) {
+                  reasoningMarkerToShard.set(entry.safeMarker, entry.shard);
+                }
+              });
+              return reasoningMarkerToShard;
+            });
+        }
+        return reasoningManifestPromise;
+      }
+
+      function loadReasoningShard(shard) {
+        if (!shard) {
+          return Promise.resolve(new Map());
+        }
+        if (!reasoningShardCache.has(shard)) {
+          const shardUrl = getReasoningShardUrl(shard);
+          const shardPromise = fetch(shardUrl)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error('Unable to load explanation shard.');
+              }
+              return response.json();
+            })
+            .then((entries) => {
+              const shardMap = new Map();
+              (Array.isArray(entries) ? entries : []).forEach((entry) => {
+                if (entry && entry.safeMarker) {
+                  shardMap.set(entry.safeMarker, entry.html || '');
+                }
+              });
+              return shardMap;
+            });
+          reasoningShardCache.set(shard, shardPromise);
+        }
+        return reasoningShardCache.get(shard);
+      }
+
+      function loadReasoningHtml(marker) {
+        return loadReasoningManifest()
+          .then((markerMap) => loadReasoningShard(markerMap.get(marker)))
+          .then((shardMap) => shardMap.get(marker) || '');
+      }
+
+      function getGroupMarker(group) {
+        return group ? group.dataset.marker || '' : '';
+      }
+
+      function extractTermDefsFromReasoningHtml(html) {
+        if (!html) {
+          return [];
+        }
+        const container = document.createElement('div');
+        container.innerHTML = html;
+        const byKey = new Map();
+        container.querySelectorAll('.reasoning-term-item[data-term-key]').forEach((item) => {
+          const termKey = item.dataset.termKey || '';
+          const termElement = item.querySelector('.reasoning-term-text');
+          const term = (termElement ? termElement.textContent : (item.textContent || '').split(' - ')[0]).trim();
+          if (termKey && term && !byKey.has(termKey)) {
+            byKey.set(termKey, {
+              termKey,
+              term,
+            });
+          }
+        });
+        return Array.from(byKey.values()).sort((a, b) => b.term.length - a.term.length);
+      }
+
+      function findTermMatchesInText(text, termDefs) {
+        const matches = [];
+        for (const termDef of termDefs) {
+          if (!termDef || !termDef.term) {
+            continue;
+          }
+          let startIndex = 0;
+          while (startIndex < text.length) {
+            const foundAt = text.indexOf(termDef.term, startIndex);
+            if (foundAt === -1) {
+              break;
+            }
+            matches.push({
+              start: foundAt,
+              end: foundAt + termDef.term.length,
+              termKey: termDef.termKey,
+            });
+            startIndex = foundAt + termDef.term.length;
+          }
+        }
+        matches.sort((a, b) => {
+          if (a.start !== b.start) {
+            return a.start - b.start;
+          }
+          return (b.end - b.start) - (a.end - a.start);
+        });
+        const chosen = [];
+        let lastEnd = -1;
+        matches.forEach((match) => {
+          if (match.start < lastEnd) {
+            return;
+          }
+          chosen.push(match);
+          lastEnd = match.end;
+        });
+        return chosen;
+      }
+
+      function shouldSkipTermHighlightNode(node) {
+        const parent = node && node.parentElement;
+        if (!parent) {
+          return true;
+        }
+        return !!parent.closest('script, style, button, a, .term-match, .chunk-marker-column, .interlaced-reasoning-panel');
+      }
+
+      function highlightTermsInElement(root, termDefs) {
+        if (!root || !termDefs.length) {
+          return;
+        }
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode(node) {
+            if (shouldSkipTermHighlightNode(node) || !node.nodeValue || !node.nodeValue.trim()) {
+              return NodeFilter.FILTER_REJECT;
+            }
+            return findTermMatchesInText(node.nodeValue, termDefs).length
+              ? NodeFilter.FILTER_ACCEPT
+              : NodeFilter.FILTER_SKIP;
+          },
+        });
+        const textNodes = [];
+        while (walker.nextNode()) {
+          textNodes.push(walker.currentNode);
+        }
+        textNodes.forEach((node) => {
+          const matches = findTermMatchesInText(node.nodeValue || '', termDefs);
+          if (!matches.length) {
+            return;
+          }
+          const fragment = document.createDocumentFragment();
+          const text = node.nodeValue || '';
+          let cursor = 0;
+          matches.forEach((match) => {
+            if (match.start > cursor) {
+              fragment.appendChild(document.createTextNode(text.slice(cursor, match.start)));
+            }
+            const span = document.createElement('span');
+            span.className = 'term-match';
+            span.dataset.termKey = match.termKey;
+            span.tabIndex = 0;
+            span.setAttribute('role', 'button');
+            span.setAttribute('aria-pressed', 'false');
+            span.textContent = text.slice(match.start, match.end);
+            fragment.appendChild(span);
+            cursor = match.end;
+          });
+          if (cursor < text.length) {
+            fragment.appendChild(document.createTextNode(text.slice(cursor)));
+          }
+          if (node.parentNode) {
+            node.parentNode.replaceChild(fragment, node);
+          }
+        });
+        root.querySelectorAll('.term-match[data-term-key]').forEach(bindTermSelection);
+      }
+
+      function highlightTermsForGroup(group) {
+        if (!group || group.dataset.termsHighlighted === 'true' || group.dataset.termsHighlighting === 'true') {
+          return;
+        }
+        const marker = getGroupMarker(group);
+        const originalRoot = group.querySelector('.interlaced-block.original .chunk-text-column')
+          || group.querySelector('.interlaced-block.original .interlaced-content');
+        if (!marker || !originalRoot) {
+          return;
+        }
+        group.dataset.termsHighlighting = 'true';
+        loadReasoningHtml(marker)
+          .then((html) => {
+            const termDefs = extractTermDefsFromReasoningHtml(html);
+            highlightTermsInElement(originalRoot, termDefs);
+            group.dataset.termsHighlighted = 'true';
+          })
+          .catch(() => {
+            delete group.dataset.termsHighlighted;
+          })
+          .finally(() => {
+            delete group.dataset.termsHighlighting;
+          });
+      }
+
+      function setupLazyTermHighlighting() {
+        const groups = Array.from(document.querySelectorAll('.interlaced-group[data-marker]'))
+          .filter((group) => group.querySelector('.reasoning-trigger-inline'));
+        if (!groups.length) {
+          return;
+        }
+        groups.forEach((group) => {
+          group.addEventListener('mouseenter', () => highlightTermsForGroup(group), { once: true });
+          group.addEventListener('focusin', () => highlightTermsForGroup(group), { once: true });
+        });
+        if (!('IntersectionObserver' in window)) {
+          groups.slice(0, 30).forEach(highlightTermsForGroup);
+          return;
+        }
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+            observer.unobserve(entry.target);
+            highlightTermsForGroup(entry.target);
+          });
+        }, {
+          rootMargin: '700px 0px',
+        });
+        groups.forEach((group) => observer.observe(group));
+      }
+
+      function ensureReasoningLoaded(group) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !reasoningElements || !reasoningElements.fullCard) {
+          return Promise.resolve(false);
+        }
+        const content = reasoningElements.fullCard.querySelector('[data-reasoning-content]');
+        if (!content) {
+          return Promise.resolve(false);
+        }
+        if (content.dataset.loaded === 'true') {
+          return Promise.resolve(true);
+        }
+        const marker = group.dataset.marker || content.dataset.marker || '';
+        content.innerHTML = '<p class="interlaced-empty">Loading explanation...</p>';
+        return loadReasoningHtml(marker)
+          .then((html) => {
+            content.innerHTML = html || '<p class="interlaced-empty">Explanation not available.</p>';
+            content.dataset.loaded = 'true';
+            content.querySelectorAll('.reasoning-term-item[data-term-key]').forEach(bindTermSelection);
+            if (group.dataset.activeTermKey) {
+              setActiveTerm(group, group.dataset.activeTermKey);
+            }
+            return true;
+          })
+          .catch(() => {
+            content.innerHTML = '<p class="interlaced-empty">Explanation could not be loaded.</p>';
+            content.dataset.loaded = 'true';
+            return false;
+          });
+      }
+
+      function setActiveTerm(group, termKey) {
+        if (!group) {
+          return;
+        }
+        group.querySelectorAll('.term-match[data-term-key], .reasoning-term-item[data-term-key]').forEach((element) => {
+          const isActive = !!termKey && element.dataset.termKey === termKey;
+          element.classList.toggle('is-active', isActive);
+          element.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      }
+
+      function getReasoningElements(group) {
+        if (!group) {
+          return null;
+        }
+        return {
+          panel: group.querySelector('.interlaced-reasoning-panel'),
+          previewCard: group.querySelector('.interlaced-reasoning-preview'),
+          previewContent: group.querySelector('.interlaced-reasoning-preview-content'),
+          fullCard: group.querySelector('.interlaced-reasoning-full'),
+          button: group.querySelector('.reasoning-trigger-inline'),
+        };
+      }
+
+      function setReasoningButtonState(button, isFullOpen) {
+        if (!button) {
+          return;
+        }
+        const buttonText = isFullOpen ? openExplanationLabel : closedExplanationLabel;
+        const markerLabel = button.dataset.marker ? ' [' + button.dataset.marker + ']' : '';
+        button.textContent = buttonText;
+        button.setAttribute('aria-expanded', isFullOpen ? 'true' : 'false');
+        button.setAttribute('aria-label', buttonText + markerLabel);
+        button.setAttribute('title', buttonText + markerLabel);
+      }
+
+      function buildReasoningPreview(group, termKey) {
+        const reasoningElements = getReasoningElements(group);
+        if (!reasoningElements || !reasoningElements.previewContent) {
+          return false;
+        }
+        const matchingItems = Array.from(
+          group.querySelectorAll('.interlaced-reasoning-full .reasoning-term-item[data-term-key]')
+        ).filter((item) => item.dataset.termKey === termKey);
+
+        reasoningElements.previewContent.innerHTML = '';
+        if (!matchingItems.length) {
+          return false;
+        }
+
+        const sectionMap = new Map();
+        matchingItems.forEach((item) => {
+          const section = item.closest('.reasoning-section');
+          const sectionKey = section || item;
+          let list = sectionMap.get(sectionKey);
+
+          if (!list) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'reasoning-preview-section';
+
+            const category = document.createElement('p');
+            category.className = 'reasoning-preview-category';
+            const title = section && section.querySelector('.reasoning-section-title');
+            category.textContent = title ? title.textContent.trim() : 'Explanation';
+
+            list = document.createElement('ul');
+            list.className = 'reasoning-preview-list';
+
+            wrapper.appendChild(category);
+            wrapper.appendChild(list);
+            reasoningElements.previewContent.appendChild(wrapper);
+            sectionMap.set(sectionKey, list);
+          }
+
+          const clone = item.cloneNode(true);
+          clone.classList.remove('reasoning-term-item');
+          clone.classList.add('reasoning-preview-item', 'is-active');
+          clone.removeAttribute('data-term-key');
+          clone.removeAttribute('tabindex');
+          clone.removeAttribute('role');
+          clone.removeAttribute('aria-pressed');
+          list.appendChild(clone);
+        });
+
+        return true;
+      }
+
+      function openReasoningPreview(group, termKey) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !termKey || !reasoningElements || !reasoningElements.panel) {
+          return;
+        }
+        if (!buildReasoningPreview(group, termKey)) {
+          openReasoningFull(group);
+          return;
+        }
+        reasoningElements.panel.hidden = false;
+        if (reasoningElements.previewCard) {
+          reasoningElements.previewCard.hidden = false;
+        }
+        if (reasoningElements.fullCard) {
+          reasoningElements.fullCard.hidden = true;
+        }
+        setReasoningButtonState(reasoningElements.button, false);
+      }
+
+      function openReasoningFull(group) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !reasoningElements || !reasoningElements.panel || !reasoningElements.fullCard) {
+          return;
+        }
+        reasoningElements.panel.hidden = false;
+        reasoningElements.fullCard.hidden = false;
+        if (reasoningElements.previewCard) {
+          reasoningElements.previewCard.hidden = true;
+        }
+        setReasoningButtonState(reasoningElements.button, true);
+        ensureReasoningLoaded(group);
+      }
+
+      function closeReasoning(group) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !reasoningElements) {
+          return;
+        }
+        if (reasoningElements.panel) {
+          reasoningElements.panel.hidden = true;
+        }
+        if (reasoningElements.previewCard) {
+          reasoningElements.previewCard.hidden = true;
+        }
+        if (reasoningElements.fullCard) {
+          reasoningElements.fullCard.hidden = true;
+        }
+        if (reasoningElements.previewContent) {
+          reasoningElements.previewContent.innerHTML = '';
+        }
+        setReasoningButtonState(reasoningElements.button, false);
+        delete group.dataset.activeTermKey;
+        setActiveTerm(group, '');
+      }
+
+      function closeAllReasoning() {
+        document.querySelectorAll('.interlaced-group').forEach((group) => {
+          closeReasoning(group);
+        });
+      }
+
+      function updateLanguageToggleButtons() {
+        const englishHidden = document.body.classList.contains('hide-english');
+        const chineseHidden = document.body.classList.contains('hide-chinese');
+        if (toggleEnglishButton) {
+          toggleEnglishButton.textContent = 'Hide English';
+          toggleEnglishButton.setAttribute('aria-pressed', englishHidden ? 'true' : 'false');
+        }
+        if (toggleChineseButton) {
+          toggleChineseButton.textContent = 'Hide Chinese';
+          toggleChineseButton.setAttribute('aria-pressed', chineseHidden ? 'true' : 'false');
+        }
+      }
+
+      function activateTermAssociation(group, termKey, options = {}) {
+        if (!group || !termKey) {
+          return;
+        }
+        const { openFull = false } = options;
+        const reasoningElements = getReasoningElements(group);
+        if (!reasoningElements) {
+          return;
+        }
+        group.dataset.activeTermKey = termKey;
+        setActiveTerm(group, termKey);
+        if (openFull) {
+          openReasoningFull(group);
+          return;
+        }
+        if (reasoningElements.fullCard && !reasoningElements.fullCard.hidden) {
+          return;
+        }
+        openReasoningPreview(group, termKey);
+      }
+
+      function bindTermSelection(element) {
+        if (!element) {
+          return;
+        }
+        if (element.dataset.termBound === 'true') {
+          return;
+        }
+        element.dataset.termBound = 'true';
+        const activate = () => {
+          const group = element.closest('.interlaced-group');
+          if (!group) {
+            return;
+          }
+          activateTermAssociation(group, element.dataset.termKey || '', {
+            openFull: false,
+          });
+        };
+        element.addEventListener('click', activate);
+        element.addEventListener('keydown', (event) => {
+          if (event.key !== 'Enter' && event.key !== ' ') {
+            return;
+          }
+          event.preventDefault();
+          activate();
+        });
+      }
+
+      inlineReasoningButtons.forEach((button) => {
+        setReasoningButtonState(button, false);
+        button.addEventListener('click', () => {
+          const group = button.closest('.interlaced-group');
+          const reasoningElements = getReasoningElements(group);
+          if (!group || !reasoningElements || !reasoningElements.fullCard) {
+            return;
+          }
+          const isFullOpen = !reasoningElements.fullCard.hidden;
+          if (isFullOpen) {
+            closeReasoning(group);
+            return;
+          }
+          openReasoningFull(group);
+        });
+      });
+
+      document.querySelectorAll('.reasoning-preview-more').forEach((button) => {
+        button.addEventListener('click', () => {
+          const group = button.closest('.interlaced-group');
+          if (!group) {
+            return;
+          }
+          openReasoningFull(group);
+        });
+      });
+
+      document.querySelectorAll('.term-match[data-term-key]').forEach(bindTermSelection);
+      document.querySelectorAll('.reasoning-term-item[data-term-key]').forEach(bindTermSelection);
+      setupLazyTermHighlighting();
+
+      if (toggleEnglishButton) {
+        toggleEnglishButton.addEventListener('click', () => {
+          const willHideEnglish = !document.body.classList.contains('hide-english');
+          if (willHideEnglish) {
+            document.body.classList.remove('hide-chinese');
+          }
+          document.body.classList.toggle('hide-english', willHideEnglish);
+          closeAllReasoning();
+          updateLanguageToggleButtons();
+        });
+      }
+
+      if (toggleChineseButton) {
+        toggleChineseButton.addEventListener('click', () => {
+          const willHideChinese = !document.body.classList.contains('hide-chinese');
+          if (willHideChinese) {
+            document.body.classList.remove('hide-english');
+          }
+          document.body.classList.toggle('hide-chinese', willHideChinese);
+          closeAllReasoning();
+          updateLanguageToggleButtons();
+        });
+      }
+
+      updateLanguageToggleButtons();
+
+      // Document-level search (mirrors index search experience)
+      if (docSearchContainer && docSearchInput && docSearchList && docSearchResults) {
+        function normalizeSearchText(text) {
+          return String(text || '')
+            .normalize('NFKC')
+            .toLowerCase()
+            .replace(/s+/g, ' ')
+            .trim();
+        }
+
+        function getSearchQueryFromUrl() {
+          try {
+            return new URLSearchParams(window.location.search).get('q') || '';
+          } catch (error) {
+            return '';
+          }
+        }
+
+        function removeSearchHighlights() {
+          document.querySelectorAll('.search-hit').forEach((hit) => {
+            const parent = hit.parentNode;
+            if (!parent) {
+              return;
+            }
+            parent.replaceChild(document.createTextNode(hit.textContent || ''), hit);
+            parent.normalize();
+          });
+          document.querySelectorAll('.search-focused-block').forEach((element) => {
+            element.classList.remove('search-focused-block');
+          });
+        }
+
+        function buildHighlightRegex(query) {
+          const parts = String(query || '').trim().split(/s+/).filter(Boolean);
+          if (!parts.length) {
+            return null;
+          }
+          const escaped = parts.map((part) => part.replace(/[-/\^$*+?.()|[]{}]/g, '\$&'));
+          return new RegExp(escaped.join('\s+'), 'gi');
+        }
+
+        function shouldSkipSearchHighlightNode(node) {
+          const parent = node && node.parentElement;
+          if (!parent) {
+            return true;
+          }
+          return !!parent.closest('script, style, mark, .search-hit, button');
+        }
+
+        function highlightSearchInElement(root, query) {
+          const regex = buildHighlightRegex(query);
+          if (!root || !regex) {
+            return [];
+          }
+          const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+            acceptNode(node) {
+              if (shouldSkipSearchHighlightNode(node) || !node.nodeValue || !node.nodeValue.trim()) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              regex.lastIndex = 0;
+              return regex.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+            },
+          });
+          const textNodes = [];
+          while (walker.nextNode()) {
+            textNodes.push(walker.currentNode);
+          }
+          const highlights = [];
+          textNodes.forEach((node) => {
+            const fragment = document.createDocumentFragment();
+            const text = node.nodeValue || '';
+            let cursor = 0;
+            regex.lastIndex = 0;
+            let match;
+            while ((match = regex.exec(text)) !== null) {
+              if (match.index > cursor) {
+                fragment.appendChild(document.createTextNode(text.slice(cursor, match.index)));
+              }
+              const hit = document.createElement('mark');
+              hit.className = 'search-hit';
+              hit.textContent = match[0];
+              fragment.appendChild(hit);
+              highlights.push(hit);
+              cursor = match.index + match[0].length;
+              if (match[0].length === 0) {
+                regex.lastIndex += 1;
+              }
+            }
+            if (cursor < text.length) {
+              fragment.appendChild(document.createTextNode(text.slice(cursor)));
+            }
+            if (node.parentNode) {
+              node.parentNode.replaceChild(fragment, node);
+            }
+          });
+          return highlights;
+        }
+
+        function applySearchHighlight(anchor, query, options = {}) {
+          const { scroll = false } = options;
+          removeSearchHighlights();
+          const normalizedQuery = normalizeSearchText(query);
+          if (!anchor || !normalizedQuery) {
+            return;
+          }
+          const target = document.getElementById(anchor);
+          if (!target) {
+            return;
+          }
+          const block = target.closest('.interlaced-block') || target.closest('.interlaced-group') || target;
+          const documentRoot = document.querySelector('.interlaced-container') || document.body;
+          block.classList.add('search-focused-block');
+          const highlights = highlightSearchInElement(documentRoot, query);
+          const currentHighlight = highlights.find((hit) => block.contains(hit)) || highlights[0];
+          if (currentHighlight) {
+            currentHighlight.classList.add('is-current');
+          }
+          if (scroll) {
+            const scrollTarget = currentHighlight || block;
+            if (scrollTarget && typeof scrollTarget.scrollIntoView === 'function') {
+              scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+            }
+          }
+        }
+
+        const MAX_INITIAL_RESULTS = 6;
+        let normalizedDocSearchData = null;
+        let docSearchLoadPromise = null;
+        let docSearchRunId = 0;
+        let currentMatches = [];
+        let showingAll = false;
+        let currentQuery = '';
+
+        function getBlockAnchor(block) {
+          const anchor = block && block.querySelector('.chunk-anchor[id]');
+          return anchor ? anchor.id : '';
+        }
+
+        function getBlockMarker(block) {
+          const group = block && block.closest('.interlaced-group');
+          if (group && group.dataset.marker) {
+            return group.dataset.marker;
+          }
+          const marker = block && block.querySelector('.marker-trailing');
+          return marker ? marker.textContent.trim() : '';
+        }
+
+        function buildDocSearchEntriesFromPage() {
+          const blocks = Array.from(
+            document.querySelectorAll('.interlaced-block.original, .interlaced-block.translation')
+          );
+          return blocks
+            .map((block) => {
+              const anchor = getBlockAnchor(block);
+              const text = block.textContent.replace(/s+/g, ' ').trim();
+              if (!anchor || !text) {
+                return null;
+              }
+              const type = block.classList.contains('original') ? 'original' : 'translation';
+              return {
+                anchor,
+                marker: getBlockMarker(block),
+                type,
+                text,
+              };
+            })
+            .filter(Boolean);
+        }
+
+        function normalizeDocSearchEntries(entries) {
+          return entries
+            .filter((entry) => entry && entry.anchor && entry.text)
+            .map((entry) => ({
+              entry,
+              textSearch: normalizeSearchText(entry.text || ''),
+              markerSearch: normalizeSearchText(entry.marker || ''),
+              typeSearch: normalizeSearchText(entry.type || ''),
+            }));
+        }
+
+        function loadDocSearchData() {
+          if (normalizedDocSearchData) {
+            return Promise.resolve(normalizedDocSearchData);
+          }
+          if (!docSearchLoadPromise) {
+            docSearchLoadPromise = new Promise((resolve) => {
+              window.setTimeout(() => {
+                normalizedDocSearchData = normalizeDocSearchEntries(buildDocSearchEntriesFromPage());
+                resolve(normalizedDocSearchData);
+              }, 0);
+            });
+          }
+          return docSearchLoadPromise;
+        }
+
+        function updateDocSearchCount(count) {
+          if (!docSearchCount) {
+            return;
+          }
+          docSearchCount.textContent = count === 1 ? '1 result' : count + ' results';
+          docSearchCount.hidden = false;
+        }
+
+        function resetSearchResults() {
+          docSearchResults.classList.remove('has-results');
+          docSearchList.innerHTML = '';
+          docSearchResults.style.display = 'none';
+          if (docSearchCount) {
+            docSearchCount.hidden = true;
+            docSearchCount.textContent = '';
+          }
+          if (docSearchMoreButton) {
+            docSearchMoreButton.classList.remove('visible');
+            docSearchMoreButton.setAttribute('aria-expanded', 'false');
+          }
+        }
+
+        function escapeRegex(text) {
+          return text.replace(/[-/\^$*+?.()|[]{}]/g, '\$&');
+        }
+
+        function countOccurrences(haystack, needle) {
+          if (!needle || !haystack) {
+            return 0;
+          }
+          let count = 0;
+          let index = haystack.indexOf(needle);
+          while (index !== -1) {
+            count += 1;
+            index = haystack.indexOf(needle, index + needle.length);
+          }
+          return count;
+        }
+
+        function buildSnippet(text, query) {
+          if (!text) {
+            return 'No preview available.';
+          }
+          const lower = text.toLowerCase();
+          const needle = String(query || '').trim().toLowerCase();
+          const foundAt = needle ? lower.indexOf(needle) : -1;
+          const matchIndex = foundAt === -1 ? 0 : foundAt;
+          const matchLength = foundAt === -1 ? 0 : needle.length;
+          const radius = 70;
+          const start = Math.max(0, matchIndex - radius);
+          const end = Math.min(text.length, matchIndex + matchLength + radius);
+          let snippet = text.slice(start, end);
+          if (start > 0) {
+            snippet = '...' + snippet;
+          }
+          if (end < text.length) {
+            snippet = snippet + '...';
+          }
+          let highlighted = snippet;
+          if (needle) {
+            const regex = new RegExp(escapeRegex(needle), 'gi');
+            highlighted = highlighted.replace(regex, (matchValue) => '<mark>' + matchValue + '</mark>');
+          }
+          return highlighted;
+        }
+
+        function renderResults() {
+          docSearchResults.style.display = 'block';
+          docSearchList.innerHTML = '';
+          updateDocSearchCount(currentMatches.length);
+          if (!currentMatches.length) {
+            docSearchResults.classList.remove('has-results');
+            if (docSearchMoreButton) {
+              docSearchMoreButton.classList.remove('visible');
+              docSearchMoreButton.setAttribute('aria-expanded', 'false');
+            }
+            return;
+          }
+          docSearchResults.classList.add('has-results');
+          docSearchList.innerHTML = '';
+          const visibleCount = showingAll
+            ? currentMatches.length
+            : Math.min(MAX_INITIAL_RESULTS, currentMatches.length);
+          const fragment = document.createDocumentFragment();
+          for (let i = 0; i < visibleCount; i += 1) {
+            const { entry } = currentMatches[i];
+            const item = document.createElement('li');
+            item.className = 'doc-search-result';
+            const link = document.createElement('a');
+            link.href = '#' + entry.anchor;
+            link.textContent = entry.marker ? '[' + entry.marker + '] ' + entry.type : entry.type;
+            link.addEventListener('click', (event) => {
+              event.preventDefault();
+              applySearchHighlight(entry.anchor, currentQuery, { scroll: true });
+              if (window.history && typeof window.history.replaceState === 'function') {
+                const url = new URL(window.location.href);
+                if (currentQuery) {
+                  url.searchParams.set('q', currentQuery);
+                } else {
+                  url.searchParams.delete('q');
+                }
+                url.hash = entry.anchor;
+                window.history.replaceState(null, '', url);
+              }
+              resetSearchResults();
+              docSearchInput.blur();
+            });
+            const meta = document.createElement('p');
+            meta.className = 'doc-search-meta';
+            const markerLabel = entry.marker ? '[' + entry.marker + '] ' : '';
+            const typeLabel = entry.type === 'original' ? 'Original text' : 'Translation';
+            meta.textContent = markerLabel + typeLabel;
+            const snippet = document.createElement('p');
+            snippet.className = 'doc-search-snippet';
+            snippet.innerHTML = buildSnippet(entry.text || '', currentQuery);
+            item.appendChild(link);
+            item.appendChild(meta);
+            item.appendChild(snippet);
+            fragment.appendChild(item);
+          }
+          docSearchList.appendChild(fragment);
+          if (docSearchMoreButton) {
+            if (currentMatches.length > MAX_INITIAL_RESULTS) {
+              docSearchMoreButton.classList.add('visible');
+              docSearchMoreButton.textContent = showingAll ? 'Show fewer results' : 'See more results';
+              docSearchMoreButton.setAttribute('aria-expanded', showingAll ? 'true' : 'false');
+            } else {
+              docSearchMoreButton.classList.remove('visible');
+              docSearchMoreButton.setAttribute('aria-expanded', 'false');
+            }
+          }
+        }
+
+        function setDocSearchMessage(message) {
+          docSearchResults.style.display = 'block';
+          docSearchResults.classList.remove('has-results');
+          docSearchList.innerHTML = '';
+          if (docSearchCount) {
+            docSearchCount.textContent = message;
+            docSearchCount.hidden = false;
+          }
+          if (docSearchMoreButton) {
+            docSearchMoreButton.classList.remove('visible');
+            docSearchMoreButton.setAttribute('aria-expanded', 'false');
+          }
+        }
+
+        function runDocSearch(normalized, query) {
+          return normalized
+            .map((item) => {
+              const textMatch = item.textSearch.includes(query);
+              const markerMatch = item.markerSearch === query;
+              const typeMatch = item.typeSearch === query;
+              if (!textMatch && !markerMatch && !typeMatch) {
+                return null;
+              }
+              let score = 0;
+              score += countOccurrences(item.textSearch, query) * 20;
+              if (markerMatch) {
+                score += 12;
+              }
+              if (typeMatch) {
+                score += 6;
+              }
+              if (item.textSearch.startsWith(query)) {
+                score += 4;
+              }
+              return { entry: item.entry, score };
+            })
+            .filter(Boolean)
+            .sort((a, b) => b.score - a.score);
+        }
+
+        function handleSearch() {
+          const rawQuery = docSearchInput.value.trim();
+          const query = normalizeSearchText(rawQuery);
+          docSearchRunId += 1;
+          const runId = docSearchRunId;
+          if (!query) {
+            currentMatches = [];
+            currentQuery = '';
+            showingAll = false;
+            resetSearchResults();
+            return;
+          }
+          currentQuery = rawQuery;
+          showingAll = false;
+          setDocSearchMessage('Preparing document search...');
+          loadDocSearchData()
+            .then((normalized) => {
+              if (runId !== docSearchRunId) {
+                return;
+              }
+              currentMatches = runDocSearch(normalized, query);
+              renderResults();
+            })
+            .catch(() => {
+              if (runId !== docSearchRunId) {
+                return;
+              }
+              currentMatches = [];
+              setDocSearchMessage('Document search could not be prepared.');
+            });
+        }
+
+        if (docSearchMoreButton) {
+          docSearchMoreButton.addEventListener('click', () => {
+            if (!currentMatches.length) {
+              return;
+            }
+            showingAll = !showingAll;
+            renderResults();
+          });
+        }
+        docSearchInput.addEventListener('input', handleSearch);
+        const initialQuery = getSearchQueryFromUrl();
+        const initialAnchor = window.location.hash ? decodeURIComponent(window.location.hash.slice(1)) : '';
+        if (initialQuery) {
+          docSearchInput.value = initialQuery;
+          currentQuery = initialQuery;
+          if (initialAnchor) {
+            window.setTimeout(() => {
+              applySearchHighlight(initialAnchor, initialQuery, { scroll: true });
+            }, 0);
+          }
+        }
+        resetSearchResults();
+      }
+    })();
+  </script>
+</body>
+</html>

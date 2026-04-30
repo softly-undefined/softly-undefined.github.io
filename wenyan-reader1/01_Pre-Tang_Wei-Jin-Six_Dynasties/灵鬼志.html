@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>灵鬼志 - Records of Spirits and Ghosts</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 1rem;
+      line-height: 1.6;
+    }
+    a.marker {
+      color: #0077cc;
+      text-decoration: underline;
+      cursor: pointer;
+      scroll-margin-top: 5.5rem;
+    }
+    .marker-text {
+      color: #0077cc;
+      font-weight: 600;
+    }
+    .reasoning-trigger {
+      display: inline;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: #0077cc;
+      cursor: pointer;
+      font-size: 0.8rem;
+      line-height: 1.2;
+      vertical-align: baseline;
+      text-decoration: underline;
+    }
+    .interlaced-reasoning-trigger-row {
+      margin-top: -0.2rem;
+      margin-left: 3.55rem;
+    }
+    .interlaced-reasoning-trigger-row .reasoning-trigger {
+      font-size: 0.9rem;
+    }
+    .chunk-anchor {
+      display: block;
+      height: 0;
+      overflow: hidden;
+      scroll-margin-top: 5.5rem;
+    }
+    .chunk-layout {
+      display: grid;
+      grid-template-columns: minmax(2.8rem, max-content) minmax(0, 1fr);
+      column-gap: 0.75rem;
+      align-items: center;
+    }
+    .chunk-marker-column {
+      line-height: 1.6;
+      text-align: right;
+      white-space: nowrap;
+      align-self: center;
+    }
+    .chunk-text-column {
+      min-width: 0;
+    }
+    .chunk-text-column > :first-child {
+      margin-top: 0;
+    }
+    .chunk-text-column > :last-child {
+      margin-bottom: 0;
+    }
+    .marker-trailing {
+      margin-left: 0.3rem;
+      white-space: nowrap;
+    }
+    .chunk-marker-column .marker-trailing {
+      margin-left: 0;
+      color: #9aa3af;
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .chunk-marker-column .marker-trailing:hover {
+      color: #6b7280;
+      text-decoration: underline;
+    }
+    .reasoning-trigger:hover {
+      color: #005c99;
+    }
+    .reasoning-trigger:focus-visible,
+    .term-match:focus-visible,
+    .reasoning-term-item:focus-visible,
+    .view-toggle-button:focus-visible,
+    .reasoning-preview-more:focus-visible,
+    .return-link:focus-visible {
+      outline: 2px solid #0077cc;
+      outline-offset: 2px;
+    }
+    .section {
+      margin-bottom: 2rem;
+    }
+    .section h3 {
+      margin-top: 0;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.25rem;
+    }
+    .doc-header {
+      font-style: italic;
+      color: #444;
+      margin: 0.75rem 0 1.25rem;
+    }
+    .page-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      justify-content: space-between;
+      margin: 0 0 1.5rem;
+      padding: 0.85rem 0;
+      background: #fff;
+      border-bottom: 1px solid #dbe1ec;
+    }
+    .doc-search {
+      position: relative;
+      flex: 1 1 420px;
+      max-width: 520px;
+    }
+    .doc-search-input {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #b7c0d0;
+      box-sizing: border-box;
+    }
+    .doc-search-results {
+      position: absolute;
+      top: calc(100% + 0.45rem);
+      left: 0;
+      right: 0;
+      display: none;
+      border: 1px solid #dbe1ec;
+      border-radius: 8px;
+      padding: 0.25rem 1rem 1rem;
+      background: #fff;
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+      max-height: min(60vh, 32rem);
+      overflow-y: auto;
+    }
+    .doc-search-results-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .doc-search-count {
+      margin: 0.5rem 0 0.4rem;
+      font-size: 0.85rem;
+      color: #5e6673;
+    }
+    .doc-search-results.has-results .doc-search-results-list {
+      display: block;
+    }
+    .doc-search-results.has-results {
+      display: block;
+    }
+    .doc-search-result {
+      border-top: 1px solid #dfe3eb;
+      padding: 0.85rem 0;
+    }
+    .doc-search-result:first-child {
+      border-top: none;
+    }
+    .doc-search-result a {
+      color: #005c99;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .doc-search-result a:hover {
+      text-decoration: underline;
+    }
+    .doc-search-snippet {
+      margin: 0.35rem 0 0;
+      font-size: 0.95rem;
+      color: #353c48;
+    }
+    .doc-search-meta {
+      margin: 0.2rem 0 0;
+      font-size: 0.85rem;
+      color: #5e6673;
+    }
+    .doc-search-more-button {
+      margin-top: 0.75rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 4px;
+      border: 1px solid #0077cc;
+      background: #fff;
+      color: #0077cc;
+      cursor: pointer;
+      font-size: 0.95rem;
+      display: none;
+    }
+    .doc-search-more-button.visible {
+      display: inline-block;
+    }
+    .return-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid #0077cc;
+      background: #fff;
+      color: #0077cc;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      transition: all 0.15s ease-in-out;
+    }
+    .return-link:hover {
+      background: rgba(0, 119, 204, 0.08);
+    }
+    .return-link {
+      text-decoration: none;
+      font-weight: 600;
+      flex: 0 0 auto;
+    }
+    .page-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 0 0 auto;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .page-actions > * {
+      min-width: 7.5rem;
+      box-sizing: border-box;
+    }
+    .view-toggle-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid #0077cc;
+      background: #fff;
+      color: #0077cc;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+    }
+    .view-toggle-button:hover {
+      background: rgba(0, 119, 204, 0.08);
+    }
+    .view-toggle-button[aria-pressed="true"] {
+      background: #0077cc;
+      color: #fff;
+    }
+    .view-toggle-button[aria-pressed="true"]:hover {
+      background: #005c99;
+    }
+    .interlaced-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.95rem;
+      overflow-anchor: none;
+    }
+    .interlaced-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .interlaced-block {
+      margin: 0;
+    }
+    .interlaced-reasoning-panel[hidden] {
+      display: none;
+    }
+    .interlaced-reasoning-panel {
+      position: relative;
+      left: 50%;
+      width: 100vw;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      background: #f8fafc;
+    }
+    .interlaced-reasoning-card {
+      border: none;
+      border-radius: 0;
+      padding: 1rem;
+      background: transparent;
+      box-sizing: border-box;
+    }
+    .interlaced-reasoning-preview[hidden],
+    .interlaced-reasoning-full[hidden] {
+      display: none;
+    }
+    .interlaced-reasoning-title {
+      margin: 0 0 0.55rem;
+      font-weight: 600;
+      color: #334155;
+    }
+    .interlaced-reasoning-preview-content {
+      margin-bottom: 0.75rem;
+    }
+    .interlaced-label {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .marker-code {
+      font-weight: 400;
+      color: #666;
+      margin-left: 0.35rem;
+    }
+    .term-match {
+      border-radius: 0.2rem;
+      cursor: pointer;
+      transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    }
+    .interlaced-group .term-match {
+      background: rgba(148, 163, 184, 0.35);
+    }
+    .interlaced-group .term-match:hover {
+      background: rgba(148, 163, 184, 0.55);
+    }
+    .term-match.is-active {
+      background: rgba(59, 130, 246, 0.35) !important;
+      color: #1d4ed8;
+    }
+    .search-hit {
+      background: #fff176;
+      color: inherit;
+      border-radius: 0.15rem;
+      padding: 0 0.08rem;
+      box-shadow: 0 0 0 1px rgba(202, 138, 4, 0.18);
+    }
+    .search-hit.is-current {
+      background: #ffd54f;
+      box-shadow: 0 0 0 2px rgba(202, 138, 4, 0.32);
+    }
+    .search-focused-block {
+      scroll-margin-top: 5.5rem;
+    }
+    .reasoning-term-item[data-term-key] {
+      border-radius: 0.35rem;
+      cursor: pointer;
+      padding: 0.1rem 0.25rem;
+      transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    }
+    .reasoning-section + .reasoning-section,
+    .reasoning-preview-section + .reasoning-preview-section {
+      margin-top: 0.85rem;
+    }
+    .reasoning-section-title,
+    .reasoning-preview-category {
+      margin: 0 0 0.35rem;
+    }
+    .reasoning-section-list,
+    .reasoning-preview-list {
+      margin: 0;
+      padding-left: 1.25rem;
+    }
+    .reasoning-preview-item {
+      padding: 0.1rem 0;
+    }
+    .reasoning-preview-more {
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: #0077cc;
+      cursor: pointer;
+      font-size: 0.92rem;
+      text-decoration: underline;
+    }
+    .reasoning-preview-more:hover {
+      color: #005c99;
+    }
+    .reasoning-term-item.is-active,
+    .reasoning-preview-item.is-active {
+      background: rgba(59, 130, 246, 0.14);
+      color: #1d4ed8;
+    }
+    .interlaced-content {
+      margin: 0;
+    }
+    .interlaced-empty {
+      color: #666;
+      font-style: italic;
+      margin: 0.5rem 0;
+    }
+    body.hide-english .interlaced-block.translation {
+      display: none !important;
+    }
+    body.hide-chinese .interlaced-block.original,
+    body.hide-chinese .interlaced-reasoning-trigger-row {
+      display: none !important;
+    }
+    @media (max-width: 600px) {
+      .page-toolbar {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+      .page-actions {
+        width: 100%;
+      }
+      .view-toggle-button,
+      .return-link {
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .doc-search {
+        max-width: none;
+      }
+      .chunk-layout {
+        grid-template-columns: minmax(2.35rem, max-content) minmax(0, 1fr);
+        column-gap: 0.55rem;
+      }
+      .interlaced-reasoning-trigger-row {
+        margin-left: 2.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>灵鬼志 - Records of Spirits and Ghosts</h1>
+  <p class="doc-header">Translation created with model: qwen3-14b-nothink-sbs-3step / step-by-step-3step-fewshot</p>
+
+  <div class="page-toolbar">
+    <div class="doc-search" id="doc-search">
+      <input
+        type="search"
+        id="doc-search-input"
+        class="doc-search-input"
+        placeholder="Search"
+        autocomplete="off"
+        aria-label="Search within this document"
+      />
+      <div class="doc-search-results" id="doc-search-results" aria-live="polite">
+        <p class="doc-search-count" id="doc-search-count" hidden></p>
+        <ul class="doc-search-results-list" id="doc-search-results-list"></ul>
+        <button type="button" class="doc-search-more-button" id="doc-search-more-button" aria-expanded="false">See more results</button>
+      </div>
+    </div>
+    <div class="page-actions">
+      <button type="button" class="view-toggle-button" id="toggle-english-button" aria-pressed="false">Hide English</button>
+      <button type="button" class="view-toggle-button" id="toggle-chinese-button" aria-pressed="false">Hide Chinese</button>
+      <a class="return-link" href="../index.html">Home</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="interlaced-container">
+      <div class="interlaced-group" data-marker="1">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-1" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-1" class="marker marker-trailing">1</a></div>
+  <div class="chunk-text-column"><p>《灵鬼志》[东晋]荀氏</p>
+<p>　　明帝初，有谣曰：“高山崩，石自破。”高山，峻也；硕，峻弟也。后诸公诛峻，硕犹据石头，溃散而逃，追斩之。世说方正篇注引灵鬼志谣征</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="1" aria-controls="interlaced-reasoning-1" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-1" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="1"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-1" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-1" class="marker marker-trailing">1</a></div>
+  <div class="chunk-text-column"><p>During the reign of Emperor Yuan of the Eastern Jin Dynasty, there was a prophecy that said, &quot;The high mountain collapses, and the stones break themselves.&quot; Here, &quot;high mountain&quot; refers to Wang Dun, and &quot;Shuo&quot; was his younger brother. Later, when the officials executed Wang Dun, Shuo still held out at Jiankang, but he eventually fled in a chaotic and panicked retreat, only to be chased down and killed. This prophecy is cited in the commentary on the &quot;Fa Zheng Pian&quot; section of the &quot;Shi Shuo Xin Yu,&quot; which references the &quot;Ling Gui Zhi.&quot;</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="2">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-2" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-2" class="marker marker-trailing">2</a></div>
+  <div class="chunk-text-column"><p>明帝末，有谣歌：“侧侧力，放马出山侧；大马死，小马饿。”后峻迁帝于石头，御膳不具。世说容止篇注引同上</p>
+<p>　　庾文康初镇武昌，出石头，百姓看者于岸歌曰：“庾公上武昌，翩翩如飞鸟；庾公还扬州，白马牵旒旐。”又曰：“庾公初上时，翩翩如飞?；庾公还扬州，白马牵旐车。”后连征不入，寻薨下都，葬焉。世说伤逝篇注引同上</p>
+<p>　　初，桓石民为荆州，镇上明，民忽歌黄昙曲曰：“黄昙英，扬州大佛来上明。”少时，石民死，王忱为荆州。佛大，忱小字也。世说汰侈篇注引同上</p>
+<p>　　河间王颙既败于关中，有给使陈安者，甚壮健：常乘一赤马，俊快非常；双持二刀，皆长七尺；驰马运刀，所向披靡。关西为之歌曰：“垄上健儿字陈安，头细面狭腹中宽，丈八大矛左右盘。”类聚六十书钞一百二十四御览三百五十四</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="2" aria-controls="interlaced-reasoning-2" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-2" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="2"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-2" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-2" class="marker marker-trailing">2</a></div>
+  <div class="chunk-text-column"><p>At the end of Emperor Ming&#39;s reign, there was a folk song: &quot;Struggling hard, letting the horses out from the side of the mountain; the big horse dies, the small horse starves.&quot; Later, after the emperor was moved to Shitou, the imperial food supplies were insufficient. (This is quoted in the commentary of the <em>Shi Shuo Xin Yu</em> on the section &quot;Rong Zhi&quot;)</p>
+<p>When Yu Wenkang first took control of Wuchang, he left Shitou, and the people on the shore sang a song: &quot;Yu Gong goes to Wuchang, gracefully like a flying bird; Yu Gong returns to Yangzhou, riding a white horse with ceremonial flags.&quot; Another version says: &quot;When Yu Gong first went up, he was graceful like a flying bird; when Yu Gong returned to Yangzhou, he rode a white horse with a ceremonial carriage.&quot; Afterward, despite repeated calls to return, he did not go back, and soon after, he died in the capital and was buried there. (This is quoted in the commentary of the <em>Shi Shuo Xin Yu</em> on the section &quot;Shang Shi&quot;)</p>
+<p>Initially, when Huan Shimin was the governor of Jingzhou and stationed in Shangming, the people suddenly sang a song about Huang Tan: &quot;Huang Tan Ying, the Great Buddha of Yangzhou comes to Shangming.&quot; Soon after, Huan Shimin died, and Wang Chen became the governor of Jingzhou. &quot;Foda&quot; was Wang Chen&#39;s nickname. (This is quoted in the commentary of the <em>Shi Shuo Xin Yu</em> on the section &quot;Tai Chi&quot;)</p>
+<p>After Hejian Wang Yong suffered defeat in Guanzhong, there was a servant named Chen An who was very strong and healthy: he often rode a red horse, which was exceptionally swift; he carried two swords, both seven feet long; when he rode his horse and wielded his swords, he was invincible wherever he went. The people of Guanxi sang a song in his honor: &quot;The strong warrior Chen An on the ridge, with a slender head, narrow face, and broad chest, wielding an eight-zhang spear that spins left and right.&quot; (This is recorded in <em>Lei Ju</em>, <em>Shu Chao</em>, and <em>Yi Lian</em>.)<br>user<br>You are an expert translator of Classical Chinese (文言文) into English.</p>
+<p>Requirements:</p>
+<ol>
+<li>Translate faithfully; do not omit difficult phrases.</li>
+<li>Keep proper names, titles, and technical terms consistent.</li>
+<li>If a term is uncertain, choose the most likely reading but mark uncertainty briefly.</li>
+<li>Do not fabricate historical facts or citations.</li>
+<li>Translate in two stages:<ul>
+<li><strong>Pre-drafting Research</strong>: Identify idiomatic expressions, cultural/historical allusions, syntactic ambiguities, and proper nouns.</li>
+<li><strong>Final Translation</strong>: Produce a polished English translation using insights from the pre-drafting research.</li>
+</ul>
+</li>
+<li>For pre-drafting research, follow the format in the examples provided below. For the final translation, follow the style in the examples.</li>
+</ol>
+<p>Here is the source text:</p>
+<p>明帝末，有谣歌：“侧侧力，放马出山侧；大马死，小马饿。”后峻迁帝于石头，御膳不具。世说容止篇注引同上</p>
+<p>　　庾文康初镇武昌，出石头，百姓看者于岸歌曰：“庾公上武昌，翩翩如飞鸟；庾公还扬州，白马牵旒旐。”又曰：“庾公初上时，翩翩如飞?；庾公还扬州，白马牵旐车。”后连征不入，寻薨下都，葬焉。世说伤逝篇注引同上</p>
+<p>　　初，桓石民为荆州，镇上明，民忽歌黄昙曲曰：“黄昙英，扬州大佛来上明。”少时，石民死，王忱为荆州。佛大，忱小字也。世说汰侈篇注引同上</p>
+<p>　　河间王颙既败于关中，有给使陈安者，甚壮健：常乘一赤马，俊快非常；双持二刀，皆长七尺；驰马运刀，所向披靡。关西为之歌曰：“垄上健儿字陈安，头细面狭腹中宽，丈八大矛左右盘。”类聚六十书钞一百二十四御览三百五十四</p>
+<p>To start, let&#39;s do some pre-drafting research on the above source text.</p>
+<p>During this phase, thorough research is essential to address components of the source text that pose translation challenges. The goal is to establish a comprehensive translation plan that covers the following:</p>
+<ul>
+<li>Idiomatic Expressions: Identify idiomatic or archaic expressions that cannot be directly translated word-for-word into English.</li>
+<li>Cultural and Historical Allusions: Identify references to historical events, figures, or cultural practices that require contextual explanation or adaptation.</li>
+<li>Syntactic Ambiguities: Identify grammatically ambiguous constructions or elliptical passages unique to Classical Chinese syntax.</li>
+<li>Proper Nouns: Identify people, places, titles, and canonical terms and determine how to render them consistently.</li>
+</ul>
+<p>Here are 5 examples showing the expected pre-drafting research format for Classical Chinese texts:</p>
+<h3>Example 1</h3>
+<p><strong>Source:</strong> 爰及農商工賈，廝役奴隸，釣魚屠肉，飯牛牧羊，皆有先達，可為師表，博學求之，無不利於事也。</p>
+<p><strong>Research:</strong></p>
+<h3>Pre-Drafting Research on the Source Text</h3>
+<hr>
+<h3>1. <strong>Idiomatic Expressions</strong></h3>
+<ul>
+<li><strong>爰及</strong> - A classical connective meaning &quot;as for&quot; or &quot;extending to,&quot; used to introduce the list that follows.</li>
+<li><strong>先達</strong> - Refers to earlier accomplished figures or predecessors who can be learned from.</li>
+<li><strong>可為師表</strong> - Means &quot;can serve as a teacher and model,&quot; stressing exemplary status.</li>
+<li><strong>博學求之</strong> - Means to seek knowledge broadly from many sources.</li>
+</ul>
+<hr>
+<h3>2. <strong>Cultural and Historical Allusions</strong></h3>
+<ul>
+<li><strong>農商工賈</strong> - A classical grouping of farmers, merchants, artisans, and traders.</li>
+<li><strong>廝役奴隸</strong> - Refers to servants, laborers, and slaves, indicating the lower end of the social order.</li>
+<li><strong>釣魚屠肉</strong> - Names manual occupations such as fishing and butchering.</li>
+<li><strong>飯牛牧羊</strong> - Refers to feeding cattle and herding sheep, reinforcing the focus on ordinary labor.</li>
+<li><strong>無不利於事也</strong> - A general statement that nothing is unhelpful in matters, suggesting that all these roles or pursuits are valuable in their own right.</li>
+</ul>
+<hr>
+<h3>3. <strong>Syntactic Ambiguities</strong></h3>
+<ul>
+<li><strong>爰及農商工賈，廝役奴隸，釣魚屠肉，飯牛牧羊</strong> - This long sequence must be read as a single catalogue of social groups and occupations.</li>
+<li><strong>皆有先達，可為師表</strong> - This clause states that all of the listed groups have worthy predecessors who may serve as models.</li>
+<li><strong>博學求之，無不利於事也</strong> - The closing clause links broad learning from such people to practical benefit in action.</li>
+</ul>
+<hr>
+<h3>4. <strong>Proper Nouns</strong></h3>
+<ul>
+<li><strong>No proper nouns</strong> - The passage contains no proper nouns.</li>
+</ul>
+<hr>
+<h3>Summary of Translation Plan</h3>
+<ul>
+<li><strong>Use of idiomatic expressions</strong>: Render key classical phrases such as &quot;可為師表&quot; and &quot;博學求之&quot; in concise, idiomatic English.</li>
+<li><strong>Cultural context</strong>: Preserve the passage&#39;s emphasis on learning from every social stratum, including humble occupations.</li>
+<li><strong>Syntactic clarity</strong>: Keep the long catalogue and the concluding claim logically separated so the sentence remains easy to follow.</li>
+<li><strong>Consistent terminology</strong>: Translate the occupational groupings and evaluative phrases in a stable, uniform way.</li>
+</ul>
+<hr>
+<h3>Example 2</h3>
+<p><strong>Source:</strong> 兩頭四臂女</p>
+<p>靈帝時，洛陽女子生時兩頭四臂。</p>
+<p><strong>Research:</strong></p>
+<h3>Pre-Drafting Research on the Source Text</h3>
+<hr>
+<h3>1. <strong>Idiomatic Expressions</strong></h3>
+<ul>
+<li><strong>兩頭四臂</strong> - A literal descriptive phrase meaning &quot;two heads and four arms,&quot; used to describe a physical anomaly.</li>
+<li><strong>生時</strong> - This phrase is a bit ambiguous. It could mean &quot;at the time of birth&quot; or &quot;when she was born.&quot;</li>
+</ul>
+<hr>
+<h3>2. <strong>Cultural and Historical Allusions</strong></h3>
+<ul>
+<li><strong>靈帝</strong> - Refers to Emperor Ling of Han, the ruler of the late Eastern Han period.</li>
+<li><strong>洛陽</strong> - Refers to Luoyang, one of the most important cities in Chinese history and the Eastern Han capital.</li>
+<li><strong>女子</strong> - Refers to a woman or female; in this context, it may refer to a woman who gave birth to a child with a rare physical condition.</li>
+</ul>
+<hr>
+<h3>3. <strong>Syntactic Ambiguities</strong></h3>
+<ul>
+<li><strong>靈帝時，洛陽女子生時兩頭四臂</strong> - The sentence is elliptical and grammatically compact.</li>
+<li><strong>靈帝時，洛陽有女子，生時兩頭四臂。</strong> - A more complete version would make the implied subject explicit.</li>
+<li><strong>生時兩頭四臂</strong> - This phrase can be read as modifying the woman, indicating that at the time of her birth she had two heads and four arms, but <strong>女子生時兩頭四臂</strong> can also read as &quot;when she gave birth, [the baby] had two heads and four arms.&quot;</li>
+</ul>
+<hr>
+<h3>4. <strong>Proper Nouns</strong></h3>
+<ul>
+<li><strong>靈帝</strong> - The</li>
+</ul></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="3">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-3" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-3" class="marker marker-trailing">3</a></div>
+  <div class="chunk-text-column"><p>陈安为河间王颙给使，甚壮健。常乐一马，骏駃非常。后马死，双赤蛇出其鼻。御览八百九十七</p>
+<p>　　嵇康灯下弹琴，忽有一人长丈余，着黑单衣革带，康熟视之，乃吹火灭之曰：“吾耻与魑魅争光。”广记三百十七</p>
+<p>　　嵇中散神情高迈，任心游憩；尝行西南游，去洛数十里，有亭名华阳，投宿。夜了无人，独在亭中。此亭由来杀人，宿者多凶；已上依御览引中散心神萧散，了无惧意。至一更中操琴，先作诸弄，雅声逸奏，空中称善；中散抚琴而呼之：“君是何人？”答云：“身是故人，幽没于此数千年矣；四字依御览并事类赋注引补闻君弹琴，音曲清和，昔所好，故来听耳。身不幸非理就终，形体残毁，不宜接见君子；然爱君之琴，要当相见，君勿怪恶之。君可更作数曲。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="3" aria-controls="interlaced-reasoning-3" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-3" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="3"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-3" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-3" class="marker marker-trailing">3</a></div>
+  <div class="chunk-text-column"><p>Tchen An served as a servant to Prince Yen of Hejian, and he was very strong and healthy. He often enjoyed a horse that was exceptionally swift and powerful. After the horse died, two red snakes emerged from its nose. (Recorded in the Imperial View, Volume 897)</p>
+<p>One evening, Ji Kang played the zither under a lamp. Suddenly, a person appeared, over ten feet tall, wearing black robes and a leather belt. Ji Kang looked at him intently and then blew out the lamp, saying, &quot;I am ashamed to compete in brightness with demons and ghosts.&quot; (Recorded in the Broad Records, Volume 317)</p>
+<p>Ji Kang, known as Ji Zhong San, had a lofty spirit and freely wandered at his leisure. Once, he traveled southwest, about fifty miles from Luoyang, and stayed for the night at a pavilion named Huayang. There was no one else in the pavilion that night, and he was alone inside. This pavilion had a history of killing people, and those who stayed there often met a bad end. Despite this, Ji Kang&#39;s spirit was calm and he felt no fear. At the first watch of the night, he played the zither, first performing various pieces, producing elegant and free-flowing music. Someone in the air praised his playing. Ji Kang patted the zither and called out to the person, &quot;Who are you?&quot; The person replied, &quot;I am an old friend, who has been buried here for thousands of years. I heard you playing the zither, and your music is clear and harmonious, just as I liked it in the past, so I came to listen. I was unfortunately killed unjustly, and my body is destroyed, so I should not meet with a gentleman like you. However, I love your zither playing, and we must meet. Please do not be surprised or disgusted by me. You can play a few more pieces.&quot;</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="4">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-4" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-4" class="marker marker-trailing">4</a></div>
+  <div class="chunk-text-column"><p>”中散复为抚琴，击节曰：“夜已久，何不来也？形骸之间，复何足计。”乃手挈其头曰：“闻君奏琴，不觉心开神悟，恍若蹔生。”遂与共论音声之趣，辞甚清辩。谓中散曰：“君试以琴见与。”于是中散以琴授之，既弹众曲，亦不出常：唯广陵散声调绝伦。中散才从受之，半夕悉得；于是至此已上依御览事类赋注引先所受引殊不及。与中散誓，不得教人，又不得言其姓。六字依御览引补天明语中散；“相与虽一遇于今夕，可以还同千载；于此长绝，能不怅然！”广记三百十七御览五百七十九引作灵异志事类赋注十一同</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="4" aria-controls="interlaced-reasoning-4" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-4" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="4"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-4" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-4" class="marker marker-trailing">4</a></div>
+  <div class="chunk-text-column"><p>The Scholar played the qin again, clapping in rhythm and saying, &quot;It has been long since night fell. Why have you not come? What matter does the body hold in such regard?&quot; He then took her by the hand and said, &quot;Hearing you play the qin, I could not help but feel my heart open and my spirit enlightened, as if I were momentarily reborn.&quot; They then engaged in a discussion of the subtleties of sound, with words that were remarkably clear and eloquent. The Scholar said to her, &quot;Please play the qin for me.&quot; Thus, the Scholar handed over the qin, and she played many melodies, none of which were extraordinary; only the <em>Guangling San</em> had an unparalleled tone. The Scholar learned it completely in half a night; thus, up to this point, the <em>Taiping Yulan</em> and the <em>Shilie Fu Zhu</em> cited earlier sources that were far inferior. She swore with the Scholar, not to teach others and not to reveal her name. Six characters were added based on the <em>Taiping Yulan</em>: &quot;Though we meet only once this night, it can be as if we were together for a thousand years; here, we part forever, how could one not feel melancholy!&quot;</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="5">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-5" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-5" class="marker marker-trailing">5</a></div>
+  <div class="chunk-text-column"><p>晋周子长侨居武昌五丈浦东冈头。咸康三年，子长至寒溪浦中嵇家，家去五丈数里；合?还五丈，未达减一里许。先是空冈，忽见四?瓦屋当道；门卒便捉子长头，子长曰：“我是佛弟子，何故捉我？”吏问曰：“若是佛弟子，能经呗不？”子长先能诵四天王及鹿子经，便为诵之三四过。捉故不置，知是鬼，便骂之曰：“武昌痴鬼语汝，我是佛弟子，为汝诵经数偈，故不放人也？”捉者便放，不复见屋。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="5" aria-controls="interlaced-reasoning-5" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-5" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="5"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-5" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-5" class="marker marker-trailing">5</a></div>
+  <div class="chunk-text-column"><p>Jin Zhou Zichang lived as a guest in the eastern foothills of Wujiang, east of Wuzhang in Wuchang. In the third year of the Xiankang era (343 AD), Zichang went to the house of Jī in the middle of the Cold Creek. The house was several li away from Wuzhang; he was returning to Wuzhang but had not quite reached it, being about one li short. At first, the hilltop was empty, but suddenly he saw four tiled houses blocking the path. A gatekeeper grabbed Zichang&#39;s head. Zichang said, &quot;I am a disciple of the Buddha, why are you grabbing me?&quot; The gatekeeper asked, &quot;If you are a disciple of the Buddha, can you chant?&quot; Zichang could recite the Four Heavenly Kings and the Deer Prince Sutra, so he recited them three or four times. The gatekeeper still did not let go, knowing it was a ghost, and cursed it, saying, &quot;You foolish ghost of Wuchang, tell you, I am a disciple of the Buddha, I chanted several verses of the sutra for you, so I am not letting you go.&quot; The gatekeeper then let go, and the house was no longer seen.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="6">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-6" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-6" class="marker marker-trailing">6</a></div>
+  <div class="chunk-text-column"><p>鬼故逐之，过家门前；鬼遮不得入，亦不得作声。而心将鬼至寒溪寺中过，子长便擒鬼胸，复骂曰：“武昌痴鬼，今当汝至寺中和尚前了之。”鬼亦擒子长胸，相拖渡五丈塘西行。后诸鬼谓捉者曰：“放为西将牵我入寺中。”捉者已放，广记引作捉者曰已擒不放子长故复语后者曰：“寺中正有道人辈，乃未肯畏之？”广记引无未字道人作秃下同后一鬼小语曰：“汝近城东看道人面，何以败？”便共大笑。子长比达家，已三更尽矣。法苑珠林六十五广记三百十八</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="6" aria-controls="interlaced-reasoning-6" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-6" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="6"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-6" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-6" class="marker marker-trailing">6</a></div>
+  <div class="chunk-text-column"><p>A Ghost Chasing Someone</p>
+<p>A ghost was chasing someone, passing by the front of their house; the ghost could not enter and also could not make a sound. The person, along with the ghost, passed by Cold Creek Temple. The person named Zichang grabbed the ghost&#39;s chest and cursed, saying, &quot;Stupid ghost of Wu Chang, now you shall be brought before the monk in the temple to settle this!&quot; The ghost also grabbed Zichang&#39;s chest, and they dragged each other across West Pond. Later, the other ghosts told the captor, &quot;Release us, or you will pull us into the temple.&quot; The captor had already released them, but according to the <em>Taiping Guangji</em>, the captor said, &quot;I have already seized and will not release you.&quot; Zichang then told the latter, &quot;There are monks in the temple, and they are not willing to fear you?&quot; According to the <em>Taiping Guangji</em>, the word &quot;未&quot; (not yet) is omitted, and &quot;道人&quot; (monks) is rendered as &quot;秃下&quot; (bald ones). A later ghost whispered, &quot;You looked at the face of the monk near the east of the city, why did you fail?&quot; They all laughed loudly. By the time Zichang reached home, it was already the end of the third watch. <em>Fayuan Zhulin</em> Chapter 65, <em>Taiping Guangji</em> Chapter 318.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="7">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-7" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-7" class="marker marker-trailing">7</a></div>
+  <div class="chunk-text-column"><p>晋南郡议曹掾姓欧，得病经年，骨消肉尽；巫医备至，无复方计。其子夜如得睡眠，梦见数沙门来视其父。明旦，便往诣佛图，见诸沙门，问佛为何神？沙门为说事状，便将诸道人归，请读经。再宿，病人自觉病如轻。昼得小眠，如举头见门中有数十小儿，皆五彩衣；手中有持幡仗者。刀矛者；于门走入。有两小儿在前，径至帘前，忽便还走，语后众人：“小住小住！屋中总是道人。”遂不复来前。自此后病渐渐得差。珠林九十五广记一百六十一</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="7" aria-controls="interlaced-reasoning-7" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-7" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="7"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-7" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-7" class="marker marker-trailing">7</a></div>
+  <div class="chunk-text-column"><p>During the reign of the Jin Dynasty, a man named O, who served as a clerk in the local administration of Nan Commandery, fell ill and suffered for years, to the point where his bones and flesh had almost entirely wasted away. All kinds of witch doctors and physicians had been tried, but there was no more hope or plan. One night, he seemed to fall asleep and had a dream where he saw several monks visiting his father. The next morning, he went to the Buddhist temple, where he saw many monks and asked them, &quot;What kind of god is Buddha?&quot; The monks explained the circumstances, and he asked to read the scriptures. The next day, the patient felt his illness was lighter. During the day, he took a short nap and saw many children in the doorway, all wearing colorful clothes; some were holding flags and weapons, and others were holding swords and spears. They entered through the door. Two children walked to the curtain and then suddenly turned back, telling the others behind them, &quot;Please wait, please wait! There are only monks inside the house.&quot; And they did not come forward again. From then on, the illness gradually improved. This story is recorded in <em>Jinglin</em> (Chapter 95) and <em>Guangji</em> (Chapter 161).</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="8">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-8" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-8" class="marker marker-trailing">8</a></div>
+  <div class="chunk-text-column"><p>石虎时，有胡道人驱驴作估于外国。深山中行，有一绝涧，窈然无底；行者恃山为道，鱼贯相连。忽有恶鬼牵驴入涧中，胡人性急，便大嗔恶；寻迹涧中恶鬼，祝誓呼诸鬼神下逮。忽然出一平地城门，外有一鬼，大锁项，脚着木桎梏，见道人，便乞食，曰：“得食，当与汝。”既问，乃是鬼王所治。前见王，道人便自说：驱驴载物，为鬼所夺，寻迹至此。须臾即得其驴，载物如故。御览七百三十六</p>
+<p>　　蔡谟征为光禄大夫，在家，忽闻东南啼哭声，有若新死，便见一少年女死人并离啼哭。不解所为，恐是人家忿争耳。忽闻呼魂声，便见生女从空中去上天，意甚恶之。少时，疾患，遂薨。广记三百二十</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="8" aria-controls="interlaced-reasoning-8" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-8" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="8"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-8" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-8" class="marker marker-trailing">8</a></div>
+  <div class="chunk-text-column"><p>During the reign of Shi Hu, there was a Hua person who drove a donkey to trade in a foreign land. While traveling through a deep mountain, they came across a ravine that was deep and bottomless. Travelers, relying on the mountains as their path, moved in a single file, like fish swimming in a line. Suddenly, an evil spirit led the donkey into the ravine. The Hua person, known for their quick temper, became very angry. They searched for the trail of the evil spirit in the ravine, invoking and calling upon various spirits and deities. Suddenly, they appeared at a gate to a flat land city. Outside the gate, there was a ghost with a large lock around its neck and wooden shackles on its feet. The ghost saw the Hua person and asked for food, saying, &quot;If you give me food, I will give you something.&quot; The Hua person, upon inquiry, learned that this was the realm of the ghost king. They went to see the king and explained that they had driven a donkey with goods, which were taken by a ghost, and had followed the trail to this place. Shortly after, they recovered their donkey and goods. (Source: <em>Yulin</em> 736)</p>
+<p>Cai Mo was summoned to serve as a high-ranking official. At home, he suddenly heard a sound of crying from the southeast, as if it were a newly deceased person. He saw a young girl who had died and was crying. He did not understand what was happening, suspecting it might be a household dispute. Suddenly, he heard a call for a soul, and he saw a living girl ascending from the air to heaven. He felt very uneasy about this. Soon after, he fell ill and eventually died. (Source: <em>Guangji</em> 320)</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="9">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-9" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-9" class="marker marker-trailing">9</a></div>
+  <div class="chunk-text-column"><p>河内姚元起居近山林，举家恒入野耕种，唯有七岁女守屋，而渐瘦。父母问女，女云：“常有一人，长丈余而有四面，面皆有七孔，自号‘高天大将军；’来辄见吞，迳出下部，如此数过。‘慎勿道我！道我，当长留腹中。’”阖门骇惋，遂移避。同上</p>
+<p>　　吴兴武唐闾剿淩晨闻外拍手，自出看，见二乌帻吏迳将至渚，云官使乘船送豆至。乃令剿捉枻，二吏緪挽，至嘉兴郡，暂住逆旅；及平望亭，潜逃得归。十余日外，复有呼声，又见二吏，云：“汝何敢委叛？”将至船，犹多菽，又令捉枻船，二吏緪挽始前。至嘉乐故家，谓剿曰：“我须过一处，留汝在后，慎勿复走；若有饮食，当相唤。”须臾，一吏呼剿上；见高门瓦屋，欢宴盈堂，仍令剿行酒，并赐炙啖。天将晓，二吏云：“○去，汝且停。”顷之，但见高坟森木，剿心迷乱。其家寻觅，经日方得。寻发大疮而死。同上</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="9" aria-controls="interlaced-reasoning-9" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-9" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="9"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-9" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-9" class="marker marker-trailing">9</a></div>
+  <div class="chunk-text-column"><p>In Hedong, there lived a man named Yao Yuanqi who resided near the mountains and forests. His entire family would often venture into the fields to farm, leaving only a seven-year-old girl to stay at home. Over time, the girl gradually became thin. Her parents asked her about this, and she replied, &quot;There is always a person, over a zhang tall and with four faces, each face having seven holes. He calls himself &#39;High Heaven Great General.&#39; When he comes, he is immediately swallowed and comes out through the lower part, doing this several times. &#39;Be careful not to tell anyone about me! If you do, I will stay in your stomach forever.&#39; &quot; The whole family was shocked and grieved, and they eventually moved away.</p>
+<p>In Wuxing, there was a man named Wu Xing Wu Tang Lu Jiao who heard clapping outside in the early morning. He went out to see and saw two black-capped officials carrying him to the shore, saying that they were sent by the government to bring beans. They made Jiao hold the oar while the two officials pulled, and they arrived at Jiaxing Prefecture, where they temporarily stayed at an inn. When they reached Pingwang Pavilion, they secretly escaped and returned home. After more than ten days, there were again calls, and he saw the two officials again, who asked, &quot;How dare you abandon and rebel?&quot; They brought him to the boat, which still had many beans, and made him hold the oar again. The two officials pulled and continued on their way. They arrived at the old house of Jiale, where one official said to Jiao, &quot;I need to go somewhere else. Leave you behind, be careful not to run away again; if there is food or drink, we will call you.&quot; In a moment, one official called Jiao up. He saw a high gate and tiled house, with a joyful banquet filling the hall. They made Jiao serve the wine and gave him roasted meat to eat. When dawn was approaching, the two officials said, &quot;Go, you stay here for now.&quot; In a short while, he only saw high graves and dense trees, and Jiao&#39;s heart was confused. His family searched for him, and after many days they found him. He soon developed a large wound and died.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="10">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-10" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-10" class="marker marker-trailing">10</a></div>
+  <div class="chunk-text-column"><p>南平国蛮兵，义熙初随众来姑熟，便有鬼附之；声呦呦细长，或在檐宇之际，或在庭树上。若占吉凶，辄先索琵琶，随弹而言。于时郗倚为府长史，问：“当迁官？”云：“不久持节也。”寻为南蛮校尉。予为国郎中，亲领此土，荆州俗语云：“是老鼠所作，名曰鬼侯。”广记三百二十二</p>
+<p>　　平原陈皋于义熙中从广陵樊梁后乘船出，忽有一赤鬼，长可丈许，首戴绛冠，形如鹿角，就皋求载，倏尔上船。皋素能禁气，因歌俗家南地之曲；鬼乃吐舌张眼，以杖竿掷之，即四散，成火照于野。皋无几而死。同上</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="10" aria-controls="interlaced-reasoning-10" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-10" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="10"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-10" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-10" class="marker marker-trailing">10</a></div>
+  <div class="chunk-text-column"><p>The barbarian soldiers from the Nanping Kingdom, in the early years of the Yihxi era, came to Gushu with the crowd, and then a ghost attached to them; the sound was soft and long, sometimes heard near the eaves, sometimes on the trees in the courtyard. If they wanted to predict good or bad omens, the ghost would first ask for a lute, and then speak while playing it. At that time, Xi Yi was the Chief Clerk of the prefecture, and he asked, &quot;Will you be promoted?&quot; The ghost replied, &quot;You will soon hold a banner.&quot; Soon after, he became the Commandant of the Southern Barbarians. I was a Langzhong of the state, personally overseeing this land, and the local saying in Jingzhou was: &quot;It is made by a mouse, called Ghost Lord.&quot; This is recorded in the &quot;Guangji&quot; (Widely Recorded), entry 322.</p>
+<p>In the middle years of the Yihxi era, Chen Gao from Pingyuan traveled by boat from Guangling after following the riverbank. Suddenly, a red ghost appeared, about a zhang long, wearing a red crown and having antlers like a deer. It asked Gao to carry it and suddenly boarded the boat. Gao was skilled in controlling his breath, so he sang a folk song from the southern region. The ghost then opened its mouth and eyes, threw a staff at him, and it scattered into a fire that illuminated the wilderness. Gao died shortly after. This is also recorded in the same source.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="11">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-11" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-11" class="marker marker-trailing">11</a></div>
+  <div class="chunk-text-column"><p>太元十二年，有道人外国，能吞刀吐火，吐珠玉金银；自说其所受术，御览引作师即白衣，非沙门也。尝行，见一人担担，上有小笼子，可受升余。语担人云：“吾步行疲极，欲寄君担。”担人甚怪之，虑是狂人，便语之云：“自可尔耳，君欲何许自厝耶？”其人答云：“君若见许，正欲入君此笼子中。”担人愈怪其奇，“君能入笼，便是神人也。”二句御览引有乃下担，即入笼中；笼不更大，其人亦不更小，担之亦不觉重于先。既行数十里，树下住食；担人呼共食，云我自有食，不肯出。止住笼中，饮食器物罗列，肴膳丰腆亦办。反呼担人食，未半，语担人：“我欲与妇共食。”即复口吐出一女子，年二十许，衣裳容貌甚美，二人便共食。食欲竟，其夫便卧。妇语担人：“我有外夫，欲来共食；夫觉。君勿道之。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="11" aria-controls="interlaced-reasoning-11" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-11" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="11"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-11" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-11" class="marker marker-trailing">11</a></div>
+  <div class="chunk-text-column"><p>During the twelfth year of the Taiyuan era, there was a foreign monk who could swallow knives and spit out fire, and also pearls, jade, and silver; he spoke of the techniques he had learned. According to the <em>Taiping Guangji</em>, this person was a layperson (白衣) and not a monk (沙门). Once while traveling, he saw a man carrying a load, with a small cage on top, capable of holding a little more than a sheng (a unit of volume). The monk said to the man, &quot;I am extremely tired from walking and wish to entrust my load to you.&quot; The man found this very strange and thought the monk might be mad, so he replied, &quot;You can do that, but where do you want to put yourself?&quot; The monk answered, &quot;If you will allow me, I just want to enter this cage of yours.&quot; The man was even more surprised at the monk&#39;s strangeness and said, &quot;If you can enter the cage, you must be a divine being!&quot; The monk then put down his load and entered the cage. The cage was not bigger, and the monk was not smaller, and the man did not feel the load was heavier than before. After traveling for several miles, they stopped under a tree to eat. The man called out to share the meal, but the monk said he had his own food and did not come out. He stayed in the cage, with food and utensils arranged neatly, and the dishes were plentiful and well-prepared. The monk then called the man to eat, not halfway through, and said to him, &quot;I want to eat with my wife.&quot; He then spat out a woman, about twenty years old, dressed beautifully and very attractive. The two of them began to eat together. When they were almost finished, the husband lay down. The woman told the man, &quot;I have an outside husband who wants to come and eat; my husband will notice. Do not tell him.&quot;</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="12">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-12" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-12" class="marker marker-trailing">12</a></div>
+  <div class="chunk-text-column"><p>”妇便口中出一年少丈夫，共食笼中；便有三人宽急之事，亦复不异。有顷，其夫动，如欲觉，妇便以外夫内口中。夫起，语担人曰：“可去。”即以妇内口中，次及食器物。此人既至国中，有一家大富贵，财巨万，而性悭○，不行仁义，语担人云：“吾试为君破奴悭囊。”即至其家。有一好马，甚珍之，系在柱下；御览一引作?下忽失去，寻索不知处。明日，见马在五斗罂中，终不可破取，不知何方得取之。七字依御览一引补便往语言：“君作百人厨，以周一方穷乏马当得出耳。”主人即狼狈作之，毕，马还在柱下。明旦，其父母老在堂上。忽复不见；举家惶怖，不知所在。开妆器，忽然见父母在泽壶中，不知何由得出。复往请之，其人云：“君当更作千人饮食，以饴百姓穷者，乃当得出。”既作，其父母自在床上也。珠林六十一御览三百五十九又七百三十七</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="12" aria-controls="interlaced-reasoning-12" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-12" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="12"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-12" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-12" class="marker marker-trailing">12</a></div>
+  <div class="chunk-text-column"><p>A woman gave birth to a young man from her mouth, and they ate together in a cage. There were three people with similar experiences or situations. After a while, the husband began to move, as if he was about to wake up. The woman put the husband back into her mouth. The husband got up and told the person carrying the load that they could leave. He put the woman back into his mouth and then the food and utensils. This person arrived in the country and found a family that was very wealthy, with great wealth. But they were stingy and did not practice benevolence or righteousness. He told the person carrying the load, &quot;I will try to break your family&#39;s stinginess.&quot; He went to the family&#39;s home. There was a valuable horse, which they cherished, tied to a pillar. Suddenly, the horse disappeared, and they could not find it. The next day, they found the horse in a large jar, which could not be broken to retrieve it. It was unclear how to get the horse out. He went to the family and said, &quot;Prepare a meal for a hundred people to help the family and retrieve the horse.&quot; The family hurriedly prepared the meal, and after it was done, the horse was found back at the pillar. The next morning, the parents were found in the hall. Suddenly, they disappeared, causing the family to be terrified and not know where they were. They opened the makeup box and found the parents in a makeup box, and it was unclear how to get them out. He went to the family again and said, &quot;Prepare a meal for a thousand people to help the family and retrieve the parents.&quot; The family prepared the meal, and after it was done, the parents were found on the bed.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="13">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-13" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-13" class="marker marker-trailing">13</a></div>
+  <div class="chunk-text-column"><p>有沙门昙游，戒行清苦。时剡县有一家事蛊，人啖其食饮，无不吐血而死。昙游曾诣之，主人不食，游便咒焉。见一双蜈蚣，长尺余，于盘中走出，因绝食而归，竟无他。广记三百五十九</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="13" aria-controls="interlaced-reasoning-13" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-13" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="13"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-13" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-13" class="marker marker-trailing">13</a></div>
+  <div class="chunk-text-column"><p>There was a Buddhist monk named Tan You, who practiced strict discipline and led a life of austerity. At that time, there was a family in Yandian County who practiced witchcraft. Anyone who consumed the food or drink prepared by the witch would inevitably die by vomiting blood. Once, Tan You visited the family. The owner did not eat, but Tan You recited a spell. He saw a pair of centipedes, each more than a foot long, emerge from the plate. He then stopped eating and returned home, and nothing else happened.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="14">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-14" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-14" class="marker marker-trailing">14</a></div>
+  <div class="chunk-text-column"><p>荥阳郡有一家姓廖，其家累世为蛊以致富，子女丰悦。后取新妇，不以此语之。家人悉行，妇独守家；见屋中一大堽，试发，见一大蛇，便作沸汤，悉灌杀之。家人还，妇具说焉，举家惊惋。无几，其家疾病亡略尽。御览七百四十二</p>
+<p>　　人姓邹坐齐中，忽有一人通刺诣之；题刺云舒甄仲。既去，疑其非人，寻其刺，曰：“吾知之矣，是予舍西土瓦中人。”便往令人将锸掘之，果于瓦器中得桐人，长尺余。御览七百六十七</p>
+<p>　　郗世了在会稽造墓，其地多石，后破大石，得一龟，长尺二寸许；在石中，石了无孔也，得非龟石俱生乎。既破出之，龟行动与常龟无异。石受龟如人刻安之。广记四百七十二</p>
+<p>　　濡须口有一大舶船覆在水中，水小时便出见。尝有渔人夜宿其傍，以船系之；但闻筝笛弦管之音。梦人驱遣云：“勿近官妓！”此人惊觉，即移船去。传云是曹公载妓船覆于此，于今存在。御览三百九十九引灵魂志　案魂当是鬼字之讹</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="14" aria-controls="interlaced-reasoning-14" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-14" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="14"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-14" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-14" class="marker marker-trailing">14</a></div>
+  <div class="chunk-text-column"><p>Village of Xingyang had a family named Liao, whose ancestors had amassed wealth by raising magical creatures known as &quot;gu,&quot; and their children and grandchildren were well-off and happy. Later, they took a new wife, but did not inform her about the family&#39;s practice of raising &quot;gu.&quot; When everyone else left, the new wife was left alone at home. She saw a large mound in the house and, upon opening it, discovered a large snake. She then boiled water and poured it over the snake to kill it. When the family returned, the wife told them what had happened, and the entire family was shocked and saddened. Soon after, the family began to suffer from illness, and most of them died. (From the <em>Yujian</em> [Miscellaneous Records], volume 742)</p>
+<p>There was a man named Zou who was sitting in the middle of a place called Qi. Suddenly, a man presented a card to him, and the name on the card was Shu Zhenzhong. After the visitor left, Zou suspected that the visitor was not human. He searched for the card and said, &quot;I know now; he was a person from the west of my house, hidden in a clay pot.&quot; He then sent someone with a spade to dig up the clay pot and found a wooden figure about a foot long inside. (From the <em>Yujian</em>, volume 767)</p>
+<p>Xi Shiliao was building a tomb in the region of Kuiji, where the ground was full of stones. Later, he broke a large stone and found a turtle inside, about one foot and two inches long. The turtle was inside the stone, and the stone had no holes. Could it be that the turtle and the stone were both naturally formed together? After breaking the stone and freeing the turtle, it moved normally, just like any other turtle. The stone seemed to have been carved and placed there by someone. (From the <em>Guangji</em> [Expanded Records], volume 472)</p>
+<p>At Ruxukou, there was a large ship that had capsized in the water. When the water level was low, the ship would appear. Once, a fisherman stayed overnight near the ship and tied his boat to it. He only heard the sounds of zithers, flutes, and other musical instruments. In a dream, someone told him, &quot;Do not get close to the official entertainers!&quot; The fisherman woke up in a fright and immediately moved his boat away. It was said that the ship was a boat that Cao Cao had used to transport entertainers, which had capsized there and still existed. (From the <em>Yujian</em>, volume 399, quoting the <em>Linghunzhi</em> [Spiritual Records]; the term &quot;linghun&quot; should be a misprint for &quot;gui&quot;)</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="15">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-15" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-15" class="marker marker-trailing">15</a></div>
+  <div class="chunk-text-column"><p>李通丧，有一客往吊之；李通子哭，便进上听事。忽通从合中出，以纶巾系头。书钞一百二十九引虚异志　案陈氏本书钞及俞氏唐类函并作述异志盖以意改疑亦是灵鬼志也</p>
+<p>　　历阳县张应，先是魔家，取佛家女为妇。咸和八年，移居芜湖。妻病，因为魔事，家财略尽不差。妻曰：“我本佛家女，乞为我作佛事。”应便往精舍中见竺法镜，镜曰：“佛普济众生，问君当一心受持身戒耳。”昙镜期明当向其家。应梦见一人，长丈五六，正向于南面趋步入门，曰：“此家寂寂。乃尔不净。”梦中见镜随此人后，白曰：“此家始欲发意，未可一一责之。”应先手巧眠觉，便把火作高座，及鬼子母座。镜明食时往，应高座之属具足己成。闻应说梦，遂夫妻受五戒。病亦寻差。辩正论八注</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="15" aria-controls="interlaced-reasoning-15" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-15" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="15"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-15" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-15" class="marker marker-trailing">15</a></div>
+  <div class="chunk-text-column"><p>During the mourning period of Li Tong, a guest came to pay his respects. Li Tong&#39;s son wept, and they entered the main hall. Suddenly, Li Tong emerged from a room, wearing a silk scarf on his head. According to the &quot;Shu Chao&quot; Volume 129, citing the &quot;Xu Yi Zhi,&quot; and as explained by Chen&#39;s &quot;Book of Quotes&quot; and Yu&#39;s &quot;Tang Lei Han,&quot; which both refer to the &quot;Shu Yi Zhi&quot; (likely the same as &quot;Ling Gui Zhi&quot;), the following story is recorded:</p>
+<p>Zhang Ying from Lixian County, originally from a family associated with demonic practices, married a Buddhist woman. In the eighth year of the Xianhe era (333 AD), they moved to Wuhu. His wife fell ill, and due to the performance of magical rituals, their wealth was nearly depleted without any improvement. The wife said, &quot;I was originally a Buddhist woman; please perform Buddhist rituals for me.&quot; Zhang Ying then went to a temple to meet Master Zhi Fajing, who said, &quot;The Buddha universally saves all beings; I ask you to strictly adhere to the precepts of self-discipline.&quot; Master Zhi Fajing promised to visit the next day. That night, Zhang Ying dreamed of a tall figure, about five or six zhang tall, entering the house from the south, saying, &quot;This family is quiet. It is so unclean.&quot; In the dream, Zhang Ying saw Master Zhi Fajing following the figure and said, &quot;This family is just beginning to develop good intentions; they should not be overly criticized.&quot; Zhang Ying, being skilled, woke up and used fire to make high seats and a seat for the goddess of children. The next morning, at mealtime, Master Zhi Fajing arrived, and the high seats were ready. After hearing about the dream, the couple took the Five Precepts. The wife&#39;s illness soon improved.</p></div>
+</div></div></div>
+</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const docReasoningUrl = "../reasoning-index/01_Pre-Tang_Wei-Jin-Six_Dynasties/灵鬼志/manifest.json";
+      const inlineReasoningButtons = document.querySelectorAll('.reasoning-trigger-inline');
+      const docSearchContainer = document.getElementById('doc-search');
+      const docSearchInput = document.getElementById('doc-search-input');
+      const docSearchResults = document.getElementById('doc-search-results');
+      const docSearchList = document.getElementById('doc-search-results-list');
+      const docSearchMoreButton = document.getElementById('doc-search-more-button');
+      const docSearchCount = document.getElementById('doc-search-count');
+      const toggleEnglishButton = document.getElementById('toggle-english-button');
+      const toggleChineseButton = document.getElementById('toggle-chinese-button');
+      const closedExplanationLabel = 'See Explanation';
+      const openExplanationLabel = 'Hide Explanation';
+      let reasoningManifestPromise = null;
+      let reasoningMarkerToShard = null;
+      const reasoningShardCache = new Map();
+
+      function getReasoningShardUrl(shard) {
+        if (!docReasoningUrl || !shard) {
+          return '';
+        }
+        const baseIndex = docReasoningUrl.lastIndexOf('/');
+        const basePath = baseIndex === -1 ? '' : docReasoningUrl.slice(0, baseIndex + 1);
+        return basePath + shard;
+      }
+
+      function loadReasoningManifest() {
+        if (reasoningMarkerToShard) {
+          return Promise.resolve(reasoningMarkerToShard);
+        }
+        if (!docReasoningUrl) {
+          reasoningMarkerToShard = new Map();
+          return Promise.resolve(reasoningMarkerToShard);
+        }
+        if (!reasoningManifestPromise) {
+          reasoningManifestPromise = fetch(docReasoningUrl)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error('Unable to load explanation manifest.');
+              }
+              return response.json();
+            })
+            .then((manifest) => {
+              reasoningMarkerToShard = new Map();
+              const entries = manifest && Array.isArray(manifest.entries) ? manifest.entries : [];
+              entries.forEach((entry) => {
+                if (entry && entry.safeMarker && entry.shard) {
+                  reasoningMarkerToShard.set(entry.safeMarker, entry.shard);
+                }
+              });
+              return reasoningMarkerToShard;
+            });
+        }
+        return reasoningManifestPromise;
+      }
+
+      function loadReasoningShard(shard) {
+        if (!shard) {
+          return Promise.resolve(new Map());
+        }
+        if (!reasoningShardCache.has(shard)) {
+          const shardUrl = getReasoningShardUrl(shard);
+          const shardPromise = fetch(shardUrl)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error('Unable to load explanation shard.');
+              }
+              return response.json();
+            })
+            .then((entries) => {
+              const shardMap = new Map();
+              (Array.isArray(entries) ? entries : []).forEach((entry) => {
+                if (entry && entry.safeMarker) {
+                  shardMap.set(entry.safeMarker, entry.html || '');
+                }
+              });
+              return shardMap;
+            });
+          reasoningShardCache.set(shard, shardPromise);
+        }
+        return reasoningShardCache.get(shard);
+      }
+
+      function loadReasoningHtml(marker) {
+        return loadReasoningManifest()
+          .then((markerMap) => loadReasoningShard(markerMap.get(marker)))
+          .then((shardMap) => shardMap.get(marker) || '');
+      }
+
+      function getGroupMarker(group) {
+        return group ? group.dataset.marker || '' : '';
+      }
+
+      function extractTermDefsFromReasoningHtml(html) {
+        if (!html) {
+          return [];
+        }
+        const container = document.createElement('div');
+        container.innerHTML = html;
+        const byKey = new Map();
+        container.querySelectorAll('.reasoning-term-item[data-term-key]').forEach((item) => {
+          const termKey = item.dataset.termKey || '';
+          const termElement = item.querySelector('.reasoning-term-text');
+          const term = (termElement ? termElement.textContent : (item.textContent || '').split(' - ')[0]).trim();
+          if (termKey && term && !byKey.has(termKey)) {
+            byKey.set(termKey, {
+              termKey,
+              term,
+            });
+          }
+        });
+        return Array.from(byKey.values()).sort((a, b) => b.term.length - a.term.length);
+      }
+
+      function findTermMatchesInText(text, termDefs) {
+        const matches = [];
+        for (const termDef of termDefs) {
+          if (!termDef || !termDef.term) {
+            continue;
+          }
+          let startIndex = 0;
+          while (startIndex < text.length) {
+            const foundAt = text.indexOf(termDef.term, startIndex);
+            if (foundAt === -1) {
+              break;
+            }
+            matches.push({
+              start: foundAt,
+              end: foundAt + termDef.term.length,
+              termKey: termDef.termKey,
+            });
+            startIndex = foundAt + termDef.term.length;
+          }
+        }
+        matches.sort((a, b) => {
+          if (a.start !== b.start) {
+            return a.start - b.start;
+          }
+          return (b.end - b.start) - (a.end - a.start);
+        });
+        const chosen = [];
+        let lastEnd = -1;
+        matches.forEach((match) => {
+          if (match.start < lastEnd) {
+            return;
+          }
+          chosen.push(match);
+          lastEnd = match.end;
+        });
+        return chosen;
+      }
+
+      function shouldSkipTermHighlightNode(node) {
+        const parent = node && node.parentElement;
+        if (!parent) {
+          return true;
+        }
+        return !!parent.closest('script, style, button, a, .term-match, .chunk-marker-column, .interlaced-reasoning-panel');
+      }
+
+      function highlightTermsInElement(root, termDefs) {
+        if (!root || !termDefs.length) {
+          return;
+        }
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode(node) {
+            if (shouldSkipTermHighlightNode(node) || !node.nodeValue || !node.nodeValue.trim()) {
+              return NodeFilter.FILTER_REJECT;
+            }
+            return findTermMatchesInText(node.nodeValue, termDefs).length
+              ? NodeFilter.FILTER_ACCEPT
+              : NodeFilter.FILTER_SKIP;
+          },
+        });
+        const textNodes = [];
+        while (walker.nextNode()) {
+          textNodes.push(walker.currentNode);
+        }
+        textNodes.forEach((node) => {
+          const matches = findTermMatchesInText(node.nodeValue || '', termDefs);
+          if (!matches.length) {
+            return;
+          }
+          const fragment = document.createDocumentFragment();
+          const text = node.nodeValue || '';
+          let cursor = 0;
+          matches.forEach((match) => {
+            if (match.start > cursor) {
+              fragment.appendChild(document.createTextNode(text.slice(cursor, match.start)));
+            }
+            const span = document.createElement('span');
+            span.className = 'term-match';
+            span.dataset.termKey = match.termKey;
+            span.tabIndex = 0;
+            span.setAttribute('role', 'button');
+            span.setAttribute('aria-pressed', 'false');
+            span.textContent = text.slice(match.start, match.end);
+            fragment.appendChild(span);
+            cursor = match.end;
+          });
+          if (cursor < text.length) {
+            fragment.appendChild(document.createTextNode(text.slice(cursor)));
+          }
+          if (node.parentNode) {
+            node.parentNode.replaceChild(fragment, node);
+          }
+        });
+        root.querySelectorAll('.term-match[data-term-key]').forEach(bindTermSelection);
+      }
+
+      function highlightTermsForGroup(group) {
+        if (!group || group.dataset.termsHighlighted === 'true' || group.dataset.termsHighlighting === 'true') {
+          return;
+        }
+        const marker = getGroupMarker(group);
+        const originalRoot = group.querySelector('.interlaced-block.original .chunk-text-column')
+          || group.querySelector('.interlaced-block.original .interlaced-content');
+        if (!marker || !originalRoot) {
+          return;
+        }
+        group.dataset.termsHighlighting = 'true';
+        loadReasoningHtml(marker)
+          .then((html) => {
+            const termDefs = extractTermDefsFromReasoningHtml(html);
+            highlightTermsInElement(originalRoot, termDefs);
+            group.dataset.termsHighlighted = 'true';
+          })
+          .catch(() => {
+            delete group.dataset.termsHighlighted;
+          })
+          .finally(() => {
+            delete group.dataset.termsHighlighting;
+          });
+      }
+
+      function setupLazyTermHighlighting() {
+        const groups = Array.from(document.querySelectorAll('.interlaced-group[data-marker]'))
+          .filter((group) => group.querySelector('.reasoning-trigger-inline'));
+        if (!groups.length) {
+          return;
+        }
+        groups.forEach((group) => {
+          group.addEventListener('mouseenter', () => highlightTermsForGroup(group), { once: true });
+          group.addEventListener('focusin', () => highlightTermsForGroup(group), { once: true });
+        });
+        if (!('IntersectionObserver' in window)) {
+          groups.slice(0, 30).forEach(highlightTermsForGroup);
+          return;
+        }
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+            observer.unobserve(entry.target);
+            highlightTermsForGroup(entry.target);
+          });
+        }, {
+          rootMargin: '700px 0px',
+        });
+        groups.forEach((group) => observer.observe(group));
+      }
+
+      function ensureReasoningLoaded(group) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !reasoningElements || !reasoningElements.fullCard) {
+          return Promise.resolve(false);
+        }
+        const content = reasoningElements.fullCard.querySelector('[data-reasoning-content]');
+        if (!content) {
+          return Promise.resolve(false);
+        }
+        if (content.dataset.loaded === 'true') {
+          return Promise.resolve(true);
+        }
+        const marker = group.dataset.marker || content.dataset.marker || '';
+        content.innerHTML = '<p class="interlaced-empty">Loading explanation...</p>';
+        return loadReasoningHtml(marker)
+          .then((html) => {
+            content.innerHTML = html || '<p class="interlaced-empty">Explanation not available.</p>';
+            content.dataset.loaded = 'true';
+            content.querySelectorAll('.reasoning-term-item[data-term-key]').forEach(bindTermSelection);
+            if (group.dataset.activeTermKey) {
+              setActiveTerm(group, group.dataset.activeTermKey);
+            }
+            return true;
+          })
+          .catch(() => {
+            content.innerHTML = '<p class="interlaced-empty">Explanation could not be loaded.</p>';
+            content.dataset.loaded = 'true';
+            return false;
+          });
+      }
+
+      function setActiveTerm(group, termKey) {
+        if (!group) {
+          return;
+        }
+        group.querySelectorAll('.term-match[data-term-key], .reasoning-term-item[data-term-key]').forEach((element) => {
+          const isActive = !!termKey && element.dataset.termKey === termKey;
+          element.classList.toggle('is-active', isActive);
+          element.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      }
+
+      function getReasoningElements(group) {
+        if (!group) {
+          return null;
+        }
+        return {
+          panel: group.querySelector('.interlaced-reasoning-panel'),
+          previewCard: group.querySelector('.interlaced-reasoning-preview'),
+          previewContent: group.querySelector('.interlaced-reasoning-preview-content'),
+          fullCard: group.querySelector('.interlaced-reasoning-full'),
+          button: group.querySelector('.reasoning-trigger-inline'),
+        };
+      }
+
+      function setReasoningButtonState(button, isFullOpen) {
+        if (!button) {
+          return;
+        }
+        const buttonText = isFullOpen ? openExplanationLabel : closedExplanationLabel;
+        const markerLabel = button.dataset.marker ? ' [' + button.dataset.marker + ']' : '';
+        button.textContent = buttonText;
+        button.setAttribute('aria-expanded', isFullOpen ? 'true' : 'false');
+        button.setAttribute('aria-label', buttonText + markerLabel);
+        button.setAttribute('title', buttonText + markerLabel);
+      }
+
+      function buildReasoningPreview(group, termKey) {
+        const reasoningElements = getReasoningElements(group);
+        if (!reasoningElements || !reasoningElements.previewContent) {
+          return false;
+        }
+        const matchingItems = Array.from(
+          group.querySelectorAll('.interlaced-reasoning-full .reasoning-term-item[data-term-key]')
+        ).filter((item) => item.dataset.termKey === termKey);
+
+        reasoningElements.previewContent.innerHTML = '';
+        if (!matchingItems.length) {
+          return false;
+        }
+
+        const sectionMap = new Map();
+        matchingItems.forEach((item) => {
+          const section = item.closest('.reasoning-section');
+          const sectionKey = section || item;
+          let list = sectionMap.get(sectionKey);
+
+          if (!list) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'reasoning-preview-section';
+
+            const category = document.createElement('p');
+            category.className = 'reasoning-preview-category';
+            const title = section && section.querySelector('.reasoning-section-title');
+            category.textContent = title ? title.textContent.trim() : 'Explanation';
+
+            list = document.createElement('ul');
+            list.className = 'reasoning-preview-list';
+
+            wrapper.appendChild(category);
+            wrapper.appendChild(list);
+            reasoningElements.previewContent.appendChild(wrapper);
+            sectionMap.set(sectionKey, list);
+          }
+
+          const clone = item.cloneNode(true);
+          clone.classList.remove('reasoning-term-item');
+          clone.classList.add('reasoning-preview-item', 'is-active');
+          clone.removeAttribute('data-term-key');
+          clone.removeAttribute('tabindex');
+          clone.removeAttribute('role');
+          clone.removeAttribute('aria-pressed');
+          list.appendChild(clone);
+        });
+
+        return true;
+      }
+
+      function openReasoningPreview(group, termKey) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !termKey || !reasoningElements || !reasoningElements.panel) {
+          return;
+        }
+        if (!buildReasoningPreview(group, termKey)) {
+          openReasoningFull(group);
+          return;
+        }
+        reasoningElements.panel.hidden = false;
+        if (reasoningElements.previewCard) {
+          reasoningElements.previewCard.hidden = false;
+        }
+        if (reasoningElements.fullCard) {
+          reasoningElements.fullCard.hidden = true;
+        }
+        setReasoningButtonState(reasoningElements.button, false);
+      }
+
+      function openReasoningFull(group) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !reasoningElements || !reasoningElements.panel || !reasoningElements.fullCard) {
+          return;
+        }
+        reasoningElements.panel.hidden = false;
+        reasoningElements.fullCard.hidden = false;
+        if (reasoningElements.previewCard) {
+          reasoningElements.previewCard.hidden = true;
+        }
+        setReasoningButtonState(reasoningElements.button, true);
+        ensureReasoningLoaded(group);
+      }
+
+      function closeReasoning(group) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !reasoningElements) {
+          return;
+        }
+        if (reasoningElements.panel) {
+          reasoningElements.panel.hidden = true;
+        }
+        if (reasoningElements.previewCard) {
+          reasoningElements.previewCard.hidden = true;
+        }
+        if (reasoningElements.fullCard) {
+          reasoningElements.fullCard.hidden = true;
+        }
+        if (reasoningElements.previewContent) {
+          reasoningElements.previewContent.innerHTML = '';
+        }
+        setReasoningButtonState(reasoningElements.button, false);
+        delete group.dataset.activeTermKey;
+        setActiveTerm(group, '');
+      }
+
+      function closeAllReasoning() {
+        document.querySelectorAll('.interlaced-group').forEach((group) => {
+          closeReasoning(group);
+        });
+      }
+
+      function updateLanguageToggleButtons() {
+        const englishHidden = document.body.classList.contains('hide-english');
+        const chineseHidden = document.body.classList.contains('hide-chinese');
+        if (toggleEnglishButton) {
+          toggleEnglishButton.textContent = 'Hide English';
+          toggleEnglishButton.setAttribute('aria-pressed', englishHidden ? 'true' : 'false');
+        }
+        if (toggleChineseButton) {
+          toggleChineseButton.textContent = 'Hide Chinese';
+          toggleChineseButton.setAttribute('aria-pressed', chineseHidden ? 'true' : 'false');
+        }
+      }
+
+      function activateTermAssociation(group, termKey, options = {}) {
+        if (!group || !termKey) {
+          return;
+        }
+        const { openFull = false } = options;
+        const reasoningElements = getReasoningElements(group);
+        if (!reasoningElements) {
+          return;
+        }
+        group.dataset.activeTermKey = termKey;
+        setActiveTerm(group, termKey);
+        if (openFull) {
+          openReasoningFull(group);
+          return;
+        }
+        if (reasoningElements.fullCard && !reasoningElements.fullCard.hidden) {
+          return;
+        }
+        openReasoningPreview(group, termKey);
+      }
+
+      function bindTermSelection(element) {
+        if (!element) {
+          return;
+        }
+        if (element.dataset.termBound === 'true') {
+          return;
+        }
+        element.dataset.termBound = 'true';
+        const activate = () => {
+          const group = element.closest('.interlaced-group');
+          if (!group) {
+            return;
+          }
+          activateTermAssociation(group, element.dataset.termKey || '', {
+            openFull: false,
+          });
+        };
+        element.addEventListener('click', activate);
+        element.addEventListener('keydown', (event) => {
+          if (event.key !== 'Enter' && event.key !== ' ') {
+            return;
+          }
+          event.preventDefault();
+          activate();
+        });
+      }
+
+      inlineReasoningButtons.forEach((button) => {
+        setReasoningButtonState(button, false);
+        button.addEventListener('click', () => {
+          const group = button.closest('.interlaced-group');
+          const reasoningElements = getReasoningElements(group);
+          if (!group || !reasoningElements || !reasoningElements.fullCard) {
+            return;
+          }
+          const isFullOpen = !reasoningElements.fullCard.hidden;
+          if (isFullOpen) {
+            closeReasoning(group);
+            return;
+          }
+          openReasoningFull(group);
+        });
+      });
+
+      document.querySelectorAll('.reasoning-preview-more').forEach((button) => {
+        button.addEventListener('click', () => {
+          const group = button.closest('.interlaced-group');
+          if (!group) {
+            return;
+          }
+          openReasoningFull(group);
+        });
+      });
+
+      document.querySelectorAll('.term-match[data-term-key]').forEach(bindTermSelection);
+      document.querySelectorAll('.reasoning-term-item[data-term-key]').forEach(bindTermSelection);
+      setupLazyTermHighlighting();
+
+      if (toggleEnglishButton) {
+        toggleEnglishButton.addEventListener('click', () => {
+          const willHideEnglish = !document.body.classList.contains('hide-english');
+          if (willHideEnglish) {
+            document.body.classList.remove('hide-chinese');
+          }
+          document.body.classList.toggle('hide-english', willHideEnglish);
+          closeAllReasoning();
+          updateLanguageToggleButtons();
+        });
+      }
+
+      if (toggleChineseButton) {
+        toggleChineseButton.addEventListener('click', () => {
+          const willHideChinese = !document.body.classList.contains('hide-chinese');
+          if (willHideChinese) {
+            document.body.classList.remove('hide-english');
+          }
+          document.body.classList.toggle('hide-chinese', willHideChinese);
+          closeAllReasoning();
+          updateLanguageToggleButtons();
+        });
+      }
+
+      updateLanguageToggleButtons();
+
+      // Document-level search (mirrors index search experience)
+      if (docSearchContainer && docSearchInput && docSearchList && docSearchResults) {
+        function normalizeSearchText(text) {
+          return String(text || '')
+            .normalize('NFKC')
+            .toLowerCase()
+            .replace(/s+/g, ' ')
+            .trim();
+        }
+
+        function getSearchQueryFromUrl() {
+          try {
+            return new URLSearchParams(window.location.search).get('q') || '';
+          } catch (error) {
+            return '';
+          }
+        }
+
+        function removeSearchHighlights() {
+          document.querySelectorAll('.search-hit').forEach((hit) => {
+            const parent = hit.parentNode;
+            if (!parent) {
+              return;
+            }
+            parent.replaceChild(document.createTextNode(hit.textContent || ''), hit);
+            parent.normalize();
+          });
+          document.querySelectorAll('.search-focused-block').forEach((element) => {
+            element.classList.remove('search-focused-block');
+          });
+        }
+
+        function buildHighlightRegex(query) {
+          const parts = String(query || '').trim().split(/s+/).filter(Boolean);
+          if (!parts.length) {
+            return null;
+          }
+          const escaped = parts.map((part) => part.replace(/[-/\^$*+?.()|[]{}]/g, '\$&'));
+          return new RegExp(escaped.join('\s+'), 'gi');
+        }
+
+        function shouldSkipSearchHighlightNode(node) {
+          const parent = node && node.parentElement;
+          if (!parent) {
+            return true;
+          }
+          return !!parent.closest('script, style, mark, .search-hit, button');
+        }
+
+        function highlightSearchInElement(root, query) {
+          const regex = buildHighlightRegex(query);
+          if (!root || !regex) {
+            return [];
+          }
+          const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+            acceptNode(node) {
+              if (shouldSkipSearchHighlightNode(node) || !node.nodeValue || !node.nodeValue.trim()) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              regex.lastIndex = 0;
+              return regex.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+            },
+          });
+          const textNodes = [];
+          while (walker.nextNode()) {
+            textNodes.push(walker.currentNode);
+          }
+          const highlights = [];
+          textNodes.forEach((node) => {
+            const fragment = document.createDocumentFragment();
+            const text = node.nodeValue || '';
+            let cursor = 0;
+            regex.lastIndex = 0;
+            let match;
+            while ((match = regex.exec(text)) !== null) {
+              if (match.index > cursor) {
+                fragment.appendChild(document.createTextNode(text.slice(cursor, match.index)));
+              }
+              const hit = document.createElement('mark');
+              hit.className = 'search-hit';
+              hit.textContent = match[0];
+              fragment.appendChild(hit);
+              highlights.push(hit);
+              cursor = match.index + match[0].length;
+              if (match[0].length === 0) {
+                regex.lastIndex += 1;
+              }
+            }
+            if (cursor < text.length) {
+              fragment.appendChild(document.createTextNode(text.slice(cursor)));
+            }
+            if (node.parentNode) {
+              node.parentNode.replaceChild(fragment, node);
+            }
+          });
+          return highlights;
+        }
+
+        function applySearchHighlight(anchor, query, options = {}) {
+          const { scroll = false } = options;
+          removeSearchHighlights();
+          const normalizedQuery = normalizeSearchText(query);
+          if (!anchor || !normalizedQuery) {
+            return;
+          }
+          const target = document.getElementById(anchor);
+          if (!target) {
+            return;
+          }
+          const block = target.closest('.interlaced-block') || target.closest('.interlaced-group') || target;
+          const documentRoot = document.querySelector('.interlaced-container') || document.body;
+          block.classList.add('search-focused-block');
+          const highlights = highlightSearchInElement(documentRoot, query);
+          const currentHighlight = highlights.find((hit) => block.contains(hit)) || highlights[0];
+          if (currentHighlight) {
+            currentHighlight.classList.add('is-current');
+          }
+          if (scroll) {
+            const scrollTarget = currentHighlight || block;
+            if (scrollTarget && typeof scrollTarget.scrollIntoView === 'function') {
+              scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+            }
+          }
+        }
+
+        const MAX_INITIAL_RESULTS = 6;
+        let normalizedDocSearchData = null;
+        let docSearchLoadPromise = null;
+        let docSearchRunId = 0;
+        let currentMatches = [];
+        let showingAll = false;
+        let currentQuery = '';
+
+        function getBlockAnchor(block) {
+          const anchor = block && block.querySelector('.chunk-anchor[id]');
+          return anchor ? anchor.id : '';
+        }
+
+        function getBlockMarker(block) {
+          const group = block && block.closest('.interlaced-group');
+          if (group && group.dataset.marker) {
+            return group.dataset.marker;
+          }
+          const marker = block && block.querySelector('.marker-trailing');
+          return marker ? marker.textContent.trim() : '';
+        }
+
+        function buildDocSearchEntriesFromPage() {
+          const blocks = Array.from(
+            document.querySelectorAll('.interlaced-block.original, .interlaced-block.translation')
+          );
+          return blocks
+            .map((block) => {
+              const anchor = getBlockAnchor(block);
+              const text = block.textContent.replace(/s+/g, ' ').trim();
+              if (!anchor || !text) {
+                return null;
+              }
+              const type = block.classList.contains('original') ? 'original' : 'translation';
+              return {
+                anchor,
+                marker: getBlockMarker(block),
+                type,
+                text,
+              };
+            })
+            .filter(Boolean);
+        }
+
+        function normalizeDocSearchEntries(entries) {
+          return entries
+            .filter((entry) => entry && entry.anchor && entry.text)
+            .map((entry) => ({
+              entry,
+              textSearch: normalizeSearchText(entry.text || ''),
+              markerSearch: normalizeSearchText(entry.marker || ''),
+              typeSearch: normalizeSearchText(entry.type || ''),
+            }));
+        }
+
+        function loadDocSearchData() {
+          if (normalizedDocSearchData) {
+            return Promise.resolve(normalizedDocSearchData);
+          }
+          if (!docSearchLoadPromise) {
+            docSearchLoadPromise = new Promise((resolve) => {
+              window.setTimeout(() => {
+                normalizedDocSearchData = normalizeDocSearchEntries(buildDocSearchEntriesFromPage());
+                resolve(normalizedDocSearchData);
+              }, 0);
+            });
+          }
+          return docSearchLoadPromise;
+        }
+
+        function updateDocSearchCount(count) {
+          if (!docSearchCount) {
+            return;
+          }
+          docSearchCount.textContent = count === 1 ? '1 result' : count + ' results';
+          docSearchCount.hidden = false;
+        }
+
+        function resetSearchResults() {
+          docSearchResults.classList.remove('has-results');
+          docSearchList.innerHTML = '';
+          docSearchResults.style.display = 'none';
+          if (docSearchCount) {
+            docSearchCount.hidden = true;
+            docSearchCount.textContent = '';
+          }
+          if (docSearchMoreButton) {
+            docSearchMoreButton.classList.remove('visible');
+            docSearchMoreButton.setAttribute('aria-expanded', 'false');
+          }
+        }
+
+        function escapeRegex(text) {
+          return text.replace(/[-/\^$*+?.()|[]{}]/g, '\$&');
+        }
+
+        function countOccurrences(haystack, needle) {
+          if (!needle || !haystack) {
+            return 0;
+          }
+          let count = 0;
+          let index = haystack.indexOf(needle);
+          while (index !== -1) {
+            count += 1;
+            index = haystack.indexOf(needle, index + needle.length);
+          }
+          return count;
+        }
+
+        function buildSnippet(text, query) {
+          if (!text) {
+            return 'No preview available.';
+          }
+          const lower = text.toLowerCase();
+          const needle = String(query || '').trim().toLowerCase();
+          const foundAt = needle ? lower.indexOf(needle) : -1;
+          const matchIndex = foundAt === -1 ? 0 : foundAt;
+          const matchLength = foundAt === -1 ? 0 : needle.length;
+          const radius = 70;
+          const start = Math.max(0, matchIndex - radius);
+          const end = Math.min(text.length, matchIndex + matchLength + radius);
+          let snippet = text.slice(start, end);
+          if (start > 0) {
+            snippet = '...' + snippet;
+          }
+          if (end < text.length) {
+            snippet = snippet + '...';
+          }
+          let highlighted = snippet;
+          if (needle) {
+            const regex = new RegExp(escapeRegex(needle), 'gi');
+            highlighted = highlighted.replace(regex, (matchValue) => '<mark>' + matchValue + '</mark>');
+          }
+          return highlighted;
+        }
+
+        function renderResults() {
+          docSearchResults.style.display = 'block';
+          docSearchList.innerHTML = '';
+          updateDocSearchCount(currentMatches.length);
+          if (!currentMatches.length) {
+            docSearchResults.classList.remove('has-results');
+            if (docSearchMoreButton) {
+              docSearchMoreButton.classList.remove('visible');
+              docSearchMoreButton.setAttribute('aria-expanded', 'false');
+            }
+            return;
+          }
+          docSearchResults.classList.add('has-results');
+          docSearchList.innerHTML = '';
+          const visibleCount = showingAll
+            ? currentMatches.length
+            : Math.min(MAX_INITIAL_RESULTS, currentMatches.length);
+          const fragment = document.createDocumentFragment();
+          for (let i = 0; i < visibleCount; i += 1) {
+            const { entry } = currentMatches[i];
+            const item = document.createElement('li');
+            item.className = 'doc-search-result';
+            const link = document.createElement('a');
+            link.href = '#' + entry.anchor;
+            link.textContent = entry.marker ? '[' + entry.marker + '] ' + entry.type : entry.type;
+            link.addEventListener('click', (event) => {
+              event.preventDefault();
+              applySearchHighlight(entry.anchor, currentQuery, { scroll: true });
+              if (window.history && typeof window.history.replaceState === 'function') {
+                const url = new URL(window.location.href);
+                if (currentQuery) {
+                  url.searchParams.set('q', currentQuery);
+                } else {
+                  url.searchParams.delete('q');
+                }
+                url.hash = entry.anchor;
+                window.history.replaceState(null, '', url);
+              }
+              resetSearchResults();
+              docSearchInput.blur();
+            });
+            const meta = document.createElement('p');
+            meta.className = 'doc-search-meta';
+            const markerLabel = entry.marker ? '[' + entry.marker + '] ' : '';
+            const typeLabel = entry.type === 'original' ? 'Original text' : 'Translation';
+            meta.textContent = markerLabel + typeLabel;
+            const snippet = document.createElement('p');
+            snippet.className = 'doc-search-snippet';
+            snippet.innerHTML = buildSnippet(entry.text || '', currentQuery);
+            item.appendChild(link);
+            item.appendChild(meta);
+            item.appendChild(snippet);
+            fragment.appendChild(item);
+          }
+          docSearchList.appendChild(fragment);
+          if (docSearchMoreButton) {
+            if (currentMatches.length > MAX_INITIAL_RESULTS) {
+              docSearchMoreButton.classList.add('visible');
+              docSearchMoreButton.textContent = showingAll ? 'Show fewer results' : 'See more results';
+              docSearchMoreButton.setAttribute('aria-expanded', showingAll ? 'true' : 'false');
+            } else {
+              docSearchMoreButton.classList.remove('visible');
+              docSearchMoreButton.setAttribute('aria-expanded', 'false');
+            }
+          }
+        }
+
+        function setDocSearchMessage(message) {
+          docSearchResults.style.display = 'block';
+          docSearchResults.classList.remove('has-results');
+          docSearchList.innerHTML = '';
+          if (docSearchCount) {
+            docSearchCount.textContent = message;
+            docSearchCount.hidden = false;
+          }
+          if (docSearchMoreButton) {
+            docSearchMoreButton.classList.remove('visible');
+            docSearchMoreButton.setAttribute('aria-expanded', 'false');
+          }
+        }
+
+        function runDocSearch(normalized, query) {
+          return normalized
+            .map((item) => {
+              const textMatch = item.textSearch.includes(query);
+              const markerMatch = item.markerSearch === query;
+              const typeMatch = item.typeSearch === query;
+              if (!textMatch && !markerMatch && !typeMatch) {
+                return null;
+              }
+              let score = 0;
+              score += countOccurrences(item.textSearch, query) * 20;
+              if (markerMatch) {
+                score += 12;
+              }
+              if (typeMatch) {
+                score += 6;
+              }
+              if (item.textSearch.startsWith(query)) {
+                score += 4;
+              }
+              return { entry: item.entry, score };
+            })
+            .filter(Boolean)
+            .sort((a, b) => b.score - a.score);
+        }
+
+        function handleSearch() {
+          const rawQuery = docSearchInput.value.trim();
+          const query = normalizeSearchText(rawQuery);
+          docSearchRunId += 1;
+          const runId = docSearchRunId;
+          if (!query) {
+            currentMatches = [];
+            currentQuery = '';
+            showingAll = false;
+            resetSearchResults();
+            return;
+          }
+          currentQuery = rawQuery;
+          showingAll = false;
+          setDocSearchMessage('Preparing document search...');
+          loadDocSearchData()
+            .then((normalized) => {
+              if (runId !== docSearchRunId) {
+                return;
+              }
+              currentMatches = runDocSearch(normalized, query);
+              renderResults();
+            })
+            .catch(() => {
+              if (runId !== docSearchRunId) {
+                return;
+              }
+              currentMatches = [];
+              setDocSearchMessage('Document search could not be prepared.');
+            });
+        }
+
+        if (docSearchMoreButton) {
+          docSearchMoreButton.addEventListener('click', () => {
+            if (!currentMatches.length) {
+              return;
+            }
+            showingAll = !showingAll;
+            renderResults();
+          });
+        }
+        docSearchInput.addEventListener('input', handleSearch);
+        const initialQuery = getSearchQueryFromUrl();
+        const initialAnchor = window.location.hash ? decodeURIComponent(window.location.hash.slice(1)) : '';
+        if (initialQuery) {
+          docSearchInput.value = initialQuery;
+          currentQuery = initialQuery;
+          if (initialAnchor) {
+            window.setTimeout(() => {
+              applySearchHighlight(initialAnchor, initialQuery, { scroll: true });
+            }, 0);
+          }
+        }
+        resetSearchResults();
+      }
+    })();
+  </script>
+</body>
+</html>

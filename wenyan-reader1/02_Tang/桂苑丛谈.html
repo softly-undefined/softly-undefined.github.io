@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>桂苑丛谈 - Collected Talks from the Cassia Garden</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 1rem;
+      line-height: 1.6;
+    }
+    a.marker {
+      color: #0077cc;
+      text-decoration: underline;
+      cursor: pointer;
+      scroll-margin-top: 5.5rem;
+    }
+    .marker-text {
+      color: #0077cc;
+      font-weight: 600;
+    }
+    .reasoning-trigger {
+      display: inline;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: #0077cc;
+      cursor: pointer;
+      font-size: 0.8rem;
+      line-height: 1.2;
+      vertical-align: baseline;
+      text-decoration: underline;
+    }
+    .interlaced-reasoning-trigger-row {
+      margin-top: -0.2rem;
+      margin-left: 3.55rem;
+    }
+    .interlaced-reasoning-trigger-row .reasoning-trigger {
+      font-size: 0.9rem;
+    }
+    .chunk-anchor {
+      display: block;
+      height: 0;
+      overflow: hidden;
+      scroll-margin-top: 5.5rem;
+    }
+    .chunk-layout {
+      display: grid;
+      grid-template-columns: minmax(2.8rem, max-content) minmax(0, 1fr);
+      column-gap: 0.75rem;
+      align-items: center;
+    }
+    .chunk-marker-column {
+      line-height: 1.6;
+      text-align: right;
+      white-space: nowrap;
+      align-self: center;
+    }
+    .chunk-text-column {
+      min-width: 0;
+    }
+    .chunk-text-column > :first-child {
+      margin-top: 0;
+    }
+    .chunk-text-column > :last-child {
+      margin-bottom: 0;
+    }
+    .marker-trailing {
+      margin-left: 0.3rem;
+      white-space: nowrap;
+    }
+    .chunk-marker-column .marker-trailing {
+      margin-left: 0;
+      color: #9aa3af;
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .chunk-marker-column .marker-trailing:hover {
+      color: #6b7280;
+      text-decoration: underline;
+    }
+    .reasoning-trigger:hover {
+      color: #005c99;
+    }
+    .reasoning-trigger:focus-visible,
+    .term-match:focus-visible,
+    .reasoning-term-item:focus-visible,
+    .view-toggle-button:focus-visible,
+    .reasoning-preview-more:focus-visible,
+    .return-link:focus-visible {
+      outline: 2px solid #0077cc;
+      outline-offset: 2px;
+    }
+    .section {
+      margin-bottom: 2rem;
+    }
+    .section h3 {
+      margin-top: 0;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.25rem;
+    }
+    .doc-header {
+      font-style: italic;
+      color: #444;
+      margin: 0.75rem 0 1.25rem;
+    }
+    .page-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      justify-content: space-between;
+      margin: 0 0 1.5rem;
+      padding: 0.85rem 0;
+      background: #fff;
+      border-bottom: 1px solid #dbe1ec;
+    }
+    .doc-search {
+      position: relative;
+      flex: 1 1 420px;
+      max-width: 520px;
+    }
+    .doc-search-input {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #b7c0d0;
+      box-sizing: border-box;
+    }
+    .doc-search-results {
+      position: absolute;
+      top: calc(100% + 0.45rem);
+      left: 0;
+      right: 0;
+      display: none;
+      border: 1px solid #dbe1ec;
+      border-radius: 8px;
+      padding: 0.25rem 1rem 1rem;
+      background: #fff;
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+      max-height: min(60vh, 32rem);
+      overflow-y: auto;
+    }
+    .doc-search-results-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .doc-search-count {
+      margin: 0.5rem 0 0.4rem;
+      font-size: 0.85rem;
+      color: #5e6673;
+    }
+    .doc-search-results.has-results .doc-search-results-list {
+      display: block;
+    }
+    .doc-search-results.has-results {
+      display: block;
+    }
+    .doc-search-result {
+      border-top: 1px solid #dfe3eb;
+      padding: 0.85rem 0;
+    }
+    .doc-search-result:first-child {
+      border-top: none;
+    }
+    .doc-search-result a {
+      color: #005c99;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .doc-search-result a:hover {
+      text-decoration: underline;
+    }
+    .doc-search-snippet {
+      margin: 0.35rem 0 0;
+      font-size: 0.95rem;
+      color: #353c48;
+    }
+    .doc-search-meta {
+      margin: 0.2rem 0 0;
+      font-size: 0.85rem;
+      color: #5e6673;
+    }
+    .doc-search-more-button {
+      margin-top: 0.75rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 4px;
+      border: 1px solid #0077cc;
+      background: #fff;
+      color: #0077cc;
+      cursor: pointer;
+      font-size: 0.95rem;
+      display: none;
+    }
+    .doc-search-more-button.visible {
+      display: inline-block;
+    }
+    .return-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid #0077cc;
+      background: #fff;
+      color: #0077cc;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      transition: all 0.15s ease-in-out;
+    }
+    .return-link:hover {
+      background: rgba(0, 119, 204, 0.08);
+    }
+    .return-link {
+      text-decoration: none;
+      font-weight: 600;
+      flex: 0 0 auto;
+    }
+    .page-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 0 0 auto;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .page-actions > * {
+      min-width: 7.5rem;
+      box-sizing: border-box;
+    }
+    .view-toggle-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid #0077cc;
+      background: #fff;
+      color: #0077cc;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+    }
+    .view-toggle-button:hover {
+      background: rgba(0, 119, 204, 0.08);
+    }
+    .view-toggle-button[aria-pressed="true"] {
+      background: #0077cc;
+      color: #fff;
+    }
+    .view-toggle-button[aria-pressed="true"]:hover {
+      background: #005c99;
+    }
+    .interlaced-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.95rem;
+      overflow-anchor: none;
+    }
+    .interlaced-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .interlaced-block {
+      margin: 0;
+    }
+    .interlaced-reasoning-panel[hidden] {
+      display: none;
+    }
+    .interlaced-reasoning-panel {
+      position: relative;
+      left: 50%;
+      width: 100vw;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      background: #f8fafc;
+    }
+    .interlaced-reasoning-card {
+      border: none;
+      border-radius: 0;
+      padding: 1rem;
+      background: transparent;
+      box-sizing: border-box;
+    }
+    .interlaced-reasoning-preview[hidden],
+    .interlaced-reasoning-full[hidden] {
+      display: none;
+    }
+    .interlaced-reasoning-title {
+      margin: 0 0 0.55rem;
+      font-weight: 600;
+      color: #334155;
+    }
+    .interlaced-reasoning-preview-content {
+      margin-bottom: 0.75rem;
+    }
+    .interlaced-label {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .marker-code {
+      font-weight: 400;
+      color: #666;
+      margin-left: 0.35rem;
+    }
+    .term-match {
+      border-radius: 0.2rem;
+      cursor: pointer;
+      transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    }
+    .interlaced-group .term-match {
+      background: rgba(148, 163, 184, 0.35);
+    }
+    .interlaced-group .term-match:hover {
+      background: rgba(148, 163, 184, 0.55);
+    }
+    .term-match.is-active {
+      background: rgba(59, 130, 246, 0.35) !important;
+      color: #1d4ed8;
+    }
+    .search-hit {
+      background: #fff176;
+      color: inherit;
+      border-radius: 0.15rem;
+      padding: 0 0.08rem;
+      box-shadow: 0 0 0 1px rgba(202, 138, 4, 0.18);
+    }
+    .search-hit.is-current {
+      background: #ffd54f;
+      box-shadow: 0 0 0 2px rgba(202, 138, 4, 0.32);
+    }
+    .search-focused-block {
+      scroll-margin-top: 5.5rem;
+    }
+    .reasoning-term-item[data-term-key] {
+      border-radius: 0.35rem;
+      cursor: pointer;
+      padding: 0.1rem 0.25rem;
+      transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    }
+    .reasoning-section + .reasoning-section,
+    .reasoning-preview-section + .reasoning-preview-section {
+      margin-top: 0.85rem;
+    }
+    .reasoning-section-title,
+    .reasoning-preview-category {
+      margin: 0 0 0.35rem;
+    }
+    .reasoning-section-list,
+    .reasoning-preview-list {
+      margin: 0;
+      padding-left: 1.25rem;
+    }
+    .reasoning-preview-item {
+      padding: 0.1rem 0;
+    }
+    .reasoning-preview-more {
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: #0077cc;
+      cursor: pointer;
+      font-size: 0.92rem;
+      text-decoration: underline;
+    }
+    .reasoning-preview-more:hover {
+      color: #005c99;
+    }
+    .reasoning-term-item.is-active,
+    .reasoning-preview-item.is-active {
+      background: rgba(59, 130, 246, 0.14);
+      color: #1d4ed8;
+    }
+    .interlaced-content {
+      margin: 0;
+    }
+    .interlaced-empty {
+      color: #666;
+      font-style: italic;
+      margin: 0.5rem 0;
+    }
+    body.hide-english .interlaced-block.translation {
+      display: none !important;
+    }
+    body.hide-chinese .interlaced-block.original,
+    body.hide-chinese .interlaced-reasoning-trigger-row {
+      display: none !important;
+    }
+    @media (max-width: 600px) {
+      .page-toolbar {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+      .page-actions {
+        width: 100%;
+      }
+      .view-toggle-button,
+      .return-link {
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .doc-search {
+        max-width: none;
+      }
+      .chunk-layout {
+        grid-template-columns: minmax(2.35rem, max-content) minmax(0, 1fr);
+        column-gap: 0.55rem;
+      }
+      .interlaced-reasoning-trigger-row {
+        margin-left: 2.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>桂苑丛谈 - Collected Talks from the Cassia Garden</h1>
+  <p class="doc-header">Translation created with model: qwen3-14b-nothink-sbs-3step / step-by-step-3step-fewshot</p>
+
+  <div class="page-toolbar">
+    <div class="doc-search" id="doc-search">
+      <input
+        type="search"
+        id="doc-search-input"
+        class="doc-search-input"
+        placeholder="Search"
+        autocomplete="off"
+        aria-label="Search within this document"
+      />
+      <div class="doc-search-results" id="doc-search-results" aria-live="polite">
+        <p class="doc-search-count" id="doc-search-count" hidden></p>
+        <ul class="doc-search-results-list" id="doc-search-results-list"></ul>
+        <button type="button" class="doc-search-more-button" id="doc-search-more-button" aria-expanded="false">See more results</button>
+      </div>
+    </div>
+    <div class="page-actions">
+      <button type="button" class="view-toggle-button" id="toggle-english-button" aria-pressed="false">Hide English</button>
+      <button type="button" class="view-toggle-button" id="toggle-chinese-button" aria-pressed="false">Hide Chinese</button>
+      <a class="return-link" href="../index.html">Home</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="interlaced-container">
+      <div class="interlaced-group" data-marker="1">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-1" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-1" class="marker marker-trailing">1</a></div>
+  <div class="chunk-text-column"><p>《桂苑丛谈》 唐 冯翊<br>　　<br>　　○张绰有道术<br>　　咸通初，有进士张绰者，下第后多游江淮间，颇有道术，常养气绝粒，嗜酒耽棋，又以炉火药术为事。一旦睹天大哂，命笔题云：&quot;争奈金乌何，头上飞不住。红炉谩烧药，玉颜安可驻今年花发枝，明年叶落树。不如且饮酒，莫管流年逝。&quot;人以此异之。不喜装饰，多历旗亭而好酒杯也。或人召饮，若遂合意，则索纸剪蛱蝶三二十枚，以气吹之，成列而飞。如此累刻，以指收之，俄皆在手，见者求之，即以他事为阻。常游盐城，多为酒困，非类辈欲乘酒试之，相竞较力，留系是邑中。醒乃述课得陈情二首以上，狄令乃立释之。诗所纪惟一篇云：&quot;门风常有蕙兰馨，鼎族家传霸国名。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="1" aria-controls="interlaced-reasoning-1" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-1" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="1"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-1" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-1" class="marker marker-trailing">1</a></div>
+  <div class="chunk-text-column"><p><strong>The Guizhuan Congtan by Feng Yi of the Tang Dynasty</strong></p>
+<p><strong>Zhang Chuo and His Daoist Practices</strong></p>
+<p>In the early years of the Xiantong era, there was a scholar named Zhang Chuo who, after failing the imperial examinations, traveled extensively in the Jiangnan region. He possessed certain supernatural abilities and practiced Daoist cultivation, abstaining from food and focusing on cultivating qi. He loved drinking wine and playing chess, and he was also involved in alchemical practices, particularly the creation of elixirs. One day, the sky seemed to laugh, and Zhang Chuo wrote down his thoughts, saying:</p>
+<p>&quot;How can one catch the sun, which keeps flying overhead? The red furnace burns elixirs in vain, and the beauty of the jade-like face cannot be preserved. This year the flowers bloom on the branches, but next year the leaves fall from the trees. It is better to drink wine and not worry about the passing of time.&quot;</p>
+<p>People were amazed by this. He did not like to be overly decorated and often visited taverns where he enjoyed drinking. If someone invited him to drink and he was pleased, he would cut out twenty to thirty butterflies, blow them with his breath, and make them fly in a row. He could keep them in his hand for several moments before returning them. Those who saw this asked for them, but he would always find an excuse to refuse. He once traveled to Yancheng and was often drunk. Some people wanted to test him, so they competed in strength and detained him in the county. When he woke up, he composed two poems to express his feelings. The magistrate, seeing his talent, immediately released him. One of the poems reads:</p>
+<p>&quot;Family traditions often have the fragrance of orchids and lilies, and the lineage of a powerful family has been passed down through generations.&quot;</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="2">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-2" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-2" class="marker marker-trailing">2</a></div>
+  <div class="chunk-text-column"><p>容貌静悬秋月彩，文章高振海涛声。讼堂无事调琴轸，郡阁何妨醉玉觥。今曰东渐桥下水，一条従此镇长清。&quot;自后狄宰多张之才，次求其道，曰久延接，欲传其术。张以明府勋贵家流，年少而宰剧邑，多声色狗马之求，未暇志味玄奥，因赠诗以开其意云：&quot;何用梯媒向外求，长生只在内中修。莫言大道人难得，自是行心不到头。&quot;他曰将欲离去，乃书琴堂而别。后人多云江南上昇。初，去曰乘醉，因求捣网剪纸鹤二只，以水噀之。俄而翔翥，乃曰&quot;汝先去，吾即后来。&quot;时狄公亦醉，不暇拘留，遂得去。其所题云：&quot;张绰张绰自不会，天下经书在腹内。身却腾腾处世间，心即逍遥出天外。&quot;至今江淮好事者，记绰时事诗极多。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="2" aria-controls="interlaced-reasoning-2" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-2" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="2"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-2" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-2" class="marker marker-trailing">2</a></div>
+  <div class="chunk-text-column"><p>With a serene and beautiful appearance, like the color of the autumn moon, and writings that resonate with the powerful sound of ocean waves, Di, the local official, enjoys a peaceful and harmonious life in court, where disputes are resolved and music is played. In the prefectural hall, there is no harm in indulging in pleasure, symbolized by drinking from a jade cup. The influence of Di will spread like the water under the Eastward Bridge, bringing lasting peace and clarity to the region. After this, Di often sought the wisdom of Zhang, who had a long-standing connection with him and wished to pass on his teachings. Zhang, a high-ranking official from a noble family, was young and governed a bustling county, preoccupied with worldly pleasures and not yet ready to delve into the profound mysteries of the Dao. Therefore, he gifted a poem to inspire Di, saying: &quot;Why seek longevity through external means? True longevity lies in inner cultivation. Do not say that the Dao is hard to find; it is simply that your journey has not yet reached its end.&quot; On another occasion, Zhang was about to leave and wrote a farewell message in the music hall. Later, it was said that Zhang ascended to the spiritual realm in Jiangnan. Initially, Zhang left in a drunken state, asking for two paper cranes made from a net, which he sprinkled with water. Soon, the cranes took flight, and Zhang said, &quot;You go first, and I will follow.&quot; At the time, Di was also drunk and did not have the time to detain Zhang, so Zhang was able to leave. The inscription he left behind read: &quot;Zhang, Zhang, you are not yet skilled, but all the classics are within your heart. Your body is active in the world, but your spirit is free and detached.&quot; To this day, many in the Jianghuai region have written numerous poems about Zhang&#39;s time and deeds.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="3">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-3" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-3" class="marker marker-trailing">3</a></div>
+  <div class="chunk-text-column"><p>○太尉朱崖辩狱<br>　　太尉朱崖出镇浙右。有甘露知主事者，诉交代得常住什物，被前主事隐用，却常住金若干两，引证前数辈，皆有递相交割文字分明，众词皆指以新得替者隐用之。且初上之时，交领既分明，及交割之曰，不见其金，鞫成具狱，伏罪昭昭。然未穷破用之所由，或以僧人不拘细行而费之，以是无理可伸，甘之死地。一旦引虑之际，公疑其未尽，徵以意揣之髡人乃具实以闻曰：&quot;居寺者乐于知事，前后主之者，积年已来，空交分两文书，其实无金 众以某孤立，不杂辈流，欲乘此挤排之。&quot;因流涕不胜其冤。公乃悯而恻之，曰：&quot;此固非难也。&quot;俯仰之间曰：&quot;吾得之矣。&quot;乃立従召兜子数乘，命关连僧入对事，咸遣蔽帘子，毕令门不相对，命取黄泥，各令模前后交付下次金样，以凭证据。僧既不知形段，竟模不成。公怒令劾前辈，皆一一伏罪。其所排者遂获清雪。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="3" aria-controls="interlaced-reasoning-3" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-3" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="3"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-3" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-3" class="marker marker-trailing">3</a></div>
+  <div class="chunk-text-column"><p><strong>Translation:</strong></p>
+<p><strong>The Grand Marshal Zhu Ya&#39;s Case of the Temple</strong></p>
+<p>The Grand Marshal Zhu Ya was sent out to govern the right side of the Zhejiang region. A monk named Ganlu, who served as the temple&#39;s officer, complained that the temple&#39;s assets had been secretly used by his predecessor, and that a certain amount of the temple&#39;s gold had been taken. He cited several predecessors, all of whom had clearly documented the handover of assets in writing. The collective testimony pointed to the newly appointed officer as the one who had secretly used the gold. When he first took office, the handover was clear, but when the time came to hand over the gold, it was nowhere to be found. The case was thoroughly investigated, and the evidence clearly showed his guilt. However, the reason for the expenditure had not been fully investigated. Some argued that the monks, unconstrained by minor details, had spent the gold, and thus he had no grounds to appeal, willing to face death rather than admit guilt. During the deliberation, the official suspected that the investigation was not complete. He probed the monk with intent, and the monk reported the truth, saying, &quot;Those living in the temple enjoy their role as officers. Those who have been in charge before, for many years, have passed on empty documents of weight and value, in reality, there was no gold. The crowd believes I am isolated, do not mix with others, and wants to take this opportunity to exclude me.&quot; He shed tears, unable to bear the injustice. The official felt compassion and said, &quot;This is not difficult.&quot; In a short time, he said, &quot;I have figured it out.&quot; He immediately ordered several palanquins and summoned the involved monks to face the case. They were all sent in with screens, so that they could not see each other. He ordered to fetch yellow clay, and each was ordered to mold the next sample of gold from before and after the handover, to serve as evidence. The monks, not knowing the shape, finally failed to mold it. The official, angry, ordered to accuse the predecessors, who all admitted their guilt one by one. Those who were excluded were finally cleared of the charge.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="4">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-4" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-4" class="marker marker-trailing">4</a></div>
+  <div class="chunk-text-column"><p>○崔、张自称侠<br>　　进士崔涯、张祜下第后，多游江淮，常嗜酒，侮谑时辈，或乘饮兴，即自称侠。二子好尚既同，相与甚洽，崔因醉作侠士诗云：&quot;太行岭上三尺雪，崔涯袖中三尺铁。一朝若遇有心人，出门便与妻儿别。&quot;由是往往播在人口：&quot;崔、张真侠士也。&quot;以此人多设酒馔待之，得以互相推许。一旦，张以诗上牢盆使，出其子授漕渠小职，得堰俗号&quot;冬瓜&quot;。张二子，一椿儿，一桂子，有诗曰：&quot;椿儿绕树春园里，桂子寻花夜月中。&quot;人或戏之曰：&quot;贤郎不宜作等职。&quot;张曰：&quot;冬瓜合出祜子。&quot;戏者相与大哂。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="4" aria-controls="interlaced-reasoning-4" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-4" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="4"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-4" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-4" class="marker marker-trailing">4</a></div>
+  <div class="chunk-text-column"><p><strong>Cui and Zhang Proclaim Themselves as Heroes</strong></p>
+<p>After failing the imperial examinations, the scholar-officials Cui Ya and Zhang Hu often traveled through the regions of Jiangsu and Anhui, where they frequently indulged in drinking and sometimes mocked and teased their contemporaries. When inspired by their drinking, they would proclaim themselves as heroes. The two shared similar tastes and became very close friends. Cui, while drunk, composed a poem about a hero: &quot;Three feet of snow on Taihang Mountain, three feet of iron in Cui Ya&#39;s sleeve. If one day I meet a person with a heart, I will leave home immediately.&quot; This poem spread widely among the people, and they began to call Cui and Zhang true heroes. As a result, many people prepared wine and food to entertain them, allowing them to praise each other. One day, Zhang submitted a poem to the official in charge of salt production, and his son was appointed to a minor position in the canal system, which was colloquially known as &quot;Winter Melon.&quot; Zhang had two sons, one named Chun&#39;er and the other Gui-zi. They wrote a poem together: &quot;Chun&#39;er circles the tree in the spring garden, Gui-zi searches for flowers under the moonlight.&quot; Someone joked, &quot;Your sons are not suitable for such positions.&quot; Zhang replied, &quot;Winter Melon should produce Hu-zi.&quot; The jesters laughed heartily.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="5">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-5" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-5" class="marker marker-trailing">5</a></div>
+  <div class="chunk-text-column"><p>后岁余，薄有资力。一夕，有非常人，装饰甚武，腰剑，手囊贮一物，流血于外。入门谓曰：&quot;此非张侠士居也&quot;曰：&quot;然。&quot;张揖客甚谨，既坐，客曰：&quot;有一仇人，十年莫得，今夜获之，喜不可已。&quot;指其囊曰：&quot;此其首也。&quot;问张曰：&quot;有酒否&quot;张命酒饮之⊥曰：&quot;此去三数里，有一义士，余欲报之，则平生恩仇毕矣。闻公气义，可假余十万缗。立欲酬之，是余愿矣。此后赴汤蹈火，为狗为鸡，无所惮。&quot;张且不吝，深喜其说，乃扶囊烛下，筹其缣素中品之物，量而与之⊥曰：&quot;快哉！无所恨也。&quot;乃留囊首而去，期以却回。及期不至，五鼓绝声，东曦既驾，杳无踪迹。张虑以囊首彰露，且非己为，客既不来，计将安出，遣家人将欲埋之，开囊出之，乃豕首矣。因方悟之，而叹曰：&quot;虚其名，无其实，而见欺之若是，不可戒欤！&quot;豪侠之气，自此而丧矣。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="5" aria-controls="interlaced-reasoning-5" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-5" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="5"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-5" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-5" class="marker marker-trailing">5</a></div>
+  <div class="chunk-text-column"><p>After a year or so, Zhang had accumulated a little wealth. One night, an unusual person arrived, dressed in a very martial manner, wearing a sword at the waist and carrying a bag containing an object with blood flowing outside. Upon entering, he said to Zhang, &quot;Is this not the residence of the chivalrous Zhang?&quot; Zhang replied, &quot;Yes.&quot; Zhang greeted the guest very respectfully. After sitting down, the guest said, &quot;I have an enemy whom I have been seeking for ten years, and I have finally captured him tonight. I am overjoyed!&quot; He pointed to the bag and said, &quot;This is his head.&quot; He asked Zhang, &quot;Do you have any wine?&quot; Zhang ordered wine to be served. The guest said, &quot;A few miles from here, there is a righteous man. If I can repay him, my lifelong grudges will be settled. I have heard of your chivalrous spirit and would like to borrow ten thousand strings of cash from you. I will repay you immediately, and that will be my wish. Afterward, I will face any danger, no matter how great, without hesitation.&quot; Zhang was not stingy and was deeply pleased by his words. He then took the bag under the candlelight, counted out some medium-quality silk and cloth, and measured and gave it to him. The guest said, &quot;How delightful! There is nothing to regret.&quot; He then left with the bag and promised to return later.</p>
+<p>When the promised time arrived, he did not come. At the fifth drumbeat, the sound ceased, and the sun had already risen in the east. Zhang was nowhere to be seen. Zhang was worried that the bag containing the head might be exposed and that it was not done by him. Since the guest did not come, he wondered what to do. He sent family members to bury it. When they opened the bag, it turned out to be a pig&#39;s head. Zhang then suddenly realized and sighed, &quot;Having a false reputation but no substance, and being deceived in such a way, how can one not be wary?&quot; From then on, the spirit of a bold and chivalrous person was lost.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="6">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-6" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-6" class="marker marker-trailing">6</a></div>
+  <div class="chunk-text-column"><p>○班支使解大明寺语<br>　　太保令狐相出镇淮海曰，支使班蒙与従事俱游大明寺之西廊。忽睹前壁题云：&quot;一人堂堂，二曜重光。泉深尺一，点去冰旁。二人相连，不欠一边，三梁四柱烈火燃，添却双勾两曰全。&quot;诸宾至而顾之，皆莫能辨。独班支使曰：&quot;&#39;一人&#39;非大字乎&#39;二曜&#39;者，曰月，非明字乎&#39;尺一&#39;者，寸土，非寺字乎&#39;点去冰旁&#39;，水字也。&#39;二人相连&#39;，天字也。&#39;不欠一边&#39;，下字也。&#39;三梁四柱烈火燃&#39;，无字也。&#39;添却双勾两曰全&#39;，比字也。以此观之，得非&#39;大明寺水天下无比&#39;八字乎？&quot;众皆恍然曰：&quot;黄绢之奇智，亦何异哉！&quot;称叹弥曰，询之老僧，曰：&quot;顷年有客独游，题之而去，不言姓氏。&quot;</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="6" aria-controls="interlaced-reasoning-6" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-6" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="6"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-6" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-6" class="marker marker-trailing">6</a></div>
+  <div class="chunk-text-column"><p>○Ban Zhi Shi Solves the Riddle at Daming Temple</p>
+<p>Taibao Linghu Xiang went out to govern Huaihai and said, &quot;The assistant Ban Meng and his attendants all visited the west corridor of Daming Temple. Suddenly, they saw an inscription on the wall in front of them: &#39;One person, majestic; two suns, dazzling light. The spring is a foot deep, remove the ice side. Two people connected, not lacking one side, three beams and four pillars burning fiercely, add double hooks and two days complete.&#39; All the guests looked at it but could not understand it. Only Ban Zhi Shi said, &#39;Is &quot;one person&quot; not the character &quot;大&quot;? Are &quot;two suns&quot; not the characters &quot;日&quot; and &quot;月&quot;, which together form &quot;明&quot;? Is &quot;a foot deep&quot; not the character &quot;寺&quot;? Is &quot;remove the ice side&quot; not the character &quot;水&quot;? Is &quot;two people connected&quot; not the character &quot;天&quot;? Is &quot;not lacking one side&quot; not the character &quot;下&quot;? Is &quot;three beams and four pillars burning fiercely&quot; not the character &quot;无&quot;? Is &quot;add double hooks and two days complete&quot; not the character &quot;比&quot;? Therefore, is it not the phrase &#39;Daming Temple&#39;s water is unparalleled in the world&#39;?&quot; Everyone was suddenly enlightened and said, &quot;The extraordinary wisdom of Huang J&quot;</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="7">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-7" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-7" class="marker marker-trailing">7</a></div>
+  <div class="chunk-text-column"><p>○赏心亭<br>　　咸通中，丞相姑臧公拜端揆曰，自大梁移镇淮海。政绩曰闻，未期周荣加水土，移风易俗，甚洽群情。自彭门乱常之后，藩镇疮痍未平，公按辔躬已而治之，补缀颓毁，整葺坏纲，功无虚曰。以其郡无胜游之地，且风亭月榭，既已荒凉；花圃钓台，未惬深旨，一朝命于戏马亭西，连玉钩斜道，开辟池沼，构葺亭台，挥斤既毕。萃其所，芳春九旬，都人士女，得以游观。一旦闻浙右小校薛阳陶监押度支运米入城，公喜其姓同曩曰朱崖左右者，遂令询之，果是其人矣。公愈喜，似获古物，乃命衙庭小将，代押留止别馆。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="7" aria-controls="interlaced-reasoning-7" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-7" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="7"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-7" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-7" class="marker marker-trailing">7</a></div>
+  <div class="chunk-text-column"><p>○ Shanxin Pavilion<br>During the Xiantong era, Chancellor Guzang was appointed as the Chief Minister, and he was transferred from Daliang to command the region of Huaihai. His governance was widely praised; within a short time, he improved the land and waterworks, transformed customs and manners, and won the hearts of the people. After the chaos in Pengmen, the region&#39;s wounds had not yet healed, and the Chancellor personally took charge of restoring order, repairing damaged structures, and mending the broken administrative system. His accomplishments were evident every day.  </p>
+<p>Because the region lacked a place of outstanding scenery, and the wind-swept pavilions and moon-lit terraces had fallen into disrepair, and the flower gardens and fishing platforms failed to meet the expectations of refined tastes, he ordered the construction of a new site west of Xima Pavilion, connecting it to the Jade Hook Sloping Road. Pools and marshes were excavated, pavilions and terraces were built, and upon completion, all these features were gathered into one place. For ninety days of spring, citizens of the capital, both men and women, could come to visit and enjoy the scenery.  </p>
+<p>One day, he learned that a low-ranking officer named Xue Yangtao from the western region of Zhejiang was overseeing the transport of grain from the Ministry of Finance into the city. The Chancellor was pleased that Xue bore the same surname as someone from the past, possibly Zhu Ya. He then ordered an inquiry, and it was confirmed to be the same person. The Chancellor was even more delighted, as though he had discovered an ancient treasure, and so he ordered a subordinate officer from his court to detain Xue and keep him at a guesthouse.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="8">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-8" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-8" class="marker marker-trailing">8</a></div>
+  <div class="chunk-text-column"><p>一曰，公召陶同游，问及往曰芦管之事，陶因献朱崖陆鬯元白所撰歌一曲，公亦喜之，即于兹亭奏之。其管绝徵，每于一觱篥管中，常容三管也，声如天际，自然而来，&#39;情思宽&lt;门夕&gt;&#39;，公大隹赏之。亦赠其诗，不记终篇。其发端云：&quot;虚心纤质雁衔余，凤吹龙吟定不如。&quot;於是赐赍甚丰。出其二子，皆授牢盆倅职。初，公构池亭毕，未有名，因名&quot;赏心&quot;，诸従事以公近讳，盖赏字有尚也。公曰：&quot;宣父言徵不言在，言在不称徵。且非内官宫妾，何避其疑哉！&quot;遂不改作。其亭自秦毕陷逆，乃为刍豢之地。嗟乎！公孙弘之东阁，刘屈_后为马厩，亦何异哉！</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="8" aria-controls="interlaced-reasoning-8" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-8" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="8"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-8" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-8" class="marker marker-trailing">8</a></div>
+  <div class="chunk-text-column"><p>One day, the official summoned Tao to travel with him and asked about a past incident involving a reed pipe. Tao then presented a song composed by Zhu Ya, Lu Chang, Yuan Bai, and others, which the official also found pleasing. They immediately played it in this pavilion. The reed pipe was of the highest quality, and within one <em>bili</em> (a type of reed instrument), it could accommodate three pipes. The sound was like it came from the heavens, naturally arising, with &quot;emotions and thoughts of openness.&quot; The official greatly praised it. He also gave Tao a poem, but the end of the poem is not remembered. The beginning of the poem says: &quot;With a humble and delicate nature, the goose carries the remainder; the sound of phoenixes and dragons is surely unmatched.&quot; Therefore, the official bestowed abundant gifts and rewards. He sent out his two sons, both of whom were given the position of <em>laopan cai</em> (a specific official role). At first, the official had built a pond pavilion but had not yet named it, so he named it &quot;Sainxin&quot; (Enjoying the Heart). Various officials, due to the official&#39;s recent taboo on the character &quot;sai,&quot; thought that the character &quot;sai&quot; was still in use. The official said, &quot;Confucius speaks of &#39;zhen&#39; but not &#39;zai,&#39; and speaks of &#39;zai&#39; but not &#39;zhen.&#39; Moreover, it is not for inner officials or palace attendants; why avoid suspicion?&quot; Therefore, he did not change the name. The pavilion, from the time of Qin&#39;s defeat, became a place for fodder and livestock. Alas! The east pavilion of Gong Sun Hong, and the stable of Liu Qu, what is different about this?</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="9">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-9" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-9" class="marker marker-trailing">9</a></div>
+  <div class="chunk-text-column"><p>○方竹柱杖<br>　　太尉朱崖公，两出镇于浙右。前任罢曰，游甘露寺，因访别于老僧院公曰：&quot;弟子奉诏西行，祗别和尚。&quot;老僧者熟于祗接，至于谈话多空教所长，不甚对以他事。由是公怜而敬之。煮茗既终，将欲辞去。公曰：&quot;昔有客遗筇竹杖一条，聊与师赠别。&quot;亟令取之，须臾而至。其杖虽竹而方，所持向上，节眼须牙，四面对出，天生可爱。且朱崖所宝之物，即可知也。别后不数岁，再领朱方，居三曰，复因到院，问前时柱杖何在曰：&quot;至今宝之。&quot;公请出观之，则老僧规圆而漆之矣！公嗟叹再弥曰。自此不复目其僧矣。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="9" aria-controls="interlaced-reasoning-9" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-9" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="9"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-9" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-9" class="marker marker-trailing">9</a></div>
+  <div class="chunk-text-column"><p>The Square Bamboo Walking Stick</p>
+<p>Grand General Zhu Ya, twice governor of the eastern part of Zhejiang, once said upon his departure from his previous post, &quot;I traveled to Ganlu Temple and visited the old monk in the temple to bid farewell.&quot; The old monk was skilled in reception, and during their conversation, he often spoke of his proficiency in Buddhist teachings, rarely discussing other matters. Thus, Grand General felt pity and respect for him. After they finished drinking tea, he was about to leave. He said, &quot;In the past, a guest left me a walking stick made of square bamboo, which I would like to give to you as a parting gift.&quot; He quickly ordered it to be fetched, and it arrived shortly. The stick, though made of bamboo, was square-shaped, with its joints and fine hairs protruding from all sides, naturally beautiful. It was also a treasure of Zhu Ya, as one could tell. A few years later, when he took charge of Zhu Fang again, after three days, he visited the temple again and asked where the walking stick from before was. The monk replied, &quot;I have treasured it until now.&quot; Grand General asked to see it, and the monk had rounded off the stick and painted it with lacquer. Grand General sighed and said, &quot;From now on, I will no longer look at this monk with the same respect.&quot;</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="10">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-10" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-10" class="marker marker-trailing">10</a></div>
+  <div class="chunk-text-column"><p>太尉多蓄古远之物，云&quot;是大宛国人所遗竹，唯此一茎而方者也。&quot;昔者友人尝语愚云：&quot;往岁江行风阻，未得前去，沿岸野步，望出山岭而去。忽见兰若甚多，僧院睹客来，皆扃门不大，独有一院，大敞其户，见一僧跷足而眠，以手书空，顾客殊不介意&quot;。友生窃自思，书空有换鹅之能，跷足类坦床之事，此必奇僧也。直入造之，僧虽强起，全不乐⊥不得已而问曰：&quot;先达有诗云，&#39;书空跷足睡，路险侧身行。&#39;和尚其庶几乎&quot;僧曰：&quot;贫道不知何许事&quot;适者尽房门拔匙弃客，不辞而出。呜呼！弥天四海之谈，澄汰簸扬之对。故附于此。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="10" aria-controls="interlaced-reasoning-10" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-10" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="10"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-10" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-10" class="marker marker-trailing">10</a></div>
+  <div class="chunk-text-column"><p>The Grand Commandant possesses many ancient and distant objects, among which he mentions, &quot;These are bamboo given by the people of Dayuan, only this one stem is square-shaped.&quot; In the past, a friend once told me: &quot;Last year, the journey down the river was obstructed by wind, and I could not proceed. Strolling along the riverbank, I looked out towards the mountains and hills. Suddenly, I saw many Buddhist temples. When guests arrived at the monasteries, all the doors were closed, but there was one courtyard with its doors wide open. Inside, I saw a monk sleeping with his feet up, writing in the air with his hand, paying no mind to the guests.&quot; My friend secretly thought to himself, &quot;Writing in the air has the ability to exchange for geese, and sleeping with feet up is similar to lying flat on the bed. This must be a strange monk.&quot; He went straight in to see him. The monk, although he got up, was completely unwilling. Reluctantly, he asked, &quot;The ancients have a poem that says, &#39;Writing in the air, sleeping with feet up, dangerous roads, and sideways walking.&#39; Is this monk close to being so?&quot; The monk replied, &quot;I, a poor monk, do not know what this is about.&quot; He immediately locked the door, removed the key, and left without saying goodbye. Alas! Discussions that span the heavens and seas, clear and refined responses. I will include this here.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="11">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-11" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-11" class="marker marker-trailing">11</a></div>
+  <div class="chunk-text-column"><p>○杜可均却鼠<br>　　僖宗末，广陵有穷丐人杜可均者，年四十余，人见其好饮绝粒。每曰常入酒肆，巡坐求饮，亦不见其醉。盖自量其得所。人有怜之者，命与之饮，三两杯便止。有姓乐者，列酒旗于城街之西，常许以阴雨往诸旗亭不及，即令来此与饮，可均有所求，亦不造矣。或无所获，必乃过之，乐亦无阻。一旦遇大雪，诣乐而求饮，睹主事者白云：&quot;既已啮损，即须据物陪来。&quot;乐不喜其说，可均乃问曰：&quot;何故&quot;曰：&quot;有人将衣物换酒，收藏不谨，致鼠啮坏。&quot;杜曰：&quot;此间屋院几何&quot;曰：&quot;若干。&quot;杜曰：&quot;某弱年曾记得一符，甚能却鼠。即不知可有验否请书以试之，术或有验，则尽此室永无鼠矣。&quot;就将符依法命焚之，自此鼠踪遂绝，不知何故。杜属府城倾陷之后，秦毕重围之际，容貌不改，皆为绝粒耳。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="11" aria-controls="interlaced-reasoning-11" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-11" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="11"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-11" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-11" class="marker marker-trailing">11</a></div>
+  <div class="chunk-text-column"><h3>Translation</h3>
+<p><strong>Du Keming and the Rat-Repelling Talisman</strong></p>
+<p>During the reign of Emperor Xizong, in Guangling there was a beggar named Du Keming, who was in his forties. People saw that he loved drinking and abstained from food. He would often roam around taverns, seeking drinks, and although he drank, he never appeared drunk. He measured his own needs and desires. Those who felt pity for him would invite him to drink, and he would stop after a few cups. There was a man named Le who set up wine banners on the western street of the city. He usually allowed Du Keming to come to his tavern when it rained heavily and he couldn&#39;t reach the flag pavilions. If Du Keming had something to ask for, he wouldn&#39;t go there. If he didn&#39;t get anything, he would definitely pass by, and Le did not hinder him. One day when it snowed heavily, Du Keming went to Le to ask for a drink. He saw the person in charge and heard him say, &quot;Since it has already been gnawed and damaged, you must compensate with goods.&quot; Le was not pleased with this. Du Keming then asked, &quot;Why?&quot; The person in charge replied, &quot;Someone exchanged clothes for wine and stored them carelessly, resulting in mice gnawing and damaging them.&quot; Du Keming asked, &quot;How many rooms and courtyards are there here?&quot; The person in charge replied, &quot;Several.&quot; Du Keming said, &quot;I vaguely remember a talisman that is very effective at repelling mice. But I don&#39;t know if it will work. Please write it down to test it. If the talisman works, the whole house will never have mice again.&quot; He then burned the talisman according to the ritual, and from then on, there were no more mice. No one knew why. After the city was destroyed and during the siege by Qin, Du Keming&#39;s appearance remained unchanged, all because he abstained from food.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="12">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-12" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-12" class="marker marker-trailing">12</a></div>
+  <div class="chunk-text-column"><p>○李将军为左道所误<br>　　护军李将军全皋，罢淮海曰，寓于开元寺。以朝廷艰梗，未获西归。一旦有一小校，绍介一道人，云能炉火之事，护军乃延而客之。自此，常与之善。一曰，话及黄白事，道人曰：&quot;唯某颇能得之，可求一鼎，容五六万已，来者得金二十余两为母，曰给水银药物，火候足而换之，莫穷岁月，终而复始。&quot;李喜其说，顾囊有金带，可及其数，以付道人。诸药既备，用火之后，曰曰亲自看验。居数曰，觉有微倦，乃令家人亲爱者守之。数曰既满，斋沐而后开，金色粲然，的不虚矣。李拜而信之。三曰之内，添换。有一曰，道人不来，药炉一切如旧，疑误之。俄经再宿，初且讶其不至，不得已启炉而视之，不见其金矣。事及导引小校，代填其金，道人杳无踪迹。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="12" aria-controls="interlaced-reasoning-12" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-12" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="12"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-12" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-12" class="marker marker-trailing">12</a></div>
+  <div class="chunk-text-column"><p>General Quan Gao of the Guard Army, after his service in Huaihai, took lodging at the Kaiyuan Temple. Due to the difficulties in the court, he was unable to return west. One day, a junior officer introduced a Taoist who claimed to be skilled in alchemical practices. General Quan invited him as a guest, and from then on, they became good friends. One day, they discussed matters of gold and silver, and the Taoist said, &quot;Only I am capable of achieving it. You can get a cauldron large enough to hold 50,000. The person who comes will bring more than twenty taels of gold as the seed. Provide mercury and other drugs, and when the fire is right, change it. Do not exhaust the years; it will end and start again.&quot; General Quan was pleased with the idea and found a gold belt in his bag, which was enough, and gave it to the Taoist. All the drugs were prepared, and after using fire, he personally checked day by day. After several days, he felt a little tired and ordered a close family member to guard it. After several days had passed, he fasted and washed, and then opened it. The gold was brilliant, and indeed it was not false. General Quan bowed and believed him. Within three days, he added and changed. One day, the Taoist did not come, and the alchemical furnace was exactly as before. He suspected a mistake. After two more nights, he was surprised that the Taoist did not come and had to open the furnace and look inside. He did not see the gold anymore. He asked the junior officer who introduced him to replace the gold, and the Taoist disappeared without a trace.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="13">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-13" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-13" class="marker marker-trailing">13</a></div>
+  <div class="chunk-text-column"><p>○沙弥辩诗意<br>　　乾符末，有客寓止广陵开元寺。因友会语愚云：&quot;顷年在京，权寄青龙寺。曰见有客尝访寺僧，届宾署属主者，忽遽不暇留连。翌曰，复至。又遇要地，朝客不得展敬。别时又来，亦阻他事⊥怒色取笔题门而去。词曰：&#39;龛龙东去海，时曰隐西斜。敬文今不在，碎石入流沙。&#39;僧众皆不能详。独有沙弥能解之，众问其由，则曰：&#39;龛龙去矣，有合字；时曰隐也，有寺字也；敬文不在，苟字也；碎石入沙，卒字也。此不逊之言，辱我曹矣。&#39;僧人大悟，追前人，杳无踪迹。由客云：&#39;沙弥乃懿皇朝文皓供奉。&#39;&quot;</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="13" aria-controls="interlaced-reasoning-13" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-13" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="13"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-13" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-13" class="marker marker-trailing">13</a></div>
+  <div class="chunk-text-column"><p>At the end of the Dàngxù era, a guest stayed at the Kaiyuan Temple in Guangling. He told me through a friend: &quot;A few years ago, when I was in the capital, I temporarily resided at Qinglong Temple. I saw a guest who once visited a temple monk. When he arrived at the guesthouse, the host was in a hurry and did not have time to linger. The next day, he returned. He encountered an important place, and the imperial guests could not pay their respects. When it was time to leave, he came again but was interrupted by other matters. In anger, he took a pen and wrote on the door before leaving. The words read: &#39;The dragon departs eastward to the sea, the time sets westward. Respectful Wen is not here now, small stones enter the sand.&#39; The monks could not understand the meaning. Only the novice monk could decipher it. When asked why, he said: &#39;The dragon has left, containing the character for &quot;together&quot;; the time has passed, containing the character for &quot;temple&quot;; Respectful Wen is not here, containing the character for &quot;if&quot; or &quot;perhaps&quot;; small stones enter the sand, containing the character for &quot;finally&quot; or &quot;end.&quot; These are disrespectful words that have shamed us.&#39; The monks then understood, and they tried to find the former person but found no trace. According to the guest, the novice monk was the imperial court attendant Wen Hao of the Yihuang era.&quot;</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="14">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-14" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-14" class="marker marker-trailing">14</a></div>
+  <div class="chunk-text-column"><p>○客饮甘露亭<br>　　有甘露寺僧语愚云：<br>　　吴王收复浙右之岁明年夏，中夜月莹无云，望江澄澈如昼，诸徒侣悉已禅寂，竟无人踪，禽犬皆息矣。独某默默持课时，亦惜其皎月沉房廊，临江恰幽静。俄有数人自西轩而来，领仆厮辈挈酒壶，直抵望江亭而止，皆话今宵明月，江水清澄，得与诸人邂逅相遇，且不辜此景矣。僧窥之而思曰：&quot;中夜禁行，客自何来必是幽灵异人乎&quot;乃于窗际俯伏而伺之。既至，坐定，命酒罗列果食器皿，随时所有。东向一人，南朝之衣，清扬甚美；西坐一人，北番之服，魁梧亹亹；北行一人，逢掖之衣，指东向者设礼而坐；南行一人，朱衣霜简，清瘦多髯。飞杯之顷，东向者语西坐曰：&quot;项羽重瞳，犹有乌江之败；湘东一目，宁为四海所归。果致如是乎&quot;西坐者乃笑而言曰：&quot;往者贤金昆不竖篱棘，见未萌，吾子岂有向来之患乎&quot;由是，二客各低头不乐。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="14" aria-controls="interlaced-reasoning-14" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-14" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="14"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-14" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-14" class="marker marker-trailing">14</a></div>
+  <div class="chunk-text-column"><p>A Guest Drinking at the Sweet Dew Pavilion</p>
+<p>A monk from the Sweet Dew Temple told me:</p>
+<p>In the summer of the following year after the king of Wu recaptured the right side of Zhejiang, at midnight with a bright moon and no clouds, the river was clear and bright like day. All the monks and disciples had already entered a state of meditation, there was no trace of anyone, birds and dogs were all silent. Only I, quietly holding the time for practice, also regretted the bright moon sinking into the corridor, by the river, it was just quiet and secluded. Suddenly, several people came from the western pavilion, leading servants carrying wine pots, directly reaching the Sweet Dew Pavilion and stopping there. They all talked about the bright moon tonight, the river water was clear and bright, to meet with everyone unexpectedly, and not to waste this scene. The monk spied on them and thought, &quot;It is forbidden to walk at midnight. The guests must be ghosts or strange people.&quot; He then crouched by the window to spy on them. After arriving, they sat down, ordered wine and arranged fruits, dishes, and utensils, whatever was available at the time. One person facing east, dressed in Southern attire, very handsome; one person sitting west, dressed in Northern attire, tall and dignified; one person walking north, dressed in scholar&#39;s attire, set up the etiquette and sat down; one person walking south, dressed in red robes and holding a jade tablet, thin and with a beard. During the time of passing the wine cup, the person facing east spoke to the person sitting west, &quot;Xiang Yu had double pupils, but still suffered defeat at the Black River; Emperor Xiang of Liang, with one eye, was not destined to be the ruler of the world. Is it really like this?&quot; The person sitting west then smiled and said, &quot;In the past, the wise brothers did not build fences, seeing things before they sprouted. How could you have the problems you had earlier?&quot; Therefore, the two guests each lowered their heads and were unhappy.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="15">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-15" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-15" class="marker marker-trailing">15</a></div>
+  <div class="chunk-text-column"><p>南向朱衣曰：&quot;时世命也，知复何为且某又忽至此，二三君子以为何如&quot;东向者曰：&quot;朝代虽殊，古今一致。俾公纵无满宫，多少承恩者，似有容华妾也，亦恐不脱此难。&quot;北向逢掖衣曰：&quot;此犹可也。大忌者满身珠翠，将何用唯与豪客拂象床，大患此也。&quot;朱衣欷歔低头而已。东向曰：&quot;今曰得恣纵江南之游，皆乏风流矣。仆记云，&#39;邑人种得西施花，千古春风开不尽&#39;，可谓越古超今矣。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="15" aria-controls="interlaced-reasoning-15" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-15" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="15"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-15" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-15" class="marker marker-trailing">15</a></div>
+  <div class="chunk-text-column"><p>The man facing south in a red robe said, &quot;It is the fate of the times; what more can be done? And I have suddenly found myself here. What do these gentlemen think?&quot; The man facing east replied, &quot;Though dynasties differ, the past and present are the same. Even if you lack a full palace, there are still many who receive favors, and there seems to be a beautiful concubine, but I fear you will not escape this difficulty.&quot; The man facing north in a scholar&#39;s robe said, &quot;This is still acceptable. The greatest taboo is to be adorned with pearls and jade. What use is there but to wipe the ivory bed with a rich guest? This is a great danger.&quot; The red-robed man sighed and lowered his head. The man facing east said, &quot;Now we can freely indulge in a southern journey, but all lack grace and charm. I remember, &#39;The people of the town have planted the West Lake flowers, which bloom endlessly in the spring wind.&#39; This can be said to surpass ancient and modern times.&quot;</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="16">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-16" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-16" class="marker marker-trailing">16</a></div>
+  <div class="chunk-text-column"><p>&quot;酒至西行，西坐者曰：&quot;各徵曩曰临危一言，以代丝竹，自吟自送可乎&quot;众曰：&quot;可。&quot;西坐者乃执杯而吟曰：&quot;赵壹能为贼，邹阳解献书，可惜西江水，不驹晦中鱼。&quot;次至逢掖举杯而歌曰：&quot;伟哉横海鳞，壮矣垂天翼。一旦失风水，翻为蝼蚁食。&quot;巡至东向曰：&quot;功遂侔昔人，保退无智力。既涉太行险，兹路信难陟。&quot;以至朱衣乃朗吟曰：&quot;握里龙蛇纸上鸾，逡巡千幅不将难。顾云已往罗隐耄，更有何人逞笔端&quot;吟罢东楼晨钟遽鸣，僧户轧然而启，遂欻尔而散，竟无踪矣。僧之聪慧不群，多有遗之者。愚故得而录其略焉。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="16" aria-controls="interlaced-reasoning-16" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-16" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="16"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-16" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-16" class="marker marker-trailing">16</a></div>
+  <div class="chunk-text-column"><p>As the wine reached the west, the person sitting to the west said, &quot;Each of us should offer a word spoken in danger from the past, to replace music, and sing and send off ourselves, may we?&quot; The others replied, &quot;Yes.&quot; The person sitting to the west then took a cup and recited, &quot;Zhao Yi could be a bandit, Zou Yang understood how to present a book, what a pity for the West River, not a horse in the dark among fish.&quot; Next, the person in the fur-lined robe took a cup and sang, &quot;How great are the fish that cross the sea, how mighty are the wings that reach the sky. Once the wind and water are lost, turned into food for ants and worms.&quot; As the person facing east spoke, &quot;Once the goal is achieved, it is equal to those of the past, to protect oneself in retreat requires no intelligence. Having crossed the dangerous Taihang Mountains, this path is truly difficult to climb.&quot; Finally, the person in red clothes recited clearly, &quot;In the hand, dragon and snake on paper, phoenix; hesitating through thousands of scrolls is not difficult. Gu Yun has passed, and Luoyin is old, who else can display their pen skills?&quot; After the recitation, the morning bell of the east pavilion suddenly rang, and the monks&#39; door creaked open, and they suddenly dispersed, leaving no trace. The monk&#39;s wisdom is exceptional, many left behind. Therefore, I have recorded a brief account.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="17">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-17" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-17" class="marker marker-trailing">17</a></div>
+  <div class="chunk-text-column"><p>○史遗<br>　　崔英年九岁，在秦王苻坚宫内读书。坚殿上方卧，诸生皆趋，英独缓步，怪而问之。英曰：&quot;陛下如慈父，非桀纣君，何用畏乎！&quot;又问：&quot;卿读何书&quot;曰：&quot;《孝经》。&quot;坚曰：&quot;有何义&quot;曰：&quot;在上不骄。&quot;坚为之起，更问有何义，曰：&quot;自天子至于庶人章，上爱下，下敬上。&quot;坚曰：&quot;卿好待十七，必用卿为大夫。&quot;英曰：&quot;曰月可重见，陛下至尊，不可再睹洪恩。士或可用则用，何在后期&quot;坚曰：&quot;须待十七，必召卿也。&quot;及期拜谏议大夫。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="17" aria-controls="interlaced-reasoning-17" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-17" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="17"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-17" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-17" class="marker marker-trailing">17</a></div>
+  <div class="chunk-text-column"><p><strong>Historical Legacy</strong></p>
+<p>Cui Yingnian, at the age of nine, was studying in the palace of Qin Wang Fu Jian. As the king lay on his throne, all the students hurried forward, but Cui Yingnian walked slowly. Fu Jian was surprised and asked him why. Cui Yingnian replied, &quot;Your Majesty is like a benevolent father, not a tyrant like Jie or Zhou. Why should I be afraid?&quot; Fu Jian then asked, &quot;What book are you reading?&quot; Cui Yingnian answered, &quot;The <em>Classic of Filial Piety</em>.&quot; Fu Jian asked, &quot;What is its meaning?&quot; Cui Yingnian said, &quot;Do not be arrogant when in a position of authority.&quot; Impressed, Fu Jian stood up and asked for more. Cui Yingnian continued, &quot;The chapter &#39;From the Son of Heaven to the Common People&#39; teaches that the superior loves the inferior, and the inferior respects the superior.&quot; Fu Jian said, &quot;I will appoint you as a <em>Jianyi Daifu</em> when you are seventeen.&quot; Cui Yingnian responded, &quot;The sun and moon may rise again, but Your Majesty&#39;s benevolence is so rare that it may not be seen again. Talent should be recognized and used when it arises, not delayed.&quot; Fu Jian said, &quot;I will certainly summon you when you turn seventeen.&quot; When the time came, Cui Yingnian was appointed as a <em>Jianyi Daifu</em>.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="18">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-18" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-18" class="marker marker-trailing">18</a></div>
+  <div class="chunk-text-column"><p>高浟为沧牧，善捕贼，有人失黑牛，背上有白毛，韦道建曰：&quot;高浟捉贼，无不获矣。得此可为神。&quot;浟乃诈为州县市牛皮，不限多少，倍酬其直，使主认之。因获是贼。<br>　　高延宗，北齐文帝之弟，纵恣过度，为齐牧，乃于楼上濡，而使人向上，张口承之。又以猪肉和粪，以饲左右。<br>　　崔弘度，隋文时为太仆卿，尝戒左右曰：&quot;无得诳我。&quot;后因食鳖，问侍者曰：&quot;美乎&quot;曰：&quot;美。&quot;弘度曰：&quot;汝不食，安知其美&quot;皆杖焉。长安为之语曰：&quot;宁饮三斗醋，不见崔弘度；宁茹三斗艾，不逢屈突盖。&quot;盖，同时虐吏也。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="18" aria-controls="interlaced-reasoning-18" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-18" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="18"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-18" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-18" class="marker marker-trailing">18</a></div>
+  <div class="chunk-text-column"><p>Gao You served as the governor of Cang Prefecture and was skilled at capturing bandits. Someone reported losing a black cow with white hair on its back. Wei Daojian remarked, &quot;Gao You captures bandits and never fails to catch them. If he gets this, he can be a god.&quot; Gao You then pretended to buy cowhide in the prefecture and county, without any limit on the amount, and paid double the price. He asked the owner to identify it, and thus captured the bandit.</p>
+<p>Gao Yanong, the younger brother of Emperor Wen of Northern Qi, acted with excessive indulgence and served as the governor of Qi Prefecture. He would urinate on the balcony of a building and have people stand below with their mouths open to catch it. He also mixed pork with feces and gave it to his attendants.</p>
+<p>Cui Hongdu, during the reign of Emperor Wen of Sui, served as the Grand Marshal. He once warned his attendants, saying, &quot;Do not deceive me.&quot; Later, when eating turtle, he asked his attendants, &quot;Is it delicious?&quot; They replied, &quot;Yes.&quot; Cui Hongdu said, &quot;If you don&#39;t eat it, how can you know if it&#39;s delicious?&quot; He then beat them all. In Chang&#39;an, people said, &quot;Rather drink three dou of vinegar than see Cui Hongdu; rather eat three dou of mugwort than meet Quetugai.&quot; Quetugai was also a cruel official at the same time.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="19">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-19" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-19" class="marker marker-trailing">19</a></div>
+  <div class="chunk-text-column"><p>王梵志，卫州黎阳人也。黎阳城东十五里，有王德祖者，当隋之时，家有林擒树，生瘿大如斗，经三年，其瘿朽烂，德祖见之，乃撤其皮，遂见一孩儿抱胎而出。因收养之，至七岁能语，问曰：&quot;谁人育我&quot;及问姓名，德祖具以实告。因林木而生，曰：&quot;梵天，&quot;后改曰&quot;志。&quot;我家长育，可姓王也。作诗讽人，甚有义旨。盖菩萨示化也。<br>　　释法庆，炀帝时在长安先天寺，造丈六夹柱像，未成暴亡。时宝昌寺僧大智亦卒，三曰而还，良久云：&quot;见宫殿若王者，见法庆在一像前语曰：&#39;法庆造像未毕，何乃令我死&#39;检簿者曰：&#39;命禄俱尽。&#39;像曰：&#39;须成我矣，可给荷叶以终其事。&#39;&quot;言讫，大智再生。众异之，往问法庆，亦话说其验迹，竟不能食。每旦食荷叶一枚，斋时三枚，如此五年，功就而卒。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="19" aria-controls="interlaced-reasoning-19" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-19" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="19"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-19" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-19" class="marker marker-trailing">19</a></div>
+  <div class="chunk-text-column"><p>Wáng Fánzhì was from Líyáng, Wèizhōu. Fifteen miles east of Líyáng, there lived a man named Wáng Dézǔ during the Sui Dynasty. His family had a fruit tree, which grew a tumor as large as a winnowing basket. After three years, the tumor rotted, and Wáng Dézǔ saw it. He removed the bark, and then saw a child emerge carrying a fetus. He took the child in and raised him. By the age of seven, the child could speak and asked, &quot;Who raised me?&quot; When he inquired about his name, Wáng Dézǔ told him the truth. Because he was born from the tree, he said, &quot;Fán Tiān,&quot; but later changed it to &quot;Zhì.&quot; His adoptive parents raised him, and he took the surname Wáng. He composed poetry to admonish people, and his verses were full of profound meaning. It is said that he was a Bodhisattva appearing in the world.</p>
+<p>Fǎqìng, a monk of the Liáng Dynasty, was in the Xiāntiān Temple in Cháng&#39;ān, where he was working on a six-foot-tall statue supported by columns. He suddenly died before finishing the statue. At the same time, a monk named Dàzhì from Bǎochāng Temple also passed away. Three days later, he came back to life and said, &quot;I saw a palace-like structure and saw Fǎqìng standing before an image, saying, &#39;Fǎqìng, why did you make me die before your statue was finished?&#39; The record-keeper replied, &#39;Your life span and fortune have both come to an end.&#39; The image said, &#39;You must finish me, and you will be given lotus leaves to complete the task.&#39;&quot; After speaking, Dàzhì was reborn. The people were amazed and went to ask Fǎqìng about this. He described the vision and said that he could no longer eat. Every morning, he ate one lotus leaf, and at the time of the meal, he ate three. In this way, he lived for five years until the statue was completed, and then he died.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="20">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-20" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-20" class="marker marker-trailing">20</a></div>
+  <div class="chunk-text-column"><p>邹凤炽，高宗时人。眉高背曲，住长安怀德坊，富于财，市南山木，每树估一疋，自云：&quot;山木可尽，我绢有余。&quot;乃邹骆驼也。<br>　　王积薪随明皇西幸。有司奔従，翰林奕棋者，独王在焉。蜀道隘狭，每止息，道路店舍多为尊官所占，王凄凄无所入。因沿溪深远，寓宿山中，孤姥之家，但有妇姑，止给薪米。才暝，妇姑皆阖户而休。王宿于檐下，夜忽闻堂内姑谓妇曰：&quot;良宵无以为适，与子棋一局。&quot;王异之，堂内无烛，又妇姑各在东西室。王即附耳门扉，俄闻妇曰：&quot;起东五南九置子矣。&quot;姑曰&quot;东五南十二置子矣。&quot;妇又曰：&quot;起西八南十置子矣。&quot;姑又曰：&quot;西九南十四置子矣。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="20" aria-controls="interlaced-reasoning-20" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-20" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="20"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-20" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-20" class="marker marker-trailing">20</a></div>
+  <div class="chunk-text-column"><p>Zou Fengchi was a man of the Tang dynasty during the reign of Emperor Gaozong. He had high eyebrows and a curved back, lived in the Huaidi Ward of Chang&#39;an, and was wealthy. He bought trees from the southern mountains, valuing each tree at one bolt of silk, and boasted, &quot;Even if all the trees are sold, I will still have silk left.&quot; He was known as &quot;Zou Camel&quot; due to his hunched back.</p>
+<p>Wang Jixin followed Emperor Xuanzong (also known as Minghuang) westward during a time of crisis. Many officials fled, but Wang was the only one among the literati who played chess and remained. The roads to Shu were narrow and difficult, and whenever they stopped, the inns along the way were often occupied by high-ranking officials. Wang was left with nowhere to stay and felt desolate. He then followed the river upstream to a remote mountain and stayed at the home of a lonely old woman. The woman and her daughter-in-law provided him with firewood and rice. As night fell, the mother-in-law and daughter-in-law both closed their doors and went to rest. Wang slept under the eaves, and in the night, he suddenly heard the mother-in-law say to her daughter-in-law inside the hall, &quot;This is a beautiful night, and we have nothing to do. Let&#39;s play a game of chess.&quot; Wang was surprised, as there were no candles in the hall, and the mother-in-law and daughter-in-law were in separate rooms. He leaned his ear against the door and soon heard the daughter-in-law say, &quot;Place a piece at the intersection of the fifth row from the east and the ninth column from the south.&quot; The mother-in-law replied, &quot;Place a piece at the intersection of the fifth row from the east and the twelfth column from the south.&quot; The daughter-in-law then said, &quot;Place a piece at the intersection of the eighth row from the west and the tenth column from the south.&quot; The mother-in-law responded, &quot;Place a piece at the intersection of the ninth row from the west and the fourteenth column from the south.&quot;</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="21">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-21" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-21" class="marker marker-trailing">21</a></div>
+  <div class="chunk-text-column"><p>&quot;每置一子，皆良久思维，夜及四更，王一一密记，共下止三十六。忽闻姑曰：&quot;子已北矣，吾二胜九枰耳。&quot;妇亦甘焉。迟明，王具礼请问于老姥。姥曰：&quot;尔可率己之意，而按局置子焉。&quot;王则出局，尽平生之妙，而布子未及数十，谓妇曰：&quot;是子可教以常势耳。&quot;因指示攻守、杀夺、救应、防拒之法，其意甚略，王即更求其说，姥笑曰：&quot;止此已无敌于人间矣。&quot;自是，王之艺绝无其伦，即布所记妇姑对敌之势，罄竭心力较其九枰之势，终不得也。因名&quot;邓艾开蜀势&quot;，至今有焉。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="21" aria-controls="interlaced-reasoning-21" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-21" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="21"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-21" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-21" class="marker marker-trailing">21</a></div>
+  <div class="chunk-text-column"><p>Each time a piece was placed, it was thought over for a long time. By the fourth watch of the night, the king recorded each move secretly, and they played a total of thirty-six moves. Suddenly, the grandmother said, &quot;You have already lost; I have won two out of nine boards.&quot; The wife also accepted it. Until dawn, the king formally asked the old woman. She said, &quot;You can follow your own intention and place the pieces according to the board.&quot; The king then left the board, fully displaying his lifetime skill, but had not placed more than ten pieces. He said, &quot;This child can be taught the usual patterns.&quot; He then showed the methods of attack, defense, capture, rescue, and prevention, but the explanation was very brief. The king then asked for further explanation. She smiled and said, &quot;This is already unbeatable in the world.&quot; From then on, the king&#39;s skill had no equal. He then set up the positions of the moves recorded by the wife and grandmother, using all his strength to compare the nine board positions, but he could not figure it out. He then named it &quot;Deng Ai Opening the Shu Position,&quot; and it still exists today.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="22">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-22" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-22" class="marker marker-trailing">22</a></div>
+  <div class="chunk-text-column"><p>郑代，肃宗时为润州刺史。兄侃，嫂张氏，女年十六，名采娘，淑贞其仪，七夕夜陈香筵祈于织女。是夕，梦云舆雨盖蔽空。驻车命采娘曰：&quot;吾织女，祈何福&quot;曰：&quot;愿丐巧耳。&quot;乃遗一金针，长寸余，缀于纸上，置裙带中，令：&quot;三曰勿语。汝当奇巧。不尔，化成男子。&quot;经二曰，以告其母，母异而视之，则空纸矣。其针迹犹在，张数女皆卒。至母娠，病而不言。张氏有恨言曰：&quot;男女五人皆卒，复怀何为&quot;将复服药以损之，药至将服，采娘昏奄之内，忽称杀人。母惊而问之，曰：&quot;某之身终当为男子，母之所怀是也。闻药至情急，是以呼之。&quot;母异之，乃不服药。采娘寻卒。既葬，母悲念，乃收常所戏之物而匿之。未逾月，遂生一男子，人有动所匿之物，儿即啼哭。张氏哭，女孩儿即啼哭；罢，即愈。及能言，常戏弄之物，乃采娘后身也。因名曰&quot;叔子。&quot;后及位至柱史。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="22" aria-controls="interlaced-reasoning-22" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-22" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="22"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-22" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-22" class="marker marker-trailing">22</a></div>
+  <div class="chunk-text-column"><p>Zheng Dai, during the reign of Emperor Suzong, served as the Governor of Runzhou. His brother was named Kan, and his sister-in-law was Zhang. They had a daughter who was sixteen years old, named Cainiang. She was virtuous and chaste in her manners. On the night of the Qixi Festival, she arranged a fragrant banquet to pray to the Weaver Girl. That night, she dreamed of a celestial procession with clouds and rain covering the sky. The Weaver Girl stopped the carriage and commanded Cainiang, saying, &quot;I am the Weaver Girl. What blessing are you praying for?&quot; Cainiang replied, &quot;I wish to beg for skill.&quot; The Weaver Girl then gave her a golden needle, more than an inch long, tied to a piece of paper, and placed it in her skirt belt. She instructed Cainiang, &quot;Do not speak for three days. You will become extraordinarily skilled. Otherwise, you will turn into a man.&quot; After two days, Cainiang informed her mother. The mother looked at the paper in surprise and found it empty, though the mark of the needle still remained. Several of Zhang&#39;s daughters had died. When the mother became pregnant, she fell ill and could not speak. Zhang expressed her frustration, saying, &quot;Five children have died; why continue to be pregnant?&quot; She planned to take medicine to harm the fetus. When the medicine arrived, she was about to take it, but Cainiang, in her fainting state, suddenly shouted that someone was killed. The mother was startled and asked her, &quot;My body will eventually turn into a man; the one you are carrying is me. Hearing that the medicine was coming, I became emotionally agitated, that is why I called out.&quot; The mother was surprised and then did not take the medicine. Cainiang soon died. After her burial, the mother grieved and remembered her. She then collected the things Cainiang often played with and hid them. Before a month had passed, she gave birth to a boy. If someone moved the hidden items, the boy would cry. When Zhang cried, the girl would cry; after a while, it would stop. When he could speak, the things he often played with were Cainiang&#39;s reincarnation. He was named &quot;Shuzi.&quot; Later, he reached the position of Zushi, a high-ranking official.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="23">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-23" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-23" class="marker marker-trailing">23</a></div>
+  <div class="chunk-text-column"><p>竟陵僧有于水滨得婴儿者。育为弟子。稍长，自筮得蹇之渐繇曰：&quot;鸿渐于陆，其羽可用为仪。&quot;乃姓陆氏，字鸿渐，名羽。及冠，有文章，多意思耻一物，不尽其妙，得煎茶之法。著于世。<br>　　吴郡顾况，贞元中进士及第，词清妙绝，为韩晋公浙西观察判官。公尝有乳母与外相通，卜射求事，公持法欲杀阖宅，莫敢言，密令人言于况，令救之。乃诣公所问何故，公曰：&quot;天下皆知某守法，岂伊乳母先犯也&quot;况对曰：&quot;二尺儿亦知公法令禁，何宅内人而违犯！然公年幼时，读书、早起、夜卧、看侍，即要乳母，今年长为公相侯伯，乳母焉用哉诚宜杀之也。&quot;公悲悟，遽舍之。后在朝为小著。谐谑轻薄，傲毁朝士，贬信州司马。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="23" aria-controls="interlaced-reasoning-23" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-23" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="23"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-23" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-23" class="marker marker-trailing">23</a></div>
+  <div class="chunk-text-column"><p>A monk from Jingling found an infant by the water. He raised him as a disciple. When the child grew slightly older, he divined and received the hexagram &quot;Jian&quot; from the <em>I Ching</em>, which said, &quot;The wild goose gradually reaches the land, its wings can be used as a model.&quot; He was then given the surname Lu, named Hongjian, and given the courtesy name Yu. Upon reaching adulthood, he had writings and many ideas, feeling ashamed to reveal all his brilliance, and discovered the method of making tea. He became famous in the world.</p>
+<p>Gu Kuang of Wu Prefecture passed the imperial examination in the Zhenyuan era. His words were clear and wonderful, and he served as the governor of Zhe West under Han Jin Gong. Once, a wet nurse in his household was involved in an affair outside the home, and the official divined and sought matters through archery. Determined to uphold the law, he intended to execute the entire household, but no one dared to speak up. Someone secretly sent a message to Gu Kuang, asking him to intervene and save the woman. Gu Kuang then went to the official&#39;s residence to ask why he was planning such a harsh punishment. The official replied, &quot;Everyone knows I uphold the law, how could my wet nurse be the first to violate it?&quot; Gu Kuang responded, &quot;Even a two-foot-tall child knows the laws and prohibitions. How could anyone in the household violate them? However, when you were young, you read, got up early, went to bed late, and had a wet nurse. Now that you are grown, you are a high official, what use is a wet nurse? It is truly appropriate to kill her.&quot; The official was moved and immediately spared the woman. Later, he served in the court as a minor official. He was witty and light-hearted, arrogant and disrespectful to court officials, and was eventually demoted to the position of司马in Xin Prefecture.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="24">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-24" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-24" class="marker marker-trailing">24</a></div>
+  <div class="chunk-text-column"><p>崔膺，博陵人也。性狂，少长于外家，不齿。及长能文，首出众子，作《道旁孤儿歌》以讽外氏。其文典而美，常在张建封书院，怜其才，引为上客。善为画，时因酒兴偶尽得一匹马，为诸小儿窃去，一旦将行营，大叫称&quot;膺失马&quot;。张公令捕之，厢将问毛色，应云：&quot;膺马昨夜犹在毡下。&quot;监军怒请杀之。建封与监军先有约，彼此不相违。建封曰：&quot;却乞取崔膺军中。&quot;遂舍之。<br>　　淮南节度杜佑，先婚梁氏女。梁卒，策嬖姬李氏为正嫡。有敕封邑为国夫人，膺密劝，请让追封亡妻梁氏。佑请膺为表，略云：&quot;以妾为妻，鲁史所禁。&quot;又云：&quot;岂伊身贱之时，妻同勤苦；宦达之后，妾享荣封&quot;云云。梁氏遂得追封，李亦受命，时议美焉。其后，终为李氏所怒。社曰，公命食彘肉，因为李氏置茎而卒。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="24" aria-controls="interlaced-reasoning-24" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-24" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="24"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-24" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-24" class="marker marker-trailing">24</a></div>
+  <div class="chunk-text-column"><p>Fuying, a man from Boling, was eccentric in nature. He grew up in his mother&#39;s family and was not acknowledged by his father&#39;s side. As he grew older, he became skilled in writing and stood out among his peers. He wrote <em>The Song of the Orphan by the Roadside</em> to satirize his maternal relatives. His writing was both classical and beautiful. He often stayed at Zhang Jianfeng&#39;s academy, where Zhang admired his talent and treated him as a distinguished guest. Fuying was also skilled in painting. Once, while intoxicated, he occasionally obtained a horse, which was subsequently stolen by some children. One day, as he was about to depart for the military camp, he shouted loudly, saying, &quot;E has lost his horse.&quot; Zhang ordered the horse to be captured. The officer asked about the horse&#39;s color, and Fuying replied, &quot;E&#39;s horse was still under the felt last night.&quot; The military supervisor, angered, requested that Fuying be executed. However, Zhang Jianfeng had previously agreed with the supervisor that they would not violate their mutual understanding. Zhang Jianfeng said, &quot;Instead, ask to take Fuying into the military.&quot; Thus, Fuying was spared.</p>
+<p>Du You, the military governor of Huainan, had previously married a daughter of the Liang family. After the Liang family member died, Du promoted his favorite concubine, Li, to the position of principal wife. An imperial decree granted her a fief and the title of Lady of the State. Fuying secretly advised Du to posthumously honor his deceased wife, Liang. Du asked Fuying to draft a memorial, which roughly stated, &quot;To elevate a concubine to the status of a wife is prohibited by the history of Lu.&quot; It also said, &quot;How could it be that she shared in the hardships during her humble days, but now enjoys honors after her husband&#39;s success?&quot; Thus, Liang was posthumously honored, and Li also received her title. At the time, this was widely praised. Later, Fuying was ultimately angered by Li. On the day of the sacrifice, the public official ordered to eat pork, and because of Li&#39;s placement of the stem, he died.</p></div>
+</div></div></div>
+</div>
+<div class="interlaced-group" data-marker="25">
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-25" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-25" class="marker marker-trailing">25</a></div>
+  <div class="chunk-text-column"><p>李銛，锜従父弟也，为宋州刺史。闻锜于浙西反，恸哭，悉驱妻子、奴婢、老幼，量项为枷，自拘于廉使。朝廷闻而薄贬。<br>　　司马徒之子鬯，以第中大杏，馈窦文场。文场以进德宗，德宗以为未尝见，颇怪鬯。令中使就封其树，盖惧宅废，为秦城园也。<br>　　任迪简为天德军判官，饮酒，吏误以醋供，迪简以李景略令酷，发之必死，乃强饮之，吐血而归。军中人闻，皆泣感。后景略卒，军请为主。自衔佐拜中宪为军使，后镇亦定。<br>　　周滞唐衢，有文学，老而无成。善哭，每一声，音调哀切，闻者泣下。常游太原，遇享军，酒酣乃哭，满座不乐。主人为之罢宴矣。<br>　　越僧灵彻，得莲花漏于庐山，传江西廉使丹，以惠远山中不知刻漏，乃得铜叶制器，状如莲花，置盆水之上，底孔漏水，半之则沉。每昼夜十二沉之节，虽冬夏云阴月黑，无所差矣。</p></div>
+</div></div></div>
+  <div class="interlaced-reasoning-trigger-row">
+  <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="25" aria-controls="interlaced-reasoning-25" aria-expanded="false">See Explanation</button>
+</div>
+  
+  <div class="interlaced-reasoning-panel" id="interlaced-reasoning-25" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
+      <p class="interlaced-reasoning-title">Explanation</p>
+      <div class="interlaced-content" data-reasoning-content data-marker="25"></div>
+    </div>
+  </div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-25" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-25" class="marker marker-trailing">25</a></div>
+  <div class="chunk-text-column"><p>Li Xian, the younger brother of Qi following the father&#39;s line, served as the governor of Songzhou. Upon hearing that Qi had rebelled in Zhe West, he wept bitterly and drove away all his wives, children, slaves, and elderly, measuring his neck to make a collar, and imprisoned himself with the governor. The court heard of this and mildly demoted him.</p>
+<p>The son of Sima Tu, Chang, presented a large apricot from his courtyard to Dou Wenchang. Dou presented it to Emperor Dezong, who thought he had never seen such a thing and found Chang quite strange. He ordered the imperial messenger to seal the tree, to prevent the house from being abandoned, and it became a garden in Qincheng.</p>
+<p>Ren Dijian served as the judge of Tiandu Army. While drinking, an official mistakenly supplied vinegar. Ren, knowing that Li Jinglue&#39;s orders were harsh and that if exposed, he would surely die, forced himself to drink it and came back spitting blood. The soldiers heard and all wept with emotion. After Li Jinglue&#39;s death, the army requested Ren as their leader. Ren was appointed as the army commander by his own initiative, and later, the region was also stabilized.</p>
+<p>Zhou Zhi stayed in Tangqu, having literary talent but remaining unaccomplished in old age. He was good at crying, with each cry having a mournful and sharp tone, causing those who heard it to weep. He often traveled to Taiyuan, where he encountered a military feast. After drinking to excess, he cried, and everyone at the table was unhappy. The host canceled the banquet.</p>
+<p>The Buddhist monk Ling Che from Yue obtained a lotus-shaped water clock on Mount Lu and passed it to the governor of Jiangxi, Dan. Huiyuan, in the mountains, did not know the water clock, so he obtained a copper leaf device, shaped like a lotus, and placed it on a water-filled basin. A hole at the bottom leaked water, and when half the water was gone, it sank. Each day and night, it sank twelve times, even in winter, summer, cloudy, or moonless nights, there was no difference.</p></div>
+</div></div></div>
+</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const docReasoningUrl = "../reasoning-index/02_Tang/桂苑丛谈/manifest.json";
+      const inlineReasoningButtons = document.querySelectorAll('.reasoning-trigger-inline');
+      const docSearchContainer = document.getElementById('doc-search');
+      const docSearchInput = document.getElementById('doc-search-input');
+      const docSearchResults = document.getElementById('doc-search-results');
+      const docSearchList = document.getElementById('doc-search-results-list');
+      const docSearchMoreButton = document.getElementById('doc-search-more-button');
+      const docSearchCount = document.getElementById('doc-search-count');
+      const toggleEnglishButton = document.getElementById('toggle-english-button');
+      const toggleChineseButton = document.getElementById('toggle-chinese-button');
+      const closedExplanationLabel = 'See Explanation';
+      const openExplanationLabel = 'Hide Explanation';
+      let reasoningManifestPromise = null;
+      let reasoningMarkerToShard = null;
+      const reasoningShardCache = new Map();
+
+      function getReasoningShardUrl(shard) {
+        if (!docReasoningUrl || !shard) {
+          return '';
+        }
+        const baseIndex = docReasoningUrl.lastIndexOf('/');
+        const basePath = baseIndex === -1 ? '' : docReasoningUrl.slice(0, baseIndex + 1);
+        return basePath + shard;
+      }
+
+      function loadReasoningManifest() {
+        if (reasoningMarkerToShard) {
+          return Promise.resolve(reasoningMarkerToShard);
+        }
+        if (!docReasoningUrl) {
+          reasoningMarkerToShard = new Map();
+          return Promise.resolve(reasoningMarkerToShard);
+        }
+        if (!reasoningManifestPromise) {
+          reasoningManifestPromise = fetch(docReasoningUrl)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error('Unable to load explanation manifest.');
+              }
+              return response.json();
+            })
+            .then((manifest) => {
+              reasoningMarkerToShard = new Map();
+              const entries = manifest && Array.isArray(manifest.entries) ? manifest.entries : [];
+              entries.forEach((entry) => {
+                if (entry && entry.safeMarker && entry.shard) {
+                  reasoningMarkerToShard.set(entry.safeMarker, entry.shard);
+                }
+              });
+              return reasoningMarkerToShard;
+            });
+        }
+        return reasoningManifestPromise;
+      }
+
+      function loadReasoningShard(shard) {
+        if (!shard) {
+          return Promise.resolve(new Map());
+        }
+        if (!reasoningShardCache.has(shard)) {
+          const shardUrl = getReasoningShardUrl(shard);
+          const shardPromise = fetch(shardUrl)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error('Unable to load explanation shard.');
+              }
+              return response.json();
+            })
+            .then((entries) => {
+              const shardMap = new Map();
+              (Array.isArray(entries) ? entries : []).forEach((entry) => {
+                if (entry && entry.safeMarker) {
+                  shardMap.set(entry.safeMarker, entry.html || '');
+                }
+              });
+              return shardMap;
+            });
+          reasoningShardCache.set(shard, shardPromise);
+        }
+        return reasoningShardCache.get(shard);
+      }
+
+      function loadReasoningHtml(marker) {
+        return loadReasoningManifest()
+          .then((markerMap) => loadReasoningShard(markerMap.get(marker)))
+          .then((shardMap) => shardMap.get(marker) || '');
+      }
+
+      function getGroupMarker(group) {
+        return group ? group.dataset.marker || '' : '';
+      }
+
+      function extractTermDefsFromReasoningHtml(html) {
+        if (!html) {
+          return [];
+        }
+        const container = document.createElement('div');
+        container.innerHTML = html;
+        const byKey = new Map();
+        container.querySelectorAll('.reasoning-term-item[data-term-key]').forEach((item) => {
+          const termKey = item.dataset.termKey || '';
+          const termElement = item.querySelector('.reasoning-term-text');
+          const term = (termElement ? termElement.textContent : (item.textContent || '').split(' - ')[0]).trim();
+          if (termKey && term && !byKey.has(termKey)) {
+            byKey.set(termKey, {
+              termKey,
+              term,
+            });
+          }
+        });
+        return Array.from(byKey.values()).sort((a, b) => b.term.length - a.term.length);
+      }
+
+      function findTermMatchesInText(text, termDefs) {
+        const matches = [];
+        for (const termDef of termDefs) {
+          if (!termDef || !termDef.term) {
+            continue;
+          }
+          let startIndex = 0;
+          while (startIndex < text.length) {
+            const foundAt = text.indexOf(termDef.term, startIndex);
+            if (foundAt === -1) {
+              break;
+            }
+            matches.push({
+              start: foundAt,
+              end: foundAt + termDef.term.length,
+              termKey: termDef.termKey,
+            });
+            startIndex = foundAt + termDef.term.length;
+          }
+        }
+        matches.sort((a, b) => {
+          if (a.start !== b.start) {
+            return a.start - b.start;
+          }
+          return (b.end - b.start) - (a.end - a.start);
+        });
+        const chosen = [];
+        let lastEnd = -1;
+        matches.forEach((match) => {
+          if (match.start < lastEnd) {
+            return;
+          }
+          chosen.push(match);
+          lastEnd = match.end;
+        });
+        return chosen;
+      }
+
+      function shouldSkipTermHighlightNode(node) {
+        const parent = node && node.parentElement;
+        if (!parent) {
+          return true;
+        }
+        return !!parent.closest('script, style, button, a, .term-match, .chunk-marker-column, .interlaced-reasoning-panel');
+      }
+
+      function highlightTermsInElement(root, termDefs) {
+        if (!root || !termDefs.length) {
+          return;
+        }
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode(node) {
+            if (shouldSkipTermHighlightNode(node) || !node.nodeValue || !node.nodeValue.trim()) {
+              return NodeFilter.FILTER_REJECT;
+            }
+            return findTermMatchesInText(node.nodeValue, termDefs).length
+              ? NodeFilter.FILTER_ACCEPT
+              : NodeFilter.FILTER_SKIP;
+          },
+        });
+        const textNodes = [];
+        while (walker.nextNode()) {
+          textNodes.push(walker.currentNode);
+        }
+        textNodes.forEach((node) => {
+          const matches = findTermMatchesInText(node.nodeValue || '', termDefs);
+          if (!matches.length) {
+            return;
+          }
+          const fragment = document.createDocumentFragment();
+          const text = node.nodeValue || '';
+          let cursor = 0;
+          matches.forEach((match) => {
+            if (match.start > cursor) {
+              fragment.appendChild(document.createTextNode(text.slice(cursor, match.start)));
+            }
+            const span = document.createElement('span');
+            span.className = 'term-match';
+            span.dataset.termKey = match.termKey;
+            span.tabIndex = 0;
+            span.setAttribute('role', 'button');
+            span.setAttribute('aria-pressed', 'false');
+            span.textContent = text.slice(match.start, match.end);
+            fragment.appendChild(span);
+            cursor = match.end;
+          });
+          if (cursor < text.length) {
+            fragment.appendChild(document.createTextNode(text.slice(cursor)));
+          }
+          if (node.parentNode) {
+            node.parentNode.replaceChild(fragment, node);
+          }
+        });
+        root.querySelectorAll('.term-match[data-term-key]').forEach(bindTermSelection);
+      }
+
+      function highlightTermsForGroup(group) {
+        if (!group || group.dataset.termsHighlighted === 'true' || group.dataset.termsHighlighting === 'true') {
+          return;
+        }
+        const marker = getGroupMarker(group);
+        const originalRoot = group.querySelector('.interlaced-block.original .chunk-text-column')
+          || group.querySelector('.interlaced-block.original .interlaced-content');
+        if (!marker || !originalRoot) {
+          return;
+        }
+        group.dataset.termsHighlighting = 'true';
+        loadReasoningHtml(marker)
+          .then((html) => {
+            const termDefs = extractTermDefsFromReasoningHtml(html);
+            highlightTermsInElement(originalRoot, termDefs);
+            group.dataset.termsHighlighted = 'true';
+          })
+          .catch(() => {
+            delete group.dataset.termsHighlighted;
+          })
+          .finally(() => {
+            delete group.dataset.termsHighlighting;
+          });
+      }
+
+      function setupLazyTermHighlighting() {
+        const groups = Array.from(document.querySelectorAll('.interlaced-group[data-marker]'))
+          .filter((group) => group.querySelector('.reasoning-trigger-inline'));
+        if (!groups.length) {
+          return;
+        }
+        groups.forEach((group) => {
+          group.addEventListener('mouseenter', () => highlightTermsForGroup(group), { once: true });
+          group.addEventListener('focusin', () => highlightTermsForGroup(group), { once: true });
+        });
+        if (!('IntersectionObserver' in window)) {
+          groups.slice(0, 30).forEach(highlightTermsForGroup);
+          return;
+        }
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+            observer.unobserve(entry.target);
+            highlightTermsForGroup(entry.target);
+          });
+        }, {
+          rootMargin: '700px 0px',
+        });
+        groups.forEach((group) => observer.observe(group));
+      }
+
+      function ensureReasoningLoaded(group) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !reasoningElements || !reasoningElements.fullCard) {
+          return Promise.resolve(false);
+        }
+        const content = reasoningElements.fullCard.querySelector('[data-reasoning-content]');
+        if (!content) {
+          return Promise.resolve(false);
+        }
+        if (content.dataset.loaded === 'true') {
+          return Promise.resolve(true);
+        }
+        const marker = group.dataset.marker || content.dataset.marker || '';
+        content.innerHTML = '<p class="interlaced-empty">Loading explanation...</p>';
+        return loadReasoningHtml(marker)
+          .then((html) => {
+            content.innerHTML = html || '<p class="interlaced-empty">Explanation not available.</p>';
+            content.dataset.loaded = 'true';
+            content.querySelectorAll('.reasoning-term-item[data-term-key]').forEach(bindTermSelection);
+            if (group.dataset.activeTermKey) {
+              setActiveTerm(group, group.dataset.activeTermKey);
+            }
+            return true;
+          })
+          .catch(() => {
+            content.innerHTML = '<p class="interlaced-empty">Explanation could not be loaded.</p>';
+            content.dataset.loaded = 'true';
+            return false;
+          });
+      }
+
+      function setActiveTerm(group, termKey) {
+        if (!group) {
+          return;
+        }
+        group.querySelectorAll('.term-match[data-term-key], .reasoning-term-item[data-term-key]').forEach((element) => {
+          const isActive = !!termKey && element.dataset.termKey === termKey;
+          element.classList.toggle('is-active', isActive);
+          element.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      }
+
+      function getReasoningElements(group) {
+        if (!group) {
+          return null;
+        }
+        return {
+          panel: group.querySelector('.interlaced-reasoning-panel'),
+          previewCard: group.querySelector('.interlaced-reasoning-preview'),
+          previewContent: group.querySelector('.interlaced-reasoning-preview-content'),
+          fullCard: group.querySelector('.interlaced-reasoning-full'),
+          button: group.querySelector('.reasoning-trigger-inline'),
+        };
+      }
+
+      function setReasoningButtonState(button, isFullOpen) {
+        if (!button) {
+          return;
+        }
+        const buttonText = isFullOpen ? openExplanationLabel : closedExplanationLabel;
+        const markerLabel = button.dataset.marker ? ' [' + button.dataset.marker + ']' : '';
+        button.textContent = buttonText;
+        button.setAttribute('aria-expanded', isFullOpen ? 'true' : 'false');
+        button.setAttribute('aria-label', buttonText + markerLabel);
+        button.setAttribute('title', buttonText + markerLabel);
+      }
+
+      function buildReasoningPreview(group, termKey) {
+        const reasoningElements = getReasoningElements(group);
+        if (!reasoningElements || !reasoningElements.previewContent) {
+          return false;
+        }
+        const matchingItems = Array.from(
+          group.querySelectorAll('.interlaced-reasoning-full .reasoning-term-item[data-term-key]')
+        ).filter((item) => item.dataset.termKey === termKey);
+
+        reasoningElements.previewContent.innerHTML = '';
+        if (!matchingItems.length) {
+          return false;
+        }
+
+        const sectionMap = new Map();
+        matchingItems.forEach((item) => {
+          const section = item.closest('.reasoning-section');
+          const sectionKey = section || item;
+          let list = sectionMap.get(sectionKey);
+
+          if (!list) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'reasoning-preview-section';
+
+            const category = document.createElement('p');
+            category.className = 'reasoning-preview-category';
+            const title = section && section.querySelector('.reasoning-section-title');
+            category.textContent = title ? title.textContent.trim() : 'Explanation';
+
+            list = document.createElement('ul');
+            list.className = 'reasoning-preview-list';
+
+            wrapper.appendChild(category);
+            wrapper.appendChild(list);
+            reasoningElements.previewContent.appendChild(wrapper);
+            sectionMap.set(sectionKey, list);
+          }
+
+          const clone = item.cloneNode(true);
+          clone.classList.remove('reasoning-term-item');
+          clone.classList.add('reasoning-preview-item', 'is-active');
+          clone.removeAttribute('data-term-key');
+          clone.removeAttribute('tabindex');
+          clone.removeAttribute('role');
+          clone.removeAttribute('aria-pressed');
+          list.appendChild(clone);
+        });
+
+        return true;
+      }
+
+      function openReasoningPreview(group, termKey) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !termKey || !reasoningElements || !reasoningElements.panel) {
+          return;
+        }
+        if (!buildReasoningPreview(group, termKey)) {
+          openReasoningFull(group);
+          return;
+        }
+        reasoningElements.panel.hidden = false;
+        if (reasoningElements.previewCard) {
+          reasoningElements.previewCard.hidden = false;
+        }
+        if (reasoningElements.fullCard) {
+          reasoningElements.fullCard.hidden = true;
+        }
+        setReasoningButtonState(reasoningElements.button, false);
+      }
+
+      function openReasoningFull(group) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !reasoningElements || !reasoningElements.panel || !reasoningElements.fullCard) {
+          return;
+        }
+        reasoningElements.panel.hidden = false;
+        reasoningElements.fullCard.hidden = false;
+        if (reasoningElements.previewCard) {
+          reasoningElements.previewCard.hidden = true;
+        }
+        setReasoningButtonState(reasoningElements.button, true);
+        ensureReasoningLoaded(group);
+      }
+
+      function closeReasoning(group) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !reasoningElements) {
+          return;
+        }
+        if (reasoningElements.panel) {
+          reasoningElements.panel.hidden = true;
+        }
+        if (reasoningElements.previewCard) {
+          reasoningElements.previewCard.hidden = true;
+        }
+        if (reasoningElements.fullCard) {
+          reasoningElements.fullCard.hidden = true;
+        }
+        if (reasoningElements.previewContent) {
+          reasoningElements.previewContent.innerHTML = '';
+        }
+        setReasoningButtonState(reasoningElements.button, false);
+        delete group.dataset.activeTermKey;
+        setActiveTerm(group, '');
+      }
+
+      function closeAllReasoning() {
+        document.querySelectorAll('.interlaced-group').forEach((group) => {
+          closeReasoning(group);
+        });
+      }
+
+      function updateLanguageToggleButtons() {
+        const englishHidden = document.body.classList.contains('hide-english');
+        const chineseHidden = document.body.classList.contains('hide-chinese');
+        if (toggleEnglishButton) {
+          toggleEnglishButton.textContent = 'Hide English';
+          toggleEnglishButton.setAttribute('aria-pressed', englishHidden ? 'true' : 'false');
+        }
+        if (toggleChineseButton) {
+          toggleChineseButton.textContent = 'Hide Chinese';
+          toggleChineseButton.setAttribute('aria-pressed', chineseHidden ? 'true' : 'false');
+        }
+      }
+
+      function activateTermAssociation(group, termKey, options = {}) {
+        if (!group || !termKey) {
+          return;
+        }
+        const { openFull = false } = options;
+        const reasoningElements = getReasoningElements(group);
+        if (!reasoningElements) {
+          return;
+        }
+        group.dataset.activeTermKey = termKey;
+        setActiveTerm(group, termKey);
+        if (openFull) {
+          openReasoningFull(group);
+          return;
+        }
+        if (reasoningElements.fullCard && !reasoningElements.fullCard.hidden) {
+          return;
+        }
+        openReasoningPreview(group, termKey);
+      }
+
+      function bindTermSelection(element) {
+        if (!element) {
+          return;
+        }
+        if (element.dataset.termBound === 'true') {
+          return;
+        }
+        element.dataset.termBound = 'true';
+        const activate = () => {
+          const group = element.closest('.interlaced-group');
+          if (!group) {
+            return;
+          }
+          activateTermAssociation(group, element.dataset.termKey || '', {
+            openFull: false,
+          });
+        };
+        element.addEventListener('click', activate);
+        element.addEventListener('keydown', (event) => {
+          if (event.key !== 'Enter' && event.key !== ' ') {
+            return;
+          }
+          event.preventDefault();
+          activate();
+        });
+      }
+
+      inlineReasoningButtons.forEach((button) => {
+        setReasoningButtonState(button, false);
+        button.addEventListener('click', () => {
+          const group = button.closest('.interlaced-group');
+          const reasoningElements = getReasoningElements(group);
+          if (!group || !reasoningElements || !reasoningElements.fullCard) {
+            return;
+          }
+          const isFullOpen = !reasoningElements.fullCard.hidden;
+          if (isFullOpen) {
+            closeReasoning(group);
+            return;
+          }
+          openReasoningFull(group);
+        });
+      });
+
+      document.querySelectorAll('.reasoning-preview-more').forEach((button) => {
+        button.addEventListener('click', () => {
+          const group = button.closest('.interlaced-group');
+          if (!group) {
+            return;
+          }
+          openReasoningFull(group);
+        });
+      });
+
+      document.querySelectorAll('.term-match[data-term-key]').forEach(bindTermSelection);
+      document.querySelectorAll('.reasoning-term-item[data-term-key]').forEach(bindTermSelection);
+      setupLazyTermHighlighting();
+
+      if (toggleEnglishButton) {
+        toggleEnglishButton.addEventListener('click', () => {
+          const willHideEnglish = !document.body.classList.contains('hide-english');
+          if (willHideEnglish) {
+            document.body.classList.remove('hide-chinese');
+          }
+          document.body.classList.toggle('hide-english', willHideEnglish);
+          closeAllReasoning();
+          updateLanguageToggleButtons();
+        });
+      }
+
+      if (toggleChineseButton) {
+        toggleChineseButton.addEventListener('click', () => {
+          const willHideChinese = !document.body.classList.contains('hide-chinese');
+          if (willHideChinese) {
+            document.body.classList.remove('hide-english');
+          }
+          document.body.classList.toggle('hide-chinese', willHideChinese);
+          closeAllReasoning();
+          updateLanguageToggleButtons();
+        });
+      }
+
+      updateLanguageToggleButtons();
+
+      // Document-level search (mirrors index search experience)
+      if (docSearchContainer && docSearchInput && docSearchList && docSearchResults) {
+        function normalizeSearchText(text) {
+          return String(text || '')
+            .normalize('NFKC')
+            .toLowerCase()
+            .replace(/s+/g, ' ')
+            .trim();
+        }
+
+        function getSearchQueryFromUrl() {
+          try {
+            return new URLSearchParams(window.location.search).get('q') || '';
+          } catch (error) {
+            return '';
+          }
+        }
+
+        function removeSearchHighlights() {
+          document.querySelectorAll('.search-hit').forEach((hit) => {
+            const parent = hit.parentNode;
+            if (!parent) {
+              return;
+            }
+            parent.replaceChild(document.createTextNode(hit.textContent || ''), hit);
+            parent.normalize();
+          });
+          document.querySelectorAll('.search-focused-block').forEach((element) => {
+            element.classList.remove('search-focused-block');
+          });
+        }
+
+        function buildHighlightRegex(query) {
+          const parts = String(query || '').trim().split(/s+/).filter(Boolean);
+          if (!parts.length) {
+            return null;
+          }
+          const escaped = parts.map((part) => part.replace(/[-/\^$*+?.()|[]{}]/g, '\$&'));
+          return new RegExp(escaped.join('\s+'), 'gi');
+        }
+
+        function shouldSkipSearchHighlightNode(node) {
+          const parent = node && node.parentElement;
+          if (!parent) {
+            return true;
+          }
+          return !!parent.closest('script, style, mark, .search-hit, button');
+        }
+
+        function highlightSearchInElement(root, query) {
+          const regex = buildHighlightRegex(query);
+          if (!root || !regex) {
+            return [];
+          }
+          const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+            acceptNode(node) {
+              if (shouldSkipSearchHighlightNode(node) || !node.nodeValue || !node.nodeValue.trim()) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              regex.lastIndex = 0;
+              return regex.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+            },
+          });
+          const textNodes = [];
+          while (walker.nextNode()) {
+            textNodes.push(walker.currentNode);
+          }
+          const highlights = [];
+          textNodes.forEach((node) => {
+            const fragment = document.createDocumentFragment();
+            const text = node.nodeValue || '';
+            let cursor = 0;
+            regex.lastIndex = 0;
+            let match;
+            while ((match = regex.exec(text)) !== null) {
+              if (match.index > cursor) {
+                fragment.appendChild(document.createTextNode(text.slice(cursor, match.index)));
+              }
+              const hit = document.createElement('mark');
+              hit.className = 'search-hit';
+              hit.textContent = match[0];
+              fragment.appendChild(hit);
+              highlights.push(hit);
+              cursor = match.index + match[0].length;
+              if (match[0].length === 0) {
+                regex.lastIndex += 1;
+              }
+            }
+            if (cursor < text.length) {
+              fragment.appendChild(document.createTextNode(text.slice(cursor)));
+            }
+            if (node.parentNode) {
+              node.parentNode.replaceChild(fragment, node);
+            }
+          });
+          return highlights;
+        }
+
+        function applySearchHighlight(anchor, query, options = {}) {
+          const { scroll = false } = options;
+          removeSearchHighlights();
+          const normalizedQuery = normalizeSearchText(query);
+          if (!anchor || !normalizedQuery) {
+            return;
+          }
+          const target = document.getElementById(anchor);
+          if (!target) {
+            return;
+          }
+          const block = target.closest('.interlaced-block') || target.closest('.interlaced-group') || target;
+          const documentRoot = document.querySelector('.interlaced-container') || document.body;
+          block.classList.add('search-focused-block');
+          const highlights = highlightSearchInElement(documentRoot, query);
+          const currentHighlight = highlights.find((hit) => block.contains(hit)) || highlights[0];
+          if (currentHighlight) {
+            currentHighlight.classList.add('is-current');
+          }
+          if (scroll) {
+            const scrollTarget = currentHighlight || block;
+            if (scrollTarget && typeof scrollTarget.scrollIntoView === 'function') {
+              scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+            }
+          }
+        }
+
+        const MAX_INITIAL_RESULTS = 6;
+        let normalizedDocSearchData = null;
+        let docSearchLoadPromise = null;
+        let docSearchRunId = 0;
+        let currentMatches = [];
+        let showingAll = false;
+        let currentQuery = '';
+
+        function getBlockAnchor(block) {
+          const anchor = block && block.querySelector('.chunk-anchor[id]');
+          return anchor ? anchor.id : '';
+        }
+
+        function getBlockMarker(block) {
+          const group = block && block.closest('.interlaced-group');
+          if (group && group.dataset.marker) {
+            return group.dataset.marker;
+          }
+          const marker = block && block.querySelector('.marker-trailing');
+          return marker ? marker.textContent.trim() : '';
+        }
+
+        function buildDocSearchEntriesFromPage() {
+          const blocks = Array.from(
+            document.querySelectorAll('.interlaced-block.original, .interlaced-block.translation')
+          );
+          return blocks
+            .map((block) => {
+              const anchor = getBlockAnchor(block);
+              const text = block.textContent.replace(/s+/g, ' ').trim();
+              if (!anchor || !text) {
+                return null;
+              }
+              const type = block.classList.contains('original') ? 'original' : 'translation';
+              return {
+                anchor,
+                marker: getBlockMarker(block),
+                type,
+                text,
+              };
+            })
+            .filter(Boolean);
+        }
+
+        function normalizeDocSearchEntries(entries) {
+          return entries
+            .filter((entry) => entry && entry.anchor && entry.text)
+            .map((entry) => ({
+              entry,
+              textSearch: normalizeSearchText(entry.text || ''),
+              markerSearch: normalizeSearchText(entry.marker || ''),
+              typeSearch: normalizeSearchText(entry.type || ''),
+            }));
+        }
+
+        function loadDocSearchData() {
+          if (normalizedDocSearchData) {
+            return Promise.resolve(normalizedDocSearchData);
+          }
+          if (!docSearchLoadPromise) {
+            docSearchLoadPromise = new Promise((resolve) => {
+              window.setTimeout(() => {
+                normalizedDocSearchData = normalizeDocSearchEntries(buildDocSearchEntriesFromPage());
+                resolve(normalizedDocSearchData);
+              }, 0);
+            });
+          }
+          return docSearchLoadPromise;
+        }
+
+        function updateDocSearchCount(count) {
+          if (!docSearchCount) {
+            return;
+          }
+          docSearchCount.textContent = count === 1 ? '1 result' : count + ' results';
+          docSearchCount.hidden = false;
+        }
+
+        function resetSearchResults() {
+          docSearchResults.classList.remove('has-results');
+          docSearchList.innerHTML = '';
+          docSearchResults.style.display = 'none';
+          if (docSearchCount) {
+            docSearchCount.hidden = true;
+            docSearchCount.textContent = '';
+          }
+          if (docSearchMoreButton) {
+            docSearchMoreButton.classList.remove('visible');
+            docSearchMoreButton.setAttribute('aria-expanded', 'false');
+          }
+        }
+
+        function escapeRegex(text) {
+          return text.replace(/[-/\^$*+?.()|[]{}]/g, '\$&');
+        }
+
+        function countOccurrences(haystack, needle) {
+          if (!needle || !haystack) {
+            return 0;
+          }
+          let count = 0;
+          let index = haystack.indexOf(needle);
+          while (index !== -1) {
+            count += 1;
+            index = haystack.indexOf(needle, index + needle.length);
+          }
+          return count;
+        }
+
+        function buildSnippet(text, query) {
+          if (!text) {
+            return 'No preview available.';
+          }
+          const lower = text.toLowerCase();
+          const needle = String(query || '').trim().toLowerCase();
+          const foundAt = needle ? lower.indexOf(needle) : -1;
+          const matchIndex = foundAt === -1 ? 0 : foundAt;
+          const matchLength = foundAt === -1 ? 0 : needle.length;
+          const radius = 70;
+          const start = Math.max(0, matchIndex - radius);
+          const end = Math.min(text.length, matchIndex + matchLength + radius);
+          let snippet = text.slice(start, end);
+          if (start > 0) {
+            snippet = '...' + snippet;
+          }
+          if (end < text.length) {
+            snippet = snippet + '...';
+          }
+          let highlighted = snippet;
+          if (needle) {
+            const regex = new RegExp(escapeRegex(needle), 'gi');
+            highlighted = highlighted.replace(regex, (matchValue) => '<mark>' + matchValue + '</mark>');
+          }
+          return highlighted;
+        }
+
+        function renderResults() {
+          docSearchResults.style.display = 'block';
+          docSearchList.innerHTML = '';
+          updateDocSearchCount(currentMatches.length);
+          if (!currentMatches.length) {
+            docSearchResults.classList.remove('has-results');
+            if (docSearchMoreButton) {
+              docSearchMoreButton.classList.remove('visible');
+              docSearchMoreButton.setAttribute('aria-expanded', 'false');
+            }
+            return;
+          }
+          docSearchResults.classList.add('has-results');
+          docSearchList.innerHTML = '';
+          const visibleCount = showingAll
+            ? currentMatches.length
+            : Math.min(MAX_INITIAL_RESULTS, currentMatches.length);
+          const fragment = document.createDocumentFragment();
+          for (let i = 0; i < visibleCount; i += 1) {
+            const { entry } = currentMatches[i];
+            const item = document.createElement('li');
+            item.className = 'doc-search-result';
+            const link = document.createElement('a');
+            link.href = '#' + entry.anchor;
+            link.textContent = entry.marker ? '[' + entry.marker + '] ' + entry.type : entry.type;
+            link.addEventListener('click', (event) => {
+              event.preventDefault();
+              applySearchHighlight(entry.anchor, currentQuery, { scroll: true });
+              if (window.history && typeof window.history.replaceState === 'function') {
+                const url = new URL(window.location.href);
+                if (currentQuery) {
+                  url.searchParams.set('q', currentQuery);
+                } else {
+                  url.searchParams.delete('q');
+                }
+                url.hash = entry.anchor;
+                window.history.replaceState(null, '', url);
+              }
+              resetSearchResults();
+              docSearchInput.blur();
+            });
+            const meta = document.createElement('p');
+            meta.className = 'doc-search-meta';
+            const markerLabel = entry.marker ? '[' + entry.marker + '] ' : '';
+            const typeLabel = entry.type === 'original' ? 'Original text' : 'Translation';
+            meta.textContent = markerLabel + typeLabel;
+            const snippet = document.createElement('p');
+            snippet.className = 'doc-search-snippet';
+            snippet.innerHTML = buildSnippet(entry.text || '', currentQuery);
+            item.appendChild(link);
+            item.appendChild(meta);
+            item.appendChild(snippet);
+            fragment.appendChild(item);
+          }
+          docSearchList.appendChild(fragment);
+          if (docSearchMoreButton) {
+            if (currentMatches.length > MAX_INITIAL_RESULTS) {
+              docSearchMoreButton.classList.add('visible');
+              docSearchMoreButton.textContent = showingAll ? 'Show fewer results' : 'See more results';
+              docSearchMoreButton.setAttribute('aria-expanded', showingAll ? 'true' : 'false');
+            } else {
+              docSearchMoreButton.classList.remove('visible');
+              docSearchMoreButton.setAttribute('aria-expanded', 'false');
+            }
+          }
+        }
+
+        function setDocSearchMessage(message) {
+          docSearchResults.style.display = 'block';
+          docSearchResults.classList.remove('has-results');
+          docSearchList.innerHTML = '';
+          if (docSearchCount) {
+            docSearchCount.textContent = message;
+            docSearchCount.hidden = false;
+          }
+          if (docSearchMoreButton) {
+            docSearchMoreButton.classList.remove('visible');
+            docSearchMoreButton.setAttribute('aria-expanded', 'false');
+          }
+        }
+
+        function runDocSearch(normalized, query) {
+          return normalized
+            .map((item) => {
+              const textMatch = item.textSearch.includes(query);
+              const markerMatch = item.markerSearch === query;
+              const typeMatch = item.typeSearch === query;
+              if (!textMatch && !markerMatch && !typeMatch) {
+                return null;
+              }
+              let score = 0;
+              score += countOccurrences(item.textSearch, query) * 20;
+              if (markerMatch) {
+                score += 12;
+              }
+              if (typeMatch) {
+                score += 6;
+              }
+              if (item.textSearch.startsWith(query)) {
+                score += 4;
+              }
+              return { entry: item.entry, score };
+            })
+            .filter(Boolean)
+            .sort((a, b) => b.score - a.score);
+        }
+
+        function handleSearch() {
+          const rawQuery = docSearchInput.value.trim();
+          const query = normalizeSearchText(rawQuery);
+          docSearchRunId += 1;
+          const runId = docSearchRunId;
+          if (!query) {
+            currentMatches = [];
+            currentQuery = '';
+            showingAll = false;
+            resetSearchResults();
+            return;
+          }
+          currentQuery = rawQuery;
+          showingAll = false;
+          setDocSearchMessage('Preparing document search...');
+          loadDocSearchData()
+            .then((normalized) => {
+              if (runId !== docSearchRunId) {
+                return;
+              }
+              currentMatches = runDocSearch(normalized, query);
+              renderResults();
+            })
+            .catch(() => {
+              if (runId !== docSearchRunId) {
+                return;
+              }
+              currentMatches = [];
+              setDocSearchMessage('Document search could not be prepared.');
+            });
+        }
+
+        if (docSearchMoreButton) {
+          docSearchMoreButton.addEventListener('click', () => {
+            if (!currentMatches.length) {
+              return;
+            }
+            showingAll = !showingAll;
+            renderResults();
+          });
+        }
+        docSearchInput.addEventListener('input', handleSearch);
+        const initialQuery = getSearchQueryFromUrl();
+        const initialAnchor = window.location.hash ? decodeURIComponent(window.location.hash.slice(1)) : '';
+        if (initialQuery) {
+          docSearchInput.value = initialQuery;
+          currentQuery = initialQuery;
+          if (initialAnchor) {
+            window.setTimeout(() => {
+              applySearchHighlight(initialAnchor, initialQuery, { scroll: true });
+            }, 0);
+          }
+        }
+        resetSearchResults();
+      }
+    })();
+  </script>
+</body>
+</html>
