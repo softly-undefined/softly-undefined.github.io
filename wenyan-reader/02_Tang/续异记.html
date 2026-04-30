@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>续异记 - Sequel to Records of Marvels</title>
+  <title>续异记 - Continuation of Records of Marvels</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -35,6 +35,7 @@
     }
     .interlaced-reasoning-trigger-row {
       margin-top: -0.2rem;
+      margin-left: 3.55rem;
     }
     .interlaced-reasoning-trigger-row .reasoning-trigger {
       font-size: 0.9rem;
@@ -45,9 +46,41 @@
       overflow: hidden;
       scroll-margin-top: 5.5rem;
     }
+    .chunk-layout {
+      display: grid;
+      grid-template-columns: minmax(2.8rem, max-content) minmax(0, 1fr);
+      column-gap: 0.75rem;
+      align-items: center;
+    }
+    .chunk-marker-column {
+      line-height: 1.6;
+      text-align: right;
+      white-space: nowrap;
+      align-self: center;
+    }
+    .chunk-text-column {
+      min-width: 0;
+    }
+    .chunk-text-column > :first-child {
+      margin-top: 0;
+    }
+    .chunk-text-column > :last-child {
+      margin-bottom: 0;
+    }
     .marker-trailing {
       margin-left: 0.3rem;
       white-space: nowrap;
+    }
+    .chunk-marker-column .marker-trailing {
+      margin-left: 0;
+      color: #9aa3af;
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .chunk-marker-column .marker-trailing:hover {
+      color: #6b7280;
+      text-decoration: underline;
     }
     .reasoning-trigger:hover {
       color: #005c99;
@@ -228,6 +261,7 @@
       display: flex;
       flex-direction: column;
       gap: 0.95rem;
+      overflow-anchor: none;
     }
     .interlaced-group {
       display: flex;
@@ -290,6 +324,20 @@
     .term-match.is-active {
       background: rgba(59, 130, 246, 0.35) !important;
       color: #1d4ed8;
+    }
+    .search-hit {
+      background: #fff176;
+      color: inherit;
+      border-radius: 0.15rem;
+      padding: 0 0.08rem;
+      box-shadow: 0 0 0 1px rgba(202, 138, 4, 0.18);
+    }
+    .search-hit.is-current {
+      background: #ffd54f;
+      box-shadow: 0 0 0 2px rgba(202, 138, 4, 0.32);
+    }
+    .search-focused-block {
+      scroll-margin-top: 5.5rem;
     }
     .reasoning-term-item[data-term-key] {
       border-radius: 0.35rem;
@@ -362,11 +410,18 @@
       .doc-search {
         max-width: none;
       }
+      .chunk-layout {
+        grid-template-columns: minmax(2.35rem, max-content) minmax(0, 1fr);
+        column-gap: 0.55rem;
+      }
+      .interlaced-reasoning-trigger-row {
+        margin-left: 2.9rem;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>续异记 - Sequel to Records of Marvels</h1>
+  <h1>续异记 - Continuation of Records of Marvels</h1>
   <p class="doc-header">Translation created with model: qwen3-14b-nothink-sbs-3step / step-by-step-3step-fewshot</p>
 
   <div class="page-toolbar">
@@ -395,159 +450,107 @@
   <div class="section">
     <div class="interlaced-container">
       <div class="interlaced-group" data-marker="1">
-  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-1" class="chunk-anchor" aria-hidden="true"></span><p>《续异记》佚名</p>
-<p>　　<span class="term-match" data-term-key="term-17" tabindex="0" role="button" aria-pressed="false">后汉</span><span class="term-match" data-term-key="term-18" tabindex="0" role="button" aria-pressed="false">黄门郎</span><span class="term-match" data-term-key="term-32" tabindex="0" role="button" aria-pressed="false">萧士义</span>，<span class="term-match" data-term-key="term-19" tabindex="0" role="button" aria-pressed="false">和帝永元二年</span>被戮。数日前，家中常所养狗，来向其妇前而语曰：“<span class="term-match" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false">汝极无相禄</span>；<span class="term-match" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false">汝家寻当破败</span>，当奈何！”其妇默然，亦不骇。狗少时自去。及士义还内，妇<span class="term-match" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false">仍学说狗语</span>，未毕，收捕便至。<span class="term-match" data-term-key="term-25" tabindex="0" role="button" aria-pressed="false">广记</span>一百四十一</p>
-<p>　　<span class="term-match" data-term-key="term-20" tabindex="0" role="button" aria-pressed="false">徐邈</span>，<span class="term-match" data-term-key="term-21" tabindex="0" role="button" aria-pressed="false">晋孝武帝</span>时为<span class="term-match" data-term-key="term-22" tabindex="0" role="button" aria-pressed="false">中书侍郎</span>，在省直，左右人恒觉邈独在帐内，以与人共语。有旧<span class="term-match" data-term-key="term-27" tabindex="0" role="button" aria-pressed="false">门生</span>，一夕伺之，无所见。天时微有光，始开窗，瞥睹一物从<span class="term-match" data-term-key="term-23" tabindex="0" role="button" aria-pressed="false">屏风</span>里飞出，<span class="term-match" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false">直入铁镬中</span>。仍逐视之，无余物，唯见镬中聚菖蒲根，下有大青蚱蜢；虽疑此为魅，而古来未闻，但摘除其两翼。至夜，<span class="term-match" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false">遂入邈梦</span>云：“<span class="term-match" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false">为君门生所困</span>，<span class="term-match" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false">往来道绝</span>；<span class="term-match" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false">相去虽近，有若山河</span>。”邈得<span class="term-match" data-term-key="term-26" tabindex="0" role="button" aria-pressed="false">梦</span>，甚凄惨。<span class="term-match" data-term-key="term-27" tabindex="0" role="button" aria-pressed="false">门生</span>知其意，乃微发其端。邈初时疑不即道。语之曰：“我<span class="term-match" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false">始来直者</span>，便见一青衣女子从前度，<span class="term-match" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false">犹作两髻</span>，<span class="term-match" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false">姿色甚美</span>。<span class="term-match" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false">聊试挑谑</span>，<span class="term-match" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false">即来就己</span>。且爱之，仍溺情。<span class="term-match" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false">亦不知其从何而至此</span>。”兼告<span class="term-match" data-term-key="term-26" tabindex="0" role="button" aria-pressed="false">梦</span>。<span class="term-match" data-term-key="term-27" tabindex="0" role="button" aria-pressed="false">门生</span>因<span class="term-match" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false">具以状白</span>，亦<span class="term-match" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false">不复追杀蚱蜢</span>。<span class="term-match" data-term-key="term-25" tabindex="0" role="button" aria-pressed="false">广记</span>四百七十三 <a href="#inter-trans-1" class="marker marker-trailing">[1]</a></p></div></div>
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-1" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-1" class="marker marker-trailing">1</a></div>
+  <div class="chunk-text-column"><p>《续异记》佚名</p>
+<p>　　后汉黄门郎萧士义，和帝永元二年被戮。数日前，家中常所养狗，来向其妇前而语曰：“汝极无相禄；汝家寻当破败，当奈何！”其妇默然，亦不骇。狗少时自去。及士义还内，妇仍学说狗语，未毕，收捕便至。广记一百四十一</p>
+<p>　　徐邈，晋孝武帝时为中书侍郎，在省直，左右人恒觉邈独在帐内，以与人共语。有旧门生，一夕伺之，无所见。天时微有光，始开窗，瞥睹一物从屏风里飞出，直入铁镬中。仍逐视之，无余物，唯见镬中聚菖蒲根，下有大青蚱蜢；虽疑此为魅，而古来未闻，但摘除其两翼。至夜，遂入邈梦云：“为君门生所困，往来道绝；相去虽近，有若山河。”邈得梦，甚凄惨。门生知其意，乃微发其端。邈初时疑不即道。语之曰：“我始来直者，便见一青衣女子从前度，犹作两髻，姿色甚美。聊试挑谑，即来就己。且爱之，仍溺情。亦不知其从何而至此。”兼告梦。门生因具以状白，亦不复追杀蚱蜢。广记四百七十三</p></div>
+</div></div></div>
   <div class="interlaced-reasoning-trigger-row">
   <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="1" aria-controls="interlaced-reasoning-1" aria-expanded="false">See Explanation</button>
 </div>
   
   <div class="interlaced-reasoning-panel" id="interlaced-reasoning-1" hidden>
-    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
-      <p class="interlaced-reasoning-title">Relevant Explanation</p>
-      <div class="interlaced-content interlaced-reasoning-preview-content"></div>
-      <button type="button" class="reasoning-preview-more">See more</button>
-    </div>
     <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
       <p class="interlaced-reasoning-title">Explanation</p>
-      <div class="interlaced-content"><p><span class="marker-text">[1]</span></p><section class="reasoning-section">
-  <p class="reasoning-section-title"><strong>Idiomatic Expressions</strong></p>
-  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">汝极无相禄</span> - Colloquial expression meaning &#39;you have no good fortune&#39; or &#39;you have no good destiny.&#39;</li><li class="reasoning-term-item" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">汝家寻当破败</span> - Means &#39;your family will soon be ruined&#39; or &#39;your family will soon be destroyed.&#39;</li><li class="reasoning-term-item" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">仍学说狗语</span> - Means &#39;continued to imitate the dog&#39;s speech.&#39;</li><li class="reasoning-term-item" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">直入铁镬中</span> - Means &#39;flew directly into the iron pot.&#39;</li><li class="reasoning-term-item" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">遂入邈梦</span> - Means &#39;then entered Miao&#39;s dream.&#39;</li><li class="reasoning-term-item" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">为君门生所困</span> - Means &#39;trapped by your disciple.&#39;</li><li class="reasoning-term-item" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">往来道绝</span> - Means &#39;the path of coming and going is cut off.&#39;</li><li class="reasoning-term-item" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">相去虽近，有若山河</span> - Means &#39;although close, it feels like mountains and rivers.&#39;</li><li class="reasoning-term-item" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">始来直者</span> - Means &#39;when I first arrived to serve.&#39;</li><li class="reasoning-term-item" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">犹作两髻</span> - Means &#39;still wearing two buns.&#39;</li><li class="reasoning-term-item" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">姿色甚美</span> - Means &#39;very beautiful in appearance.&#39;</li><li class="reasoning-term-item" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">聊试挑谑</span> - Means &#39;lightly teased.&#39;</li><li class="reasoning-term-item" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">即来就己</span> - Means &#39;then came to me.&#39;</li><li class="reasoning-term-item" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">亦不知其从何而至此</span> - Means &#39;I also did not know where she came from.&#39;</li><li class="reasoning-term-item" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">具以状白</span> - Means &#39;reported the entire situation.&#39;</li><li class="reasoning-term-item" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">不复追杀蚱蜢</span> - Means &#39;no longer pursued or killed the grasshopper.&#39;</li></ul>
-</section>
-<section class="reasoning-section">
-  <p class="reasoning-section-title"><strong>Cultural and Historical Allusions</strong></p>
-  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-17" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">后汉</span> - Refers to the Eastern Han dynasty, a period in Chinese history.</li><li class="reasoning-term-item" data-term-key="term-18" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">黄门郎</span> - A low-ranking official in the Han dynasty&#39;s imperial court.</li><li class="reasoning-term-item" data-term-key="term-19" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">和帝永元二年</span> - Refers to the second year of Emperor He&#39;s Yongyuan era, a specific time period in the Eastern Han dynasty.</li><li class="reasoning-term-item" data-term-key="term-20" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">徐邈</span> - A historical figure who served as a mid-level official during the Eastern Jin dynasty.</li><li class="reasoning-term-item" data-term-key="term-21" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">晋孝武帝</span> - Refers to Emperor Xiaowu of Jin, the ruler of the Eastern Jin dynasty.</li><li class="reasoning-term-item" data-term-key="term-22" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">中书侍郎</span> - A mid-level official in the Jin dynasty&#39;s central government.</li><li class="reasoning-term-item" data-term-key="term-23" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">屏风</span> - A traditional Chinese screen used for decoration and privacy.</li><li class="reasoning-term-item" data-term-key="term-24" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">铁镬</span> - An iron pot, a common household item.</li><li class="reasoning-term-item" data-term-key="term-25" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">广记</span> - Refers to the *Taiping Guangji* (太平广记), a massive collection of stories and anecdotes compiled during the Song dynasty.</li><li class="reasoning-term-item" data-term-key="term-26" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">梦</span> - Refers to a dream, a common theme in Chinese literature and folklore.</li><li class="reasoning-term-item" data-term-key="term-27" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">门生</span> - Refers to a disciple or student, often in the context of a teacher-student relationship.</li><li class="reasoning-term-item" data-term-key="term-28" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">先达</span> - Refers to earlier accomplished figures or predecessors who can be learned from.</li><li class="reasoning-term-item" data-term-key="term-29" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">可为师表</span> - Means &#39;can serve as a teacher and model,&#39; stressing exemplary status.</li><li class="reasoning-term-item" data-term-key="term-30" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">博学求之</span> - Means to seek knowledge broadly from many sources.</li><li class="reasoning-term-item" data-term-key="term-31" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">无不利於事也</span> - A general statement that nothing is unhelpful in matters, suggesting that all these roles or pursuits are valuable in their own right.</li></ul>
-</section>
-<section class="reasoning-section">
-  <p class="reasoning-section-title"><strong>Proper Nouns</strong></p>
-  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-17" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">后汉</span> - The Eastern Han dynasty.</li><li class="reasoning-term-item" data-term-key="term-18" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">黄门郎</span> - A low-ranking official in the Han dynasty&#39;s imperial court.</li><li class="reasoning-term-item" data-term-key="term-32" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">萧士义</span> - The main character who was executed.</li><li class="reasoning-term-item" data-term-key="term-33" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">和帝</span> - Emperor He of Han.</li><li class="reasoning-term-item" data-term-key="term-34" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">永元二年</span> - The second year of Emperor He&#39;s Yongyuan era.</li><li class="reasoning-term-item" data-term-key="term-20" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">徐邈</span> - A historical figure who served as a mid-level official during the Eastern Jin dynasty.</li><li class="reasoning-term-item" data-term-key="term-21" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">晋孝武帝</span> - Emperor Xiaowu of Jin.</li><li class="reasoning-term-item" data-term-key="term-22" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">中书侍郎</span> - A mid-level official in the Jin dynasty&#39;s central government.</li><li class="reasoning-term-item" data-term-key="term-23" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">屏风</span> - A traditional Chinese screen.</li><li class="reasoning-term-item" data-term-key="term-24" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">铁镬</span> - An iron pot.</li><li class="reasoning-term-item" data-term-key="term-25" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">广记</span> - The *Taiping Guangji* (太平广记).</li><li class="reasoning-term-item" data-term-key="term-26" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">梦</span> - A dream.</li><li class="reasoning-term-item" data-term-key="term-27" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">门生</span> - A disciple or student.</li><li class="reasoning-term-item" data-term-key="term-28" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">先达</span> - Earlier accomplished figures or predecessors.</li><li class="reasoning-term-item" data-term-key="term-29" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">可为师表</span> - Can serve as a teacher and model.</li><li class="reasoning-term-item" data-term-key="term-30" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">博学求之</span> - Seek knowledge broadly from many sources.</li><li class="reasoning-term-item" data-term-key="term-31" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">无不利於事也</span> - Nothing is unhelpful in matters.</li></ul>
-</section></div>
+      <div class="interlaced-content" data-reasoning-content data-marker="1"></div>
     </div>
   </div>
-  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-1" class="chunk-anchor" aria-hidden="true"></span><p><strong>The Continuation of Strange Records (续异记)</strong> Anonymous</p>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-1" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-1" class="marker marker-trailing">1</a></div>
+  <div class="chunk-text-column"><p><strong>The Continuation of Strange Records (续异记)</strong> Anonymous</p>
 <p>In the Eastern Han dynasty, Huangmenlang Xiao Shiyi was executed in the second year of Emperor He&#39;s Yongyuan era. Several days before, a dog that had been regularly kept in the household came to the woman&#39;s presence and spoke to her, saying, &quot;You have no good fortune; your family will soon be ruined, what shall we do?&quot; The woman remained silent and did not show fear. The dog left after a short while. When Xiao Shiyi returned home, the woman continued to imitate the dog&#39;s speech. Before she finished, the authorities arrived to arrest her. (Recorded in the <em>Taiping Guangji</em>, Volume 141)</p>
-<p>During the reign of Emperor Xiaowu of Jin, Xu Miao served as a Zhongshu Shilang (a mid-level official in the central government). People around him often sensed that Xu Miao was alone in his tent, as if he were conversing with someone. An old student of his once watched secretly one night and saw nothing. When the sky was faintly lit, he opened the window and suddenly saw something fly out from behind the screen and dart straight into an iron pot. He followed it and found nothing else but a cluster of cattail roots with a large green grasshopper beneath them. Although he suspected it was a spirit, he had never heard of such a thing before, so he merely picked off its two wings. That night, it entered Xu Miao&#39;s dream and said, &quot;Trapped by your disciple, the path of coming and going is cut off; although close, it feels like mountains and rivers.&quot; Xu Miao was deeply moved by the dream. The student realized the meaning and gently hinted at it. Xu Miao initially doubted and did not immediately speak. He told the student, &quot;When I first arrived to serve, I saw a young woman in green clothes pass by, still wearing two buns, very beautiful in appearance. I lightly teased her, and she came to me. I liked her and became infatuated. I also did not know where she came from.&quot; He also shared the dream with the student. The student then reported the entire situation, and Xu Miao no longer pursued or killed the grasshopper. (Recorded in the <em>Taiping Guangji</em>, Volume 473) <a href="#inter-orig-1" class="marker marker-trailing">[1]</a></p></div></div>
+<p>During the reign of Emperor Xiaowu of Jin, Xu Miao served as a Zhongshu Shilang (a mid-level official in the central government). People around him often sensed that Xu Miao was alone in his tent, as if he were conversing with someone. An old student of his once watched secretly one night and saw nothing. When the sky was faintly lit, he opened the window and suddenly saw something fly out from behind the screen and dart straight into an iron pot. He followed it and found nothing else but a cluster of cattail roots with a large green grasshopper beneath them. Although he suspected it was a spirit, he had never heard of such a thing before, so he merely picked off its two wings. That night, it entered Xu Miao&#39;s dream and said, &quot;Trapped by your disciple, the path of coming and going is cut off; although close, it feels like mountains and rivers.&quot; Xu Miao was deeply moved by the dream. The student realized the meaning and gently hinted at it. Xu Miao initially doubted and did not immediately speak. He told the student, &quot;When I first arrived to serve, I saw a young woman in green clothes pass by, still wearing two buns, very beautiful in appearance. I lightly teased her, and she came to me. I liked her and became infatuated. I also did not know where she came from.&quot; He also shared the dream with the student. The student then reported the entire situation, and Xu Miao no longer pursued or killed the grasshopper. (Recorded in the <em>Taiping Guangji</em>, Volume 473)</p></div>
+</div></div></div>
 </div>
 <div class="interlaced-group" data-marker="2">
-  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-2" class="chunk-anchor" aria-hidden="true"></span><p><span class="term-match" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false">晋义熙中</span>，<span class="term-match" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false">零陵</span><span class="term-match" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false">施子然</span>，虽<span class="term-match" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false">出自单门</span>，而<span class="term-match" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false">神情辨悟</span>。家大作田。至作<span class="term-match" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false">蜗牛庐</span>于田侧守视，恒宿在中。其夜，独自未眠之顷，见一丈夫来，长短是中形人，着<span class="term-match" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false">黄练单衣袷</span>，直<span class="term-match" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false">造席</span>，<span class="term-match" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false">捧手</span>与子然语。子然问其姓名。即答云：“仆姓卢，名钩。家在<span class="term-match" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false">粽溪</span>边，临水。”复经半旬中，其作人掘田塍西沟边蚁垤，忽见大坎，满中<span class="term-match" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false">蝼蛄</span>，将近斗许，而有数头极壮，一个弥大。子然自是始悟曰：“近日客<span class="term-match" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false">卢钩</span>，<span class="term-match" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false">反音则蝼蛄也</span>。家在<span class="term-match" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false">粽溪</span>，即西坎也。”悉<span class="term-match" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false">灌以沸汤</span>，于是<span class="term-match" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false">遂绝</span>。同上 <a href="#inter-trans-2" class="marker marker-trailing">[2]</a></p></div></div>
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-2" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-2" class="marker marker-trailing">2</a></div>
+  <div class="chunk-text-column"><p>晋义熙中，零陵施子然，虽出自单门，而神情辨悟。家大作田。至作蜗牛庐于田侧守视，恒宿在中。其夜，独自未眠之顷，见一丈夫来，长短是中形人，着黄练单衣袷，直造席，捧手与子然语。子然问其姓名。即答云：“仆姓卢，名钩。家在粽溪边，临水。”复经半旬中，其作人掘田塍西沟边蚁垤，忽见大坎，满中蝼蛄，将近斗许，而有数头极壮，一个弥大。子然自是始悟曰：“近日客卢钩，反音则蝼蛄也。家在粽溪，即西坎也。”悉灌以沸汤，于是遂绝。同上</p></div>
+</div></div></div>
   <div class="interlaced-reasoning-trigger-row">
   <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="2" aria-controls="interlaced-reasoning-2" aria-expanded="false">See Explanation</button>
 </div>
   
   <div class="interlaced-reasoning-panel" id="interlaced-reasoning-2" hidden>
-    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
-      <p class="interlaced-reasoning-title">Relevant Explanation</p>
-      <div class="interlaced-content interlaced-reasoning-preview-content"></div>
-      <button type="button" class="reasoning-preview-more">See more</button>
-    </div>
     <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
       <p class="interlaced-reasoning-title">Explanation</p>
-      <div class="interlaced-content"><p><span class="marker-text">[2]</span></p><section class="reasoning-section">
-  <p class="reasoning-section-title"><strong>Idiomatic Expressions</strong></p>
-  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">出自单门</span> - Literally means &#39;from a humble family,&#39; often used to describe someone of modest origins.</li><li class="reasoning-term-item" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">神情辨悟</span> - Describes someone who is intelligent and perceptive.</li><li class="reasoning-term-item" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">蜗牛庐</span> - Literally means &#39;snail hut,&#39; referring to a small, makeshift shelter.</li><li class="reasoning-term-item" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">造席</span> - Means to approach or come near.</li><li class="reasoning-term-item" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">捧手</span> - Means to raise one&#39;s hands, often in a gesture of respect or greeting.</li><li class="reasoning-term-item" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">反音则蝼蛄也</span> - A play on words where &#39;卢钩&#39; (Lu Gou) is pronounced similarly to &#39;蝼蛄&#39; (lou gu), meaning &#39;mole cricket.&#39;</li><li class="reasoning-term-item" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">粽溪</span> - Literally means &#39;zong stream,&#39; likely a place name.</li><li class="reasoning-term-item" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">灌以沸汤</span> - Means to pour boiling water.</li><li class="reasoning-term-item" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">遂绝</span> - Means to finally be eradicated or eliminated.</li></ul>
-</section>
-<section class="reasoning-section">
-  <p class="reasoning-section-title"><strong>Cultural and Historical Allusions</strong></p>
-  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">晋义熙中</span> - Refers to the year 405 during the Eastern Jin Dynasty, a period of significant cultural and literary development.</li><li class="reasoning-term-item" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">施子然</span> - A historical figure from the Eastern Jin Dynasty, known for his intelligence and perceptiveness.</li><li class="reasoning-term-item" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">黄练单衣袷</span> - Describes a simple, yellow linen robe, indicating the visitor&#39;s modest attire.</li><li class="reasoning-term-item" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">蝼蛄</span> - A type of mole cricket, often associated with agricultural pests.</li><li class="reasoning-term-item" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">沸汤</span> - Boiling water, commonly used in traditional Chinese medicine and pest control.</li></ul>
-</section>
-<section class="reasoning-section">
-  <p class="reasoning-section-title"><strong>Proper Nouns</strong></p>
-  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">晋义熙中</span> - The year 405 during the Eastern Jin Dynasty.</li><li class="reasoning-term-item" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">零陵</span> - A place name, likely referring to a region in southern China.</li><li class="reasoning-term-item" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">施子然</span> - A historical figure from the Eastern Jin Dynasty.</li><li class="reasoning-term-item" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">卢钩</span> - The name of the visitor, which is a play on words.</li><li class="reasoning-term-item" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">粽溪</span> - A place name, likely referring to a stream or river.</li><li class="reasoning-term-item" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">蝼蛄</span> - A type of mole cricket.</li></ul>
-</section></div>
+      <div class="interlaced-content" data-reasoning-content data-marker="2"></div>
     </div>
   </div>
-  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-2" class="chunk-anchor" aria-hidden="true"></span><p>During the reign of Emperor Xiaowu of Jin, in the year 405, there was a man named Shi Ziran from Lingling who, despite being born into a humble family, possessed a sharp and perceptive mind. His family owned a large farm, and he built a small, makeshift shelter near the fields to monitor the crops, where he would often stay overnight. One night, while he was still awake, he saw a man approach. The man was of average height, dressed in a simple yellow linen robe, and walked straight up to Shi Ziran, raising his hands in greeting. Shi Ziran asked the man his name, and the man replied, &quot;My surname is Lu, and my given name is Gou. My home is by the Zong Stream, beside the water.&quot; A few days later, one of the farm workers dug into the ant hill on the western side of the field and suddenly discovered a large pit filled with mole crickets, nearly a peck in quantity, with several particularly large ones, one of which was especially massive. Shi Ziran then realized, &quot;The guest named Lu Gou, whose name sounds like &#39;mole cricket.&#39; His home by the Zong Stream is the western pit.&quot; He then poured boiling water into the pit, and thus the mole crickets were finally eradicated. <a href="#inter-orig-2" class="marker marker-trailing">[2]</a></p></div></div>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-2" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-2" class="marker marker-trailing">2</a></div>
+  <div class="chunk-text-column"><p>During the reign of Emperor Xiaowu of Jin, in the year 405, there was a man named Shi Ziran from Lingling who, despite being born into a humble family, possessed a sharp and perceptive mind. His family owned a large farm, and he built a small, makeshift shelter near the fields to monitor the crops, where he would often stay overnight. One night, while he was still awake, he saw a man approach. The man was of average height, dressed in a simple yellow linen robe, and walked straight up to Shi Ziran, raising his hands in greeting. Shi Ziran asked the man his name, and the man replied, &quot;My surname is Lu, and my given name is Gou. My home is by the Zong Stream, beside the water.&quot; A few days later, one of the farm workers dug into the ant hill on the western side of the field and suddenly discovered a large pit filled with mole crickets, nearly a peck in quantity, with several particularly large ones, one of which was especially massive. Shi Ziran then realized, &quot;The guest named Lu Gou, whose name sounds like &#39;mole cricket.&#39; His home by the Zong Stream is the western pit.&quot; He then poured boiling water into the pit, and thus the mole crickets were finally eradicated.</p></div>
+</div></div></div>
 </div>
 <div class="interlaced-group" data-marker="3">
-  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-3" class="chunk-anchor" aria-hidden="true"></span><p>刘穆之梦有人称刘镇军相迎。旦占之，曰：“吾死矣。今岂有刘镇军邪？”后宋武遣人迎，共定大业。<span class="term-match" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false">武帝</span>时为镇军将军。广记二百七十六</p>
-<p>　　吴兴俞亮，以<span class="term-match" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false">永明八年</span>补护军府使。于常眠处，闻有羊声。疑为神怪。窃于户窥之，见其床下有一羊，高可二尺，毛色若丹，光耀满室。初学记二十九六帖九十六御览九百二</p>
-<p>　　<span class="term-match" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false">秣陵令</span>中山刘沼，梁天监三年为建康监，与门生作食，于灶里得一龟，长尺许，在灰中了不以燔炙为弊。刘为设斋会，放之于娄胡。刘俄迁<span class="term-match" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false">秣陵令</span>。广记一百十八</p>
-<p>　　<span class="term-match" data-term-key="term-19" tabindex="0" role="button" aria-pressed="false">零陵太守</span>广陵刘兴道，罢郡住斋中。安床在西壁下，忽见东壁边有一眼，斯须之间便有四，渐渐见多，遂至满室；久乃消散，不知所在。又见床前有头发，从土中稍稍繁多。见一头而出，乃是方相头，奄忽自灭。刘忧怖，沈疾不起。广记一百四十一 <a href="#inter-trans-3" class="marker marker-trailing">[3]</a></p></div></div>
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-3" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-3" class="marker marker-trailing">3</a></div>
+  <div class="chunk-text-column"><p>刘穆之梦有人称刘镇军相迎。旦占之，曰：“吾死矣。今岂有刘镇军邪？”后宋武遣人迎，共定大业。武帝时为镇军将军。广记二百七十六</p>
+<p>　　吴兴俞亮，以永明八年补护军府使。于常眠处，闻有羊声。疑为神怪。窃于户窥之，见其床下有一羊，高可二尺，毛色若丹，光耀满室。初学记二十九六帖九十六御览九百二</p>
+<p>　　秣陵令中山刘沼，梁天监三年为建康监，与门生作食，于灶里得一龟，长尺许，在灰中了不以燔炙为弊。刘为设斋会，放之于娄胡。刘俄迁秣陵令。广记一百十八</p>
+<p>　　零陵太守广陵刘兴道，罢郡住斋中。安床在西壁下，忽见东壁边有一眼，斯须之间便有四，渐渐见多，遂至满室；久乃消散，不知所在。又见床前有头发，从土中稍稍繁多。见一头而出，乃是方相头，奄忽自灭。刘忧怖，沈疾不起。广记一百四十一</p></div>
+</div></div></div>
   <div class="interlaced-reasoning-trigger-row">
   <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="3" aria-controls="interlaced-reasoning-3" aria-expanded="false">See Explanation</button>
 </div>
   
   <div class="interlaced-reasoning-panel" id="interlaced-reasoning-3" hidden>
-    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
-      <p class="interlaced-reasoning-title">Relevant Explanation</p>
-      <div class="interlaced-content interlaced-reasoning-preview-content"></div>
-      <button type="button" class="reasoning-preview-more">See more</button>
-    </div>
     <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
       <p class="interlaced-reasoning-title">Explanation</p>
-      <div class="interlaced-content"><p><span class="marker-text">[3]</span></p><section class="reasoning-section">
-  <p class="reasoning-section-title"><strong>Idiomatic Expressions</strong></p>
-  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">劉穆之夢有人稱劉鎮軍相迎</span> - A literal description of a dream where someone calls out to meet Liu Zhenjun.</li><li class="reasoning-term-item" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">旦占之，曰：‘吾死矣。今豈有劉鎮軍邪？’</span> - A colloquial expression of divination and doubt.</li><li class="reasoning-term-item" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">武帝時為鎮軍將軍</span> - A historical reference to Emperor Wu&#39;s title.</li><li class="reasoning-term-item" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">廣記二百七十六</span> - A citation from the *Guangji* (Expanded Records), a historical text.</li><li class="reasoning-term-item" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">吳興俞亮，以永明八年補護軍府使</span> - A formal statement of appointment.</li><li class="reasoning-term-item" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">初學記二十九六帖九十六御覽九百二</span> - Citations from various historical and encyclopedic texts.</li><li class="reasoning-term-item" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">秣陵令中山劉沼，梁天監三年為建康監</span> - A formal statement of office and appointment.</li><li class="reasoning-term-item" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">廣記一百十八</span> - A citation from the *Guangji*.</li><li class="reasoning-term-item" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">零陵太守廣陵劉興道，罷郡住齋中</span> - A formal statement of office and residence.</li><li class="reasoning-term-item" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">廣記一百四十一</span> - A citation from the *Guangji*.</li></ul>
-</section>
-<section class="reasoning-section">
-  <p class="reasoning-section-title"><strong>Cultural and Historical Allusions</strong></p>
-  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">劉穆之</span> - A historical figure, a key advisor to Emperor Wu of Liu Song.</li><li class="reasoning-term-item" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">劉鎮軍</span> - A title referring to Liu Zhenjun, likely a high-ranking official.</li><li class="reasoning-term-item" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">武帝</span> - Emperor Wu of Liu Song, a founding emperor of the Liu Song dynasty.</li><li class="reasoning-term-item" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">永明八年</span> - The eighth year of the Yongming era (480 AD) of Emperor Wu of Qi.</li><li class="reasoning-term-item" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">護軍府使</span> - An official position in the military administration.</li><li class="reasoning-term-item" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">秣陵令</span> - The magistrate of Moling (present-day Nanjing).</li><li class="reasoning-term-item" data-term-key="term-17" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">梁天監三年</span> - The third year of the Tianjian era (504 AD) of Emperor Wu of Liang.</li><li class="reasoning-term-item" data-term-key="term-18" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">建康監</span> - An official overseeing Jiankang (present-day Nanjing).</li><li class="reasoning-term-item" data-term-key="term-19" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">零陵太守</span> - The governor of Lingling (present-day Yongzhou, Hunan).</li><li class="reasoning-term-item" data-term-key="term-20" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">廣陵</span> - A region in present-day Jiangsu.</li></ul>
-</section>
-<section class="reasoning-section">
-  <p class="reasoning-section-title"><strong>Proper Nouns</strong></p>
-  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">劉穆之</span> - Liu Mu, a historical figure.</li><li class="reasoning-term-item" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">劉鎮軍</span> - Liu Zhenjun, a title.</li><li class="reasoning-term-item" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">武帝</span> - Emperor Wu of Liu Song.</li><li class="reasoning-term-item" data-term-key="term-21" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">吳興俞亮</span> - Yu Liang of Wuxing.</li><li class="reasoning-term-item" data-term-key="term-22" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">秣陵令中山劉沼</span> - Liu Zhao of Zhongshan, magistrate of Moling.</li><li class="reasoning-term-item" data-term-key="term-23" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">零陵太守廣陵劉興道</span> - Liu Xingdao of Guangling, governor of Lingling.</li></ul>
-</section></div>
+      <div class="interlaced-content" data-reasoning-content data-marker="3"></div>
     </div>
   </div>
-  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-3" class="chunk-anchor" aria-hidden="true"></span><p>Liu Mu dreamed that someone was calling out to meet Liu Zhenjun. In the morning, he divined it and said, &quot;I am going to die. Is there even a Liu Zhenjun now?&quot; Later, Emperor Wu of Liu Song sent someone to welcome him, and together they established the great cause. At that time, Emperor Wu was the General of the Army. <em>Guangji</em> 276.</p>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-3" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-3" class="marker marker-trailing">3</a></div>
+  <div class="chunk-text-column"><p>Liu Mu dreamed that someone was calling out to meet Liu Zhenjun. In the morning, he divined it and said, &quot;I am going to die. Is there even a Liu Zhenjun now?&quot; Later, Emperor Wu of Liu Song sent someone to welcome him, and together they established the great cause. At that time, Emperor Wu was the General of the Army. <em>Guangji</em> 276.</p>
 <p>Yu Liang of Wuxing was appointed as the Military Governor in the eighth year of Yongming. While lying in his usual sleeping place, he heard the sound of sheep. He suspected it to be a supernatural phenomenon. Peering through the door, he saw a sheep under his bed, about two feet tall, with red-colored fur, its radiance filling the room. <em>Chuxueji</em> 29, <em>Liuji</em> 96, <em>Yuelan</em> 902.</p>
 <p>Liu Zhao of Zhongshan, the magistrate of Moling, was the supervisor of Jiankang in the third year of Tianjian. While cooking with his disciples, he found a turtle in the stove, about a foot long, which was not harmed by the ashes. Liu held a vegetarian feast and released it into the Louhu. Soon after, Liu Zhao was promoted to the position of magistrate of Moling. <em>Guangji</em> 118.</p>
-<p>Liu Xingdao of Guangling, the governor of Lingling, retired to his study after leaving office. He placed his bed against the western wall, but suddenly saw an eye appear on the eastern wall. Soon, there were four eyes, and they gradually increased in number until the room was full; after a while, they disappeared without a trace. He also saw hair growing from the ground, which became more numerous over time. He saw a head emerge, which turned out to be the head of a Fangxiang, and it vanished suddenly. Liu was filled with fear and anxiety, falling ill and unable to get up. <em>Guangji</em> 141. <a href="#inter-orig-3" class="marker marker-trailing">[3]</a></p></div></div>
+<p>Liu Xingdao of Guangling, the governor of Lingling, retired to his study after leaving office. He placed his bed against the western wall, but suddenly saw an eye appear on the eastern wall. Soon, there were four eyes, and they gradually increased in number until the room was full; after a while, they disappeared without a trace. He also saw hair growing from the ground, which became more numerous over time. He saw a head emerge, which turned out to be the head of a Fangxiang, and it vanished suddenly. Liu was filled with fear and anxiety, falling ill and unable to get up. <em>Guangji</em> 141.</p></div>
+</div></div></div>
 </div>
 <div class="interlaced-group" data-marker="4">
-  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-4" class="chunk-anchor" aria-hidden="true"></span><p><span class="term-match" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false">晋陵无锡尉</span><span class="term-match" data-term-key="term-28" tabindex="0" role="button" aria-pressed="false">严无欲</span>，<span class="term-match" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false">贮谷，后开乃成蛇草</span>，<span class="term-match" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false">焚之，使贫</span>。御览一百九十</p>
-<p>　　<span class="term-match" data-term-key="term-23" tabindex="0" role="button" aria-pressed="false">竟陵王诞</span>，<span class="term-match" data-term-key="term-24" tabindex="0" role="button" aria-pressed="false">广记引作刘诞</span>在广陵左右侍直。眠中梦人告之曰，<span class="term-match" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false">官须发为矛旄</span>。觉则已失发矣。如此者数十人。御览三百四十一广记二百七十六</p>
-<p>　　孙氏妻<span class="term-match" data-term-key="term-27" tabindex="0" role="button" aria-pressed="false">黄氏</span>，忽见一童子在前，以?掷之，跃入云去。夜闻户外歌曰：“昔御览引作首填夏家冢，辇泥头欲秃。<span class="term-match" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false">今居黄氏居，非意伤我目</span>。”寻觅巢中，得一白燕，其左目伤。事类赋注十九御览九百二十二</p>
-<p>　　<span class="term-match" data-term-key="term-25" tabindex="0" role="button" aria-pressed="false">山阴朱法公者</span>，<span class="term-match" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false">尝出行，憩于台城东橘树下</span>。忽有女子，年可十六七，形甚端丽。<span class="term-match" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false">薄晚，遣婢与法公相闻</span>，<span class="term-match" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false">方夕欲诣宿</span>。至<span class="term-match" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false">人定后，乃来</span>。<span class="term-match" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false">自称姓檀，住在城侧</span>。<span class="term-match" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false">因共眠寝，至晓而去</span>。<span class="term-match" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false">明日复来</span>。<span class="term-match" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false">如此数夜</span>。<span class="term-match" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false">每晓去，婢辄来迎</span>。<span class="term-match" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false">复有男子可六七岁，端丽可爱</span>；<span class="term-match" data-term-key="term-17" tabindex="0" role="button" aria-pressed="false">女云是其弟</span>。<span class="term-match" data-term-key="term-18" tabindex="0" role="button" aria-pressed="false">后晓去，女衣裙开，见龟尾及龟脚</span>。<span class="term-match" data-term-key="term-19" tabindex="0" role="button" aria-pressed="false">法公方悟是魅</span>，<span class="term-match" data-term-key="term-20" tabindex="0" role="button" aria-pressed="false">欲执之</span>。<span class="term-match" data-term-key="term-21" tabindex="0" role="button" aria-pressed="false">向夕复来</span>，<span class="term-match" data-term-key="term-22" tabindex="0" role="button" aria-pressed="false">即然火照觅，寻失所在</span>。广记四百六十九 <a href="#inter-trans-4" class="marker marker-trailing">[4]</a></p></div></div>
+  <div class="interlaced-block original"><div class="interlaced-content"><span id="inter-orig-4" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-trans-4" class="marker marker-trailing">4</a></div>
+  <div class="chunk-text-column"><p>晋陵无锡尉严无欲，贮谷，后开乃成蛇草，焚之，使贫。御览一百九十</p>
+<p>　　竟陵王诞，广记引作刘诞在广陵左右侍直。眠中梦人告之曰，官须发为矛旄。觉则已失发矣。如此者数十人。御览三百四十一广记二百七十六</p>
+<p>　　孙氏妻黄氏，忽见一童子在前，以?掷之，跃入云去。夜闻户外歌曰：“昔御览引作首填夏家冢，辇泥头欲秃。今居黄氏居，非意伤我目。”寻觅巢中，得一白燕，其左目伤。事类赋注十九御览九百二十二</p>
+<p>　　山阴朱法公者，尝出行，憩于台城东橘树下。忽有女子，年可十六七，形甚端丽。薄晚，遣婢与法公相闻，方夕欲诣宿。至人定后，乃来。自称姓檀，住在城侧。因共眠寝，至晓而去。明日复来。如此数夜。每晓去，婢辄来迎。复有男子可六七岁，端丽可爱；女云是其弟。后晓去，女衣裙开，见龟尾及龟脚。法公方悟是魅，欲执之。向夕复来，即然火照觅，寻失所在。广记四百六十九</p></div>
+</div></div></div>
   <div class="interlaced-reasoning-trigger-row">
   <button type="button" class="reasoning-trigger reasoning-trigger-inline" data-marker="4" aria-controls="interlaced-reasoning-4" aria-expanded="false">See Explanation</button>
 </div>
   
   <div class="interlaced-reasoning-panel" id="interlaced-reasoning-4" hidden>
-    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
-      <p class="interlaced-reasoning-title">Relevant Explanation</p>
-      <div class="interlaced-content interlaced-reasoning-preview-content"></div>
-      <button type="button" class="reasoning-preview-more">See more</button>
-    </div>
     <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
       <p class="interlaced-reasoning-title">Explanation</p>
-      <div class="interlaced-content"><p><span class="marker-text">[4]</span></p><section class="reasoning-section">
-  <p class="reasoning-section-title"><strong>Idiomatic Expressions</strong></p>
-  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-1" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">晋陵无锡尉</span> - Refers to a local official in the Jinling region (modern-day Zhenjiang, Jiangsu).</li><li class="reasoning-term-item" data-term-key="term-2" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">贮谷，后开乃成蛇草</span> - Metaphorical or supernatural event where stored grain transforms into snake grass.</li><li class="reasoning-term-item" data-term-key="term-3" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">焚之，使贫</span> - Burning the snake grass causes poverty as a consequence.</li><li class="reasoning-term-item" data-term-key="term-4" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">官须发为矛旄</span> - The official needs hair for a spear flag, a ceremonial item.</li><li class="reasoning-term-item" data-term-key="term-5" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">昔填夏家冢，辇泥头欲秃</span> - In the past, it filled the tomb of the Xia family, carting mud to their heads to make them bald, likely a curse or supernatural event.</li><li class="reasoning-term-item" data-term-key="term-6" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">今居黄氏居，非意伤我目</span> - Now it resides in Huang&#39;s home, unintentionally hurting my eyes, likely a curse or supernatural event.</li><li class="reasoning-term-item" data-term-key="term-7" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">尝出行，憩于台城东橘树下</span> - He once traveled and rested under an orange tree east of Taicheng.</li><li class="reasoning-term-item" data-term-key="term-8" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">薄晚，遣婢与法公相闻</span> - Late in the afternoon, she sent a maid to inform Fagong.</li><li class="reasoning-term-item" data-term-key="term-9" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">方夕欲诣宿</span> - She wanted to stay overnight as evening approached.</li><li class="reasoning-term-item" data-term-key="term-10" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">人定后，乃来</span> - After the hour of people had settled, she came.</li><li class="reasoning-term-item" data-term-key="term-11" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">自称姓檀，住在城侧</span> - She introduced herself as surnamed Tan, living on the outskirts of the city.</li><li class="reasoning-term-item" data-term-key="term-12" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">因共眠寝，至晓而去</span> - They slept together until dawn and then she left.</li><li class="reasoning-term-item" data-term-key="term-13" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">明日复来</span> - The next day, she came again.</li><li class="reasoning-term-item" data-term-key="term-14" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">如此数夜</span> - This happened for several nights.</li><li class="reasoning-term-item" data-term-key="term-15" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">每晓去，婢辄来迎</span> - Every morning when she left, the maid would come to greet her.</li><li class="reasoning-term-item" data-term-key="term-16" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">复有男子可六七岁，端丽可爱</span> - There was also a boy, about six or seven years old, who was very handsome and lovely.</li><li class="reasoning-term-item" data-term-key="term-17" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">女云是其弟</span> - The woman said he was her brother.</li><li class="reasoning-term-item" data-term-key="term-18" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">后晓去，女衣裙开，见龟尾及龟脚</span> - The next morning when she left, the woman&#39;s skirt opened, revealing a turtle&#39;s tail and feet, likely a supernatural revelation.</li><li class="reasoning-term-item" data-term-key="term-19" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">法公方悟是魅</span> - Fagong then realized she was a spirit.</li><li class="reasoning-term-item" data-term-key="term-20" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">欲执之</span> - He wanted to seize her.</li><li class="reasoning-term-item" data-term-key="term-21" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">向夕复来</span> - As evening approached, she came again.</li><li class="reasoning-term-item" data-term-key="term-22" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">即然火照觅，寻失所在</span> - He immediately lit a fire to search for her, but she was gone.</li></ul>
-</section>
-<section class="reasoning-section">
-  <p class="reasoning-section-title"><strong>Cultural and Historical Allusions</strong></p>
-  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-23" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">竟陵王诞</span> - Refers to King Jingling Duan, likely Liu Duan, a prince during the Southern Song dynasty.</li><li class="reasoning-term-item" data-term-key="term-24" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">广记引作刘诞</span> - The *Guangji* (Comprehensive Records) refers to him as Liu Duan.</li><li class="reasoning-term-item" data-term-key="term-25" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">山阴朱法公者</span> - Zhu Fagong of Shanyin, a historical figure.</li><li class="reasoning-term-item" data-term-key="term-26" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">台城东橘树下</span> - Refers to an orange tree east of Taicheng, a historical location.</li><li class="reasoning-term-item" data-term-key="term-27" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">黄氏</span> - Refers to a woman surnamed Huang, likely a historical figure.</li></ul>
-</section>
-<section class="reasoning-section">
-  <p class="reasoning-section-title"><strong>Proper Nouns</strong></p>
-  <ul class="reasoning-section-list"><li class="reasoning-term-item" data-term-key="term-28" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">严无欲</span> - A proper name, likely a historical figure, but his exact identity is unclear.</li><li class="reasoning-term-item" data-term-key="term-29" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">蛇草</span> - Could refer to a type of plant associated with snakes or a curse.</li><li class="reasoning-term-item" data-term-key="term-30" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">刘诞</span> - A proper name, likely referring to Liu Duan, a prince during the Southern Song dynasty.</li><li class="reasoning-term-item" data-term-key="term-31" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">朱法公</span> - A proper name, likely referring to Zhu Fagong, a historical figure.</li><li class="reasoning-term-item" data-term-key="term-32" tabindex="0" role="button" aria-pressed="false"><span class="reasoning-term-text">檀</span> - A proper surname, likely referring to a historical figure.</li></ul>
-</section></div>
+      <div class="interlaced-content" data-reasoning-content data-marker="4"></div>
     </div>
   </div>
-  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-4" class="chunk-anchor" aria-hidden="true"></span><p>Yan Wu Yu, the magistrate of Wuxi, Jinling, stored grain, which later opened up to become snake grass. He burned it, causing poverty. (Recorded in <em>Yuyan</em> 190)</p>
-<p>King Jingling Duan, also referred to as Liu Duan in <em>Guangji</em>, had his attendants around Guangling. In his sleep, he dreamed of someone telling him that the official needed his hair for a spear flag. Upon waking, he found his hair gone. This happened to dozens of people. (Recorded in <em>Yuyan</em> 341 and <em>Guangji</em> 276)</p>
-<p>Huang, the wife of Sun, suddenly saw a child in front of her. He threw something at her, and it leaped into the clouds and disappeared. At night, she heard a song outside the door: &quot;In the past, it filled the tomb of the Xia family, carting mud to their heads to make them bald. Now it resides in Huang&#39;s home, unintentionally hurting my eyes.&quot; She searched in the nest and found a white swallow, whose left eye was injured. (Recorded in <em>Shilie Fu</em> 19 and <em>Yuyan</em> 922)</p>
-<p>Zhu Fagong of Shanyin once traveled and rested under an orange tree east of Taicheng. Suddenly, a woman appeared, about sixteen or seventeen years old, with a very beautiful appearance. Late in the afternoon, she sent a maid to inform Fagong, saying she wanted to stay overnight as evening approached. After the hour of people had settled, she came. She introduced herself as surnamed Tan, living on the outskirts of the city. They slept together until dawn and then she left. The next day, she came again. This happened for several nights. Every morning when she left, the maid would come to greet her. There was also a boy, about six or seven years old, who was very handsome and lovely; the woman said he was her brother. The next morning when she left, the woman&#39;s skirt opened, revealing a turtle&#39;s tail and feet. Fagong then realized she was a spirit and wanted to seize her. As evening approached, she came again. He immediately lit a fire to search for her, but she was gone. (Recorded in <em>Guangji</em> 469) <a href="#inter-orig-4" class="marker marker-trailing">[4]</a></p></div></div>
-</div>
-<div class="interlaced-block original">
-  <div class="interlaced-content"><p>晋陵无锡尉严无欲，贮谷，后开乃成蛇草，焚之，使贫。御览一百九十</p>
-<p>　　竟陵王诞，广记引作刘诞在广陵左右侍直。眠中梦人告之曰，官须发为矛旄。觉则已失发矣。如此者数十人。御览三百四十一广记二百七十六</p>
-<p>　　孙氏妻黄氏，忽见一童子在前，以?掷之，跃入云去。夜闻户外歌曰：“昔御览引作首填夏家冢，辇泥头欲秃。今居黄氏居，非意伤我目。”寻觅巢中，得一白燕，其左目伤。事类赋注十九御览九百二十二</p>
-<p>　　山阴朱法公者，尝出行，憩于台城东橘树下。忽有女子，年可十六七，形甚端丽。薄晚，遣婢与法公相闻，方夕欲诣宿。至人定后，乃来。自称姓檀，住在城侧。因共眠寝，至晓而去。明日复来。如此数夜。每晓去，婢辄来迎。复有男子可六七岁，端丽可爱；女云是其弟。后晓去，女衣裙开，见龟尾及龟脚。法公方悟是魅，欲执之。向夕复来，即然火照觅，寻失所在。广记四百六十九</p></div>
-</div>
-<div class="interlaced-block translation">
-  <div class="interlaced-content"><p>Yan Wu Yu, the magistrate of Wuxi, Jinling, stored grain, which later opened up to become snake grass. He burned it, causing poverty. (Recorded in <em>Yuyan</em> 190)</p>
+  <div class="interlaced-block translation"><div class="interlaced-content"><span id="inter-trans-4" class="chunk-anchor" aria-hidden="true"></span><div class="chunk-layout">
+  <div class="chunk-marker-column"><a href="#inter-orig-4" class="marker marker-trailing">4</a></div>
+  <div class="chunk-text-column"><p>Yan Wu Yu, the magistrate of Wuxi, Jinling, stored grain, which later opened up to become snake grass. He burned it, causing poverty. (Recorded in <em>Yuyan</em> 190)</p>
 <p>King Jingling Duan, also referred to as Liu Duan in <em>Guangji</em>, had his attendants around Guangling. In his sleep, he dreamed of someone telling him that the official needed his hair for a spear flag. Upon waking, he found his hair gone. This happened to dozens of people. (Recorded in <em>Yuyan</em> 341 and <em>Guangji</em> 276)</p>
 <p>Huang, the wife of Sun, suddenly saw a child in front of her. He threw something at her, and it leaped into the clouds and disappeared. At night, she heard a song outside the door: &quot;In the past, it filled the tomb of the Xia family, carting mud to their heads to make them bald. Now it resides in Huang&#39;s home, unintentionally hurting my eyes.&quot; She searched in the nest and found a white swallow, whose left eye was injured. (Recorded in <em>Shilie Fu</em> 19 and <em>Yuyan</em> 922)</p>
 <p>Zhu Fagong of Shanyin once traveled and rested under an orange tree east of Taicheng. Suddenly, a woman appeared, about sixteen or seventeen years old, with a very beautiful appearance. Late in the afternoon, she sent a maid to inform Fagong, saying she wanted to stay overnight as evening approached. After the hour of people had settled, she came. She introduced herself as surnamed Tan, living on the outskirts of the city. They slept together until dawn and then she left. The next day, she came again. This happened for several nights. Every morning when she left, the maid would come to greet her. There was also a boy, about six or seven years old, who was very handsome and lovely; the woman said he was her brother. The next morning when she left, the woman&#39;s skirt opened, revealing a turtle&#39;s tail and feet. Fagong then realized she was a spirit and wanted to seize her. As evening approached, she came again. He immediately lit a fire to search for her, but she was gone. (Recorded in <em>Guangji</em> 469)</p></div>
+</div></div></div>
 </div>
     </div>
   </div>
 
   <script>
     (function () {
-      const docSearchData = [{"anchor":"inter-trans-2","marker":"2","type":"translation","text":"**The Continuation of Strange Records (续异记)** Anonymous In the Eastern Han dynasty, Huangmenlang Xiao Shiyi was executed in the second year of Emperor He's Yongyuan era. Several days before, a dog that had been regularly kept in the household came to the woman's presence and spoke to her, saying, \"You have no good fortune; your family will soon be ruined, what shall we do?\" The woman remained silent and did not show fear. The dog left after a short while. When Xiao Shiyi returned home, the woman continued to imitate the dog's speech. Before she finished, the authorities arrived to arrest her. (Recorded in the *Taiping Guangji*, Volume 141) During the reign of Emperor Xiaowu of Jin, Xu Miao served as a Zhongshu Shilang (a mid-level official in the central government). People around him often sensed that Xu Miao was alone in his tent, as if he were conversing with someone. An old student of his once watched secretly one night and saw nothing. When the sky was faintly lit, he opened the window and suddenly saw something fly out from behind the screen and dart straight into an iron pot. He followed it and found nothing else but a cluster of cattail roots with a large green grasshopper beneath them. Although he suspected it was a spirit, he had never heard of such a thing before, so he merely picked off its two wings. That night, it entered Xu Miao's dream and said, \"Trapped by your disciple, the path of coming and going is cut off; although close, it feels like mountains and rivers.\" Xu Miao was deeply moved by the dream. The student realized the meaning and gently hinted at it. Xu Miao initially doubted and did not immediately speak. He told the student, \"When I first arrived to serve, I saw a young woman in green clothes pass by, still wearing two buns, very beautiful in appearance. I lightly teased her, and she came to me. I liked her and became infatuated. I also did not know where she came from.\" He also shared the dream with the student. The student then reported the entire situation, and Xu Miao no longer pursued or killed the grasshopper. (Recorded in the *Taiping Guangji*, Volume 473)"},{"anchor":"inter-trans-3","marker":"3","type":"translation","text":"During the reign of Emperor Xiaowu of Jin, in the year 405, there was a man named Shi Ziran from Lingling who, despite being born into a humble family, possessed a sharp and perceptive mind. His family owned a large farm, and he built a small, makeshift shelter near the fields to monitor the crops, where he would often stay overnight. One night, while he was still awake, he saw a man approach. The man was of average height, dressed in a simple yellow linen robe, and walked straight up to Shi Ziran, raising his hands in greeting. Shi Ziran asked the man his name, and the man replied, \"My surname is Lu, and my given name is Gou. My home is by the Zong Stream, beside the water.\" A few days later, one of the farm workers dug into the ant hill on the western side of the field and suddenly discovered a large pit filled with mole crickets, nearly a peck in quantity, with several particularly large ones, one of which was especially massive. Shi Ziran then realized, \"The guest named Lu Gou, whose name sounds like 'mole cricket.' His home by the Zong Stream is the western pit.\" He then poured boiling water into the pit, and thus the mole crickets were finally eradicated."},{"anchor":"inter-trans-4","marker":"4","type":"translation","text":"Liu Mu dreamed that someone was calling out to meet Liu Zhenjun. In the morning, he divined it and said, \"I am going to die. Is there even a Liu Zhenjun now?\" Later, Emperor Wu of Liu Song sent someone to welcome him, and together they established the great cause. At that time, Emperor Wu was the General of the Army. *Guangji* 276. Yu Liang of Wuxing was appointed as the Military Governor in the eighth year of Yongming. While lying in his usual sleeping place, he heard the sound of sheep. He suspected it to be a supernatural phenomenon. Peering through the door, he saw a sheep under his bed, about two feet tall, with red-colored fur, its radiance filling the room. *Chuxueji* 29, *Liuji* 96, *Yuelan* 902. Liu Zhao of Zhongshan, the magistrate of Moling, was the supervisor of Jiankang in the third year of Tianjian. While cooking with his disciples, he found a turtle in the stove, about a foot long, which was not harmed by the ashes. Liu held a vegetarian feast and released it into the Louhu. Soon after, Liu Zhao was promoted to the position of magistrate of Moling. *Guangji* 118. Liu Xingdao of Guangling, the governor of Lingling, retired to his study after leaving office. He placed his bed against the western wall, but suddenly saw an eye appear on the eastern wall. Soon, there were four eyes, and they gradually increased in number until the room was full; after a while, they disappeared without a trace. He also saw hair growing from the ground, which became more numerous over time. He saw a head emerge, which turned out to be the head of a Fangxiang, and it vanished suddenly. Liu was filled with fear and anxiety, falling ill and unable to get up. *Guangji* 141."},{"anchor":"inter-orig-2","marker":"2","type":"original","text":"《续异记》佚名 后汉黄门郎萧士义，和帝永元二年被戮。数日前，家中常所养狗，来向其妇前而语曰：“汝极无相禄；汝家寻当破败，当奈何！”其妇默然，亦不骇。狗少时自去。及士义还内，妇仍学说狗语，未毕，收捕便至。广记一百四十一 徐邈，晋孝武帝时为中书侍郎，在省直，左右人恒觉邈独在帐内，以与人共语。有旧门生，一夕伺之，无所见。天时微有光，始开窗，瞥睹一物从屏风里飞出，直入铁镬中。仍逐视之，无余物，唯见镬中聚菖蒲根，下有大青蚱蜢；虽疑此为魅，而古来未闻，但摘除其两翼。至夜，遂入邈梦云：“为君门生所困，往来道绝；相去虽近，有若山河。”邈得梦，甚凄惨。门生知其意，乃微发其端。邈初时疑不即道。语之曰：“我始来直者，便见一青衣女子从前度，犹作两髻，姿色甚美。聊试挑谑，即来就己。且爱之，仍溺情。亦不知其从何而至此。”兼告梦。门生因具以状白，亦不复追杀蚱蜢。广记四百七十三"},{"anchor":"inter-orig-3","marker":"3","type":"original","text":"晋义熙中，零陵施子然，虽出自单门，而神情辨悟。家大作田。至作蜗牛庐于田侧守视，恒宿在中。其夜，独自未眠之顷，见一丈夫来，长短是中形人，着黄练单衣袷，直造席，捧手与子然语。子然问其姓名。即答云：“仆姓卢，名钩。家在粽溪边，临水。”复经半旬中，其作人掘田塍西沟边蚁垤，忽见大坎，满中蝼蛄，将近斗许，而有数头极壮，一个弥大。子然自是始悟曰：“近日客卢钩，反音则蝼蛄也。家在粽溪，即西坎也。”悉灌以沸汤，于是遂绝。同上"},{"anchor":"inter-orig-4","marker":"4","type":"original","text":"刘穆之梦有人称刘镇军相迎。旦占之，曰：“吾死矣。今岂有刘镇军邪？”后宋武遣人迎，共定大业。武帝时为镇军将军。广记二百七十六 吴兴俞亮，以永明八年补护军府使。于常眠处，闻有羊声。疑为神怪。窃于户窥之，见其床下有一羊，高可二尺，毛色若丹，光耀满室。初学记二十九六帖九十六御览九百二 秣陵令中山刘沼，梁天监三年为建康监，与门生作食，于灶里得一龟，长尺许，在灰中了不以燔炙为弊。刘为设斋会，放之于娄胡。刘俄迁秣陵令。广记一百十八 零陵太守广陵刘兴道，罢郡住斋中。安床在西壁下，忽见东壁边有一眼，斯须之间便有四，渐渐见多，遂至满室；久乃消散，不知所在。又见床前有头发，从土中稍稍繁多。见一头而出，乃是方相头，奄忽自灭。刘忧怖，沈疾不起。广记一百四十一"}];
+      const docReasoningUrl = "../reasoning-index/02_Tang/续异记/manifest.json";
       const inlineReasoningButtons = document.querySelectorAll('.reasoning-trigger-inline');
       const docSearchContainer = document.getElementById('doc-search');
       const docSearchInput = document.getElementById('doc-search-input');
@@ -559,6 +562,286 @@
       const toggleChineseButton = document.getElementById('toggle-chinese-button');
       const closedExplanationLabel = 'See Explanation';
       const openExplanationLabel = 'Hide Explanation';
+      let reasoningManifestPromise = null;
+      let reasoningMarkerToShard = null;
+      const reasoningShardCache = new Map();
+
+      function getReasoningShardUrl(shard) {
+        if (!docReasoningUrl || !shard) {
+          return '';
+        }
+        const baseIndex = docReasoningUrl.lastIndexOf('/');
+        const basePath = baseIndex === -1 ? '' : docReasoningUrl.slice(0, baseIndex + 1);
+        return basePath + shard;
+      }
+
+      function loadReasoningManifest() {
+        if (reasoningMarkerToShard) {
+          return Promise.resolve(reasoningMarkerToShard);
+        }
+        if (!docReasoningUrl) {
+          reasoningMarkerToShard = new Map();
+          return Promise.resolve(reasoningMarkerToShard);
+        }
+        if (!reasoningManifestPromise) {
+          reasoningManifestPromise = fetch(docReasoningUrl)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error('Unable to load explanation manifest.');
+              }
+              return response.json();
+            })
+            .then((manifest) => {
+              reasoningMarkerToShard = new Map();
+              const entries = manifest && Array.isArray(manifest.entries) ? manifest.entries : [];
+              entries.forEach((entry) => {
+                if (entry && entry.safeMarker && entry.shard) {
+                  reasoningMarkerToShard.set(entry.safeMarker, entry.shard);
+                }
+              });
+              return reasoningMarkerToShard;
+            });
+        }
+        return reasoningManifestPromise;
+      }
+
+      function loadReasoningShard(shard) {
+        if (!shard) {
+          return Promise.resolve(new Map());
+        }
+        if (!reasoningShardCache.has(shard)) {
+          const shardUrl = getReasoningShardUrl(shard);
+          const shardPromise = fetch(shardUrl)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error('Unable to load explanation shard.');
+              }
+              return response.json();
+            })
+            .then((entries) => {
+              const shardMap = new Map();
+              (Array.isArray(entries) ? entries : []).forEach((entry) => {
+                if (entry && entry.safeMarker) {
+                  shardMap.set(entry.safeMarker, entry.html || '');
+                }
+              });
+              return shardMap;
+            });
+          reasoningShardCache.set(shard, shardPromise);
+        }
+        return reasoningShardCache.get(shard);
+      }
+
+      function loadReasoningHtml(marker) {
+        return loadReasoningManifest()
+          .then((markerMap) => loadReasoningShard(markerMap.get(marker)))
+          .then((shardMap) => shardMap.get(marker) || '');
+      }
+
+      function getGroupMarker(group) {
+        return group ? group.dataset.marker || '' : '';
+      }
+
+      function extractTermDefsFromReasoningHtml(html) {
+        if (!html) {
+          return [];
+        }
+        const container = document.createElement('div');
+        container.innerHTML = html;
+        const byKey = new Map();
+        container.querySelectorAll('.reasoning-term-item[data-term-key]').forEach((item) => {
+          const termKey = item.dataset.termKey || '';
+          const termElement = item.querySelector('.reasoning-term-text');
+          const term = (termElement ? termElement.textContent : (item.textContent || '').split(' - ')[0]).trim();
+          if (termKey && term && !byKey.has(termKey)) {
+            byKey.set(termKey, {
+              termKey,
+              term,
+            });
+          }
+        });
+        return Array.from(byKey.values()).sort((a, b) => b.term.length - a.term.length);
+      }
+
+      function findTermMatchesInText(text, termDefs) {
+        const matches = [];
+        for (const termDef of termDefs) {
+          if (!termDef || !termDef.term) {
+            continue;
+          }
+          let startIndex = 0;
+          while (startIndex < text.length) {
+            const foundAt = text.indexOf(termDef.term, startIndex);
+            if (foundAt === -1) {
+              break;
+            }
+            matches.push({
+              start: foundAt,
+              end: foundAt + termDef.term.length,
+              termKey: termDef.termKey,
+            });
+            startIndex = foundAt + termDef.term.length;
+          }
+        }
+        matches.sort((a, b) => {
+          if (a.start !== b.start) {
+            return a.start - b.start;
+          }
+          return (b.end - b.start) - (a.end - a.start);
+        });
+        const chosen = [];
+        let lastEnd = -1;
+        matches.forEach((match) => {
+          if (match.start < lastEnd) {
+            return;
+          }
+          chosen.push(match);
+          lastEnd = match.end;
+        });
+        return chosen;
+      }
+
+      function shouldSkipTermHighlightNode(node) {
+        const parent = node && node.parentElement;
+        if (!parent) {
+          return true;
+        }
+        return !!parent.closest('script, style, button, a, .term-match, .chunk-marker-column, .interlaced-reasoning-panel');
+      }
+
+      function highlightTermsInElement(root, termDefs) {
+        if (!root || !termDefs.length) {
+          return;
+        }
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode(node) {
+            if (shouldSkipTermHighlightNode(node) || !node.nodeValue || !node.nodeValue.trim()) {
+              return NodeFilter.FILTER_REJECT;
+            }
+            return findTermMatchesInText(node.nodeValue, termDefs).length
+              ? NodeFilter.FILTER_ACCEPT
+              : NodeFilter.FILTER_SKIP;
+          },
+        });
+        const textNodes = [];
+        while (walker.nextNode()) {
+          textNodes.push(walker.currentNode);
+        }
+        textNodes.forEach((node) => {
+          const matches = findTermMatchesInText(node.nodeValue || '', termDefs);
+          if (!matches.length) {
+            return;
+          }
+          const fragment = document.createDocumentFragment();
+          const text = node.nodeValue || '';
+          let cursor = 0;
+          matches.forEach((match) => {
+            if (match.start > cursor) {
+              fragment.appendChild(document.createTextNode(text.slice(cursor, match.start)));
+            }
+            const span = document.createElement('span');
+            span.className = 'term-match';
+            span.dataset.termKey = match.termKey;
+            span.tabIndex = 0;
+            span.setAttribute('role', 'button');
+            span.setAttribute('aria-pressed', 'false');
+            span.textContent = text.slice(match.start, match.end);
+            fragment.appendChild(span);
+            cursor = match.end;
+          });
+          if (cursor < text.length) {
+            fragment.appendChild(document.createTextNode(text.slice(cursor)));
+          }
+          if (node.parentNode) {
+            node.parentNode.replaceChild(fragment, node);
+          }
+        });
+        root.querySelectorAll('.term-match[data-term-key]').forEach(bindTermSelection);
+      }
+
+      function highlightTermsForGroup(group) {
+        if (!group || group.dataset.termsHighlighted === 'true' || group.dataset.termsHighlighting === 'true') {
+          return;
+        }
+        const marker = getGroupMarker(group);
+        const originalRoot = group.querySelector('.interlaced-block.original .chunk-text-column')
+          || group.querySelector('.interlaced-block.original .interlaced-content');
+        if (!marker || !originalRoot) {
+          return;
+        }
+        group.dataset.termsHighlighting = 'true';
+        loadReasoningHtml(marker)
+          .then((html) => {
+            const termDefs = extractTermDefsFromReasoningHtml(html);
+            highlightTermsInElement(originalRoot, termDefs);
+            group.dataset.termsHighlighted = 'true';
+          })
+          .catch(() => {
+            delete group.dataset.termsHighlighted;
+          })
+          .finally(() => {
+            delete group.dataset.termsHighlighting;
+          });
+      }
+
+      function setupLazyTermHighlighting() {
+        const groups = Array.from(document.querySelectorAll('.interlaced-group[data-marker]'))
+          .filter((group) => group.querySelector('.reasoning-trigger-inline'));
+        if (!groups.length) {
+          return;
+        }
+        groups.forEach((group) => {
+          group.addEventListener('mouseenter', () => highlightTermsForGroup(group), { once: true });
+          group.addEventListener('focusin', () => highlightTermsForGroup(group), { once: true });
+        });
+        if (!('IntersectionObserver' in window)) {
+          groups.slice(0, 30).forEach(highlightTermsForGroup);
+          return;
+        }
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+            observer.unobserve(entry.target);
+            highlightTermsForGroup(entry.target);
+          });
+        }, {
+          rootMargin: '700px 0px',
+        });
+        groups.forEach((group) => observer.observe(group));
+      }
+
+      function ensureReasoningLoaded(group) {
+        const reasoningElements = getReasoningElements(group);
+        if (!group || !reasoningElements || !reasoningElements.fullCard) {
+          return Promise.resolve(false);
+        }
+        const content = reasoningElements.fullCard.querySelector('[data-reasoning-content]');
+        if (!content) {
+          return Promise.resolve(false);
+        }
+        if (content.dataset.loaded === 'true') {
+          return Promise.resolve(true);
+        }
+        const marker = group.dataset.marker || content.dataset.marker || '';
+        content.innerHTML = '<p class="interlaced-empty">Loading explanation...</p>';
+        return loadReasoningHtml(marker)
+          .then((html) => {
+            content.innerHTML = html || '<p class="interlaced-empty">Explanation not available.</p>';
+            content.dataset.loaded = 'true';
+            content.querySelectorAll('.reasoning-term-item[data-term-key]').forEach(bindTermSelection);
+            if (group.dataset.activeTermKey) {
+              setActiveTerm(group, group.dataset.activeTermKey);
+            }
+            return true;
+          })
+          .catch(() => {
+            content.innerHTML = '<p class="interlaced-empty">Explanation could not be loaded.</p>';
+            content.dataset.loaded = 'true';
+            return false;
+          });
+      }
 
       function setActiveTerm(group, termKey) {
         if (!group) {
@@ -677,6 +960,7 @@
           reasoningElements.previewCard.hidden = true;
         }
         setReasoningButtonState(reasoningElements.button, true);
+        ensureReasoningLoaded(group);
       }
 
       function closeReasoning(group) {
@@ -697,6 +981,7 @@
           reasoningElements.previewContent.innerHTML = '';
         }
         setReasoningButtonState(reasoningElements.button, false);
+        delete group.dataset.activeTermKey;
         setActiveTerm(group, '');
       }
 
@@ -728,6 +1013,7 @@
         if (!reasoningElements) {
           return;
         }
+        group.dataset.activeTermKey = termKey;
         setActiveTerm(group, termKey);
         if (openFull) {
           openReasoningFull(group);
@@ -743,6 +1029,10 @@
         if (!element) {
           return;
         }
+        if (element.dataset.termBound === 'true') {
+          return;
+        }
+        element.dataset.termBound = 'true';
         const activate = () => {
           const group = element.closest('.interlaced-group');
           if (!group) {
@@ -791,6 +1081,7 @@
 
       document.querySelectorAll('.term-match[data-term-key]').forEach(bindTermSelection);
       document.querySelectorAll('.reasoning-term-item[data-term-key]').forEach(bindTermSelection);
+      setupLazyTermHighlighting();
 
       if (toggleEnglishButton) {
         toggleEnglishButton.addEventListener('click', () => {
@@ -820,19 +1111,198 @@
 
       // Document-level search (mirrors index search experience)
       if (docSearchContainer && docSearchInput && docSearchList && docSearchResults) {
-        const normalized = (Array.isArray(docSearchData) ? docSearchData : [])
-          .filter((entry) => entry && entry.anchor && entry.text)
-          .map((entry) => ({
-            entry,
-            textLower: (entry.text || '').toLowerCase(),
-            markerLower: (entry.marker || '').toLowerCase(),
-            typeLower: (entry.type || '').toLowerCase(),
-          }));
+        function normalizeSearchText(text) {
+          return String(text || '')
+            .normalize('NFKC')
+            .toLowerCase()
+            .replace(/s+/g, ' ')
+            .trim();
+        }
+
+        function getSearchQueryFromUrl() {
+          try {
+            return new URLSearchParams(window.location.search).get('q') || '';
+          } catch (error) {
+            return '';
+          }
+        }
+
+        function removeSearchHighlights() {
+          document.querySelectorAll('.search-hit').forEach((hit) => {
+            const parent = hit.parentNode;
+            if (!parent) {
+              return;
+            }
+            parent.replaceChild(document.createTextNode(hit.textContent || ''), hit);
+            parent.normalize();
+          });
+          document.querySelectorAll('.search-focused-block').forEach((element) => {
+            element.classList.remove('search-focused-block');
+          });
+        }
+
+        function buildHighlightRegex(query) {
+          const parts = String(query || '').trim().split(/s+/).filter(Boolean);
+          if (!parts.length) {
+            return null;
+          }
+          const escaped = parts.map((part) => part.replace(/[-/\^$*+?.()|[]{}]/g, '\$&'));
+          return new RegExp(escaped.join('\s+'), 'gi');
+        }
+
+        function shouldSkipSearchHighlightNode(node) {
+          const parent = node && node.parentElement;
+          if (!parent) {
+            return true;
+          }
+          return !!parent.closest('script, style, mark, .search-hit, button');
+        }
+
+        function highlightSearchInElement(root, query) {
+          const regex = buildHighlightRegex(query);
+          if (!root || !regex) {
+            return [];
+          }
+          const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+            acceptNode(node) {
+              if (shouldSkipSearchHighlightNode(node) || !node.nodeValue || !node.nodeValue.trim()) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              regex.lastIndex = 0;
+              return regex.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+            },
+          });
+          const textNodes = [];
+          while (walker.nextNode()) {
+            textNodes.push(walker.currentNode);
+          }
+          const highlights = [];
+          textNodes.forEach((node) => {
+            const fragment = document.createDocumentFragment();
+            const text = node.nodeValue || '';
+            let cursor = 0;
+            regex.lastIndex = 0;
+            let match;
+            while ((match = regex.exec(text)) !== null) {
+              if (match.index > cursor) {
+                fragment.appendChild(document.createTextNode(text.slice(cursor, match.index)));
+              }
+              const hit = document.createElement('mark');
+              hit.className = 'search-hit';
+              hit.textContent = match[0];
+              fragment.appendChild(hit);
+              highlights.push(hit);
+              cursor = match.index + match[0].length;
+              if (match[0].length === 0) {
+                regex.lastIndex += 1;
+              }
+            }
+            if (cursor < text.length) {
+              fragment.appendChild(document.createTextNode(text.slice(cursor)));
+            }
+            if (node.parentNode) {
+              node.parentNode.replaceChild(fragment, node);
+            }
+          });
+          return highlights;
+        }
+
+        function applySearchHighlight(anchor, query, options = {}) {
+          const { scroll = false } = options;
+          removeSearchHighlights();
+          const normalizedQuery = normalizeSearchText(query);
+          if (!anchor || !normalizedQuery) {
+            return;
+          }
+          const target = document.getElementById(anchor);
+          if (!target) {
+            return;
+          }
+          const block = target.closest('.interlaced-block') || target.closest('.interlaced-group') || target;
+          const documentRoot = document.querySelector('.interlaced-container') || document.body;
+          block.classList.add('search-focused-block');
+          const highlights = highlightSearchInElement(documentRoot, query);
+          const currentHighlight = highlights.find((hit) => block.contains(hit)) || highlights[0];
+          if (currentHighlight) {
+            currentHighlight.classList.add('is-current');
+          }
+          if (scroll) {
+            const scrollTarget = currentHighlight || block;
+            if (scrollTarget && typeof scrollTarget.scrollIntoView === 'function') {
+              scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+            }
+          }
+        }
 
         const MAX_INITIAL_RESULTS = 6;
+        let normalizedDocSearchData = null;
+        let docSearchLoadPromise = null;
+        let docSearchRunId = 0;
         let currentMatches = [];
         let showingAll = false;
-        let currentTokens = [];
+        let currentQuery = '';
+
+        function getBlockAnchor(block) {
+          const anchor = block && block.querySelector('.chunk-anchor[id]');
+          return anchor ? anchor.id : '';
+        }
+
+        function getBlockMarker(block) {
+          const group = block && block.closest('.interlaced-group');
+          if (group && group.dataset.marker) {
+            return group.dataset.marker;
+          }
+          const marker = block && block.querySelector('.marker-trailing');
+          return marker ? marker.textContent.trim() : '';
+        }
+
+        function buildDocSearchEntriesFromPage() {
+          const blocks = Array.from(
+            document.querySelectorAll('.interlaced-block.original, .interlaced-block.translation')
+          );
+          return blocks
+            .map((block) => {
+              const anchor = getBlockAnchor(block);
+              const text = block.textContent.replace(/s+/g, ' ').trim();
+              if (!anchor || !text) {
+                return null;
+              }
+              const type = block.classList.contains('original') ? 'original' : 'translation';
+              return {
+                anchor,
+                marker: getBlockMarker(block),
+                type,
+                text,
+              };
+            })
+            .filter(Boolean);
+        }
+
+        function normalizeDocSearchEntries(entries) {
+          return entries
+            .filter((entry) => entry && entry.anchor && entry.text)
+            .map((entry) => ({
+              entry,
+              textSearch: normalizeSearchText(entry.text || ''),
+              markerSearch: normalizeSearchText(entry.marker || ''),
+              typeSearch: normalizeSearchText(entry.type || ''),
+            }));
+        }
+
+        function loadDocSearchData() {
+          if (normalizedDocSearchData) {
+            return Promise.resolve(normalizedDocSearchData);
+          }
+          if (!docSearchLoadPromise) {
+            docSearchLoadPromise = new Promise((resolve) => {
+              window.setTimeout(() => {
+                normalizedDocSearchData = normalizeDocSearchEntries(buildDocSearchEntriesFromPage());
+                resolve(normalizedDocSearchData);
+              }, 0);
+            });
+          }
+          return docSearchLoadPromise;
+        }
 
         function updateDocSearchCount(count) {
           if (!docSearchCount) {
@@ -873,24 +1343,15 @@
           return count;
         }
 
-        function buildSnippet(text, tokens) {
+        function buildSnippet(text, query) {
           if (!text) {
             return 'No preview available.';
           }
           const lower = text.toLowerCase();
-          let matchIndex = -1;
-          let matchLength = 0;
-          for (const token of tokens) {
-            const idx = lower.indexOf(token);
-            if (idx !== -1) {
-              matchIndex = idx;
-              matchLength = token.length;
-              break;
-            }
-          }
-          if (matchIndex === -1) {
-            matchIndex = 0;
-          }
+          const needle = String(query || '').trim().toLowerCase();
+          const foundAt = needle ? lower.indexOf(needle) : -1;
+          const matchIndex = foundAt === -1 ? 0 : foundAt;
+          const matchLength = foundAt === -1 ? 0 : needle.length;
           const radius = 70;
           const start = Math.max(0, matchIndex - radius);
           const end = Math.min(text.length, matchIndex + matchLength + radius);
@@ -902,12 +1363,9 @@
             snippet = snippet + '...';
           }
           let highlighted = snippet;
-          if (tokens && tokens.length) {
-            tokens.forEach((token) => {
-              if (!token) return;
-              const regex = new RegExp(escapeRegex(token), 'gi');
-              highlighted = highlighted.replace(regex, (matchValue) => '<mark>' + matchValue + '</mark>');
-            });
+          if (needle) {
+            const regex = new RegExp(escapeRegex(needle), 'gi');
+            highlighted = highlighted.replace(regex, (matchValue) => '<mark>' + matchValue + '</mark>');
           }
           return highlighted;
         }
@@ -937,12 +1395,19 @@
             const link = document.createElement('a');
             link.href = '#' + entry.anchor;
             link.textContent = entry.marker ? '[' + entry.marker + '] ' + entry.type : entry.type;
-            link.addEventListener('click', () => {
-              const target = document.getElementById(entry.anchor);
-              if (target && typeof target.scrollIntoView === 'function') {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            link.addEventListener('click', (event) => {
+              event.preventDefault();
+              applySearchHighlight(entry.anchor, currentQuery, { scroll: true });
+              if (window.history && typeof window.history.replaceState === 'function') {
+                const url = new URL(window.location.href);
+                if (currentQuery) {
+                  url.searchParams.set('q', currentQuery);
+                } else {
+                  url.searchParams.delete('q');
+                }
+                url.hash = entry.anchor;
+                window.history.replaceState(null, '', url);
               }
-              docSearchInput.value = '';
               resetSearchResults();
               docSearchInput.blur();
             });
@@ -953,7 +1418,7 @@
             meta.textContent = markerLabel + typeLabel;
             const snippet = document.createElement('p');
             snippet.className = 'doc-search-snippet';
-            snippet.innerHTML = buildSnippet(entry.text || '', currentTokens);
+            snippet.innerHTML = buildSnippet(entry.text || '', currentQuery);
             item.appendChild(link);
             item.appendChild(meta);
             item.appendChild(snippet);
@@ -972,50 +1437,76 @@
           }
         }
 
-        function handleSearch() {
-          const query = docSearchInput.value.trim().toLowerCase();
-          if (!query) {
-            currentMatches = [];
-            currentTokens = [];
-            showingAll = false;
-            resetSearchResults();
-            return;
+        function setDocSearchMessage(message) {
+          docSearchResults.style.display = 'block';
+          docSearchResults.classList.remove('has-results');
+          docSearchList.innerHTML = '';
+          if (docSearchCount) {
+            docSearchCount.textContent = message;
+            docSearchCount.hidden = false;
           }
-          const tokens = query.split(/s+/).filter(Boolean);
-          if (!tokens.length) {
-            currentMatches = [];
-            currentTokens = [];
-            showingAll = false;
-            resetSearchResults();
-            return;
+          if (docSearchMoreButton) {
+            docSearchMoreButton.classList.remove('visible');
+            docSearchMoreButton.setAttribute('aria-expanded', 'false');
           }
-          const matches = normalized
+        }
+
+        function runDocSearch(normalized, query) {
+          return normalized
             .map((item) => {
-              for (const token of tokens) {
-                if (
-                  !item.textLower.includes(token) &&
-                  !item.markerLower.includes(token) &&
-                  !item.typeLower.includes(token)
-                ) {
-                  return null;
-                }
+              const textMatch = item.textSearch.includes(query);
+              const markerMatch = item.markerSearch === query;
+              const typeMatch = item.typeSearch === query;
+              if (!textMatch && !markerMatch && !typeMatch) {
+                return null;
               }
               let score = 0;
-              tokens.forEach((token) => {
-                score += countOccurrences(item.textLower, token) * 4;
-                score += countOccurrences(item.markerLower, token) * 6;
-                if (item.typeLower.includes(token)) {
-                  score += 3;
-                }
-              });
+              score += countOccurrences(item.textSearch, query) * 20;
+              if (markerMatch) {
+                score += 12;
+              }
+              if (typeMatch) {
+                score += 6;
+              }
+              if (item.textSearch.startsWith(query)) {
+                score += 4;
+              }
               return { entry: item.entry, score };
             })
             .filter(Boolean)
             .sort((a, b) => b.score - a.score);
-          currentMatches = matches;
-          currentTokens = tokens;
+        }
+
+        function handleSearch() {
+          const rawQuery = docSearchInput.value.trim();
+          const query = normalizeSearchText(rawQuery);
+          docSearchRunId += 1;
+          const runId = docSearchRunId;
+          if (!query) {
+            currentMatches = [];
+            currentQuery = '';
+            showingAll = false;
+            resetSearchResults();
+            return;
+          }
+          currentQuery = rawQuery;
           showingAll = false;
-          renderResults();
+          setDocSearchMessage('Preparing document search...');
+          loadDocSearchData()
+            .then((normalized) => {
+              if (runId !== docSearchRunId) {
+                return;
+              }
+              currentMatches = runDocSearch(normalized, query);
+              renderResults();
+            })
+            .catch(() => {
+              if (runId !== docSearchRunId) {
+                return;
+              }
+              currentMatches = [];
+              setDocSearchMessage('Document search could not be prepared.');
+            });
         }
 
         if (docSearchMoreButton) {
@@ -1028,6 +1519,17 @@
           });
         }
         docSearchInput.addEventListener('input', handleSearch);
+        const initialQuery = getSearchQueryFromUrl();
+        const initialAnchor = window.location.hash ? decodeURIComponent(window.location.hash.slice(1)) : '';
+        if (initialQuery) {
+          docSearchInput.value = initialQuery;
+          currentQuery = initialQuery;
+          if (initialAnchor) {
+            window.setTimeout(() => {
+              applySearchHighlight(initialAnchor, initialQuery, { scroll: true });
+            }, 0);
+          }
+        }
         resetSearchResults();
       }
     })();
