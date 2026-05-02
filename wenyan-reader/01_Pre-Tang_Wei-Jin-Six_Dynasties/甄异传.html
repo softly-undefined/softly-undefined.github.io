@@ -353,6 +353,10 @@
     .reasoning-preview-category {
       margin: 0 0 0.35rem;
     }
+    .reasoning-preview-category {
+      color: #334155;
+      font-weight: 600;
+    }
     .reasoning-section-list,
     .reasoning-preview-list {
       margin: 0;
@@ -548,6 +552,9 @@
 </div>
   
   <div class="interlaced-reasoning-panel" id="interlaced-reasoning-1" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <div class="interlaced-reasoning-preview-content"></div>
+    </div>
     <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
       <p class="interlaced-reasoning-title">Explanation</p>
       <div class="interlaced-content" data-reasoning-content data-marker="1"></div>
@@ -569,6 +576,9 @@
 </div>
   
   <div class="interlaced-reasoning-panel" id="interlaced-reasoning-2" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <div class="interlaced-reasoning-preview-content"></div>
+    </div>
     <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
       <p class="interlaced-reasoning-title">Explanation</p>
       <div class="interlaced-content" data-reasoning-content data-marker="2"></div>
@@ -589,6 +599,9 @@
 </div>
   
   <div class="interlaced-reasoning-panel" id="interlaced-reasoning-3" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <div class="interlaced-reasoning-preview-content"></div>
+    </div>
     <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
       <p class="interlaced-reasoning-title">Explanation</p>
       <div class="interlaced-content" data-reasoning-content data-marker="3"></div>
@@ -609,6 +622,9 @@
 </div>
   
   <div class="interlaced-reasoning-panel" id="interlaced-reasoning-4" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <div class="interlaced-reasoning-preview-content"></div>
+    </div>
     <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
       <p class="interlaced-reasoning-title">Explanation</p>
       <div class="interlaced-content" data-reasoning-content data-marker="4"></div>
@@ -631,6 +647,9 @@
 </div>
   
   <div class="interlaced-reasoning-panel" id="interlaced-reasoning-5" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <div class="interlaced-reasoning-preview-content"></div>
+    </div>
     <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
       <p class="interlaced-reasoning-title">Explanation</p>
       <div class="interlaced-content" data-reasoning-content data-marker="5"></div>
@@ -653,6 +672,9 @@
 </div>
   
   <div class="interlaced-reasoning-panel" id="interlaced-reasoning-6" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <div class="interlaced-reasoning-preview-content"></div>
+    </div>
     <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
       <p class="interlaced-reasoning-title">Explanation</p>
       <div class="interlaced-content" data-reasoning-content data-marker="6"></div>
@@ -673,6 +695,9 @@
 </div>
   
   <div class="interlaced-reasoning-panel" id="interlaced-reasoning-7" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <div class="interlaced-reasoning-preview-content"></div>
+    </div>
     <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
       <p class="interlaced-reasoning-title">Explanation</p>
       <div class="interlaced-content" data-reasoning-content data-marker="7"></div>
@@ -696,6 +721,9 @@
 </div>
   
   <div class="interlaced-reasoning-panel" id="interlaced-reasoning-8" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <div class="interlaced-reasoning-preview-content"></div>
+    </div>
     <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
       <p class="interlaced-reasoning-title">Explanation</p>
       <div class="interlaced-content" data-reasoning-content data-marker="8"></div>
@@ -724,6 +752,9 @@
 </div>
   
   <div class="interlaced-reasoning-panel" id="interlaced-reasoning-9" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <div class="interlaced-reasoning-preview-content"></div>
+    </div>
     <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
       <p class="interlaced-reasoning-title">Explanation</p>
       <div class="interlaced-content" data-reasoning-content data-marker="9"></div>
@@ -745,6 +776,9 @@
 </div>
   
   <div class="interlaced-reasoning-panel" id="interlaced-reasoning-10" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <div class="interlaced-reasoning-preview-content"></div>
+    </div>
     <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
       <p class="interlaced-reasoning-title">Explanation</p>
       <div class="interlaced-content" data-reasoning-content data-marker="10"></div>
@@ -770,6 +804,9 @@
 </div>
   
   <div class="interlaced-reasoning-panel" id="interlaced-reasoning-11" hidden>
+    <div class="interlaced-reasoning-card interlaced-reasoning-preview" hidden>
+      <div class="interlaced-reasoning-preview-content"></div>
+    </div>
     <div class="interlaced-reasoning-card interlaced-reasoning-full" hidden>
       <p class="interlaced-reasoning-title">Explanation</p>
       <div class="interlaced-content" data-reasoning-content data-marker="11"></div>
@@ -1122,7 +1159,7 @@
         }
         const matchingItems = Array.from(
           group.querySelectorAll('.interlaced-reasoning-full .reasoning-term-item[data-term-key]')
-        ).filter((item) => item.dataset.termKey === termKey);
+        ).filter((item) => item.dataset.termKey === termKey).slice(0, 1);
 
         reasoningElements.previewContent.innerHTML = '';
         if (!matchingItems.length) {
@@ -1171,18 +1208,35 @@
         if (!group || !termKey || !reasoningElements || !reasoningElements.panel) {
           return;
         }
-        if (!buildReasoningPreview(group, termKey)) {
+
+        if (!reasoningElements.previewCard || !reasoningElements.previewContent) {
           openReasoningFull(group);
           return;
         }
+
         reasoningElements.panel.hidden = false;
-        if (reasoningElements.previewCard) {
-          reasoningElements.previewCard.hidden = false;
-        }
+        reasoningElements.previewCard.hidden = false;
+        reasoningElements.previewContent.innerHTML = '<p class="interlaced-empty">Loading explanation...</p>';
         if (reasoningElements.fullCard) {
           reasoningElements.fullCard.hidden = true;
         }
         setReasoningButtonState(reasoningElements.button, false);
+
+        ensureReasoningLoaded(group).then((loaded) => {
+          if (!loaded || group.dataset.activeTermKey !== termKey) {
+            return;
+          }
+          if (!buildReasoningPreview(group, termKey)) {
+            openReasoningFull(group);
+            return;
+          }
+          reasoningElements.panel.hidden = false;
+          reasoningElements.previewCard.hidden = false;
+          if (reasoningElements.fullCard) {
+            reasoningElements.fullCard.hidden = true;
+          }
+          setReasoningButtonState(reasoningElements.button, false);
+        });
       }
 
       function openReasoningFull(group) {
