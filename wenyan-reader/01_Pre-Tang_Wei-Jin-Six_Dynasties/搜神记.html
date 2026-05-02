@@ -393,29 +393,117 @@
     body.hide-chinese .interlaced-reasoning-trigger-row {
       display: none !important;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
+      h1 {
+        font-size: 1.45rem;
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+      }
+      .doc-header {
+        overflow-wrap: anywhere;
+      }
       .page-toolbar {
+        position: static;
         flex-direction: column-reverse;
         align-items: stretch;
+        gap: 0.75rem;
+        padding: 0.75rem 0;
       }
       .page-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        width: 100%;
+      }
+      .page-actions > * {
+        min-width: 0;
         width: 100%;
       }
       .view-toggle-button,
       .return-link {
+        min-height: 44px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.55rem 0.75rem;
         text-align: center;
+      }
+      .doc-search {
+        flex-basis: auto;
+        max-width: none;
+        width: 100%;
+      }
+      .doc-search-input {
+        min-height: 44px;
+      }
+      .doc-search-results {
+        position: static;
+        box-sizing: border-box;
+        margin-top: 0.5rem;
+        max-height: 65vh;
+        box-shadow: none;
+      }
+      .doc-search-more-button {
+        min-height: 44px;
         width: 100%;
         box-sizing: border-box;
       }
-      .doc-search {
-        max-width: none;
-      }
       .chunk-layout {
-        grid-template-columns: minmax(2.35rem, max-content) minmax(0, 1fr);
-        column-gap: 0.55rem;
+        grid-template-columns: minmax(2rem, max-content) minmax(0, 1fr);
+        column-gap: 0.5rem;
+        align-items: start;
+      }
+      .chunk-marker-column {
+        padding-top: 0.1rem;
+      }
+      .chunk-text-column,
+      .interlaced-content,
+      .reasoning-section-list,
+      .reasoning-preview-list {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+      .chunk-text-column p {
+        margin: 0.45rem 0;
+      }
+      .chunk-text-column pre,
+      .interlaced-content pre {
+        max-width: 100%;
+        overflow-x: auto;
+        white-space: pre-wrap;
+      }
+      .chunk-text-column code,
+      .interlaced-content code {
+        overflow-wrap: anywhere;
+        white-space: pre-wrap;
       }
       .interlaced-reasoning-trigger-row {
-        margin-left: 2.9rem;
+        margin-left: 2.5rem;
+      }
+      .interlaced-reasoning-trigger-row .reasoning-trigger {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+      }
+      .interlaced-reasoning-panel {
+        left: auto;
+        width: auto;
+        margin-left: -1rem;
+        margin-right: -1rem;
+      }
+      .interlaced-reasoning-card {
+        padding: 0.85rem 1rem;
+      }
+    }
+    @media (max-width: 420px) {
+      .chunk-layout {
+        grid-template-columns: minmax(1.65rem, max-content) minmax(0, 1fr);
+        column-gap: 0.4rem;
+      }
+      .chunk-marker-column .marker-trailing {
+        font-size: 0.78rem;
+      }
+      .interlaced-reasoning-trigger-row {
+        margin-left: 2.05rem;
       }
     }
   </style>

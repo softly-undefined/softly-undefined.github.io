@@ -135,6 +135,68 @@
     details.directory .directory-children {
       margin-top: 0.6rem;
     }
+    @media (max-width: 700px) {
+      body {
+        margin: 0.75rem;
+        line-height: 1.5;
+      }
+      h1 {
+        font-size: 1.6rem;
+        line-height: 1.2;
+      }
+      .intro {
+        margin: 0.75rem 0 1.25rem;
+      }
+      .intro,
+      .search-snippet,
+      .search-meta,
+      details.directory > summary,
+      ul.file-list a {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+      .search-container {
+        box-sizing: border-box;
+        padding: 0.85rem;
+        margin-bottom: 1.25rem;
+      }
+      .search-input {
+        box-sizing: border-box;
+        max-width: none;
+        min-height: 44px;
+      }
+      .search-more-button {
+        box-sizing: border-box;
+        min-height: 44px;
+        width: 100%;
+      }
+      details.directory {
+        margin: 0.5rem 0;
+      }
+      details.directory[style] {
+        margin-left: 0 !important;
+      }
+      details.directory > summary {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+        line-height: 1.3;
+      }
+      details.directory > summary::before {
+        flex: 0 0 auto;
+      }
+      ul.file-list {
+        padding-left: 1.1rem;
+      }
+      ul.file-list li {
+        margin: 0.1rem 0;
+      }
+      ul.file-list a {
+        display: inline-block;
+        padding: 0.35rem 0;
+        line-height: 1.35;
+      }
+    }
   </style>
 </head>
 <body>
@@ -316,7 +378,7 @@
         return String(text || '')
           .normalize('NFKC')
           .toLowerCase()
-          .replace(/\s+/g, ' ')
+          .replace(/s+/g, ' ')
           .trim();
       }
 
@@ -471,7 +533,7 @@
       }
 
       function escapeRegex(text) {
-        return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return text.replace(/[-/\^$*+?.()|[]{}]/g, '\$&');
       }
 
       function buildSnippet(text, query) {
