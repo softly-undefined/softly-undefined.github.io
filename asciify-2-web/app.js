@@ -3,6 +3,8 @@ const SIZE_ONE_ACTUAL_POINTS = 2.25;
 const GLYPH_HEIGHT = 58;
 const FOREGROUND_WEIGHT = 4;
 const PALETTE_LEVELS = 6;
+const ASSET_VERSION = "20260614-color-toggle-1";
+const WORKER_PROTOCOL_VERSION = 1;
 const BEAM_WIDTHS = {
   1: 5,
   5: 10,
@@ -203,7 +205,15 @@ copyButton.addEventListener("click", async () => {
     const selection = window.getSelection();
     selection.removeAllRanges();
     selection.addRange(range);
-    copyButton.textContent = "Selected text";
+    if (document.execCommand?.("copy")) {
+      copyButton.textContent = "Copied";
+      selection.removeAllRanges();
+      window.setTimeout(() => {
+        copyButton.textContent = getCopyButtonLabel();
+      }, 1800);
+    } else {
+      copyButton.textContent = "Selected - press Ctrl/Cmd+C";
+    }
   }
 });
 
@@ -260,7 +270,8 @@ async function loadCalibration(fontSize) {
   if (calibrationCache.has(fontSize)) {
     return calibrationCache.get(fontSize);
   }
-  const response = await fetch(`calibration/${fontSize}.json`);
+  const calibrationUrl = new URL(`calibration/${fontSize}.json`, import.meta.url);
+  const response = await fetch(calibrationUrl);
   if (!response.ok) {
     throw new Error(`Could not load the size ${fontSize} calibration.`);
   }
@@ -333,12 +344,21 @@ async function convertImage({ calibration, source, numLines, beamWidth, colorMod
     };
 
     for (let index = 0; index < workerCount; index++) {
-      const worker = new Worker("worker.js");
+      const workerUrl = new URL(`worker.js?v=${ASSET_VERSION}`, import.meta.url);
+      const worker = new Worker(workerUrl);
       run.workers.push(worker);
 
       worker.addEventListener("message", (event) => {
         const message = event.data;
         if (message.type === "ready") {
+          if (message.protocolVersion !== WORKER_PROTOCOL_VERSION) {
+            reject(
+              new Error(
+                "The site loaded mismatched app and worker versions. Clear the site cache and redeploy all asciify-2-web files.",
+              ),
+            );
+            return;
+          }
           dispatch(worker);
           return;
         }
@@ -364,6 +384,7 @@ async function convertImage({ calibration, source, numLines, beamWidth, colorMod
         foregroundWeight: FOREGROUND_WEIGHT,
         colorMode,
         paletteLevels: PALETTE_LEVELS,
+        protocolVersion: WORKER_PROTOCOL_VERSION,
       });
     }
   });
