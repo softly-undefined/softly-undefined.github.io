@@ -9,13 +9,13 @@ let foregroundWeight = 0;
 let minGlyphWidth = 0;
 let colorMode = false;
 let paletteLevels = 6;
-let protocolVersion = 0;
+const WORKER_PROTOCOL_VERSION = 2;
 
 self.addEventListener("message", (event) => {
   const message = event.data;
   if (message.type === "init") {
     initialize(message);
-    self.postMessage({ type: "ready", protocolVersion });
+    self.postMessage({ type: "ready", protocolVersion: WORKER_PROTOCOL_VERSION });
     return;
   }
   if (message.type === "search") {
@@ -32,7 +32,6 @@ function initialize({
   foregroundWeight: weight,
   colorMode: requestedColorMode,
   paletteLevels: requestedPaletteLevels,
-  protocolVersion: requestedProtocolVersion,
 }) {
   glyphHeight = calibration.glyphHeight;
   lineWidth = calibration.lineWidth;
@@ -40,7 +39,6 @@ function initialize({
   foregroundWeight = weight;
   colorMode = requestedColorMode;
   paletteLevels = requestedPaletteLevels;
-  protocolVersion = requestedProtocolVersion;
   advances = Float64Array.from(calibration.advances);
   pairAdvances = Float64Array.from(calibration.pairAdvances);
   glyphs = calibration.glyphs.map((glyph) => ({

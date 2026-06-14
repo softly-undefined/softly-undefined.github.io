@@ -3,8 +3,8 @@ const SIZE_ONE_ACTUAL_POINTS = 2.25;
 const GLYPH_HEIGHT = 58;
 const FOREGROUND_WEIGHT = 4;
 const PALETTE_LEVELS = 6;
-const ASSET_VERSION = "20260614-color-toggle-1";
-const WORKER_PROTOCOL_VERSION = 1;
+const ASSET_VERSION = "20260614-color-toggle-2";
+const WORKER_PROTOCOL_VERSION = 2;
 const BEAM_WIDTHS = {
   1: 5,
   5: 10,
@@ -363,6 +363,13 @@ async function convertImage({ calibration, source, numLines, beamWidth, colorMod
           return;
         }
         if (message.type === "result") {
+          if (
+            colorMode &&
+            (!Array.isArray(message.colors) || message.colors.length !== message.text.length)
+          ) {
+            reject(createWorkerMismatchError());
+            return;
+          }
           results[message.lineIndex] = {
             text: message.text,
             colors: message.colors,
@@ -437,6 +444,9 @@ function renderColoredOutput(lines) {
   asciiOutput.replaceChildren();
   lines.forEach((line, lineIndex) => {
     for (let index = 0; index < line.text.length; index++) {
+      if (!line.colors?.[index]) {
+        throw createWorkerMismatchError();
+      }
       const span = document.createElement("span");
       span.textContent = line.text[index];
       span.style.color = `rgb(${line.colors[index].join(",")})`;
@@ -451,14 +461,17 @@ function renderColoredOutput(lines) {
 function buildRichHtml(lines, fontSize) {
   const actualFontSize = fontSize === 1 ? SIZE_ONE_ACTUAL_POINTS : fontSize;
   const content = lines
-    .map((line) =>
-      [...line.text]
-        .map((char, index) => {
-          const color = line.colors[index].join(",");
-          return `<span style="color:rgb(${color})">${escapeHtml(char)}</span>`;
-        })
-        .join(""),
-    )
+    .map((line) => {
+      if (!line.colors || line.colors.length !== line.text.length) {
+        throw createWorkerMismatchError();
+      }
+      return [...line.text]
+          .map((char, index) => {
+            const color = line.colors[index].join(",");
+            return `<span style="color:rgb(${color})">${escapeHtml(char)}</span>`;
+          })
+          .join("");
+    })
     .join("\n");
   return (
     `<pre style="margin:0;background:#fff;color:#000;font-family:Arial,sans-serif;` +
@@ -475,6 +488,12 @@ function escapeHtml(value) {
 
 function getCopyButtonLabel() {
   return outputIsColor ? "Copy colors to clipboard" : "Copy to clipboard";
+}
+
+function createWorkerMismatchError() {
+  return new Error(
+    "The site loaded an older monochrome worker.js. Upload the updated worker.js, app.js, and index.html together, then hard-refresh the page.",
+  );
 }
 
 function terminateWorkers(run) {
