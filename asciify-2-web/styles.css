@@ -145,6 +145,30 @@ button:disabled {
   font-weight: 600;
 }
 
+.controls .toggle-control {
+  min-width: 0;
+  flex-direction: row;
+  align-items: center;
+  gap: 9px;
+}
+
+.toggle-control input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.toggle-control span {
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle-control small {
+  color: var(--muted);
+  font-weight: 400;
+}
+
 select {
   padding: 5px 9px;
 }
@@ -227,6 +251,8 @@ progress {
   font-family: Arial, sans-serif;
   line-height: normal;
   white-space: pre;
+  background: #ffffff;
+  color: #000000;
 }
 
 [hidden] {

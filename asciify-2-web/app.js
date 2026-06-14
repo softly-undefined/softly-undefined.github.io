@@ -1,7 +1,8 @@
-const SIZE_ONE_LINE_WIDTH = 9019;
+const SIZE_ONE_LINE_WIDTH = 8568;
 const SIZE_ONE_ACTUAL_POINTS = 2.25;
 const GLYPH_HEIGHT = 58;
 const FOREGROUND_WEIGHT = 4;
+const PALETTE_LEVELS = 6;
 const BEAM_WIDTHS = {
   1: 5,
   5: 10,
@@ -16,6 +17,7 @@ const imageInput = document.querySelector("#image-input");
 const dropZone = document.querySelector("#drop-zone");
 const fileLabel = document.querySelector("#file-label");
 const fontSizeSelect = document.querySelector("#font-size");
+const colorModeInput = document.querySelector("#color-mode");
 const fontHint = document.querySelector("#font-hint");
 const convertButton = document.querySelector("#convert-button");
 const cancelButton = document.querySelector("#cancel-button");
@@ -35,6 +37,8 @@ let selectedFile = null;
 let previewUrl = null;
 let activeRun = null;
 let outputText = "";
+let outputHtml = "";
+let outputIsColor = false;
 const calibrationCache = new Map();
 
 const fontHints = {
@@ -84,10 +88,13 @@ form.addEventListener("submit", async (event) => {
   setError("");
   resultSection.hidden = true;
   outputText = "";
+  outputHtml = "";
+  outputIsColor = false;
   setBusy(true);
 
   const run = {
     cancelled: false,
+    colorMode: colorModeInput.checked,
     workers: [],
     startedAt: performance.now(),
   };
@@ -113,18 +120,27 @@ form.addEventListener("submit", async (event) => {
       source,
       numLines,
       beamWidth: BEAM_WIDTHS[fontSize],
+      colorMode: run.colorMode,
       run,
     });
     assertActive(run);
 
-    outputText = `${lines.join("\n")}\n`;
-    asciiOutput.textContent = outputText;
+    outputText = `${lines.map((line) => line.text).join("\n")}\n`;
+    outputIsColor = run.colorMode;
+    if (outputIsColor) {
+      renderColoredOutput(lines);
+      outputHtml = buildRichHtml(lines, fontSize);
+    } else {
+      asciiOutput.textContent = outputText;
+    }
     asciiOutput.style.fontSize = fontSize === 1 ? "2.25pt" : `${fontSize}pt`;
+    copyButton.textContent = getCopyButtonLabel();
 
     const elapsed = (performance.now() - run.startedAt) / 1000;
-    const characters = lines.reduce((sum, line) => sum + line.length, 0);
+    const characters = lines.reduce((sum, line) => sum + line.text.length, 0);
+    const mode = outputIsColor ? "color" : "monochrome";
     resultSummary.textContent =
-      `${numLines} lines, ${characters.toLocaleString()} characters, ` +
+      `${numLines} lines, ${characters.toLocaleString()} characters, ${mode}, ` +
       `${formatDuration(elapsed)}.`;
     resultSection.hidden = false;
     resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -164,10 +180,22 @@ copyButton.addEventListener("click", async () => {
   }
 
   try {
-    await navigator.clipboard.writeText(outputText);
+    if (outputIsColor) {
+      if (!window.ClipboardItem || !navigator.clipboard.write) {
+        throw new Error("Rich clipboard unavailable");
+      }
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          "text/html": new Blob([outputHtml], { type: "text/html" }),
+          "text/plain": new Blob([outputText], { type: "text/plain" }),
+        }),
+      ]);
+    } else {
+      await navigator.clipboard.writeText(outputText);
+    }
     copyButton.textContent = "Copied";
     window.setTimeout(() => {
-      copyButton.textContent = "Copy to clipboard";
+      copyButton.textContent = getCopyButtonLabel();
     }, 1800);
   } catch {
     const range = document.createRange();
@@ -203,6 +231,7 @@ function setSelectedFile(file) {
 function setBusy(busy) {
   convertButton.disabled = busy || !selectedFile;
   fontSizeSelect.disabled = busy;
+  colorModeInput.disabled = busy;
   imageInput.disabled = busy;
   cancelButton.hidden = !busy;
   progressShell.hidden = !busy && !statusText.textContent;
@@ -254,7 +283,7 @@ async function loadSourceImage(file) {
   return { canvas, width: canvas.width, height: canvas.height };
 }
 
-async function convertImage({ calibration, source, numLines, beamWidth, run }) {
+async function convertImage({ calibration, source, numLines, beamWidth, colorMode, run }) {
   const workerCount = Math.min(
     numLines,
     8,
@@ -298,6 +327,7 @@ async function convertImage({ calibration, source, numLines, beamWidth, run }) {
         calibration.glyphHeight,
         lineIndex,
         numLines,
+        colorMode,
       );
       worker.postMessage({ type: "search", lineIndex, target }, [target.buffer]);
     };
@@ -313,7 +343,10 @@ async function convertImage({ calibration, source, numLines, beamWidth, run }) {
           return;
         }
         if (message.type === "result") {
-          results[message.lineIndex] = message.text;
+          results[message.lineIndex] = {
+            text: message.text,
+            colors: message.colors,
+          };
           completed++;
           setStatus("Searching rows...", completed, numLines);
           dispatch(worker);
@@ -329,12 +362,14 @@ async function convertImage({ calibration, source, numLines, beamWidth, run }) {
         calibration,
         beamWidth,
         foregroundWeight: FOREGROUND_WEIGHT,
+        colorMode,
+        paletteLevels: PALETTE_LEVELS,
       });
     }
   });
 }
 
-function renderStrip(source, context, width, height, lineIndex, numLines) {
+function renderStrip(source, context, width, height, lineIndex, numLines, colorMode) {
   const top = Math.round((source.height * lineIndex) / numLines);
   let bottom = Math.round((source.height * (lineIndex + 1)) / numLines);
   if (bottom <= top) {
@@ -356,6 +391,16 @@ function renderStrip(source, context, width, height, lineIndex, numLines) {
   );
 
   const rgba = context.getImageData(0, 0, width, height).data;
+  if (colorMode) {
+    const rgb = new Uint8Array(width * height * 3);
+    for (let sourceIndex = 0, targetIndex = 0; sourceIndex < rgba.length; sourceIndex += 4) {
+      rgb[targetIndex++] = rgba[sourceIndex];
+      rgb[targetIndex++] = rgba[sourceIndex + 1];
+      rgb[targetIndex++] = rgba[sourceIndex + 2];
+    }
+    return rgb;
+  }
+
   const gray = new Uint8Array(width * height);
   for (let sourceIndex = 0, targetIndex = 0; sourceIndex < rgba.length; sourceIndex += 4) {
     gray[targetIndex++] = Math.round(
@@ -365,6 +410,50 @@ function renderStrip(source, context, width, height, lineIndex, numLines) {
     );
   }
   return gray;
+}
+
+function renderColoredOutput(lines) {
+  asciiOutput.replaceChildren();
+  lines.forEach((line, lineIndex) => {
+    for (let index = 0; index < line.text.length; index++) {
+      const span = document.createElement("span");
+      span.textContent = line.text[index];
+      span.style.color = `rgb(${line.colors[index].join(",")})`;
+      asciiOutput.append(span);
+    }
+    if (lineIndex < lines.length - 1) {
+      asciiOutput.append("\n");
+    }
+  });
+}
+
+function buildRichHtml(lines, fontSize) {
+  const actualFontSize = fontSize === 1 ? SIZE_ONE_ACTUAL_POINTS : fontSize;
+  const content = lines
+    .map((line) =>
+      [...line.text]
+        .map((char, index) => {
+          const color = line.colors[index].join(",");
+          return `<span style="color:rgb(${color})">${escapeHtml(char)}</span>`;
+        })
+        .join(""),
+    )
+    .join("\n");
+  return (
+    `<pre style="margin:0;background:#fff;color:#000;font-family:Arial,sans-serif;` +
+    `font-size:${actualFontSize}pt;line-height:normal;white-space:pre">${content}</pre>`
+  );
+}
+
+function escapeHtml(value) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function getCopyButtonLabel() {
+  return outputIsColor ? "Copy colors to clipboard" : "Copy to clipboard";
 }
 
 function terminateWorkers(run) {
