@@ -1,0 +1,44 @@
+{
+  "name": "clean-remap",
+  "description": "Final cleaned and remapped ASCII dinosaur character.",
+  "canvas": {
+    "width": 210,
+    "height": 180,
+    "background": "#ffffff",
+    "mode": "RGB"
+  },
+  "ascii": {
+    "color": false,
+    "fontFamily": "Arial, sans-serif",
+    "fontSizes": [11, 15, 20, 25, 30, 35],
+    "defaultFontSize": 11,
+    "lineHeight": 1.34,
+    "renderer": "tools/asciify_mk2.py",
+    "calibrationModelDirectory": "tools/calibration-models"
+  },
+  "playback": {
+    "defaultFps": 8,
+    "loopingActions": ["idle", "walk"]
+  },
+  "actions": {
+    "idle": {"frames": 6, "loop": true},
+    "walk": {"frames": 5, "loop": true},
+    "jump": {"frames": 4, "loop": false},
+    "fall": {"frames": 4, "loop": false},
+    "attack": {"frames": 4, "loop": false},
+    "hurt": {"frames": 3, "loop": false},
+    "die": {"frames": 4, "loop": false},
+    "turn": {"frames": 4, "loop": false},
+    "blink": {"frames": 3, "loop": false}
+  },
+  "suggestedControls": {
+    "walkLeft": ["ArrowLeft", "KeyA"],
+    "walkRight": ["ArrowRight", "KeyD"],
+    "jump": "Space",
+    "attack": "KeyF",
+    "hurt": "KeyH",
+    "turn": "KeyT",
+    "blink": "KeyB",
+    "die": "KeyX"
+  }
+}
