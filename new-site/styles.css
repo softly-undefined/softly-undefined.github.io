@@ -515,22 +515,41 @@ button {
 
 @media (max-width: 540px) {
   :root {
-    --header-height: 218px;
-    --sprite-height: 170px;
-    --sprite-width: 190px;
+    --header-height: 150px;
+    --sprite-height: 124px;
+    --sprite-width: 150px;
     --game-hud-font-size: 8px;
-    --sprite-scale: 1;
-    --title-font-size: 4px;
+    --sprite-scale: 0.46;
+    --title-font-size: 3px;
     --title-scale: 1;
   }
 
+  .site-title {
+    top: -4px;
+    left: 8px;
+    max-width: calc(100vw - 16px);
+  }
+
   .site-nav {
-    grid-template-columns: repeat(2, max-content);
+    grid-template-columns: repeat(4, max-content);
     justify-content: center;
     align-content: center;
-    gap: 6px 18px;
-    padding: 0 10px;
-    font-size: 0.78rem;
+    column-gap: clamp(11px, 3.4vw, 18px);
+    row-gap: 0;
+    padding: 0 6px;
+    font-size: 0.68rem;
+  }
+
+  .page-section:first-child {
+    padding-top: 12px;
+  }
+
+  .page-section h2 {
+    font-size: 1.1rem;
+  }
+
+  .research-statement {
+    font-size: 1rem;
   }
 
   .about-layout,
