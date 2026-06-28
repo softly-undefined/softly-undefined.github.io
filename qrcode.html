@@ -1,219 +1,73 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>QR Code Generator</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+  </head>
+  <body class="tool-body">
+    <main class="tool-shell">
+      <p><a href="secret_index.html">Back to secret page</a></p>
+      <h1>QR Code Generator</h1>
+      <div class="tool-panel">
+        <label for="qr-input">Text or URL</label>
+        <div class="tool-row">
+          <input id="qr-input" type="text" placeholder="https://example.com" />
+          <button id="qr-generate" type="button">Generate</button>
+        </div>
+        <div class="qr-output" id="qr-output" aria-live="polite"></div>
+        <button id="qr-download" type="button" hidden>Download PNG</button>
+      </div>
+    </main>
 
-  <!-- QRCode.js -->
-  <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+    <script>
+      const qrOutput = document.querySelector("#qr-output");
+      const qrInput = document.querySelector("#qr-input");
+      const generate = document.querySelector("#qr-generate");
+      const download = document.querySelector("#qr-download");
+      const qrcode = new QRCode(qrOutput, {
+        width: 256,
+        height: 256,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H,
+      });
 
-  <style>
-    /* Default (light mode) */
-    :root {
-      --bg: #ffffff;
-      --fg: #000000;
-      --panel: #ffffff;
-      --border: #000000;
-      --muted: #666666;
-      --input-bg: #f5f5f5;
-      --input-border: #ccc;
-      --placeholder: #7a7a7a;
-      --btn-bg: #f5f5f5;
-      --btn-border: #ccc;
-      --btn-fg: #000000;
-      --btn-hover: #e0e0e0;
-      --link: #0b62d6;
-    }
+      function makeQr() {
+        const value = qrInput.value.trim();
 
-    /* Dark mode override */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #2c2c2c;
-        --fg: #f0f0f0;
-        --panel: #2c2c2c;
-        --border: #f0f0f0;
-        --muted: #aaaaaa;
-        --input-bg: #3a3a3a;
-        --input-border: #555;
-        --placeholder: #bbbbbb;
-        --btn-bg: #3a3a3a;
-        --btn-border: #555;
-        --btn-fg: #f0f0f0;
-        --btn-hover: #444;
-        --link: #80b3ff;
-      }
-    }
+        if (!value) {
+          qrInput.focus();
+          return;
+        }
 
-    html, body {
-      height: 100%;
-      margin: 0;
-      background: var(--bg);
-      color: var(--fg);
-      font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    h1 {
-      margin: 40px 16px 12px;
-      text-align: center;
-    }
-
-    .generator-container {
-      width: min(90%, 680px);
-      background: var(--panel);
-      border-left: 2px solid var(--border);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      box-sizing: border-box;
-    }
-
-    .input-row {
-      width: 100%;
-      display: flex;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-
-    input[type="text"] {
-      flex: 1;
-      padding: 10px 12px;
-      font-size: 16px;
-      background: var(--input-bg);
-      color: var(--fg);
-      border: 1px solid var(--input-border);
-      border-radius: 6px;
-    }
-    input::placeholder {
-      color: var(--placeholder);
-    }
-    input:focus {
-      border-color: #80b3ff;
-      box-shadow: 0 0 0 3px rgba(128,179,255,0.25);
-      outline: none;
-    }
-
-    button {
-      padding: 10px 16px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: 1px solid var(--btn-border);
-      background: var(--btn-bg);
-      color: var(--btn-fg);
-      cursor: pointer;
-    }
-    button:hover {
-      background: var(--btn-hover);
-    }
-
-    #qr-code {
-      background: white;      /* white border area */
-      padding: 12px;          /* border thickness */
-      border-radius: 4px;     /* optional rounded corners */
-      display: inline-block;
-    }
-
-    #download-btn {
-      display: none;
-      margin-top: 10px;
-    }
-
-    #back-btn {
-      margin-top: 10px;
-    }
-
-    .credits {
-      width: min(90%, 680px);
-      margin: 14px auto 40px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
-    }
-    .credits a {
-      color: var(--link);
-      text-decoration: none;
-    }
-    .credits a:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-
-<body>
-  <h1>Convenient QR Code Generator</h1>
-
-  <div class="generator-container">
-    <div class="input-row">
-      <input id="text-input" type="text" placeholder="Enter text or URL" />
-      <button id="generate-btn">Generate</button>
-    </div>
-
-    <div id="qr-code"></div>
-
-    <button id="download-btn">Download QR Code</button>
-    <button id="back-btn" onclick="window.location.href='../index.html'">Home</button>
-  </div>
-
-  <div class="credits">
-    <small>
-      QR code generation is powered by the open-source
-      <a href="https://github.com/davidshimjs/qrcodejs" target="_blank" rel="noopener noreferrer">QRCode.js library</a>.
-    </small>
-  </div>
-
-  <script>
-    const qrcode = new QRCode(document.getElementById("qr-code"), {
-      width: 256,
-      height: 256,
-      colorDark: "#000000",
-      colorLight: "#ffffff",
-      correctLevel: QRCode.CorrectLevel.H
-    });
-
-    const textInput = document.getElementById("text-input");
-    const generateBtn = document.getElementById("generate-btn");
-    const downloadBtn = document.getElementById("download-btn");
-
-    function generate() {
-      const text = textInput.value.trim();
-      if (!text) {
-        alert("Please enter some text or a URL to encode.");
-        return;
-      }
-      qrcode.makeCode(text);
-      downloadBtn.style.display = "inline-block";
-    }
-
-    generateBtn.addEventListener("click", generate);
-    textInput.addEventListener("keypress", e => {
-      if (e.key === "Enter") generate();
-    });
-
-    downloadBtn.addEventListener("click", () => {
-      const canvas = document.querySelector("#qr-code canvas");
-      let dataUrl = null;
-
-      if (canvas) {
-        dataUrl = canvas.toDataURL("image/png");
-      } else {
-        const img = document.querySelector("#qr-code img");
-        if (img) dataUrl = img.src;
+        qrcode.makeCode(value);
+        download.hidden = false;
       }
 
-      if (dataUrl) {
-        const a = document.createElement("a");
-        a.href = dataUrl;
-        a.download = "qr_code.png";
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      }
-    });
-  </script>
-</body>
+      generate.addEventListener("click", makeQr);
+      qrInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          makeQr();
+        }
+      });
+
+      download.addEventListener("click", () => {
+        const canvas = qrOutput.querySelector("canvas");
+        const image = qrOutput.querySelector("img");
+        const url = canvas ? canvas.toDataURL("image/png") : image?.src;
+
+        if (!url) {
+          return;
+        }
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "qr-code.png";
+        link.click();
+      });
+    </script>
+  </body>
 </html>

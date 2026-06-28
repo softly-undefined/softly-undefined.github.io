@@ -1,142 +1,88 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Stopwatch with Splits</title>
-  <style>
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      max-width: 500px;
-      margin: 40px auto;
-      text-align: center;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stopwatch</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="tool-body">
+    <main class="tool-shell">
+      <p><a href="secret_index.html">Back to secret page</a></p>
+      <h1>Stopwatch</h1>
+      <div class="tool-panel stopwatch-panel">
+        <div class="stopwatch-time" id="stopwatch-time">00:00.0</div>
+        <div class="tool-row">
+          <button id="start-stopwatch" type="button">Start</button>
+          <button id="stop-stopwatch" type="button">Stop</button>
+          <button id="reset-stopwatch" type="button">Reset</button>
+          <button id="split-stopwatch" type="button">Split</button>
+        </div>
+        <ol class="split-list" id="split-list"></ol>
+      </div>
+    </main>
 
-    #time {
-      font-size: 3rem;
-      margin-bottom: 20px;
-    }
+    <script>
+      const timeDisplay = document.querySelector("#stopwatch-time");
+      const splitList = document.querySelector("#split-list");
+      let startTime = 0;
+      let elapsed = 0;
+      let interval = null;
+      let splitCount = 0;
 
-    button {
-      padding: 8px 14px;
-      margin: 5px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
+      function formatTime(milliseconds) {
+        const tenthsTotal = Math.floor(milliseconds / 100);
+        const minutes = Math.floor(tenthsTotal / 600);
+        const seconds = Math.floor((tenthsTotal % 600) / 10);
+        const tenths = tenthsTotal % 10;
 
-    ul {
-      list-style: none;
-      padding: 0;
-      margin-top: 20px;
-      text-align: left;
-    }
+        return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}.${tenths}`;
+      }
 
-    li {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 6px 0;
-      border-bottom: 1px solid #ddd;
-    }
+      function currentElapsed() {
+        return interval ? elapsed + performance.now() - startTime : elapsed;
+      }
 
-    input.split-name {
-      border: 1px solid #ccc;
-      padding: 3px 6px;
-      font-size: 0.9rem;
-      flex: 1;
-    }
+      function renderTime() {
+        timeDisplay.textContent = formatTime(currentElapsed());
+      }
 
-    .split-time {
-      font-family: monospace;
-      white-space: nowrap;
-    }
-  </style>
-</head>
-<body>
+      document.querySelector("#start-stopwatch").addEventListener("click", () => {
+        if (interval) {
+          return;
+        }
 
-  <div id="time">00:00.000</div>
+        startTime = performance.now();
+        interval = setInterval(renderTime, 100);
+        renderTime();
+      });
 
-  <div>
-    <button onclick="start()">Start</button>
-    <button onclick="stop()">Stop</button>
-    <button onclick="reset()">Reset</button>
-    <button onclick="split()">Split</button>
-  </div>
+      document.querySelector("#stop-stopwatch").addEventListener("click", () => {
+        if (!interval) {
+          return;
+        }
 
-  <ul id="splits"></ul>
+        elapsed = currentElapsed();
+        clearInterval(interval);
+        interval = null;
+        renderTime();
+      });
 
-<script>
-  let startTime = null;
-  let elapsed = 0;
-  let timer = null;
-  let splitCount = 0;
+      document.querySelector("#reset-stopwatch").addEventListener("click", () => {
+        clearInterval(interval);
+        interval = null;
+        elapsed = 0;
+        splitCount = 0;
+        splitList.textContent = "";
+        renderTime();
+      });
 
-  function format(ms) {
-    const totalSeconds = ms / 1000;
-    const rounded = Math.round(totalSeconds * 10) / 10; // 0.1s precision
-
-    const minutes = Math.floor(rounded / 60);
-    const seconds = Math.floor(rounded % 60);
-    const tenths = Math.floor((rounded * 10) % 10);
-
-    return (
-      String(minutes).padStart(2, '0') + ':' +
-      String(seconds).padStart(2, '0') + '.' +
-      tenths
-    );
-  }
-
-  function update() {
-    const now = performance.now();
-    const diff = elapsed + (now - startTime);
-    document.getElementById('time').textContent = format(diff);
-  }
-
-  function start() {
-    if (timer) return;
-    startTime = performance.now();
-    timer = setInterval(update, 100); // 0.1s updates
-  }
-
-  function stop() {
-    if (!timer) return;
-    elapsed += performance.now() - startTime;
-    clearInterval(timer);
-    timer = null;
-  }
-
-  function reset() {
-    stop();
-    elapsed = 0;
-    splitCount = 0;
-    document.getElementById('time').textContent = '00:00.0';
-    document.getElementById('splits').innerHTML = '';
-  }
-
-  function split() {
-    const currentTime = timer
-      ? elapsed + (performance.now() - startTime)
-      : elapsed;
-
-    splitCount++;
-
-    const li = document.createElement('li');
-
-    const nameInput = document.createElement('input');
-    nameInput.type = 'text';
-    nameInput.className = 'split-name';
-    nameInput.value = `Split ${splitCount}`;
-
-    const timeSpan = document.createElement('span');
-    timeSpan.className = 'split-time';
-    timeSpan.textContent = format(currentTime);
-
-    li.appendChild(nameInput);
-    li.appendChild(timeSpan);
-
-    document.getElementById('splits').appendChild(li);
-  }
-</script>
-
-</body>
+      document.querySelector("#split-stopwatch").addEventListener("click", () => {
+        splitCount += 1;
+        const item = document.createElement("li");
+        item.textContent = `Split ${splitCount}: ${formatTime(currentElapsed())}`;
+        splitList.append(item);
+      });
+    </script>
+  </body>
 </html>
-
