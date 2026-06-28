@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vanishing Tic‑Tac‑Toe (Rule‑Based)</title>
+  <style>
+    /* Embedded styles for the single‑file Vanishing Tic‑Tac‑Toe game */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    #container {
+      margin-top: 40px;
+      text-align: center;
+      max-width: 400px;
+    }
+    h1 {
+      margin-bottom: 0.5em;
+    }
+    .description {
+      font-size: 0.9rem;
+      margin-bottom: 1em;
+      color: #555;
+    }
+    #scoreboard {
+      margin-bottom: 1em;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+    }
+    #scoreboard span {
+      flex: 1;
+      text-align: center;
+    }
+    #message {
+      margin: 0.5em 0;
+      min-height: 1.5em;
+      font-size: 1rem;
+      color: #333;
+    }
+    #board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      margin: 0 auto;
+      max-width: 306px;
+    }
+    .cell {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2.5rem;
+      cursor: pointer;
+      border: 2px solid #999;
+      box-sizing: border-box;
+      user-select: none;
+      transition: background-color 0.2s;
+      background-color: #fff;
+    }
+    .cell.disabled {
+      cursor: default;
+      opacity: 0.6;
+    }
+    /* Colour palette for X pieces (blue hues) */
+    .x-oldest {
+      background-color: #1c5ca8;
+      color: #000;
+    }
+    .x-middle {
+      background-color: #4e8ed1;
+      color: #000;
+    }
+    .x-new {
+      background-color: #a5c7e6;
+      color: #000;
+    }
+    /* Colour palette for O pieces (red hues) */
+    .o-oldest {
+      background-color: #a8281c;
+      color: #000;
+    }
+    .o-middle {
+      background-color: #d1634e;
+      color: #000;
+    }
+    .o-new {
+      background-color: #f4b5ae;
+      color: #000;
+    }
+    button {
+      margin-top: 1em;
+      padding: 0.6em 1.2em;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+      background-color: #0069d9;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #0053ba;
+    }
+    button.hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h1>Vanishing Tic‑Tac‑Toe</h1>
+    <p class="description">
+      The AI plays O and uses the ComplexRuleBasedAgent located <a href="https://github.com/softly-undefined/tictactoe/blob/main/vanishing_tictactoe/complexrulebased_agent.py">here</a>.  Click a cell to place your X.  After each player has made 3 moves, their oldest piece vanishes when they place a new one.  First to get 3 in a row wins!
+    </p>
+    <div id="scoreboard">
+      <span id="human-score">Human: 0</span>
+      <span id="ai-score">AI: 0</span>
+      <span id="ties-score">Ties: 0</span>
+    </div>
+    <div id="message" aria-live="polite"></div>
+    <div id="board" class="board"></div>
+    <button id="new-game" class="hidden">Play Again</button>
+    <!-- Button to toggle between AI and player‑vs‑player mode.  The label updates based on the current mode. -->
+    <button id="toggle-mode">Switch to Player vs Player</button>
+    <!-- Button to return to the site's index page. -->
+    <button id="return-home">Return Home</button>
+  </div>
+  <script>
+    // JavaScript logic for the single‑file Vanishing Tic‑Tac‑Toe game
+    (function() {
+      // Game parameters
+      const n = 3;                 // board dimension
+      const vanishTurn = n;        // pieces disappear after n moves per player
+      const winLines = [
+        [0,1,2],[3,4,5],[6,7,8],   // rows
+        [0,3,6],[1,4,7],[2,5,8],   // columns
+        [0,4,8],[2,4,6]            // diagonals
+      ];
+      const corners = [0, 2, 6, 8];
+      const centerCells = [4];
+
+      // DOM references
+      const boardDiv   = document.getElementById('board');
+      const messageDiv = document.getElementById('message');
+      const newGameBtn = document.getElementById('new-game');
+      const humanScore = document.getElementById('human-score');
+      const aiScore    = document.getElementById('ai-score');
+      const tiesScore  = document.getElementById('ties-score');
+      const toggleModeBtn = document.getElementById('toggle-mode');
+      const returnHomeBtn = document.getElementById('return-home');
+
+      // Game state variables
+      let board;
+      let historyX;
+      let historyO;
+      let currentPlayer;
+      let humanPlayer = 1;  // human always plays X
+      let aiPlayer    = -1; // AI plays O
+let humanWins = 0;
+let aiWins    = 0;
+let player1Wins = 0;
+let player2Wins = 0;
+let ties      = 0;
+let pvpMode   = false;
+let done      = false;
+
+      /** Initialise a new game state. */
+      function initGame() {
+        board        = Array(n * n).fill(0);
+        historyX     = [];
+        historyO     = [];
+        currentPlayer = 1;
+        done         = false;
+        updateBoard();
+        updateScores();
+        messageDiv.textContent = '';
+        newGameBtn.classList.add('hidden');
+      }
+
+      /** Build the board UI once. */
+      function buildBoard() {
+        boardDiv.innerHTML = '';
+        for (let i = 0; i < n * n; i++) {
+          const cell = document.createElement('div');
+          cell.classList.add('cell');
+          cell.dataset.index = i;
+          cell.addEventListener('click', () => onCellClick(i));
+          boardDiv.appendChild(cell);
+        }
+      }
+
+      /** Handle a user's click on a cell. */
+      function onCellClick(idx) {
+        if (done) return;
+        // Ignore clicks on occupied squares
+        if (board[idx] !== 0) return;
+        // In AI mode, only allow the human to move on their turn
+        if (!pvpMode && currentPlayer !== humanPlayer) return;
+        // Apply the player's move
+        step(idx);
+        if (done) return;
+        // If in AI mode, let the AI respond
+        if (!pvpMode) {
+          const aiMove = ruleBasedAct(board, historyX.slice(), historyO.slice(), aiPlayer);
+          step(aiMove);
+        }
+      }
+
+      /** Perform a move for the current player at the given index. */
+      function step(idx) {
+        // Apply vanishing mechanism
+        let hist = currentPlayer === 1 ? historyX : historyO;
+        if (hist.length >= vanishTurn) {
+          const oldest = hist.shift();
+          board[oldest] = 0;
+        }
+        board[idx] = currentPlayer;
+        hist.push(idx);
+        // Check for win
+        const winner = checkWinner(board, currentPlayer);
+        if (winner !== null) {
+          done = true;
+          if (pvpMode) {
+            // In PvP mode, update the appropriate player score and message
+            if (winner === 1) {
+              player1Wins++;
+              messageDiv.textContent = 'Player X wins!';
+            } else {
+              player2Wins++;
+              messageDiv.textContent = 'Player O wins!';
+            }
+          } else {
+            // In AI mode, update human or AI score and message
+            if (winner === humanPlayer) {
+              humanWins++;
+              messageDiv.textContent = 'You win!';
+            } else {
+              aiWins++;
+              messageDiv.textContent = 'AI wins!';
+            }
+          }
+          newGameBtn.classList.remove('hidden');
+        } else if (isBoardFull(board)) {
+          done = true;
+          ties++;
+          messageDiv.textContent = "It's a tie!";
+          newGameBtn.classList.remove('hidden');
+        } else {
+          // Switch player and continue
+          currentPlayer *= -1;
+        }
+        updateBoard();
+        updateScores();
+      }
+
+      /** Check if the board is completely filled. */
+      function isBoardFull(b) {
+        return b.every(v => v !== 0);
+      }
+
+      /** Determine if the given player has won. */
+      function checkWinner(b, player) {
+        for (const line of winLines) {
+          let all = true;
+          for (const i of line) {
+            if (b[i] !== player) { all = false; break; }
+          }
+          if (all) return player;
+        }
+        return null;
+      }
+
+      /** Update the DOM to reflect the current board state and histories. */
+      function updateBoard() {
+        for (let i = 0; i < boardDiv.children.length; i++) {
+          const cell = boardDiv.children[i];
+          cell.className = 'cell';
+          const value = board[i];
+          if (value === 1) {
+            cell.textContent = 'X';
+            const hx = historyX;
+            if (hx.length > 0 && i === hx[0]) cell.classList.add('x-oldest');
+            else if (hx.length > 1 && i === hx[1]) cell.classList.add('x-middle');
+            else cell.classList.add('x-new');
+          } else if (value === -1) {
+            cell.textContent = 'O';
+            const ho = historyO;
+            if (ho.length > 0 && i === ho[0]) cell.classList.add('o-oldest');
+            else if (ho.length > 1 && i === ho[1]) cell.classList.add('o-middle');
+            else cell.classList.add('o-new');
+          } else {
+            cell.textContent = '';
+          }
+        }
+      }
+
+      /** Update the scoreboard display. */
+      function updateScores() {
+        if (pvpMode) {
+          humanScore.textContent = `Player X: ${player1Wins}`;
+          aiScore.textContent    = `Player O: ${player2Wins}`;
+          tiesScore.textContent  = `Ties: ${ties}`;
+        } else {
+          humanScore.textContent = `Human: ${humanWins}`;
+          aiScore.textContent    = `AI: ${aiWins}`;
+          tiesScore.textContent  = `Ties: ${ties}`;
+        }
+      }
+
+      /** Toggle between playing against the AI and a player‑vs‑player mode. */
+      function toggleMode() {
+        pvpMode = !pvpMode;
+        // Update the toggle button's label to reflect the upcoming mode
+        toggleModeBtn.textContent = pvpMode ? 'Switch to Player vs AI' : 'Switch to Player vs Player';
+        // Reset game state and messages
+        messageDiv.textContent = '';
+        initGame();
+        updateScores();
+      }
+
+      /**
+       * Implementation of the Complex Rule‑Based agent.  This function
+       * determines the AI's move based on the current board, the move
+       * histories for X and O and the AI's marker (1 or −1).  It is a
+       * direct port of the Python agent provided in the original codebase【579538742632765†L16-L78】.
+       *
+       * @param {number[]} boardArr The flat board array (0 for empty, ±1 for X/O)
+       * @param {number[]} histX History of X moves (order oldest→newest)
+       * @param {number[]} histO History of O moves
+       * @param {number} aiMark The AI's marker (1 for X, −1 for O)
+       * @returns {number} The selected move index
+       */
+      function ruleBasedAct(boardArr, histX, histO, aiMark) {
+        const emptyIdx = [];
+        for (let i = 0; i < boardArr.length; i++) {
+          if (boardArr[i] === 0) emptyIdx.push(i);
+        }
+        // Random move if board is empty (first turn)
+        if (emptyIdx.length === 0) return -1;
+        // Determine which history belongs to the AI and the opponent
+        let me = aiMark;
+        let opp = -aiMark;
+        let histMe  = (me === 1 ? histX : histO).slice();
+        let histOpp = (me === 1 ? histO : histX).slice();
+        // Helper functions defined inline to capture closure variables
+        function simulate(boardIn, histIn, pos, player) {
+          const b2 = boardIn.slice();
+          const h2 = histIn.slice();
+          if (h2.length >= vanishTurn) {
+            const oldest = h2.shift();
+            b2[oldest] = 0;
+          }
+          b2[pos] = player;
+          h2.push(pos);
+          return [b2, h2];
+        }
+        function checkWinBoard(b, player) {
+          return winLines.some(line => line.every(i => b[i] === player));
+        }
+        function isWinAfter(boardIn, histIn, pos, player) {
+          const [b2, _] = simulate(boardIn, histIn, pos, player);
+          return checkWinBoard(b2, player);
+        }
+        function countWins(boardIn, histIn, player) {
+          let count = 0;
+          for (const p of emptyIdx) {
+            if (boardIn[p] === 0 && isWinAfter(boardIn, histIn, p, player)) {
+              count++;
+            }
+          }
+          return count;
+        }
+        function createsFork(boardIn, histIn, pos, player) {
+          const [b2, h2] = simulate(boardIn, histIn, pos, player);
+          return countWins(b2, h2, player) >= 2;
+        }
+        function opponentCanWinNext(boardIn, histOppIn, opponent) {
+          for (const p of emptyIdx) {
+            if (boardIn[p] === 0 && isWinAfter(boardIn, histOppIn, p, opponent)) {
+              return true;
+            }
+          }
+          return false;
+        }
+        function isSafeMove(boardIn, histMeIn, histOppIn, pos, meMark, oppMark) {
+          const [b2, h2me] = simulate(boardIn, histMeIn, pos, meMark);
+          return !opponentCanWinNext(b2, histOppIn, oppMark);
+        }
+        // Strategy: win if possible
+        for (const pos of emptyIdx) {
+          if (isWinAfter(boardArr, histMe, pos, me)) return pos;
+        }
+        // Block opponent's win if they can win now
+        const blocks = emptyIdx.filter(pos => isWinAfter(boardArr, histOpp, pos, opp));
+        if (blocks.length > 0) {
+          for (const pos of blocks) {
+            if (isSafeMove(boardArr, histMe, histOpp, pos, me, opp)) return pos;
+          }
+          return blocks[0];
+        }
+        // Create a fork if possible
+        for (const pos of emptyIdx) {
+          if (createsFork(boardArr, histMe, pos, me) && isSafeMove(boardArr, histMe, histOpp, pos, me, opp)) {
+            return pos;
+          }
+        }
+        // Block opponent's fork
+        const forksToBlock = emptyIdx.filter(pos => createsFork(boardArr, histOpp, pos, opp));
+        if (forksToBlock.length > 0) {
+          for (const pos of forksToBlock) {
+            if (isSafeMove(boardArr, histMe, histOpp, pos, me, opp)) return pos;
+          }
+          return forksToBlock[0];
+        }
+        // Fallback: center, then corners, then any empty
+        const fallback = [];
+        for (const c of centerCells) {
+          fallback.push(c);
+        }
+        for (const c of corners) {
+          fallback.push(c);
+        }
+        for (const pos of emptyIdx) {
+          fallback.push(pos);
+        }
+        for (const pos of fallback) {
+          if (emptyIdx.includes(pos) && isSafeMove(boardArr, histMe, histOpp, pos, me, opp)) {
+            return pos;
+          }
+        }
+        // As a last resort, choose randomly among the empty positions
+        return emptyIdx[Math.floor(Math.random() * emptyIdx.length)];
+      }
+
+      // Event listener for the New Game button
+      newGameBtn.addEventListener('click', initGame);
+      // Event listener for the toggle mode button
+      toggleModeBtn.addEventListener('click', toggleMode);
+      // Event listener for the return home button
+      returnHomeBtn.addEventListener('click', () => {
+        // Navigate to the site's home page.  It assumes index.html exists
+        window.location.href = 'index.html';
+      });
+      // Build the board and initialise the first game
+      buildBoard();
+      initGame();
+    })();
+  </script>
+</body>
+</html>

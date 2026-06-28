@@ -1,4 +1,17 @@
 (() => {
+  if ("scrollRestoration" in window.history) {
+    window.history.scrollRestoration = "manual";
+  }
+
+  function scrollToTopOnFreshLoad() {
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
+  }
+
+  scrollToTopOnFreshLoad();
+  window.addEventListener("pageshow", scrollToTopOnFreshLoad);
+
   const SPRITE_FONT_SIZE = "25";
   const spriteData =
     window.CLEAN_REMAP_ASCII?.sizes?.[SPRITE_FONT_SIZE]?.sprites;
@@ -12,8 +25,11 @@
   const gameScore = document.querySelector("#game-score");
   const gameOver = document.querySelector("#game-over");
   const gameOverArt = document.querySelector("#game-over-art");
-  const secretClue = document.querySelector("#secret-clue");
-  const secretClueText = document.querySelector("#secret-clue-text");
+  const navLinks = document.querySelectorAll(".site-nav a");
+  const languageButtons = document.querySelectorAll(".lang-btn[data-lang]");
+  const translatedElements = document.querySelectorAll("[data-zh-cn], [data-zh-tw]");
+
+  setupLanguageSwitcher();
 
   if (
     !spriteData ||
@@ -33,11 +49,16 @@
   const FPS = 8;
   const FRAME_DURATION = 1000 / FPS;
   const TURN_FRAME_DURATION = 40;
+  const TITLE_REVEALED_STORAGE_KEY = "site-title-revealed";
+  const SPRITE_POSITION_STORAGE_KEY = "site-sprite-position";
+  const PENDING_NAV_HOP_STORAGE_KEY = "site-pending-nav-hop";
   const WALK_SPEED = 325;
   const ARRIVAL_DISTANCE = 1;
   const BLINK_DELAY_MIN = 2200;
   const BLINK_DELAY_MAX = 5600;
   const TITLE_TRANSITION_DURATION = 620;
+  const NAV_HOP_DURATION = 520;
+  const NAV_HOP_HEIGHT = 14;
 
   const GAME_START_LEFT_RATIO = 0.21;
   const GAME_START_LEFT_MIN = 48;
@@ -175,7 +196,7 @@
     },
   ];
 
-  let position = (window.innerWidth - sprite.offsetWidth) / 2;
+  let position = initialSpritePosition();
   let target = position;
   let facing = 1;
   let action = "idle";
@@ -202,6 +223,7 @@
     return indexes;
   }, []);
   let titleTransition = null;
+  let navHopStartedAt = null;
 
   gameOverArt.textContent = normalizeAsciiBlock(gameOverArt.textContent);
 
@@ -223,8 +245,16 @@
 
   updateScoreboard();
   if (siteTitle) {
-    siteTitle.textContent = titleTextForVisibleCount(0, []);
-    startTitleTransition(true);
+    if (storedTitleRevealed()) {
+      siteTitle.textContent = titleText;
+    } else {
+      siteTitle.textContent = titleTextForVisibleCount(0, []);
+      startTitleTransition(true);
+    }
+  }
+
+  if (consumePendingNavHop()) {
+    startNavHop();
   }
 
   function normalizeAsciiBlock(text) {
@@ -254,8 +284,129 @@
     return lines.map((line) => line.slice(indent).trimEnd()).join("\n");
   }
 
+  function setupLanguageSwitcher() {
+    if (!languageButtons.length || !translatedElements.length) {
+      return;
+    }
+
+    const originalHtml = new Map();
+    translatedElements.forEach((element) => {
+      originalHtml.set(element, element.innerHTML);
+    });
+
+    const getStoredLanguage = () => {
+      try {
+        return window.localStorage?.getItem("site-language") || "en";
+      } catch {
+        return "en";
+      }
+    };
+
+    const storeLanguage = (language) => {
+      try {
+        window.localStorage?.setItem("site-language", language);
+      } catch {
+        // Ignore storage failures; the visible language can still change.
+      }
+    };
+
+    const setLanguage = (language) => {
+      const normalizedLanguage = ["en", "zh-cn", "zh-tw"].includes(language)
+        ? language
+        : "en";
+
+      document.documentElement.lang = normalizedLanguage;
+
+      translatedElements.forEach((element) => {
+        if (normalizedLanguage === "en") {
+          element.innerHTML = originalHtml.get(element);
+          return;
+        }
+
+        const translation = element.getAttribute(`data-${normalizedLanguage}`);
+        if (translation) {
+          element.innerHTML = translation;
+        }
+      });
+
+      languageButtons.forEach((button) => {
+        const isActive = button.dataset.lang === normalizedLanguage;
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+
+      storeLanguage(normalizedLanguage);
+    };
+
+    languageButtons.forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.classList.contains("active")));
+      button.addEventListener("click", () => {
+        setLanguage(button.dataset.lang);
+      });
+    });
+
+    setLanguage(getStoredLanguage());
+  }
+
   function randomBetween(minimum, maximum) {
     return minimum + Math.random() * (maximum - minimum);
+  }
+
+  function getSessionValue(key) {
+    try {
+      return window.sessionStorage?.getItem(key);
+    } catch {
+      return null;
+    }
+  }
+
+  function setSessionValue(key, value) {
+    try {
+      window.sessionStorage?.setItem(key, value);
+    } catch {
+      // Session storage is a progressive enhancement for cross-page continuity.
+    }
+  }
+
+  function storedTitleRevealed() {
+    return getSessionValue(TITLE_REVEALED_STORAGE_KEY) === "true";
+  }
+
+  function markTitleRevealed() {
+    setSessionValue(TITLE_REVEALED_STORAGE_KEY, "true");
+  }
+
+  function initialSpritePosition() {
+    const fallback = (window.innerWidth - sprite.offsetWidth) / 2;
+    const storedPosition = Number(getSessionValue(SPRITE_POSITION_STORAGE_KEY));
+
+    if (!Number.isFinite(storedPosition)) {
+      return fallback;
+    }
+
+    return Math.min(maxPosition(), Math.max(0, storedPosition));
+  }
+
+  function saveSpritePosition() {
+    setSessionValue(SPRITE_POSITION_STORAGE_KEY, String(position));
+  }
+
+  function saveHeaderStateForNavigation() {
+    if (siteTitle?.textContent === titleText) {
+      markTitleRevealed();
+    }
+
+    saveSpritePosition();
+  }
+
+  function consumePendingNavHop() {
+    const hasPendingHop = getSessionValue(PENDING_NAV_HOP_STORAGE_KEY) === "true";
+
+    if (hasPendingHop) {
+      setSessionValue(PENDING_NAV_HOP_STORAGE_KEY, "false");
+    }
+
+    return hasPendingHop;
   }
 
   function shuffledIndexes(indexes) {
@@ -348,6 +499,7 @@
     if (progress >= 1) {
       if (titleTransition.toVisible) {
         siteTitle.textContent = titleText;
+        markTitleRevealed();
       }
 
       titleTransition = null;
@@ -434,6 +586,24 @@
 
   function clampTarget(mouseX) {
     return Math.min(maxPosition(), Math.max(0, mouseX - visibleCenterOffset()));
+  }
+
+  function startNavHop() {
+    if (mode !== "free") {
+      return;
+    }
+
+    target = position;
+    navHopStartedAt = performance.now();
+  }
+
+  function easedNavHop(progress) {
+    const easedProgress =
+      progress < 0.5
+        ? 2 * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+    return Math.sin(easedProgress * Math.PI) * NAV_HOP_HEIGHT;
   }
 
   function gameVisibleLeft() {
@@ -1041,7 +1211,20 @@
     updateTitleTransition(timestamp);
     advanceAnimation(elapsed, timestamp);
 
-    sprite.style.transform = `translate(${position}px, ${-game.jumpY}px)`;
+    let navHopY = 0;
+    if (navHopStartedAt !== null) {
+      const hopProgress = Math.min(
+        1,
+        (timestamp - navHopStartedAt) / NAV_HOP_DURATION,
+      );
+      navHopY = easedNavHop(hopProgress);
+
+      if (hopProgress >= 1) {
+        navHopStartedAt = null;
+      }
+    }
+
+    sprite.style.transform = `translate(${position}px, ${-(game.jumpY + navHopY)}px)`;
     sprite.dataset.action = action;
     sprite.dataset.facing = facing > 0 ? "right" : "left";
     frameElement.style.setProperty("--facing", facing);
@@ -1055,17 +1238,49 @@
   document.addEventListener("pointermove", (event) => {
     lastPointerX = event.clientX;
 
-    if (mode === "free") {
+    if (mode === "free" && navHopStartedAt === null) {
       target = clampTarget(event.clientX);
     }
   });
 
-  secretClue?.addEventListener("click", () => {
-    if (!secretClueText) {
-      return;
-    }
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
 
-    secretClueText.hidden = !secretClueText.hidden;
+      saveHeaderStateForNavigation();
+
+      const destination = new URL(link.href, window.location.href);
+      const isSamePageTop =
+        destination.origin === window.location.origin &&
+        destination.pathname === window.location.pathname &&
+        destination.hash === "#top";
+
+      if (isSamePageTop) {
+        event.preventDefault();
+        startNavHop();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+
+      const isSameOriginPage =
+        destination.origin === window.location.origin &&
+        destination.pathname !== window.location.pathname;
+
+      if (isSameOriginPage) {
+        setSessionValue(PENDING_NAV_HOP_STORAGE_KEY, "true");
+      } else {
+        startNavHop();
+      }
+    });
   });
 
   sprite.addEventListener("pointerdown", (event) => {
@@ -1138,6 +1353,7 @@
     if (mode === "free") {
       position = Math.min(position, maxPosition());
       target = Math.min(target, maxPosition());
+      saveSpritePosition();
       return;
     }
 

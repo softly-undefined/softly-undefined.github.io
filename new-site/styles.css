@@ -54,7 +54,7 @@ body {
   padding-top: var(--header-height-total);
   color: var(--ink);
   background: var(--paper);
-  font-family: Arial, sans-serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 a {
@@ -76,14 +76,14 @@ a:visited {
   left: 0;
   height: var(--header-height);
   background: var(--paper);
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px dotted var(--rule);
 }
 
 .sprite-track {
   position: relative;
   height: var(--sprite-height);
   overflow: hidden;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px dotted var(--rule);
 }
 
 .sprite-track.is-game {
@@ -253,17 +253,30 @@ a:visited {
 }
 
 .site-nav {
-  display: grid;
-  grid-template-columns: repeat(4, max-content);
-  column-gap: clamp(34px, 8vw, 140px);
-  row-gap: 6px;
-  justify-content: center;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
   align-items: center;
+  width: min(1000px, calc(100vw - 32px));
   height: calc(var(--header-height) - var(--sprite-height));
-  padding: 0 16px;
+  margin: 0 auto;
+  padding: 0;
   font-size: 0.95rem;
   letter-spacing: 0;
   text-transform: none;
+}
+
+.nav-links,
+.language-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px clamp(28px, 5vw, 84px);
+  align-items: center;
+}
+
+.language-switcher {
+  justify-content: flex-end;
+  gap: 12px;
 }
 
 .site-nav a {
@@ -274,6 +287,31 @@ a:visited {
 
 .site-nav a:hover,
 .site-nav a:focus {
+  text-decoration: underline;
+}
+
+.lang-btn {
+  padding: 0;
+  color: var(--link);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0;
+  font-size: 0.86rem;
+  line-height: 1.2;
+  text-decoration: none;
+  text-underline-offset: 3px;
+}
+
+.lang-btn:hover,
+.lang-btn:focus {
+  text-decoration: underline;
+}
+
+.lang-btn.active {
+  color: var(--ink);
+  background: transparent;
+  border-color: transparent;
+  font-weight: 700;
   text-decoration: underline;
 }
 
@@ -293,13 +331,13 @@ a:visited {
 }
 
 .page-section {
-  padding-top: 10px;
-  margin-top: 26px;
-  border-top: 1px solid var(--rule);
+  padding-top: 18px;
+  margin-top: 38px;
+  border-top: 1px dotted var(--rule);
 }
 
 .page-section:first-child {
-  padding-top: 18px;
+  padding-top: 28px;
   margin-top: 0;
   border-top: 0;
 }
@@ -312,12 +350,18 @@ a:visited {
 
 .page-section h2 a {
   color: var(--link);
+  text-decoration: none;
+}
+
+.page-section h2 a:hover,
+.page-section h2 a:focus {
+  text-decoration: underline;
 }
 
 .about-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 220px;
-  gap: 28px;
+  gap: 44px;
   align-items: start;
 }
 
@@ -325,6 +369,11 @@ a:visited {
   width: 100%;
   max-height: 260px;
   object-fit: cover;
+}
+
+.about-photo-wrap {
+  position: relative;
+  width: 100%;
 }
 
 .research-statement {
@@ -355,45 +404,59 @@ a:visited {
   font-size: 1rem;
 }
 
+.publication-list {
+  max-width: 82ch;
+  margin: 0;
+  padding-left: 22px;
+}
+
+.publication-list li {
+  margin-bottom: 12px;
+}
+
+.inline-links {
+  display: inline-flex;
+  gap: 12px;
+  margin-left: 8px;
+}
+
 .entry img {
   width: 100%;
   max-height: 150px;
   object-fit: contain;
 }
 
-.publication-entry img {
-  max-height: 120px;
-}
-
 .link-row {
   display: flex;
   flex-wrap: wrap;
+  gap: 0 22px;
+}
+
+.profile-links {
+  justify-content: center;
   gap: 0 14px;
+  margin: 9px 0 0;
+  font-size: 0.92rem;
 }
 
 .secret-clue {
   position: relative;
-  margin-top: 54px;
-  padding-bottom: 34px;
+  margin-top: 42px;
+  padding-bottom: 24px;
   color: var(--ink);
   text-align: center;
 }
 
 .last-updated {
-  margin: 0 0 4px;
+  margin: 0 0 1px;
   color: var(--ink);
-}
-
-.secret-clue-text {
-  margin: 8px 0 0;
-  color: var(--muted);
-  opacity: 0.72;
 }
 
 .secret-button {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  top: 50%;
+  right: -12px;
+  transform: translateY(-50%);
   color: var(--paper);
   text-decoration: none;
 }
@@ -472,17 +535,19 @@ button {
 .secret-clue-button {
   padding: 0;
   color: var(--muted);
-  opacity: 0.52;
+  opacity: 0.34;
   background: transparent;
   border: 0;
   border-radius: 0;
   font: inherit;
+  font-size: 0.48rem;
+  line-height: 1;
   cursor: pointer;
 }
 
 .secret-clue-button:hover,
 .secret-clue-button:focus {
-  opacity: 0.75;
+  opacity: 0.58;
 }
 
 .tool-panel button {
@@ -515,12 +580,12 @@ button {
 
 @media (max-width: 540px) {
   :root {
-    --header-height: 150px;
-    --sprite-height: 124px;
-    --sprite-width: 150px;
+    --header-height: 156px;
+    --sprite-height: 126px;
+    --sprite-width: 160px;
     --game-hud-font-size: 8px;
-    --sprite-scale: 0.46;
-    --title-font-size: 3px;
+    --sprite-scale: 0.58;
+    --title-font-size: 3.25px;
     --title-scale: 1;
   }
 
@@ -531,12 +596,24 @@ button {
   }
 
   .site-nav {
-    grid-template-columns: repeat(4, max-content);
-    justify-content: center;
+    justify-content: space-between;
     align-content: center;
-    column-gap: clamp(11px, 3.4vw, 18px);
-    row-gap: 0;
-    padding: 0 6px;
+    width: calc(100vw - 32px);
+    gap: 8px 14px;
+    padding: 0;
+    font-size: 0.72rem;
+  }
+
+  .nav-links {
+    gap: 7px 16px;
+  }
+
+  .language-switcher {
+    gap: 8px;
+  }
+
+  .lang-btn {
+    padding: 0;
     font-size: 0.68rem;
   }
 
@@ -545,7 +622,7 @@ button {
   }
 
   .page-section h2 {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
   }
 
   .research-statement {
@@ -560,6 +637,11 @@ button {
   .about-photo {
     max-width: 220px;
     justify-self: start;
+  }
+
+  .about-photo-wrap {
+    width: 220px;
+    max-width: 100%;
   }
 
   .entry img {
