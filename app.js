@@ -30,6 +30,7 @@
   const translatedElements = document.querySelectorAll("[data-zh-cn], [data-zh-tw]");
 
   setupLanguageSwitcher();
+  setupSecretLetterNavigation();
 
   if (
     !spriteData ||
@@ -346,6 +347,25 @@
     });
 
     setLanguage(getStoredLanguage());
+  }
+
+  function setupSecretLetterNavigation() {
+    document.addEventListener("click", (event) => {
+      const target =
+        event.target instanceof Element
+          ? event.target.closest("[data-secret-href]")
+          : null;
+
+      if (!target) {
+        return;
+      }
+
+      const href = target.getAttribute("data-secret-href");
+
+      if (href) {
+        window.location.href = href;
+      }
+    });
   }
 
   function randomBetween(minimum, maximum) {
