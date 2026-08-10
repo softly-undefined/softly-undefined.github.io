@@ -429,6 +429,11 @@ a:visited {
   margin-bottom: 12px;
 }
 
+.publication-list strong,
+.publication-authors {
+  display: block;
+}
+
 .inline-links {
   display: inline-flex;
   gap: 12px;
