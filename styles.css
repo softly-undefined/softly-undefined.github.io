@@ -459,6 +459,12 @@ a:visited {
   font-size: 0.92rem;
 }
 
+.profile-email {
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
 .secret-letter-target {
   color: inherit;
   text-decoration: inherit;
