@@ -25,3 +25,32 @@ for(const i of [0,2,1,2,0,1,0,2]){tabs[i].onclick();assert.equal(run('TARGET'),t
 tabs[1].onclick();
 run("key='2000-01-01';checkDay()");assert.equal(run('TARGET'),'eric');assert.equal(run('path.at(-1)'), 'eric');
 console.log('PASS: three reachable daily puzzles, separate progress/hints, wins, sharing, keyboard tabs, day check');
+
+// Audit the complete source subset, rather than only a few reported words.
+const sourceWords=fs.readFileSync(require('path').join(__dirname,'dictionary/enable-4-6.txt'),'utf8').trim().split('\n');
+assert.equal(sourceWords.length,27771);
+assert.equal(new Set(sourceWords).size,sourceWords.length);
+const accepted=run('WORDS');
+for(const w of sourceWords){assert(/^[a-z]{4,6}$/.test(w));assert(accepted.has(w),`Missing ENABLE word: ${w}`)}
+for(const w of run('[...startWords,...fiveLetterStartWords,...targets]'))assert(accepted.has(w),`Missing curated word: ${w}`);
+for(const w of 'paid feet held hang okay proud events went gone made said took eaten mice geese teeth women men children dogs cats walks walked babies cities tries tried trying played playing running better best'.split(' ').filter(w=>w.length>=4&&w.length<=6))assert(accepted.has(w),`Missing familiar inflection: ${w}`);
+for(const w of ['zzzz','qzxq','1234','pa!d','pay','payments'])assert(!accepted.has(w));
+
+// Every hint must stay within the legal dictionary, change one letter, and
+// reduce shortest distance by one; this checks the entire reachable graph.
+for(const tab of tabs){tab.onclick();const routes=run('[...toward]'),distances=run('distance');for(const [word,next] of routes){assert(accepted.has(word)&&accepted.has(next));assert.equal(word.length,next.length);assert.equal([...word].filter((c,i)=>c!==next[i]).length,1);assert.equal(distances.get(next),distances.get(word)-1)}}
+
+// Exercise actual submission handlers, including the reported uppercase PAID.
+tabs[1].onclick();run("path=[start];const toSaid=buildRoutes('said',WORDS).toward;while(path.at(-1)!=='said')path.push(toSaid.get(path.at(-1)));hints=0;render()");
+function submit(word){input.value=word;el('form').submit({preventDefault(){}})}
+submit('  PAID  ');assert.equal(run('path.at(-1)'),'paid');
+assert.equal(el('message').textContent,'');
+el('hint').onclick();assert(el('message').textContent.startsWith('Try '));
+run('load()');assert.equal(run('path.at(-1)'),'paid');assert.equal(run('hints'),1);
+submit('feet');assert.equal(run('path.at(-1)'),'paid');assert(el('message').textContent.includes('is a word'));
+submit('zzzz');assert(el('message').textContent.includes('dictionary'));
+submit('pa!d');assert(el('message').textContent.includes('A–Z'));
+submit('pay');assert(el('message').textContent.includes('4-letter'));
+tabs[0].onclick();run('path=[start];render()');submit('PAID');assert(el('message').textContent.includes('5-letter'));
+assert(html.includes('<form id="form" novalidate>'),'Submission validation must handle trimmed input itself');
+console.log(`PASS: ${accepted.size.toLocaleString()} accepted words; complete ENABLE/curated coverage, all hint routes, PAID submission, progress reload, and rejection messages`);
